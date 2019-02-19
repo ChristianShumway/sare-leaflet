@@ -17,12 +17,41 @@
   </head>
 
   <body>
-    <div class="container-sare">
-      <header>
-         
+    <div class="sare">
+      <header class="container-header">
+        <div class="navbar-fixed"> 
+          <nav>
+            <div class="nav-wrapper">
+              <a href="#" class="brand-logo">SARE</a>
+              <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#">Mapa</a></li>
+                <li><a href="#">Opciones</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
       </header>
-      <h1>SARE</h1>
-      <div id="mapa"></div>
+      
+      <section class='container-search'>
+        <div class="row row-search">
+          <div class="col s12 m8 offset-m2 l6 offset-l3 wrap-search">
+            <div class="input-field">
+              <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+            </div>
+            <a>BUTON BUSCAR</a>
+            <a>BUTON VER LISTA</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="container-map">
+        <div class="row row-map">
+          <div class="col s12 l10 wrap-map">
+            <div id="mapa"></div>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <script src="resources/js/main.js" type="text/javascript"></script>
