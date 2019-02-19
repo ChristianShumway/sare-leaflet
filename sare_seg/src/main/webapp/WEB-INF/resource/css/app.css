@@ -1,0 +1,16 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 19/02/2019, 01:53:25 PM
+    Author     : LIDIA.VAZQUEZ
+*/
+
+#mapa {
+    height:280px;
+    width: 100%;
+    position: relative;
+    margin-top: 0px;
+}
