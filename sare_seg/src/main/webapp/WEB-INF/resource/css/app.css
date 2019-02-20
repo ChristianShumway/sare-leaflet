@@ -1,16 +1,145 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : 19/02/2019, 01:53:25 PM
-    Author     : LIDIA.VAZQUEZ
-*/
-
 #mapa {
-    height:280px;
+  height:280px;
+  width: 100%;
+  position: relative;
+  margin-top: 0px;
+}
+
+/* HEADER */
+nav{
+  background: #2d384a !important;
+}
+
+nav .brand-logo {
+  margin: 0 20px;
+}
+/* END HEADER */
+
+/* CONTAINER SEARCH */
+.container-search{
+  background: url('./../images/fondos/edificios.jpg');
+  height: 200px;
+  background-position: top;
+  background-repeat: no-repeat;
+  background-color: cadetblue;
+  background-size: cover;
+  background-attachment: fixed;
+  padding: 20px;
+}
+
+.row-search {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-bottom: 0 !important;
+}
+
+.wrap-search {
+  background: rgba(255, 255, 255, .3);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 5px !important;
+}
+
+.wrap-search .input-field{
+  width: 70%;
+  padding: 5px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrap-search .input-field input[type='text']{
+  border-bottom: 0;
+  border-radius: 5px;
+  padding: 2px 5px;
+  background: white;
+  margin-bottom: 0;
+}
+
+.wrap-search .input-field input[type=text]:not(.browser-default):focus:not([readonly]){
+  border-bottom: none;
+  box-shadow: none;
+  border: 1px solid #2d384a;
+}
+
+.btn-search{
+  background: gray;
+  padding: 10px 30px;
+  margin: 0 10px;
+  border-radius: 6px;
+  color: white;
+  box-shadow: 0px 3px 10px grey;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+.search-primary{
+  background: #0277bd;
+}
+
+.search-secondary{
+  background: #fbc02d;
+}
+
+.search-third{
+  background: #589c87;
+}
+
+.search-inactive{
+  background: #424242;
+}
+
+.search-primary:hover{
+  background: #01579b;
+}
+
+.search-secondary:hover{
+  background: #f9a825;
+}
+
+.search-third:hover{
+  background: #3d7967;
+}
+
+.search-inactive:hover{
+  background: #212121;
+}
+/*  END CONTAINER SEARCH */
+
+
+@media screen and (max-width:768px){
+  .wrap-search .input-field {
+    padding: 5px 10px;
+  }
+
+  .btn-search {
+    padding: 10px 25px;
+    margin: 0 5px;
+  }
+}
+
+@media screen and (max-width:480px){
+  .container-search {
+    padding: 10px;
+  }
+  .wrap-search {
+    flex-direction: column;
+    padding: 4px 8px !important;
+  }
+
+  .wrap-search .input-field {
     width: 100%;
-    position: relative;
-    margin-top: 0px;
+    padding: 0 !important;
+    margin: 5px 0;
+  }
+
+  .btn-search {   
+    width: 100%;
+    text-align: center;
+    margin-bottom: 5px;
+  }
 }

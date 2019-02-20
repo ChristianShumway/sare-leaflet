@@ -9,6 +9,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="resources/css/app.css" rel="stylesheet" type="text/css"/>
     <title>SARE 2019</title>
      <!-- Compiled and minified CSS -->
@@ -36,10 +37,10 @@
         <div class="row row-search">
           <div class="col s12 m8 offset-m2 l6 offset-l3 wrap-search">
             <div class="input-field">
-              <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+              <input placeholder="Realizar Busqueda..." id="first_name" type="text" class="validate">
             </div>
-            <a>BUTON BUSCAR</a>
-            <a>BUTON VER LISTA</a>
+            <a class="btn-search search-third">Buscar</a>
+            <a class="btn-search search-third">Ver</a>
           </div>
         </div>
       </section>
