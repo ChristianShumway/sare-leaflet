@@ -8,6 +8,7 @@
 /* HEADER */
 nav{
   background: #2d384a !important;
+  box-shadow: none !important;
 }
 
 nav .brand-logo {
@@ -25,7 +26,21 @@ nav .brand-logo {
   background-size: cover;
   background-attachment: fixed;
   padding: 20px;
+  position: relative;
 }
+.hide-search{
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+.hide-search i{
+  font-size: 60px;
+}
+
 
 .row-search {
   height: 100%;
@@ -62,7 +77,7 @@ nav .brand-logo {
 .wrap-search .input-field input[type=text]:not(.browser-default):focus:not([readonly]){
   border-bottom: none;
   box-shadow: none;
-  border: 1px solid #2d384a;
+  /* border: 1px solid #2d384a; */
 }
 
 .btn-search{
@@ -75,6 +90,15 @@ nav .brand-logo {
   cursor: pointer;
   text-decoration: none;
   font-size: 12px;
+  transition: .1s;
+}
+
+.btn-search:hover, .hide-search:hover i{
+  transform: scale(1.02)
+}
+
+.btn-search:active, .hide-search:active i{
+  transform: scale(0.9)
 }
 
 .search-primary{
@@ -112,6 +136,7 @@ nav .brand-logo {
 
 
 @media screen and (max-width:768px){
+  /* CONTAINER SEARCH */
   .wrap-search .input-field {
     padding: 5px 10px;
   }
@@ -120,12 +145,20 @@ nav .brand-logo {
     padding: 10px 25px;
     margin: 0 5px;
   }
+  /* END CONTAINER SEARCH */
 }
 
 @media screen and (max-width:480px){
+  /* CONTAINER SEARCH */
   .container-search {
     padding: 10px;
+    height: 190px;
   }
+
+  .row-search {
+    align-items: flex-end;
+  }
+
   .wrap-search {
     flex-direction: column;
     padding: 4px 8px !important;
@@ -142,4 +175,57 @@ nav .brand-logo {
     text-align: center;
     margin-bottom: 5px;
   }
+
+  .hide-search {
+    top: -9px;
+    right: 0px;
+  }
+
+  .hide-search i {
+    font-size: 45px;
+  }
+  /* END CONTAINER SEARCH */
 }
+
+@keyframes showSearch {
+  from {
+    height: 50px;
+    padding: 0;
+  }
+  to {
+    height: 200px;
+    padding: 20px
+  }
+}
+
+@keyframes hideSearch {
+  from {
+    height: 200px;
+    padding: 20px;
+  }
+  to {
+    height: 50px;
+    background: #2d384a;
+    padding: 0;
+  }
+}
+
+@keyframes rotateArrow {
+  from {
+    transform: rotate(0);
+  }
+  to{
+    transform: rotate(180deg);
+  }
+}
+
+
+@keyframes rotateArrow2 {
+  from {
+    transform: rotate(180deg);
+  }
+  to{
+    transform: rotate(360deg);
+  }
+}
+

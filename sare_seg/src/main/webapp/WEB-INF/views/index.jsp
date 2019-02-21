@@ -33,8 +33,11 @@
         </div>
       </header>
       
-      <section class='container-search'>
-        <div class="row row-search">
+      <section id='container-search' class='container-search' data-visible='show'>
+        <a id='arrow-search' class='hide-search'  onclick="handleVisibleSearch()" tabindex="2">
+          <i class="material-icons">keyboard_arrow_down</i>
+        </a>
+        <div class="row row-search" id="row-search">
           <div class="col s12 m8 offset-m2 l6 offset-l3 wrap-search">
             <div class="input-field">
               <input placeholder="Realizar Busqueda..." id="first_name" type="text" class="validate">
@@ -55,7 +58,7 @@
 
     </div>
 
-    <script src="resources/js/main.js" type="text/javascript"></script>
+    <!-- <script src="resources/js/main.js" type="text/javascript"></script> -->
     <script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/config.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
@@ -63,6 +66,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src='resources/js/actionsDom.js'></script>
     <script> 
       const loadScript = (url, callback) => {
         let script = document.createElement('script')
