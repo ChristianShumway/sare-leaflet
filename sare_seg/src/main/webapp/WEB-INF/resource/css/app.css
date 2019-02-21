@@ -1,5 +1,5 @@
 #mapa {
-  height:280px;
+  height:350px;
   width: 100%;
   position: relative;
   margin-top: 0px;
@@ -133,6 +133,12 @@ nav .brand-logo {
   background: #212121;
 }
 /*  END CONTAINER SEARCH */
+
+/* CONTAINER MAP */
+.container-map{
+  margin-top: 20px;
+}
+/*  END CONTAINER MAP */
 
 
 @media screen and (max-width:768px){
