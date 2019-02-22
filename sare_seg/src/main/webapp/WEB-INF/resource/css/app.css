@@ -285,6 +285,54 @@ nav .brand-logo {
 /* end options */
 /*  END CONTAINER MAP AND OPTIONS */
 
+/* CONTAINER FORM */
+.container-form{
+  /* border: 1px solid red; */
+  margin: 10px;
+}
+
+.wrap-form{
+  /* border: 1px solid blue; */
+  margin: 5px 0;
+  padding: 0;
+}
+
+.title-option{
+  /* background: gray; */
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.wrap-form:nth-child(odd) .title-option{
+  background: #80deea;
+}
+
+.wrap-form:nth-child(even) .title-option{
+  background: #3949ab;
+}
+
+.title-option p{
+  color: white;
+  font-size: 26px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.inputs-option{
+  border-top: none;
+  padding: 1px 30px 10px 30px;
+}
+
+.wrap-form .input-field input[type=text]:not(.browser-default):focus:not([readonly]){
+  /* border-bottom: none; */
+  border-bottom: 1px solid #c8e6c9;
+  box-shadow: 0 1px 0 0 #c8e6c9;
+}
+
+
+/* END CONTAINER FORM */
+
 @media (min-width:993px) and (max-width:1220px){
   .check-option {
     padding: 2px 0;

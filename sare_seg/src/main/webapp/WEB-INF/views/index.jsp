@@ -147,11 +147,13 @@
       <section class="container-form">
         <form>
           <div class="row row-form">
-            <div class="col s12 m6 l4 wrap-form op-referencia">
+            
+            <!-- OPCIÓN REFERENCIA -->
+            <div class="col s12 m6 l4 wrap-form op-referencia ">
               <div class="title-option">
                 <p>Referencia</p>
               </div>
-              <div class="inputs-option">
+              <div class="inputs-option z-depth-3">
                   <div class="input-field">
                     <input placeholder="Origen" id="origen" name="origen" type="text" >
                   </div>
@@ -169,6 +171,57 @@
                   </div>
               </div>
             </div>
+            <!-- OPCIÓN REFERENCIA -->
+
+            <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
+            <div class="col s12 m6 l4 wrap-form op-referencia ">
+              <div class="title-option">
+                <p>Referencia</p>
+              </div>
+              <div class="inputs-option z-depth-3">
+                  <div class="input-field">
+                    <input placeholder="Origen" id="origen" name="origen" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="C154" id="c154" name="c154" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Nombre del Establecimiento" id="e08" name="e08" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Razón Social" id="e09" name="e09" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="SCIAN" id="codigo_scian" name="codigo_scian" type="text" >
+                  </div>
+              </div>
+            </div>
+            <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
+
+            <!-- OPCIÓN REFERENCIA -->
+            <div class="col s12 m6 l4 wrap-form op-referencia ">
+              <div class="title-option">
+                <p>Referencia</p>
+              </div>
+              <div class="inputs-option z-depth-3">
+                  <div class="input-field">
+                    <input placeholder="Origen" id="origen" name="origen" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="C154" id="c154" name="c154" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Nombre del Establecimiento" id="e08" name="e08" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Razón Social" id="e09" name="e09" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="SCIAN" id="codigo_scian" name="codigo_scian" type="text" >
+                  </div>
+              </div>
+            </div>
+            <!-- OPCIÓN REFERENCIA -->
           </div>
         </form>
       </section>
