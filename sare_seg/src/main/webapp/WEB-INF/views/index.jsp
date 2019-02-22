@@ -42,8 +42,8 @@
             <div class="input-field">
               <input placeholder="Realizar Busqueda..." id="first_name" type="text" class="validate">
             </div>
-            <a class="btn-search search-third">Buscar</a>
-            <a class="btn-search search-third">Ver</a>
+              <a class="btn-search search-third">Buscar</a>
+              <a class="btn-search search-third">Ver</a>
           </div>
         </div>
       </section>
@@ -58,78 +58,85 @@
           <!-- end mapa -->
           <!-- opciones -->
           <div class="col s12 l2 wrap-options">
-            
-            <div class="check-option">
-              <p class="option-title">Altas</p>
-              <div class="switch">
-                <label>
-                  Off
-                  <input type="checkbox">
-                  <span class="lever"></span>
-                  On
-                </label>
+            <div class="items-check">
+              
+              <div class="check-option">
+                <p class="option-title">Altas</p>
+                <div class="switch">
+                  <label>
+                    Inactivo
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Activo
+                  </label>
+                </div>
               </div>
-            </div>
+  
+              <div class="check-option">
+                <p class="option-title">Sucursales</p>
+                <div class="switch">
+                  <label>
+                    Inactivo
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Activo
+                  </label>
+                </div>
+              </div>
+  
+              <div class="check-option">
+                <p class="option-title">DENUE</p>
+                <div class="switch">
+                  <label>
+                    Inactivo
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Activo
+                  </label>
+                </div>
+              </div>
+  
+              <div class="check-option">
+                <p class="option-title">Matrices</p>
+                <div class="switch">
+                  <label>
+                    Inactivo
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Activo
+                  </label>
+                </div>
+              </div>
+  
+              <div class="check-option">
+                <p class="option-title">Postes de Kilometraje</p>
+                <div class="switch">
+                  <label>
+                    Inactivo
+                    <input type="checkbox">
+                    <span class="lever"></span>
+                    Activo
+                  </label>
+                </div>
+              </div>
 
-            <div class="check-option">
-              <p class="option-title">Sucursales</p>
-              <div class="switch">
-                <label>
-                  Off
-                  <input type="checkbox">
-                  <span class="lever"></span>
-                  On
-                </label>
-              </div>
-            </div>
-
-            <div class="check-option">
-              <p class="option-title">DENUE</p>
-              <div class="switch">
-                <label>
-                  Off
-                  <input type="checkbox">
-                  <span class="lever"></span>
-                  On
-                </label>
-              </div>
-            </div>
-
-            <div class="check-option">
-              <p class="option-title">Matrices</p>
-              <div class="switch">
-                <label>
-                  Off
-                  <input type="checkbox">
-                  <span class="lever"></span>
-                  On
-                </label>
-              </div>
-            </div>
-
-            <div class="check-option">
-              <p class="option-title">Postes de Kilometraje</p>
-              <div class="switch">
-                <label>
-                  Off
-                  <input type="checkbox">
-                  <span class="lever"></span>
-                  On
-                </label>
-              </div>
             </div>
 
             <span class="options-line"></span>
-            
-            <div class="radio-option">
-              <input id="radio1" name="radio" type="radio"/>
-              <label for="radio1">Vista Calle</label>
-            </div>
-            <div class="radio-option">
-              <input id="radio2" name="radio" type="radio"/>
-              <label for="radio2">Identificar</label>
-            </div>
 
+            <div class="items-radio">
+              
+              <div class="radio-option">
+                <input id="radio1" name="radio" type="radio"/>
+                <label for="radio1">Vista Calle</label>
+              </div>
+
+              <div class="radio-option">
+                <input id="radio2" name="radio" type="radio"/>
+                <label for="radio2">Identificar</label>
+              </div>
+
+            </div> 
           </div>
           <!-- end opciones -->
         </div>
