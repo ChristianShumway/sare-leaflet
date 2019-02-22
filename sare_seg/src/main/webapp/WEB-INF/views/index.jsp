@@ -143,6 +143,37 @@
       </section>
       <!-- END CONTAINER MAP -->
 
+      <!-- CONTAINER FORM -->
+      <section class="container-form">
+        <form>
+          <div class="row row-form">
+            <div class="col s12 m6 l4 wrap-form op-referencia">
+              <div class="title-option">
+                <p>Referencia</p>
+              </div>
+              <div class="inputs-option">
+                  <div class="input-field">
+                    <input placeholder="Origen" id="origen" name="origen" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="C154" id="c154" name="c154" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Nombre del Establecimiento" id="e08" name="e08" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="Razón Social" id="e09" name="e09" type="text" >
+                  </div>
+                  <div class="input-field">
+                    <input placeholder="SCIAN" id="codigo_scian" name="codigo_scian" type="text" >
+                  </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </section>
+      <!-- END CONTAINER FORM -->
+
     </div>
 
     <!-- <script src="resources/js/main.js" type="text/javascript"></script> -->
