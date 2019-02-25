@@ -15,6 +15,7 @@
      <!-- Compiled and minified CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
   </head>
 
   <body>
@@ -149,11 +150,12 @@
           <div class="row row-form">
             
             <!-- OPCIÓN REFERENCIA -->
-            <div class="col s12 m6 l4 wrap-form op-referencia ">
-              <div class="title-option">
+            <div class="col s12 m6 l4 wrap-form op-referencia">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('referencia')" id="title-referencia">
+                <i class="material-icons" id="icon-referencia">add</i>
                 <p>Referencia</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
                   <input placeholder="Origen" id="origen" name="origen" type="text" >
                 </div>
@@ -174,11 +176,12 @@
             <!-- OPCIÓN REFERENCIA -->
 
             <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
-            <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica ">
-              <div class="title-option">
+            <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('ubicacion-geografica')" id="title-ubicacion-geografica">
+                <i class="material-icons" id="icon-ubicacion-geografica">add</i>  
                 <p>Ubicación Geográfica</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-ubicacion-geografica">
                 <div class="input-field">
                   <input placeholder="Clave" id="e03" name="e03" type="text" >
                   <label for="e03">Entidad Federativa</label>
@@ -212,10 +215,11 @@
 
             <!-- OPCIÓN DOMICILIO -->
             <div class="col s12 m6 l4 wrap-form op-domicilio">
-              <div class="title-option">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('domicilio')" id="title-domicilio">
+                <i class="material-icons" id="icon-domicilio">add</i>
                 <p>Domicilio</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-domicilio">
                 <div class="input-field">
                   <input id="tipo_e10" name="tipo_e10" type="text" hidden >
                 </div>
@@ -249,10 +253,11 @@
 
             <!-- OPCIÓN ASENTAMIENTO -->
             <div class="col s12 m6 l4 wrap-form op-referencia">
-              <div class="title-option">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('asentamiento')" id="title-asentamiento">
+                <i class="material-icons" id="icon-asentamiento">add</i>
                 <p>Asentamiento</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-asentamiento">
                 <div class="input-field">
                   <select id="tipo_e14" name="tipo_e14">
                     <option value="" disabled selected>Tipo de Asentamiento Humano</option>
@@ -272,10 +277,11 @@
 
             <!-- OPCIÓN ENTRE VIALIDADES -->
             <div class="col s12 m6 l4 wrap-form op-entre-vialidades">
-              <div class="title-option">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('entre-vialidades')" id="title-entre-vialidades">
+                <i class="material-icons"  id="icon-entre-vialidades">add</i>
                 <p>Entre Vialidades</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-entre-vialidades">
                 <div class="input-field">
                   <input id="tipo_e10_a" name="tipo_e10_a" type="text" hidden >
                 </div>
@@ -314,10 +320,11 @@
 
             <!-- OPCIÓN CALLE POSTERIOR -->
             <div class="col s12 m6 l4 wrap-form op-calle-posterior">
-              <div class="title-option">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('calle-posterior')" id="title-calle-posterior">
+                <i class="material-icons" id="icon-calle-posterior">add</i>
                 <p>Calle Posterior</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-calle-posterior">
                 <div class="input-field">
                   <input  id="tipo_e10_c" name="tipo_e10_c" type="text" hidden >
                 </div>
@@ -346,10 +353,11 @@
 
             <!-- OPCIÓN EDIFICIO, CENTROS COMERCIALES -->
             <div class="col s12 m6 l4 wrap-form op-edificio-centros-comerciales ">
-              <div class="title-option">
+              <div class="title-option" data-visible="show" onclick="handleVisibleForm('edificio')" id="title-edificio">
+                <i class="material-icons" id="icon-edificio">add</i>
                 <p>Edificio, Centro Comercial</p>
               </div>
-              <div class="inputs-option z-depth-3">
+              <div class="inputs-option z-depth-3" id="inputs-edificio">
                 <div class="input-field">
                   <input placeholder="E12 Edificio" id="e12" name="e12" type="text" >
                 </div>

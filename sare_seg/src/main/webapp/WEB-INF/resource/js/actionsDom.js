@@ -16,3 +16,22 @@ const handleVisibleSearch = () => {
   }
  
 }
+
+const handleVisibleForm = option => {
+  const container = document.getElementById(`title-${option}`)
+  const contenidoInputs = document.getElementById(`inputs-${option}`)
+  const icon = document.getElementById(`icon-${option}`)
+  let visible = container.dataset.visible
+
+  if(visible == 'show'){
+    container.classList.add('no-visible')
+    contenidoInputs.style.animation = 'hideContainerForm 1.2s 1 linear forwards'
+    icon.style.animation = 'rotateXClose 1.2s 1 linear forwards'
+    container.dataset.visible = 'hide'
+  } else if (visible == 'hide'){
+    container.classList.remove('no-visible')
+    contenidoInputs.style.animation = 'showContainerForm 1.2s 1 linear forwards'
+    icon.style.animation = 'rotateXOpen 1.2s 1 linear forwards'
+    container.dataset.visible = 'show'
+  }
+}
