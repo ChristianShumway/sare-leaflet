@@ -17,6 +17,24 @@ const handleVisibleSearch = () => {
  
 }
 
+const handleOptions = () => {
+  const arrow = document.getElementById('item-options')
+  const options = document.getElementById('wrap-options')
+  let visible = arrow.dataset.visible
+
+  if(visible == 'show'){
+    options.style.animation = 'hideOptions 1.2s 1 linear forwards' 
+    arrow.style.animation = 'rotateArrow 1.2s 1 linear forwards' 
+    //row.style.display  = 'none'
+    arrow.dataset.visible = 'hide'
+  } else if (visible == 'hide') {
+    options.style.animation = 'showOptions 1.2s 1 linear forwards' 
+    arrow.style.animation = 'rotateArrow2 1.2s 1 linear forwards'
+    //row.style.display  = 'flex'
+    arrow.dataset.visible = 'show'
+  }
+}
+
 const handleVisibleForm = option => {
   const container = document.getElementById(`title-${option}`)
   const contenidoInputs = document.getElementById(`inputs-${option}`)

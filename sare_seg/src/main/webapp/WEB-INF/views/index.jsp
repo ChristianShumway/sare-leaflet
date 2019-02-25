@@ -58,9 +58,11 @@
           </div>
           <!-- end mapa -->
           <!-- opciones -->
-          <div class="col s12 l2 wrap-options">
+          <div class="col s12 item-options">
+            <i class="material-icons" id="item-options" data-visible="show" onclick="handleOptions()">keyboard_arrow_down</i>
+          </div>
+          <div class="col s12 l2 wrap-options" id="wrap-options">
             <div class="items-check">
-              
               <div class="check-option">
                 <p class="option-title">Altas</p>
                 <div class="switch">
@@ -387,6 +389,19 @@
         </form>
       </section>
       <!-- END CONTAINER FORM -->
+
+      <!-- FOOTER -->
+      <footer class="page-footer">
+        <div class="container">
+          <img src="resources/images/logos/INEGI.png" alt="inegi">
+        </div>
+        <div class="footer-copyright">
+          <div class="container">
+            © 2019 Copyright INEGI
+          </div>
+        </div>
+      </footer>
+      <!-- END FOOTER -->
 
     </div>
 
