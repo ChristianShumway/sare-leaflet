@@ -35,6 +35,7 @@
       </header>
       
       <section id='container-search' class='container-search' data-visible='show'>
+        <h5 id="titulo-busqueda">BUSQUEDA</h5>
         <a id='arrow-search' class='hide-search'  onclick="handleVisibleSearch()" tabindex="2">
           <i class="material-icons">keyboard_arrow_down</i>
         </a>
@@ -43,8 +44,10 @@
             <div class="input-field">
               <input placeholder="Realizar Busqueda..." id="first_name" type="text" class="validate">
             </div>
-              <a class="btn-search search-third">Buscar</a>
-              <a class="btn-search search-third">Ver</a>
+              <div class="btns-search">   
+                <a class="btn-search search-third">Buscar</a>
+                <a class="btn-search search-third">Ver</a>
+              </div>
           </div>
         </div>
       </section>
@@ -64,11 +67,11 @@
           <div class="col s12 l2 wrap-options" id="wrap-options">
             <div class="items-check">
               <div class="check-option">
-                <p class="option-title">Altas</p>
+                <p class="option-title" id="option-altas">Altas</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-altas" onchange="handleChangeOptions('altas')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -76,11 +79,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title">Sucursales</p>
+                <p class="option-title" id="option-sucursal">Sucursales</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -88,11 +91,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title">DENUE</p>
+                <p class="option-title" id="option-denue">DENUE</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-denue" onchange="handleChangeOptions('denue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -100,11 +103,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title">Matrices</p>
+                <p class="option-title" id="option-matrices">Matrices</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-matrices" onchange="handleChangeOptions('matrices')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -112,11 +115,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title">Postes de Kilometraje</p>
+                <p class="option-title" id="option-postes">Postes de Kilometraje</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox">
+                    <input type="checkbox" id="checkbox-postes" onchange="handleChangeOptions('postes')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -405,7 +408,7 @@
 
     </div>
 
-    <!-- <script src="resources/js/main.js" type="text/javascript"></script> -->
+    <script src="resources/js/main.js" type="text/javascript"></script>
     <script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/config.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
