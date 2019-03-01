@@ -204,6 +204,10 @@ nav ul a {
   padding: 2px 10px;
   margin: 5px 0;
   font-family: 'Montserrat', sans-serif;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .option-active{
@@ -467,6 +471,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 @media (min-width:993px) and (max-width:1220px){
   /* CONTAINER MAP AND OPTIONS */
   .check-option {
+    /* border: 2px solid red; */
     padding: 2px 0;
   }
 
@@ -620,6 +625,14 @@ textarea.materialize-textarea:focus:not([readonly]) {
     width: 60px;
   }
   /* END CONTAINER FOOTER */
+}
+
+@media screen and (max-width:610px){
+  /* CONTAINER MAP AND OPTIOS */
+  .check-option .switch label {
+    font-size: 0;
+  } 
+  /* END CONTAINER MAP AND OPTIONS */
 }
 
 @media screen and (max-width:480px){
