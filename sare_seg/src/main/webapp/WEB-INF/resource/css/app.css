@@ -336,7 +336,7 @@ nav ul a {
 .title-option{
   padding: 10px;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
   position: relative;
   cursor: pointer;
@@ -363,12 +363,23 @@ nav ul a {
 }
 
 .title-option i{
-  position: absolute;
-  top: 28%;
-  left: 10px;
+  /* position: absolute; */
+  /* top: 28%; */
+  /* left: 10px; */
   color: white;
   font-size: 30px;
-  transform: rotate(45deg)
+  transform: rotate(45deg);
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title-option .titlew{
+  width: 80%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .title-option p{
@@ -377,11 +388,12 @@ nav ul a {
   text-transform: uppercase;
   margin: 0;
   font-family: 'Montserrat', sans-serif;
+  display: inline-block;
 }
 
 .inputs-option{
   border-top: none;
-  padding: 10px 30px 10px 30px;
+  padding: 12px 30px 10px 30px;
   height: 400px;
   overflow-y: auto;
   margin-bottom: 10px;
@@ -418,6 +430,19 @@ textarea.materialize-textarea:focus:not([readonly]) {
   border-bottom: 1px solid #c8e6c9 !important;
   -webkit-box-shadow: 0 1px 0 0 #c8e6c9 !important;
   box-shadow: 0 1px 0 0 #c8e6c9 !important;
+}
+
+.wrap-form .input-field input:not([type]):focus:not([readonly])+label, 
+.wrap-form .input-field input[type=text]:not(.browser-default):focus:not([readonly])+label, 
+.wrap-form .input-field textarea.materialize-textarea:focus:not([readonly])+label {
+  color: #2d384a;
+}
+
+.wrap-form .input-field textarea~label{
+  white-space: nowrap;
+  overflow: hidden;
+  width: 100%;
+  text-overflow: ellipsis;
 }
 /* END CONTAINER FORM */
 
@@ -577,14 +602,11 @@ textarea.materialize-textarea:focus:not([readonly]) {
   }
 
   .title-option i {
-    position: absolute;
-    top: 23%;
-    left: 5px;
     font-size: 26px;
   }
 
   .inputs-option {
-    padding: 5px 20px 5px 20px;
+    padding: 10px 20px 5px 20px;
     /* height: 250px; */
   }
   /* END CONTAINER FORM */
@@ -698,13 +720,13 @@ textarea.materialize-textarea:focus:not([readonly]) {
     padding: 5px;
   }
 
-  .title-option p {
-    font-size: 14px;
-  }
-
   .title-option i {
     top: 12%;
     font-size: 24px;
+  }
+
+  .inputs-option{
+    height: auto;
   }
   /* END CONTAINER FORM */
 
@@ -757,24 +779,6 @@ textarea.materialize-textarea:focus:not([readonly]) {
   }
 }
 
-@keyframes hideContainerForm {
-  from {
-    height: 400px;
-  }
-  to {
-    height: 0;
-    padding: 0;
-  }
-}
-
-@keyframes showContainerForm {
-  from {
-    height: 0;
-  }
-  to {
-    height: 400px;
-  }
-}
 
 @keyframes rotateXClose {
   from{
@@ -815,4 +819,23 @@ textarea.materialize-textarea:focus:not([readonly]) {
   }
 }
 
+/*form*/
 
+@keyframes hideContainerForm {
+  from {
+    height: 400px;
+  }
+  to {
+    height: 0;
+    padding: 0;
+  }
+}
+
+@keyframes showContainerForm {
+  from {
+    height: 0;
+  }
+  to {
+    height: 400px;
+  }
+}

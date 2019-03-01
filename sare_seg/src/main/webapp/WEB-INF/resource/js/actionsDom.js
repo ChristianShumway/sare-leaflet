@@ -1,3 +1,5 @@
+let objDataHeight = {}
+
 const handleVisibleSearch = () => {
   const containerSearch = document.getElementById('container-search')
   const arrowSearch = document.getElementById('arrow-search')
@@ -23,17 +25,19 @@ const handleVisibleSearch = () => {
 const handleOptions = () => {
   const arrow = document.getElementById('item-options')
   const options = document.getElementById('wrap-options')
+  const containerHeight = `${options.offsetHeight}px`
   let visible = arrow.dataset.visible
 
   if(visible == 'show'){
-    options.style.animation = 'hideOptions 1.2s 1 linear forwards' 
+    options.animate([{ height:containerHeight}, {height:0}], {duration:1200, fill:'forwards'})
+    options.offsetHeight >= 10  ? objDataHeight.optionsMovil = containerHeight : false
+   //options.style.animation = 'hideOptions 1.2s 1 linear forwards' 
     arrow.style.animation = 'rotateArrow 1.2s 1 linear forwards' 
-    //row.style.display  = 'none'
     arrow.dataset.visible = 'hide'
   } else if (visible == 'hide') {
-    options.style.animation = 'showOptions 1.2s 1 linear forwards' 
+    //options.style.animation = 'showOptions 1.2s 1 linear forwards' 
+    options.animate([{ height: 0}, {height: objDataHeight.optionsMovil}], {duration:1200, fill:'forwards'})
     arrow.style.animation = 'rotateArrow2 1.2s 1 linear forwards'
-    //row.style.display  = 'flex'
     arrow.dataset.visible = 'show'
   }
 }
@@ -41,17 +45,25 @@ const handleOptions = () => {
 const handleVisibleForm = option => {
   const container = document.getElementById(`title-${option}`)
   const contenidoInputs = document.getElementById(`inputs-${option}`)
+  const containerHeight = `${contenidoInputs.offsetHeight}px`
   const icon = document.getElementById(`icon-${option}`)
   let visible = container.dataset.visible
 
   if(visible == 'show'){
     container.classList.add('no-visible')
-    contenidoInputs.style.animation = 'hideContainerForm 1.2s 1 linear forwards'
+    if(screen.width <= '480') {
+      contenidoInputs.animate([{ height:containerHeight, padding: '5px 20px 5px 20px'}, {height:0, padding: 0,}], {duration:1200, fill:'forwards'})
+      contenidoInputs.offsetHeight != 0 && !objDataHeight[option] ? objDataHeight[option] = containerHeight : false
+    } else {
+      contenidoInputs.style.animation = 'hideContainerForm 1.2s 1 linear forwards'
+    }
     icon.style.animation = 'rotateXClose 1.2s 1 linear forwards'
     container.dataset.visible = 'hide'
   } else if (visible == 'hide'){
     container.classList.remove('no-visible')
-    contenidoInputs.style.animation = 'showContainerForm 1.2s 1 linear forwards'
+    screen.width <= '480' 
+      ? contenidoInputs.animate([{ height: 0, padding: 0}, {height: objDataHeight[option], padding: '5px 20px 5px 20px',}], {duration:1200, fill:'forwards'}) 
+      : contenidoInputs.style.animation = 'showContainerForm 1.2s 1 linear forwards'
     icon.style.animation = 'rotateXOpen 1.2s 1 linear forwards'
     container.dataset.visible = 'show'
   }
