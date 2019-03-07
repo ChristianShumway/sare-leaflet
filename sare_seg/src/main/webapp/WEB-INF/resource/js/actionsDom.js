@@ -68,3 +68,16 @@ const handleVisibleForm = option => {
     container.dataset.visible = 'show'
   }
 }
+
+const handleVisibleRatifica = () => {
+  const containerRatifica = document.getElementById('container-ratifica')
+  let visible = containerRatifica.dataset.visible
+  if(visible == 'show'){
+    containerRatifica.animate([{ height:'auto' , opacity:1, padding:'10px 0'}, {height:0, opacity:0, padding:0}], {duration:400, fill:'forwards'})
+    containerRatifica.dataset.visible = 'hide'
+  } else {
+    containerRatifica.animate([{ height:0 , opacity:0, padding:0}, {height:'auto', opacity:1, padding:'10px 0'}], {duration:400, fill:'forwards'})
+    containerRatifica.dataset.visible = 'show'
+   
+  }
+}

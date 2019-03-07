@@ -26,14 +26,15 @@
             <div class="nav-wrapper">
               <a href="#" class="brand-logo">SARE</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">Mapa</a></li>
-                <li><a href="#">Opciones</a></li>
+                <li><a href="#container-map">Mapa</a></li>
+                <li><a href="#container-form">Opciones</a></li>
               </ul>
             </div>
           </nav>
         </div>
       </header>
       
+      <!-- CONTAINER SEARCH -->
       <section id='container-search' class='container-search' data-visible='show'>
         <h5 id="titulo-busqueda">BUSQUEDA</h5>
         <a id='arrow-search' class='hide-search'  onclick="handleVisibleSearch()" tabindex="2">
@@ -45,15 +46,36 @@
               <input placeholder="Realizar Busqueda..." id="first_name" type="text" class="validate">
             </div>
               <div class="btns-search">   
-                <a class="btn-search search-third">Buscar</a>
+                <a onclick="buscarUE()" class="btn-search search-third">Buscar</a>
                 <a class="btn-search search-third">Ver</a>
               </div>
           </div>
         </div>
       </section>
+      <!-- END CONTAINER SARCH -->
+
+      <!-- CONTAINER RATIFICA -->
+      <section class="container-ratifica" id="container-ratifica" data-visible='hide'>
+        <div class="row row-ratifica" id="row-ratifica">
+          <div class="col s12 wrap-ratifica" id="wrap-ratifica">
+            <p class="title-ratifica">¿Deséas Ratificar?</p>
+            <div class="wrap-btns-ratifica">
+              <div onclick="ratificar('si')" class="btn-ratifica si-ratifica">
+                <div class="icon-si-ratifica"> <i class="material-icons">check</i></div>
+                <div class="text-si-ratifica">Ratificar</div>
+              </div>
+              <div onclick="ratificar('no')" class="btn-ratifica no-ratifica">
+                <div class="text-no-ratifica">No Ratificar</div>
+                <div class="icon-no-ratifica"> <i class="material-icons">close</i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- END CONTAINER RATIFICA -->
 
       <!-- CONTAINER MAP -->
-      <section class="container-map">
+      <section class="container-map" id="container-map">
         <div class="row row-map">
           <!-- mapa -->
           <div class="col s12 l10 wrap-map">
@@ -150,7 +172,7 @@
       <!-- END CONTAINER MAP -->
 
       <!-- CONTAINER FORM -->
-      <section class="container-form">
+      <section class="container-form" id="container-form">
         <form>
           <div class="row row-form">
             
