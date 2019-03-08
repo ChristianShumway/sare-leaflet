@@ -16,6 +16,7 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.css">
   </head>
 
   <body>
@@ -460,6 +461,21 @@
       </section>
       <!-- END CONTAINER FORM -->
 
+      <!-- CONTAINER OPTIONS BUTTONS -->
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large btn-options-menu">
+          <i class="large material-icons">menu</i>
+        </a>
+        <ul>
+          <li><a onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="I am a tooltip"><i class="material-icons">save</i></a></li>
+          <li><a class="btn-floating btn-item-menu"><i class="material-icons">highlight_off</i></a></li>
+          <li><a class="btn-floating btn-item-menu"><i class="material-icons">content_paste</i></a></li>
+          <li><a class="btn-floating btn-item-menu"><i class="material-icons">local_printshop</i></a></li>
+          <li><a class="btn-floating btn-item-menu"><i class="material-icons">exit_to_app</i></a></li>
+        </ul>
+      </div>
+      <!-- END CONTAINER OPTIONS BUTTONS -->
+
       <!-- FOOTER -->
       <footer class="page-footer">
         <div class="container">
@@ -475,13 +491,15 @@
 
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.js"></script>
     <script src="resources/js/main.js" type="text/javascript"></script>
     <script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/config.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
     <!-- Compiled and minified JavaScript -->
-    <script src="resources/js/jquery-2.1.1.min.js"></script>
+    <script src="resources/js/jquery-2.1.1.min.js"  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+    crossorigin="anonymous"  ></script>
     <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
     <script src='resources/js/actionsDom.js'></script>
 
@@ -516,9 +534,10 @@
             }
           )
 
-          $('.tooltipped').tooltip({delay: 50})
           $('.dropdown-button').dropdown('open')
           $('select').material_select()
+          $('.tooltipped').tooltip()
+          $('.fixed-action-btn').floatingActionButton();
         })
       }, 1000 )
     </script>

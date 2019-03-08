@@ -484,6 +484,10 @@ nav ul a {
   background: #2b2726 !important;
 }
 
+.wrap-form .title-option.error{
+  background: #b71c1c  !important;
+}
+
 .title-option i{
   /* position: absolute; */
   /* top: 28%; */
@@ -567,6 +571,54 @@ textarea.materialize-textarea:focus:not([readonly]) {
   text-overflow: ellipsis;
 }
 /* END CONTAINER FORM */
+
+/* CONTAINER OPTIONS BUTTONS */
+.btn-options-menu{
+  background: #FFAF20 !important;
+  transition: 1s;
+}
+
+.btn-item-menu{
+  background: #10455B !important;
+  transition: 2s;
+}
+
+.btn-item-menu.inactive{
+  background: #F9F3ED !important;
+}
+
+.btn-options-menu:hover{
+  background: #dc9414 !important;
+  transform: scale(1.1)
+}
+
+.btn-options-menu:active{
+  transform: scale(1.1)
+}
+
+.btn-item-menu:hover{
+  background: #5562eb !important;
+  transform: scale(1.1) !important;
+}
+
+/* estilos alert toast pisados */
+body.swal2-toast-shown .swal2-container.swal2-top-start {
+  top: 10px !important;
+  left: 10px !important;
+}
+
+body.swal2-toast-shown .swal2-container.swal2-shown {
+  width: 300px !important;
+  height: 84px !important;
+}
+
+.swal2-popup.swal2-toast {
+  width: 100% !important;
+  height: 100% !important;
+}
+/*  end estilos alert toast pisados */
+
+/* END CONTAINER OPTIONS BUTTONS */
 
 /* FOOTER */
 .page-footer{
