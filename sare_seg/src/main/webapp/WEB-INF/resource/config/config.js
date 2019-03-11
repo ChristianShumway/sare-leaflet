@@ -25,9 +25,9 @@ var projectParams = {
             format: 'png'
         }
     ],
-    'onLoad': init,
+    /*'onLoad': init,
     'onIdentify': eventoIdentificar,
-    'onZoomEnd':endzoom,
+    'onZoomEnd':endzoom,*/
     'btnTogglePanels': true
     
 };
