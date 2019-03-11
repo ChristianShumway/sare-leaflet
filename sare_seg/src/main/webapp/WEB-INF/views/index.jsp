@@ -29,6 +29,7 @@
     <!-- Compiled and minified JavaScript -->
     <script src="resources/js/jquery-2.1.1.min.js"  ></script>
     <script src='resources/js/actionsDom.js'></script>
+    <script src='resources/js/objFormulario.js'></script>
   </head>
 
   <body>
@@ -165,16 +166,21 @@
 
             <span class="options-line"></span>
 
-            <div class="items-radio">
-              
+            <div class="items-radio">  
+
               <div class="radio-option">
-                <input id="radio1" name="radio" type="radio"/>
-                <label for="radio1">Vista Calle</label>
+                <input id="identificar" name="radio" type="radio"/>
+                <label for="identificar">Identificar</label>
               </div>
 
               <div class="radio-option">
-                <input id="radio2" name="radio" type="radio"/>
-                <label for="radio2">Identificar</label>
+                <input id="puntear" name="radio" type="radio"/>
+                <label for="puntear">Puntear</label>
+              </div>
+
+              <div class="radio-option">
+                <input id="v-calle" name="radio" type="radio"/>
+                <label for="v-calle">Vista Calle</label>
               </div>
 
             </div> 
@@ -479,7 +485,7 @@
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="I am a tooltip"><i class="material-icons">save</i></a></li>
+          <li><a onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped click-to-toggle" data-position="left" data-tooltip="I am a tooltip"><i class="material-icons">save</i></a></li>
           <li><a class="btn-floating btn-item-menu"><i class="material-icons">highlight_off</i></a></li>
           <li><a class="btn-floating btn-item-menu"><i class="material-icons">content_paste</i></a></li>
           <li><a class="btn-floating btn-item-menu"><i class="material-icons">local_printshop</i></a></li>
@@ -501,10 +507,7 @@
       </footer>
       <!-- END FOOTER -->
 
-    </div>
-
-
-      
+    </div>    
   </body>
   
     <script>
@@ -528,23 +531,21 @@
     </script>
   
     <script type="text/javascript">
- 
-        loadScript("resources/js/materialize.min.js", () => {
-          // initialization code                
-          $(".button-collapse")
-            .sideNav({
-              edge: 'left',
-              draggable: true
-            }
-          )
+      loadScript("resources/js/materialize.min.js", () => {
+        // initialization code                
+        $(".button-collapse")
+          .sideNav({
+            edge: 'left',
+            draggable: true
+          })
 
-          $('.dropdown-button').dropdown('open')
-          $('select').material_select()
-          $('.tooltipped').tooltip()
-          //$('.fixed-action-btn').floatingActionButton();
-        })
-      
+        $('.dropdown-button').dropdown('open')
+        $('select').material_select()
+        $('.tooltipped').tooltip()
+        //$('.fixed-action-btn').floatingActionButton();
+      })
     </script>
+
     <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
 
 </html>

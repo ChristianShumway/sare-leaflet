@@ -1,84 +1,3 @@
-const objForm = [
-  {
-    id:'origen',
-    key: 'referencia',
-    name:'origen',
-    title:'title-referencia'
-  },
-  {
-    id:'c154',
-    key: 'referencia',
-    name:'c154',
-    title:'title-referencia'
-  },
-  {
-    id:'e08',
-    key: 'referencia',
-    name:'e08',
-    title:'title-referencia'
-  },
-  {
-    id:'e09',
-    key: 'referencia',
-    name:'e09',
-    title:'title-referencia'
-  },
-  {
-    id:'codigo_scian',
-    key: 'referencia',
-    name:'codigo_scian',
-    title:'title-referencia'
-  },
-  {
-    id:'e03',
-    key: 'ubicacion-geografica',
-    name:'e03',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e03n',
-    key: 'ubicacion-geografica',
-    name:'e03n',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e04',
-    key: 'ubicacion-geografica',
-    name:'e04',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e04n',
-    key: 'ubicacion-geografica',
-    name:'e04n',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e05n',
-    key: 'ubicacion-geografica',
-    name:'e05n',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e05',
-    key: 'ubicacion-geografica',
-    name:'e05',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e06',
-    key: 'ubicacion-geografica',
-    name:'e06',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e07',
-    key: 'ubicacion-geografica',
-    name:'e07',
-    title:'title-ubicacion-geografica',
-  },
-]
-
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
   const checkBox = document.getElementById(`checkbox-${option}`)
@@ -100,11 +19,11 @@ const ratificar = request => {
 }
 
 const handleFormValidations = () => {
-  let inputsEmpty = false
   let containerInputsVisible = true
+  const totalInputs = objForm.length
+  let inputsInfo = 0
 
   for(let input = 0; input < objForm.length; input ++){
-    //console.log(objForm[input])
     const {id, name, title, key} = objForm[input]
     const element = document.getElementById(id)
     const wrapTitle = document.getElementById(title)
@@ -114,51 +33,32 @@ const handleFormValidations = () => {
     if(element.value == ''){
       element.style.borderColor = 'red'
       inputsEmpty = true
-      alertToastForm()
+      containerInputsVisible = false
+      const msgInputEmpty = `Favor de completar la información del campo ${name}`
+      alertToastForm(msgInputEmpty)
 
-      element.value == '' && wrapTitle.id == title 
-      ? wrapTitle.classList.add('error') 
-      : wrapTitle.classList.remove('error')
+      wrapTitle.id == title && 
+        wrapTitle.classList.add('error') 
+        element.focus()
 
       break
     } else {
       element.style.borderColor = '#eeeeee'
-    }
-
+      containerInputsVisible = true
+      inputsInfo ++
       
+      wrapTitle.id == title && 
+        wrapTitle.classList.remove('error') 
+    }
+     
   }
-  
-  // objForm.forEach(input => {
-  //   const {id, name, title, key} = input
-  //   const element = document.getElementById(id)
-  //   const wrapTitle = document.getElementById(title)
-  //   let visible = wrapTitle.dataset.visible
 
-  //   if(element.value == ''){
-  //     element.style.borderColor = 'red'
-  //     inputsEmpty = true
-  //     alertToastForm()
-  //   } else {
-  //     element.style.borderColor = '#eeeeee'
-  //   }
+  inputsInfo == totalInputs && alert('no hay inputs vacios')  
 
-    
-  //   element.value == '' && wrapTitle.id == title 
-  //     ? wrapTitle.classList.add('error') 
-  //     : wrapTitle.classList.remove('error')
-    
-  //   element.value !== '' && wrapTitle.id == title
-  //     ? true
-  //     : false
-  //     //? visible == 'show' ? handleVisibleForm(key) : false
-
-  // })
-
-  //inputsEmpty ? alert('hay inputs vacios') : alert('no hay inputs vacios')
 }
 
 
-const alertToastForm = () => {
+const alertToastForm = title => {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-start',
@@ -168,6 +68,7 @@ const alertToastForm = () => {
   
   Toast.fire({
     type: 'error',
-    title: 'Favor de completar los campos seleccionados'
+    title
   })
 }
+
