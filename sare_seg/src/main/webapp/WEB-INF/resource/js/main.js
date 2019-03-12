@@ -16,6 +16,15 @@ const ratificar = request => {
   viewSearchContainer.setAttribute('onclick','handleVisibleSearch()')
   handleVisibleSearch()
   handleVisibleRatifica()
+  handleShowAlertPickMap()
+
+  if(request == 'si'){
+    const saveOption = document.getElementById('item-save-option')
+    const cancelOption = document.getElementById('item-cancel-option')
+
+    saveOption.removeAttribute('disabled')
+    cancelOption.removeAttribute('disabled')
+  }
 }
 
 const handleFormValidations = () => {
@@ -56,6 +65,11 @@ const handleFormValidations = () => {
   inputsInfo == totalInputs && alert('no hay inputs vacios')  
 
 }
+
+const HandleWhatDoYouWantToDo = request => {
+  alert(request)
+}
+
 
 
 const alertToastForm = title => {

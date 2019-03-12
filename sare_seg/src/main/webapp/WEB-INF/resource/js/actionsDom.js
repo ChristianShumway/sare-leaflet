@@ -81,3 +81,27 @@ const handleVisibleRatifica = () => {
    
   }
 }
+
+const handleShowAlertPickMap = () => {
+  const wrapAlertPick = document.getElementById('wrap-alert-pick')
+  screen.width > '768'
+    ? wrapAlertPick.animate([{ bottom: '-45px'}, {bottom:'30px'}], {duration:800, fill:'forwards'})
+    : wrapAlertPick.animate([{ bottom: '-45px'}, {bottom:'10px'}], {duration:800, fill:'forwards'})
+
+  wrapAlertPick.style.animation = 'latido 2s alternate infinite forwards 2s'
+}
+
+
+const handleHideAlertPickMap = () => {
+  const wrapAlertPick = document.getElementById('wrap-alert-pick')
+  screen.width > '768'
+    ? wrapAlertPick.animate([{ bottom: '30px'}, {bottom:'-45px'}], {duration:300, fill:'forwards'})
+    : wrapAlertPick.animate([{ bottom: '10px'}, {bottom:'-45px'}], {duration:300, fill:'forwards'})
+}
+
+const handleScrollTop = () =>{
+  // alert(document.body.scrollTop)
+  var body = $("html, body")
+  body.stop().animate({scrollTop:0}, 2000, 'swing', () =>{} )
+}
+
