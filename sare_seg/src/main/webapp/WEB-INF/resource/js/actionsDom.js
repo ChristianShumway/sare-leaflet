@@ -105,3 +105,12 @@ const handleScrollTop = () =>{
   body.stop().animate({scrollTop:0}, 2000, 'swing', () =>{} )
 }
 
+const handleModuleScroll = e => {
+  e.preventDefault()
+  const ancla = e.target.hash
+  const body = $("html, body")
+  body.stop(true,true).animate({				
+    scrollTop: $(ancla).offset().top
+  },1000);
+}
+

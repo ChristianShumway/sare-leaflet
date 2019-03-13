@@ -41,8 +41,8 @@
             <div class="nav-wrapper">
               <a href="#" class="brand-logo">SARE</a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#container-map">Mapa</a></li>
-                <li><a href="#container-form">Opciones</a></li>
+                <li><a id="ancla-map" onclick='handleModuleScroll(event)' href="#container-map">Mapa</a></li>
+                <li><a id="ancla-form" onclick='handleModuleScroll(event)' href="#container-form">Opciones</a></li>
               </ul>
             </div>
           </nav>
