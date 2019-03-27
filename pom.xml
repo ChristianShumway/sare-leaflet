@@ -6,10 +6,10 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>sare_seg_db</module>
-        <module>sare_seg_services</module>
     <module>sare_seg</module>
-  </modules>
+        <module>sare_db</module>
+        <module>sare_services</module>
+    </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>

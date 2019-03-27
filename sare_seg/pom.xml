@@ -8,7 +8,7 @@
   </parent>
 
     <groupId>mx.org.inegi.sare</groupId>
-    <artifactId>sare</artifactId>
+    <artifactId>sare_seg</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -24,18 +24,29 @@
     
     <dependencies>
         <dependency>
+            <groupId>mx.org.inegi.sare</groupId>
+            <artifactId>sare_services</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>1.7.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>mx.org.inegi.sare</groupId>
+            <artifactId>sare_db</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-          <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -88,12 +99,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-exec</artifactId>
             <version>1.3</version>
-        </dependency>
-         <dependency>
-            <groupId>mx.org.inegi.sare</groupId>
-            <artifactId>sare_services</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
     </dependencies>
 
