@@ -29,12 +29,7 @@
             <version>1.0-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
-        <dependency>
-            <groupId>gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>1.7.1</version>
-            <type>jar</type>
-        </dependency>
+        
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
