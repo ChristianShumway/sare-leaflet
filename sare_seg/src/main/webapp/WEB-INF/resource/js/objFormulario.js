@@ -78,3 +78,47 @@ const objForm = [
     title:'title-ubicacion-geografica',
   },
 ]
+
+const inputsEditables = [
+  {
+    id:'origen',
+  },
+  {
+    id:'c154',
+  },
+  {
+    id:'e08',
+  },
+  {
+    id:'e09',
+  },
+  {
+    id:'codigo_scian',
+  },
+  {
+    id:'e03',
+  },
+  {
+    id:'e03n',
+  },
+  {
+    id:'e04',
+  },
+  {
+    id:'e04n',
+  },
+  {
+    id:'e05n',
+  },
+  {
+    id:'e05',
+  },
+  {
+    id:'e06',
+  },
+  {
+    id:'e07',
+  },  
+]
+
+let inputsByWrap = {}
