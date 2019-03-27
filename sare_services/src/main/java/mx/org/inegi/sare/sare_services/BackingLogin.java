@@ -9,10 +9,12 @@ import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_usuarios;
+import org.springframework.stereotype.Service;
 /**
  *
  * @author LIDIA.VAZQUEZ
  */
+@Service("BackingLogin")
 public class BackingLogin {
     
     public cat_respuesta_services login(Integer proyecto, String usuario, String password, 

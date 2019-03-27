@@ -22,7 +22,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan("mx.org.inegi.sare")
+@ComponentScan({"mx.org.inegi.sare.sare.controller","mx.org.inegi.sare.sare_services"})
 @PropertySource(value = "classpath:/web.properties")
 public class WebConfig extends WebMvcConfigurerAdapter {
     

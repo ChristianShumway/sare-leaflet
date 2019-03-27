@@ -20,8 +20,8 @@ import org.springframework.stereotype.Service;
 @Service("BackingGuardar")
 public class BackingGuardar extends BackingSincroniza {
     
-     @Autowired
-    @Qualifier("BackingGuardar")
+    @Autowired
+    @Qualifier("DaoBackingGuardarSare")
     InterfaceGuardarUE InterfaceGuardar;
 
     public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare inmueble,String usuario, String ip)
