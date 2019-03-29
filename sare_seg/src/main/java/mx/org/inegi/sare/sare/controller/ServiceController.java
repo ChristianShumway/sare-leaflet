@@ -9,6 +9,7 @@ package mx.org.inegi.sare.sare.controller;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
@@ -134,8 +135,13 @@ public class ServiceController {
     }
     
     @RequestMapping(value = "login.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password,@RequestParam(value = "acceso") String acceso,@RequestParam(value = "clave_operativa") String clave_operativa,@RequestParam(value = "id_deftramo") String id_deftramo,@RequestParam(value = "nombre") String nombre,@RequestParam(value = "ce") String ce,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "consulta") String consulta, HttpServletRequest request) throws Exception {
-        return BackingLogin.login(proyecto, usuario, password, acceso,clave_operativa,id_deftramo,nombre,ce,id_ue,consulta, request);
+    public cat_respuesta_services login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password,@RequestParam(value = "acceso") String acceso,@RequestParam(value = "clave_operativa") String clave_operativa,@RequestParam(value = "id_deftramo") String id_deftramo,@RequestParam(value = "nombre") String nombre,@RequestParam(value = "ce") String ce,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "consulta") String consulta, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingLogin.login(proyecto, usuario, password, acceso,clave_operativa,id_deftramo,nombre,ce,id_ue,consulta, request, response);
+    }
+    
+    @RequestMapping(value = "Login.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services Login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingLogin.login(proyecto, usuario, password, request, response);
     }
     
     

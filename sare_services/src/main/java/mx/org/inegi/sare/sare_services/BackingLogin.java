@@ -5,7 +5,17 @@
  */
 package mx.org.inegi.sare.sare_services;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +23,11 @@ import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_usuarios;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceLogin;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,8 +39,21 @@ import org.springframework.stereotype.Service;
 public class BackingLogin {
     
     @Autowired
-    @Qualifier("DaoBackingLogin")
+    @Qualifier("DaoLogin")
     InterfaceLogin InterfaceLogin;
+    
+    
+    public cat_respuesta_services login(Integer proyecto, String usuario, String password,HttpServletRequest request, HttpServletResponse response) throws IOException
+    {
+        cat_respuesta_services Respuesta;
+        String ip="";
+        Respuesta=getAuthValidWeb(usuario,password,ip);
+        if(Respuesta.getMensaje().getType().equals("Exito"))
+        {
+            response.sendRedirect("index.html");
+        }
+        return Respuesta;
+    } 
     
     public cat_respuesta_services login(Integer proyecto, String usuario, String password, 
             String acceso, String clave_operativa,String id_deftramo,String nombre,String ce, String id_ue, String consulta, HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -75,6 +103,58 @@ public class BackingLogin {
         
         return respuesta;
         
+    }
+    
+    private cat_respuesta_services getAuthValidWeb(String user, String password, String ip) {
+        cat_respuesta_services respuesta = new cat_respuesta_services();
+        //cat_usuarios usuario = InterfaceLogin.getUserByUser(user.toLowerCase());
+         Map data = new HashMap();
+        Boolean success = false;
+        if(user!=null)
+        {
+            if((password!=null && !password.equals("")) && (user!=null && !user.equals("")))
+            {
+                success = autenticarDirAct(user, password);
+            }
+            else
+            {
+                success = autenticarDirAct(user, password);
+            }
+            if(success)
+            {
+               respuesta.setMensaje(new cat_mensaje("Exito", "")); 
+            }
+            else
+            {
+                respuesta.setMensaje(new cat_mensaje("warning", "Datos de autenticación erroneos"));
+            }
+        }
+        return respuesta;
+    }
+    
+    private Boolean autenticarDirAct(String user, String password) {
+        Boolean success = true;
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpGet request = new HttpGet("http://10.153.3.5:8080/AuntenticaDirectorioActivo/autentica.do?u=" + user + "&p=" + password);
+            HttpResponse response = client.execute(request);
+            HttpEntity entity = response.getEntity();
+            BufferedReader rd = new BufferedReader(
+                    new InputStreamReader(entity.getContent()));
+            StringBuilder result = new StringBuilder();
+            String line;
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            }
+            Gson g = new Gson();
+            JsonObject jsonObject = new JsonParser().parse(result.toString()).getAsJsonObject();
+            Boolean resp = Boolean.valueOf(jsonObject.get("result").getAsString());
+            success = resp;
+        } catch (IOException | IllegalStateException | JsonSyntaxException ex) {
+            Logger.getLogger(BackingLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return success;
+
     }
     
     private boolean registraAccesoPG(cat_usuarios usuario){

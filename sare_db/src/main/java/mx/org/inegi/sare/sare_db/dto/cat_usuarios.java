@@ -24,6 +24,8 @@ public class cat_usuarios {
     private Boolean consulta;
     private String id_deftramo;
     private String ip;
+    private String pass;
+    private String proyecto;
 
     public cat_usuarios() {
     }
@@ -50,6 +52,25 @@ public class cat_usuarios {
         this.id_deftramo = id_deftramo;
     }
 
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(String proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    
+    
+    
     public String getIp() {
         return ip;
     }
