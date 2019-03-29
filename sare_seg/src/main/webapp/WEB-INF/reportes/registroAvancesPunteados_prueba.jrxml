@@ -1,0 +1,1319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registroAvancePunteados" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="15" bottomMargin="20" uuid="ec0b94dd-faa5-4539-a9a1-73b8e0247adc">
+	<property name="ireport.zoom" value="1.3310000000000082"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FCE4D6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#F4B084"/>
+		</conditionalStyle>
+	</style>
+	<style name="table_TD_1" mode="Opaque" backcolor="#F4B084">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==1)]]></conditionExpression>
+			<style backcolor="#F4B084"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="01 01C A1 05 06 07 12" uuid="0da90263-0085-4754-b90e-2bbe21c4410e">
+		<parameter name="where1" class="java.lang.String">
+			<defaultValueExpression><![CDATA[01]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT cestatal, origen,  carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
+(carga_01 +  carga_01A + carga_A1+carga_01C+carga_05+carga_06) carga ,
+(realizado_01 + realizado_01A +realizado_A1+realizado_01C+realizado_05+realizado_06 )realizado FROM (
+SELECT '00' ce, 'NAC' cestatal, 1 orden,
+        origen,
+            sum(CASE WHEN c154 IN ('01') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN c154 IN ('01') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN c154 IN ('01A') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN c154 IN ('01A') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN c154 IN ('A1') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN c154 IN ('A1') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN c154 IN ('01C') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN c154 IN ('01C') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN c154 IN ('05') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN c154 IN ('05') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN c154 IN ('06') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN c154 IN ('06') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM CE2019_SEG.vw_punteo_sare
+            WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('01','01A','A1','01C','05','06')
+and 1=1
+            GROUP BY  origen
+
+union all
+SELECT cestatal, CASE
+            WHEN  cestatal ='01' THEN 'AGS'
+            WHEN  cestatal ='02' THEN 'BCN'
+            WHEN  cestatal ='03' THEN 'BCS'
+            WHEN  cestatal ='04' THEN 'CAM'
+            WHEN  cestatal ='05' THEN 'COA'
+            WHEN  cestatal ='06' THEN 'COL'
+            WHEN  cestatal ='07' THEN 'CHS'
+            WHEN  cestatal ='08' THEN 'CHI'
+            WHEN  cestatal ='09' THEN 'DFN'
+            WHEN  cestatal ='10' THEN 'DGO'
+            WHEN  cestatal ='11' THEN 'GTO'
+            WHEN  cestatal ='12' THEN 'GRO'
+            WHEN  cestatal ='13' THEN 'HGO'
+            WHEN  cestatal ='14' THEN 'JAL'
+            WHEN  cestatal ='15' THEN 'MEO'
+            WHEN  cestatal ='16' THEN 'MIC'
+            WHEN  cestatal ='17' THEN 'MOR'
+            WHEN  cestatal ='18' THEN 'NAY'
+            WHEN  cestatal ='19' THEN 'NLN'
+            WHEN  cestatal ='20' THEN 'OAX'
+            WHEN  cestatal ='21' THEN 'PUE'
+            WHEN  cestatal ='22' THEN 'QRO'
+            WHEN  cestatal ='23' THEN 'QTR'
+            WHEN  cestatal ='24' THEN 'SLP'
+            WHEN  cestatal ='25' THEN 'SIN'
+            WHEN  cestatal ='26' THEN 'SON'
+            WHEN  cestatal ='27' THEN 'TAB'
+            WHEN  cestatal ='28' THEN 'TAM'
+            WHEN  cestatal ='29' THEN 'TLA'
+            WHEN  cestatal ='30' THEN 'VER'
+            WHEN  cestatal ='31' THEN 'YUC'
+            WHEN  cestatal ='32' THEN 'ZAC'
+            WHEN  cestatal ='33' THEN 'DFS'
+            WHEN  cestatal ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+     origen,
+          sum(CASE WHEN c154 IN ('01') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN c154 IN ('01') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN c154 IN ('01A') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN c154 IN ('01A') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN c154 IN ('A1') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN c154 IN ('A1') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN c154 IN ('01C') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN c154 IN ('01C') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN c154 IN ('05') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN c154 IN ('05') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN c154 IN ('06') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN c154 IN ('06') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM CE2019_SEG.vw_punteo_sare
+            WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('01','01A','A1','01C','05','06')
+$P!{where1}
+            GROUP BY cestatal, origen
+
+) dd order by ce,ORIGEN]]>
+		</queryString>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="ORIGEN" class="java.math.BigDecimal"/>
+		<field name="CARGA_01" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01" class="java.math.BigDecimal"/>
+		<field name="CARGA_01A" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01A" class="java.math.BigDecimal"/>
+		<field name="CARGA_A1" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_A1" class="java.math.BigDecimal"/>
+		<field name="CARGA_01C" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01C" class="java.math.BigDecimal"/>
+		<field name="CARGA_05" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_05" class="java.math.BigDecimal"/>
+		<field name="CARGA_06" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_06" class="java.math.BigDecimal"/>
+		<field name="CARGA" class="java.math.BigDecimal"/>
+		<field name="REALIZADO" class="java.math.BigDecimal"/>
+		<variable name="sumaCarga01" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_01}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado01" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_01}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga01A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_01A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado01A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_01A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCargaA1" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_A1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_A1}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizadoA1" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_A1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_A1}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga01C" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_01C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01C}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado01C" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_01C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01C}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga05" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_05}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_05}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado05" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_05}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_05}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga06" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_06}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_06}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado06" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_06}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_06}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalCarga" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalRealizado" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO}]]></initialValueExpression>
+		</variable>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{CESTATAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="parte2-0712nua409" uuid="f71b97b9-8d4a-49c3-84dd-acff4ccce229">
+		<parameter name="where2" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT cestatal, origen,  carga_07, realizado_07, carga_12, realizado_12, carga_12A, realizado_12A,carga_NU,realizado_NU,carga_A4,realizado_A4,carga_09,realizado_09,
+
+(carga_07 +  carga_12 + carga_12A+carga_NU+carga_A4+carga_09) carga
+,(realizado_07 + realizado_12 +realizado_12A+ realizado_NU+realizado_A4+realizado_09)realizado
+
+ FROM (
+SELECT '00' ce, 'NAC' cestatal, 1 orden,
+        origen,
+                        sum(CASE WHEN c154 IN ('07') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_07,
+            sum(CASE WHEN c154 IN ('07') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_07,
+            sum(CASE WHEN c154 IN ('12') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_12,
+            sum(CASE WHEN c154 IN ('12') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_12,
+            sum(CASE WHEN c154 IN ('12A') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_12A,
+            sum(CASE WHEN c154 IN ('12A') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_12A,
+            sum(CASE WHEN c154 IN ('NU') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_NU,
+            sum(CASE WHEN c154 IN ('NU') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_NU,
+            sum(CASE WHEN c154 IN ('A4') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_A4,
+            sum(CASE WHEN c154 IN ('A4') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_A4,
+            sum(CASE WHEN c154 IN ('09') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_09,
+            sum(CASE WHEN c154 IN ('09') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_09
+            FROM CE2019_SEG.vw_punteo_sare
+           WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('07','12','12A','NU','A4','09')
+and 1=1
+            GROUP BY  origen
+
+union all
+SELECT cestatal, CASE
+            WHEN  cestatal ='01' THEN 'AGS'
+            WHEN  cestatal ='02' THEN 'BCN'
+            WHEN  cestatal ='03' THEN 'BCS'
+            WHEN  cestatal ='04' THEN 'CAM'
+            WHEN  cestatal ='05' THEN 'COA'
+            WHEN  cestatal ='06' THEN 'COL'
+            WHEN  cestatal ='07' THEN 'CHS'
+            WHEN  cestatal ='08' THEN 'CHI'
+            WHEN  cestatal ='09' THEN 'DFN'
+            WHEN  cestatal ='10' THEN 'DGO'
+            WHEN  cestatal ='11' THEN 'GTO'
+            WHEN  cestatal ='12' THEN 'GRO'
+            WHEN  cestatal ='13' THEN 'HGO'
+            WHEN  cestatal ='14' THEN 'JAL'
+            WHEN  cestatal ='15' THEN 'MEO'
+            WHEN  cestatal ='16' THEN 'MIC'
+            WHEN  cestatal ='17' THEN 'MOR'
+            WHEN  cestatal ='18' THEN 'NAY'
+            WHEN  cestatal ='19' THEN 'NLN'
+            WHEN  cestatal ='20' THEN 'OAX'
+            WHEN  cestatal ='21' THEN 'PUE'
+            WHEN  cestatal ='22' THEN 'QRO'
+            WHEN  cestatal ='23' THEN 'QTR'
+            WHEN  cestatal ='24' THEN 'SLP'
+            WHEN  cestatal ='25' THEN 'SIN'
+            WHEN  cestatal ='26' THEN 'SON'
+            WHEN  cestatal ='27' THEN 'TAB'
+            WHEN  cestatal ='28' THEN 'TAM'
+            WHEN  cestatal ='29' THEN 'TLA'
+            WHEN  cestatal ='30' THEN 'VER'
+            WHEN  cestatal ='31' THEN 'YUC'
+            WHEN  cestatal ='32' THEN 'ZAC'
+            WHEN  cestatal ='33' THEN 'DFS'
+            WHEN  cestatal ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+     origen,
+            sum(CASE WHEN c154 IN ('07') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_07,
+            sum(CASE WHEN c154 IN ('07') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_07,
+            sum(CASE WHEN c154 IN ('12') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_12,
+            sum(CASE WHEN c154 IN ('12') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_12,
+            sum(CASE WHEN c154 IN ('12A') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_12A,
+            sum(CASE WHEN c154 IN ('12A') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_12A,
+            sum(CASE WHEN c154 IN ('NU') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_NU,
+            sum(CASE WHEN c154 IN ('NU') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_NU,
+            sum(CASE WHEN c154 IN ('A4') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_A4,
+            sum(CASE WHEN c154 IN ('A4') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_A4,
+            sum(CASE WHEN c154 IN ('09') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_09,
+            sum(CASE WHEN c154 IN ('09') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_09
+            FROM CE2019_SEG.vw_punteo_sare
+            WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('07','12','12A','NU','A4','09')
+$P!{where2}
+            GROUP BY cestatal, origen
+
+) dd order by ce,ORIGEN]]>
+		</queryString>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="ORIGEN" class="java.math.BigDecimal"/>
+		<field name="CARGA_07" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_07" class="java.math.BigDecimal"/>
+		<field name="CARGA_12" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_12" class="java.math.BigDecimal"/>
+		<field name="CARGA_12A" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_12A" class="java.math.BigDecimal"/>
+		<field name="CARGA_NU" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_NU" class="java.math.BigDecimal"/>
+		<field name="CARGA_A4" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_A4" class="java.math.BigDecimal"/>
+		<field name="CARGA_09" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_09" class="java.math.BigDecimal"/>
+		<field name="CARGA" class="java.math.BigDecimal"/>
+		<field name="REALIZADO" class="java.math.BigDecimal"/>
+		<variable name="sumaCarga07" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_07}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_07}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado07" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_07}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_07}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga12" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_12}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_12}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado12" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_12}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_12}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga12A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_12A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_12A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado12A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_12A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_12A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCargaNU" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_NU}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_NU}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizadoNU" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_NU}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_NU}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCargaA4" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_A4}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_A4}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizadoA4" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_A4}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_A4}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga09" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_09}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_09}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado09" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_09}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_09}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalCarga" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalRealizado" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO}]]></initialValueExpression>
+		</variable>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{CESTATAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="parte3-10152122a33c33e" uuid="595af009-549a-415c-90bd-3256378b0570">
+		<parameter name="where3" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT cestatal, origen,  carga_10, realizado_10, carga_15, realizado_15, carga_21, realizado_21,carga_22A,realizado_22A,carga_22C,realizado_22C,carga_22E,realizado_22E,
+
+(carga_10 +  carga_15 + carga_21+carga_22A+carga_22C+carga_22E) carga
+,(realizado_10 + realizado_15 +realizado_21+ realizado_22A+realizado_22C+realizado_22E)realizado
+
+ FROM (
+SELECT '00' ce, 'NAC' cestatal, 1 orden,
+        origen,
+            sum(CASE WHEN c154 IN ('10') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_10,
+            sum(CASE WHEN c154 IN ('10') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_10,
+            sum(CASE WHEN c154 IN ('15') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_15,
+            sum(CASE WHEN c154 IN ('15') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_15,
+            sum(CASE WHEN c154 IN ('21') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_21,
+            sum(CASE WHEN c154 IN ('21') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_21,
+            sum(CASE WHEN c154 IN ('22A') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_22A,
+            sum(CASE WHEN c154 IN ('22A') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_22A,
+            sum(CASE WHEN c154 IN ('22C') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_22C,
+            sum(CASE WHEN c154 IN ('22C') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_22C,
+            sum(CASE WHEN c154 IN ('22E') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_22E,
+            sum(CASE WHEN c154 IN ('22E') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_22E
+            FROM CE2019_SEG.vw_punteo_sare
+           WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('10','15','21','22A','22C','22E')
+and 1=1
+            GROUP BY  origen
+
+union all
+SELECT cestatal, CASE
+            WHEN  cestatal ='01' THEN 'AGS'
+            WHEN  cestatal ='02' THEN 'BCN'
+            WHEN  cestatal ='03' THEN 'BCS'
+            WHEN  cestatal ='04' THEN 'CAM'
+            WHEN  cestatal ='05' THEN 'COA'
+            WHEN  cestatal ='06' THEN 'COL'
+            WHEN  cestatal ='07' THEN 'CHS'
+            WHEN  cestatal ='08' THEN 'CHI'
+            WHEN  cestatal ='09' THEN 'DFN'
+            WHEN  cestatal ='10' THEN 'DGO'
+            WHEN  cestatal ='11' THEN 'GTO'
+            WHEN  cestatal ='12' THEN 'GRO'
+            WHEN  cestatal ='13' THEN 'HGO'
+            WHEN  cestatal ='14' THEN 'JAL'
+            WHEN  cestatal ='15' THEN 'MEO'
+            WHEN  cestatal ='16' THEN 'MIC'
+            WHEN  cestatal ='17' THEN 'MOR'
+            WHEN  cestatal ='18' THEN 'NAY'
+            WHEN  cestatal ='19' THEN 'NLN'
+            WHEN  cestatal ='20' THEN 'OAX'
+            WHEN  cestatal ='21' THEN 'PUE'
+            WHEN  cestatal ='22' THEN 'QRO'
+            WHEN  cestatal ='23' THEN 'QTR'
+            WHEN  cestatal ='24' THEN 'SLP'
+            WHEN  cestatal ='25' THEN 'SIN'
+            WHEN  cestatal ='26' THEN 'SON'
+            WHEN  cestatal ='27' THEN 'TAB'
+            WHEN  cestatal ='28' THEN 'TAM'
+            WHEN  cestatal ='29' THEN 'TLA'
+            WHEN  cestatal ='30' THEN 'VER'
+            WHEN  cestatal ='31' THEN 'YUC'
+            WHEN  cestatal ='32' THEN 'ZAC'
+            WHEN  cestatal ='33' THEN 'DFS'
+            WHEN  cestatal ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+     origen,
+            sum(CASE WHEN c154 IN ('10') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_10,
+            sum(CASE WHEN c154 IN ('10') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_10,
+            sum(CASE WHEN c154 IN ('15') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_15,
+            sum(CASE WHEN c154 IN ('15') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_15,
+            sum(CASE WHEN c154 IN ('21') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_21,
+            sum(CASE WHEN c154 IN ('21') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_21,
+            sum(CASE WHEN c154 IN ('22A') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_22A,
+            sum(CASE WHEN c154 IN ('22A') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_22A,
+            sum(CASE WHEN c154 IN ('22C') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_22C,
+            sum(CASE WHEN c154 IN ('22C') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_22C,
+            sum(CASE WHEN c154 IN ('22E') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_22E,
+            sum(CASE WHEN c154 IN ('22E') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_22E
+            FROM CE2019_SEG.vw_punteo_sare
+           WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('10','15','21','22A','22C','22E')
+$P!{where3}
+            GROUP BY cestatal, origen
+
+) dd order by ce,ORIGEN]]>
+		</queryString>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="ORIGEN" class="java.math.BigDecimal"/>
+		<field name="CARGA_10" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_10" class="java.math.BigDecimal"/>
+		<field name="CARGA_15" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_15" class="java.math.BigDecimal"/>
+		<field name="CARGA_21" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_21" class="java.math.BigDecimal"/>
+		<field name="CARGA_22A" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22A" class="java.math.BigDecimal"/>
+		<field name="CARGA_22C" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22C" class="java.math.BigDecimal"/>
+		<field name="CARGA_22E" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22E" class="java.math.BigDecimal"/>
+		<field name="CARGA" class="java.math.BigDecimal"/>
+		<field name="REALIZADO" class="java.math.BigDecimal"/>
+		<variable name="sumaCarga10" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_10}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_10}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado10" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_10}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_10}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga15" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_15}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_15}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado15" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_15}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_15}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga21" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_21}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_21}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado21" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_21}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_21}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22A" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22A}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22C" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22C}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22C" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22C}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22E" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22E}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22E}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22E" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22E}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22E}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalCarga" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalRealizado" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO}]]></initialValueExpression>
+		</variable>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{CESTATAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="parte4-22g22i22j22la233" uuid="45a80560-83cb-40e1-9e98-109e70f3da24">
+		<parameter name="where4" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT cestatal, origen,  carga_22G, realizado_22G, carga_22I, realizado_22I, carga_22J, realizado_22J,carga_22L,realizado_22L,carga_A2,realizado_A2,carga_33,realizado_33,
+
+(carga_22G +  carga_22I + carga_22J+carga_22L+carga_A2+carga_33) carga
+,(realizado_22G + realizado_22I +realizado_22J+ realizado_22L+realizado_A2+realizado_33)realizado
+
+ FROM (
+SELECT '00' ce, 'NACIONAL' cestatal, 1 orden,
+        origen,
+             sum(CASE WHEN c154 IN ('22G') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_22G,
+            sum(CASE WHEN c154 IN ('22G') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_22G,
+            sum(CASE WHEN c154 IN ('22I') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_22I,
+            sum(CASE WHEN c154 IN ('22I') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_22I,
+            sum(CASE WHEN c154 IN ('22J') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_22J,
+            sum(CASE WHEN c154 IN ('22J') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_22J,
+            sum(CASE WHEN c154 IN ('22L') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_22L,
+            sum(CASE WHEN c154 IN ('22L') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_22L,
+            sum(CASE WHEN c154 IN ('A2') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_A2,
+            sum(CASE WHEN c154 IN ('A2') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_A2,
+            sum(CASE WHEN c154 IN ('33') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_33,
+            sum(CASE WHEN c154 IN ('33') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_33
+            FROM CE2019_SEG.vw_punteo_sare
+           WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('22G','22I','22J','22L','A2','33')
+and 1=1
+            GROUP BY  origen
+
+union all
+SELECT cestatal, CASE
+            WHEN  cestatal ='01' THEN 'AGS'
+            WHEN  cestatal ='02' THEN 'BCN'
+            WHEN  cestatal ='03' THEN 'BCS'
+            WHEN  cestatal ='04' THEN 'CAM'
+            WHEN  cestatal ='05' THEN 'COA'
+            WHEN  cestatal ='06' THEN 'COL'
+            WHEN  cestatal ='07' THEN 'CHS'
+            WHEN  cestatal ='08' THEN 'CHI'
+            WHEN  cestatal ='09' THEN 'DFN'
+            WHEN  cestatal ='10' THEN 'DGO'
+            WHEN  cestatal ='11' THEN 'GTO'
+            WHEN  cestatal ='12' THEN 'GRO'
+            WHEN  cestatal ='13' THEN 'HGO'
+            WHEN  cestatal ='14' THEN 'JAL'
+            WHEN  cestatal ='15' THEN 'MEO'
+            WHEN  cestatal ='16' THEN 'MIC'
+            WHEN  cestatal ='17' THEN 'MOR'
+            WHEN  cestatal ='18' THEN 'NAY'
+            WHEN  cestatal ='19' THEN 'NLN'
+            WHEN  cestatal ='20' THEN 'OAX'
+            WHEN  cestatal ='21' THEN 'PUE'
+            WHEN  cestatal ='22' THEN 'QRO'
+            WHEN  cestatal ='23' THEN 'QTR'
+            WHEN  cestatal ='24' THEN 'SLP'
+            WHEN  cestatal ='25' THEN 'SIN'
+            WHEN  cestatal ='26' THEN 'SON'
+            WHEN  cestatal ='27' THEN 'TAB'
+            WHEN  cestatal ='28' THEN 'TAM'
+            WHEN  cestatal ='29' THEN 'TLA'
+            WHEN  cestatal ='30' THEN 'VER'
+            WHEN  cestatal ='31' THEN 'YUC'
+            WHEN  cestatal ='32' THEN 'ZAC'
+            WHEN  cestatal ='33' THEN 'DFS'
+            WHEN  cestatal ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+     origen,
+             sum(CASE WHEN c154 IN ('22G') and sare_st in ('10','20', '01') THEN 1 ELSE 1 END) carga_22G,
+            sum(CASE WHEN c154 IN ('22G') and sare_st in ('01') THEN 1 ELSE 1 END) realizado_22G,
+            sum(CASE WHEN c154 IN ('22I') and sare_st in ('10','20', '01') THEN 1 ELSE 2 END) carga_22I,
+            sum(CASE WHEN c154 IN ('22I') and sare_st in ('01') THEN 1 ELSE 2 END) realizado_22I,
+            sum(CASE WHEN c154 IN ('22J') and sare_st in ('10','20', '01') THEN 1 ELSE 3 END) carga_22J,
+            sum(CASE WHEN c154 IN ('22J') and sare_st in ('01') THEN 1 ELSE 3 END) realizado_22J,
+            sum(CASE WHEN c154 IN ('22L') and sare_st in ('10','20', '01') THEN 1 ELSE 4 END) carga_22L,
+            sum(CASE WHEN c154 IN ('22L') and sare_st in ('01') THEN 1 ELSE 4 END) realizado_22L,
+            sum(CASE WHEN c154 IN ('A2') and sare_st in ('10','20', '01') THEN 1 ELSE 5 END) carga_A2,
+            sum(CASE WHEN c154 IN ('A2') and sare_st in ('01') THEN 1 ELSE 5 END) realizado_A2,
+            sum(CASE WHEN c154 IN ('33') and sare_st in ('10','20', '01') THEN 1 ELSE 6 END) carga_33,
+            sum(CASE WHEN c154 IN ('33') and sare_st in ('01') THEN 1 ELSE 6 END) realizado_33
+            FROM CE2019_SEG.vw_punteo_sare
+           WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('22G','22I','22J','22L','A2','33')
+$P!{where4}
+            GROUP BY cestatal, origen
+
+) dd order by ce,ORIGEN]]>
+		</queryString>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="ORIGEN" class="java.math.BigDecimal"/>
+		<field name="CARGA_22G" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22G" class="java.math.BigDecimal"/>
+		<field name="CARGA_22I" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22I" class="java.math.BigDecimal"/>
+		<field name="CARGA_22J" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22J" class="java.math.BigDecimal"/>
+		<field name="CARGA_22L" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_22L" class="java.math.BigDecimal"/>
+		<field name="CARGA_A2" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_A2" class="java.math.BigDecimal"/>
+		<field name="CARGA_33" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_33" class="java.math.BigDecimal"/>
+		<field name="CARGA" class="java.math.BigDecimal"/>
+		<field name="REALIZADO" class="java.math.BigDecimal"/>
+		<variable name="sumaCarga22G" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22G}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22G}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22G" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22G}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22G}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22I" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22I}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22I}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22I" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22I}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22I}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22J" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22J}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22J}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22J" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22J}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22J}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCargaA2" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_A2}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_A2}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizadoA2" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_A2}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_A2}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga22L" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_22L}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_22L}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado22L" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_22L}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_22L}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaCarga33" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_33}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_33}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaRealizado33" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_33}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_33}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalCarga" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA}]]></initialValueExpression>
+		</variable>
+		<variable name="sumaTotalRealizado" class="java.math.BigDecimal" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO}]]></initialValueExpression>
+		</variable>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{CESTATAL}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="where" class="java.lang.String"/>
+	<parameter name="URL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT *  FROM CE2019_SEG.vw_punteo_sare
+           WHERE rownum<2]]>
+	</queryString>
+	<field name="CE" class="java.math.BigDecimal"/>
+	<field name="JC" class="java.math.BigDecimal"/>
+	<field name="JA" class="java.math.BigDecimal"/>
+	<field name="A" class="java.math.BigDecimal"/>
+	<field name="ID_UE" class="java.math.BigDecimal"/>
+	<field name="CLEE_EMP" class="java.lang.String"/>
+	<field name="E03" class="java.lang.String"/>
+	<field name="E03N" class="java.lang.String"/>
+	<field name="E04" class="java.lang.String"/>
+	<field name="E04N" class="java.lang.String"/>
+	<field name="E05" class="java.lang.String"/>
+	<field name="E05N" class="java.lang.String"/>
+	<field name="E06" class="java.lang.String"/>
+	<field name="E07" class="java.lang.String"/>
+	<field name="E08" class="java.lang.String"/>
+	<field name="E09" class="java.lang.String"/>
+	<field name="TIPO_E10" class="java.math.BigDecimal"/>
+	<field name="E10" class="java.lang.String"/>
+	<field name="E11" class="java.math.BigDecimal"/>
+	<field name="E11A" class="java.lang.String"/>
+	<field name="TIPO_E14" class="java.math.BigDecimal"/>
+	<field name="E14" class="java.lang.String"/>
+	<field name="TIPO_E10_A" class="java.math.BigDecimal"/>
+	<field name="E10_A" class="java.lang.String"/>
+	<field name="TIPO_E10_B" class="java.math.BigDecimal"/>
+	<field name="E10_B" class="java.lang.String"/>
+	<field name="TIPO_E10_C" class="java.math.BigDecimal"/>
+	<field name="E10_C" class="java.lang.String"/>
+	<field name="COORD_Y" class="java.math.BigDecimal"/>
+	<field name="COORD_X" class="java.math.BigDecimal"/>
+	<field name="TRAMO_CONTROL" class="java.lang.String"/>
+	<field name="DESCRUBIC" class="java.lang.String"/>
+	<field name="E13" class="java.math.BigDecimal"/>
+	<field name="E13A" class="java.lang.String"/>
+	<field name="E12" class="java.lang.String"/>
+	<field name="E20" class="java.lang.String"/>
+	<field name="TIPO_E19" class="java.lang.String"/>
+	<field name="E19" class="java.lang.String"/>
+	<field name="E14_A" class="java.lang.String"/>
+	<field name="C154" class="java.lang.String"/>
+	<field name="ORIGEN" class="java.math.BigDecimal"/>
+	<field name="E23A" class="java.lang.String"/>
+	<field name="E17" class="java.math.BigDecimal"/>
+	<field name="E17_DESC" class="java.lang.String"/>
+	<field name="ID_EVENTO" class="java.math.BigDecimal"/>
+	<field name="ID_DEFTRAMO" class="java.math.BigDecimal"/>
+	<field name="SARE_ST" class="java.lang.String"/>
+	<field name="CESTATAL" class="java.lang.String"/>
+	<field name="CE_DESCRIPCION" class="java.lang.String"/>
+	<variable name="titulo" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<pageHeader>
+		<band height="67" splitType="Stretch">
+			<staticText>
+				<reportElement x="129" y="10" width="315" height="46" uuid="891fa3b9-7ac3-4df4-9a07-43a151b3c91f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="15" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Reporte de Avance de Registros Punteados]]></text>
+			</staticText>
+			<image>
+				<reportElement x="3" y="19" width="50" height="28" uuid="9b7bfd45-8b1f-4e61-8c7a-e12b9ebb38d3"/>
+				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="522" y="19" width="50" height="28" uuid="fbd158db-2262-47ed-be03-6d31656338e9"/>
+				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="5"/>
+	</columnHeader>
+	<detail>
+		<band height="134">
+			<componentElement>
+				<reportElement key="table 8" style="table 8" mode="Transparent" x="0" y="0" width="572" height="115" backcolor="#F4B084" uuid="0218d156-65d4-44bc-b54f-410c6d7e383b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="01 01C A1 05 06 07 12" uuid="a3c0d3de-8504-482e-b098-07554f815f80">
+						<datasetParameter name="where1">
+							<datasetParameterExpression><![CDATA[$P{where}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="102" uuid="c7850ecc-0623-477f-9eda-ba940c986e83">
+						<jr:tableFooter height="0" rowSpan="1"/>
+						<jr:groupHeader groupName="group1">
+							<jr:cell style="table_TD_1" height="30" rowSpan="1">
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textField>
+									<reportElement style="table_TD" mode="Transparent" x="0" y="0" width="102" height="30" backcolor="#FFFFFF" uuid="a186e8f5-8f55-49df-bda8-4e1521c539d2"/>
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true" isItalic="true"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{CESTATAL}]]></textFieldExpression>
+								</textField>
+							</jr:cell>
+						</jr:groupHeader>
+						<jr:columnHeader height="61" rowSpan="2">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="102" height="61" forecolor="#000000" backcolor="#C65911" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#003333"/>
+									<leftPen lineWidth="0.5" lineColor="#003333"/>
+									<bottomPen lineWidth="0.5" lineColor="#003333"/>
+									<rightPen lineWidth="0.5" lineColor="#003333"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[CE/Origen]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="0" rowSpan="1"/>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="102" height="25" uuid="d35a70f1-cc3a-4705-850f-ea84049083d3"/>
+								<box>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{ORIGEN}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:columnGroup width="234" uuid="19a3852d-7a47-478e-a530-e536d57a90e6">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="234" height="30" forecolor="#000000" backcolor="#C65911" uuid="421423c5-40b2-475a-829c-5292b6a64cfc"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA['01]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="118" uuid="5785ab62-8045-496f-af97-4bc05ae91475">
+							<jr:groupHeader groupName="group1">
+								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+									<box>
+										<topPen lineWidth="0.5"/>
+										<leftPen lineWidth="0.5"/>
+										<bottomPen lineWidth="0.5"/>
+										<rightPen lineWidth="0.5"/>
+									</box>
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Transparent" x="0" y="0" width="118" height="30" backcolor="#FFFFFF" uuid="085a8eba-ce8d-4510-9dc9-8d100f0837e5"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga01}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="118" height="31" forecolor="#000000" backcolor="#C65911" uuid="f892bf13-bad7-4e79-9615-b7a183f31981"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="118" height="25" uuid="f07c2d09-ee60-43d7-bdaf-92c7a9a3348d"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_01}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="116" uuid="6ca8bc58-43b4-44bc-9505-249bcb3eb2a1">
+							<jr:groupHeader groupName="group1">
+								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Transparent" x="0" y="0" width="116" height="30" backcolor="#FFFFFF" uuid="9b581864-5072-4c0a-aad1-54e1642e7c29"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado01}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="116" height="31" forecolor="#000000" backcolor="#C65911" uuid="ee92ea0c-f72e-40e1-baff-0be396e8f89e"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="116" height="25" uuid="ba0234b5-d0d0-4baf-b4cf-e164ced3b0c4"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_01}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="225" uuid="d907e9f1-0e83-4579-861d-891af8510346">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="225" height="30" forecolor="#000000" backcolor="#C65911" uuid="0121ffa8-961f-4716-809f-af5e20ac21d6"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA['01 C]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="124" uuid="e1518bb9-dd6f-45ce-ad78-a8b3f0ed2efc">
+							<jr:groupHeader groupName="group1">
+								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Transparent" x="0" y="0" width="124" height="30" backcolor="#FFFFFF" uuid="48ef8cc0-7b3f-4d04-af1c-7910c90b19ff"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga01C}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="124" height="31" forecolor="#000000" backcolor="#C65911" uuid="98a16c7e-acfa-4476-95b9-7d43043df235"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="124" height="25" uuid="9ca0d1bb-32ae-4b5d-b8ed-27bc21079662"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_01C}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="101" uuid="68529034-d620-4845-a21a-38d559f49638">
+							<jr:groupHeader groupName="group1">
+								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Transparent" x="0" y="0" width="101" height="30" backcolor="#FFFFFF" uuid="efdd01e8-4fb5-4d43-bbae-a90a2ae5a07e"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado01C}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="101" height="31" forecolor="#000000" backcolor="#C65911" uuid="4d5c8e25-d591-4307-a3c1-98f4c1fce4af"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+								<textField>
+									<reportElement x="0" y="0" width="101" height="25" uuid="af07c6ce-b844-4fe3-ac0a-427681df23ae"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_01C}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="49">
+			<textField>
+				<reportElement x="266" y="16" width="23" height="21" uuid="c0be0f8a-116e-445a-bcf7-e2cd2712aa3b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="26" width="266" height="1" uuid="4118a897-4017-4d19-b4b6-f59b65bb7bcb"/>
+			</line>
+			<line>
+				<reportElement x="289" y="27" width="266" height="1" uuid="938a5b05-cdf9-4f96-a191-784a0287a67f"/>
+			</line>
+			<staticText>
+				<reportElement x="433" y="28" width="104" height="20" uuid="00247605-8339-422c-8992-84895402cc22"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Fecha de Generación:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="514" y="28" width="54" height="20" uuid="1e8c0c12-5036-4fd9-80a5-e86deab24485"/>
+				<box>
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="205" y="15" width="144" height="20" uuid="d0c935da-68af-4068-8a1b-e96bb8f7cd6c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No se encontraron datossdsfsdf
+]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>

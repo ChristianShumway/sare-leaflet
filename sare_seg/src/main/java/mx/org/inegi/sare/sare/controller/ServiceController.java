@@ -22,6 +22,7 @@ import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
 import mx.org.inegi.sare.sare_services.BackingLogin;
 import mx.org.inegi.sare.sare_services.BackingPunteoSare;
+import mx.org.inegi.sare.sare_services.BackingReportes;
 import mx.org.inegi.sare.sare_services.BackingSincroniza;
 import mx.org.inegi.sare.sare_services.BackingValidacionesSare;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,10 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingLogin")
     private BackingLogin BackingLogin;
+    
+    @Autowired
+    @Qualifier("BackingReportes")
+    private BackingReportes BackingReportes;
 
     @RequestMapping(value = "getCP.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
@@ -144,5 +149,9 @@ public class ServiceController {
         return BackingLogin.login(proyecto, usuario, password, request, response);
     }
     
+    @RequestMapping(value = "Reportes.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services Reportes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "tipo") String tipo,@RequestParam(value = "reporte") String reporte,@RequestParam(value = "ce") String ce, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingReportes.getReporte(proyecto,tipo,reporte,ce, request, response);
+    }
     
 }
