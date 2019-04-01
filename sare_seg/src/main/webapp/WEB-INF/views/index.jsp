@@ -22,6 +22,7 @@
      
      <!-- <script src="resources/js/jquery-2.1.1.min.js"  ></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.js"></script>
+    <script src="resources/js/sendAjax.js" type="text/javascript"></script>
     <script src="resources/js/main.js" type="text/javascript"></script>
     <script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/map.js" type="text/javascript"></script>
@@ -95,7 +96,7 @@
             </div>
               <div class="btns-search">   
                 <a onclick="buscarUE()" class="btn-search search-third tooltipped" data-position="bottom" data-tooltip="Busqueda por clave" >Buscar</a>
-                <a onclick=" handleHideAlertPickMap()" class="btn-search search-third tooltipped" data-position="bottom" data-tooltip="Ver lista de claves" >Ver</a>
+                <a onclick="handleViewCleeList()" class="btn-search search-third tooltipped" data-position="bottom" data-tooltip="Ver lista de claves" >Ver</a>
               </div>
           </div>
         </div>

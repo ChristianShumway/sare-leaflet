@@ -8,7 +8,7 @@ var urlServices = {
      }*/
     map: {
         url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SeguimientoCA2016.map', //PROD
-//        url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SeguimientoCA2016.map',
+        //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SeguimientoCA2016.map',
         //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/mgn2018.map',
         label: 'ca',
         type: 'Wms'
@@ -139,6 +139,13 @@ var urlServices = {
     getDatosClasesPorFiltro: {
         url: 'getDatosClasesPorFiltro.do',
         label: 'getDatosClasesPorFiltro',
+        type: 'GET'
+    },
+
+    
+    getListadoUnidadesEconomicas: {
+        url: 'getListadoUnidadesEconomicas.do',
+        label: 'getListadoUnidadesEconomicas.do',
         type: 'GET'
     }
 };
