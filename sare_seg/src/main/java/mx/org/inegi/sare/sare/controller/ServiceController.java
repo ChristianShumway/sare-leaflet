@@ -20,6 +20,7 @@ import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
+import mx.org.inegi.sare.sare_services.BackingListUEbyXY;
 import mx.org.inegi.sare.sare_services.BackingLogin;
 import mx.org.inegi.sare.sare_services.BackingPunteoSare;
 import mx.org.inegi.sare.sare_services.BackingReportes;
@@ -79,6 +80,10 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingReportes")
     private BackingReportes BackingReportes;
+    
+    @Autowired
+    @Qualifier("BackingListUEbyXY")
+    private BackingListUEbyXY BackingListUEbyXY;
 
     @RequestMapping(value = "getCP.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
@@ -129,6 +134,11 @@ public class ServiceController {
     public cat_respuesta_services activa(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario, @RequestParam(value = "id_ue") String id_ue, HttpServletRequest request) throws Exception {
         String ip = request.getRemoteAddr();
         return BackingActivacion.getActivaCveunicaPunteo(proyecto, usuario, id_ue, ip);
+    }
+    
+    @RequestMapping(value = "getListUEbyXY.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getListUEbyXY(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x,@RequestParam(value = "y") String y,@RequestParam(value = "opciones") String opciones, HttpServletRequest request) throws Exception {
+        return BackingListUEbyXY.getListUEbyXY(proyecto, x, y, opciones);
     }
 
     @RequestMapping(value = "guardarUE.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

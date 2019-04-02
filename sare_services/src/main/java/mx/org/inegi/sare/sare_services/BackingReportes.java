@@ -90,7 +90,6 @@ public class BackingReportes {
             }
         } catch (Exception es) {
             es.printStackTrace();
-            //exportaPDF(response, "reporte", conne, params);
         } finally {
             try {
                 conne.close();
@@ -117,7 +116,6 @@ public class BackingReportes {
             out.flush();
             out.close();
         } catch (IOException | JRException e) {
-            e.printStackTrace();
         } 
     }
 
@@ -125,8 +123,7 @@ public class BackingReportes {
         response.setContentType("application/vnd.ms-excel");
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         JRXlsExporter exporterXLS = new JRXlsExporter();
-        try {
-            ServletOutputStream out = response.getOutputStream();
+        try (ServletOutputStream out = response.getOutputStream()) {
             JasperReport report = JasperCompileManager.compileReport(nombreArchivo);
             JasperPrint print = JasperFillManager.fillReport(report, params, conne);
             exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
@@ -136,9 +133,7 @@ public class BackingReportes {
             response.setContentLength(arrayOutputStream.toByteArray().length);
             out.write(arrayOutputStream.toByteArray());
             out.flush();
-            out.close();
         } catch (IOException | JRException e) {
-            e.printStackTrace();
         }
     }
     
@@ -146,8 +141,7 @@ public class BackingReportes {
         response.setContentType("text/csv");
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         JRCsvExporter exporterXLS = new JRCsvExporter();
-        try {
-            ServletOutputStream out = response.getOutputStream();
+        try (ServletOutputStream out = response.getOutputStream()) {
             JasperReport report = JasperCompileManager.compileReport(nombreArchivo);
             JasperPrint print = JasperFillManager.fillReport(report, params, conne);
             exporterXLS.setParameter(JRXlsExporterParameter.JASPER_PRINT, print);
@@ -158,9 +152,7 @@ public class BackingReportes {
             response.setContentLength(arrayOutputStream.toByteArray().length);
             out.write(arrayOutputStream.toByteArray());
             out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (IOException | JRException e) {
         }
      }
      

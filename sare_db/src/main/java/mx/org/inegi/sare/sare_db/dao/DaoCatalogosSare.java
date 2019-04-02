@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
