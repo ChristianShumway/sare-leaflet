@@ -34,6 +34,7 @@
     <script src='resources/js/jquery-2.1.1.min.js'></script>
     <script src='resources/js/actionsDom.js'></script>
     <script src='resources/js/objFormulario.js'></script>
+    <script src="resources/js/config.js" type="text/javascript"></script>
   </head>
 
   <body>
@@ -142,11 +143,11 @@
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
               <div class="check-option">
-                <p class="option-title" id="option-altas">Altas</p>
+                <p class="option-title" id="option-unicos">Unicos</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-altas" onchange="handleChangeOptions('altas')">
+                    <input type="checkbox" id="checkbox-unicos" onchange="handleChangeOptions('unicos')">
                     <span class="lever"></span>
                     Activo
                   </label>

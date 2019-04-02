@@ -6,11 +6,131 @@ let finClavesVista = 9
 let dataCleeListNew = {}
 screen.width <= '480' 
 
+let layersSARE = ['c100', 'c101', /*'cc200', 'cc201', 'cc202', 'cc203', 'cc2031', 'cc2032',*/ 'wdenue'];
+
+
+const init=()=>{
+        addCapas({'checked': true, 'id': 'unidades'});
+}
+
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
+  const idWms= urlServices['map'].label;
   const checkBox = document.getElementById(`checkbox-${option}`)
   checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
+  if(option=="sucursal"){
+    addCapas(checkBox);
+  }
+  else{
+   addLayerEconomicas(checkBox,option);
+  }
+  
 }
+
+//funcion para agregar capas en las opciones Matrice,unicos,denue
+
+const addLayerEconomicas = (chk,option) => {
+    var idWms = urlServices['map'].label;
+    if (chk.checked === true) {
+        if (layersSARE.indexOf(chk.id) < 0) {
+            switch(option){
+                case 'denue':
+                  addLay('wdenue'); 
+                case 'unicos':
+                  addLay('c101u');
+                case 'matrices':
+                  addLay('C101M');
+                case 'postes':
+                  addLay('c104');
+              case 'sucursal':
+                  addLay('c101');   
+            }
+        }
+    } else {
+        //layersSARE.pop(chk.id);
+        layersSARE.splice(layersSARE.indexOf(chk.id), 1);
+    }
+    console.log("layersSARE " + layersSARE);
+    MDM6('setParams', {layer: idWms, params: {'layers': layersSARE, 'EDO': '00'}});
+};
+
+//Funcion agregar capas en el mapa en la opcion sucursales
+const addCapas=chk=>{
+    var idWms = urlServices['map'].label;
+    if(chk.checked==true){
+       if(layersSARE.indexOf('c101')<0)
+       {
+           addLay('c101');
+       } 
+    }else{
+        if(chk.checked==='noFalse'){
+            
+        }
+        else
+        {
+          remLay('c101')  
+        }
+        if(typeof chk.mza !== 'undefined' && chk.mza === true)
+        {
+          remLay('c103');
+          addLay('c102');
+          addLay('c102r');  
+        }
+        if(typeof chk.ageb !== 'undefined' && chk.ageb === true)
+        {
+            remLay('c102');
+            remLay('c102r');
+            addLay('c103');
+        }
+    }
+    ordenaLayer();
+    MDM6('setParams', {layer: idWms, params: {'layers': layersSARE, 'EDO': '00'}});
+}
+
+//Funcion para agregar capas cuando ya tenemos agregadas en las capas
+
+const remLay=item=> {
+    var index = layersSARE.indexOf(item);
+    if (index >= 0) {
+        layersSARE.splice(index, 1);
+    }
+}
+
+//Funcion para llenar arreglo con las capas que van en el mapa
+
+const addLay=item=> {
+    var index = layersSARE.indexOf(item);
+    if (index < 0) {
+        layersSARE.push(item);
+    }
+}
+
+//Funcion para ordenar las capas que llegan al mapa
+
+const ordenaLayer=()=>{
+    if (layersSARE.indexOf('c102') > 0) {
+        remLay('c102');
+        remLay('c102r');
+        layersSARE.unshift('c102');
+        layersSARE.unshift('c102r');
+    } else if (layersSARE.indexOf('c103') > 0) {
+        remLay('c103');
+        layersSARE.unshift('c103');
+    }
+}
+
+//Funcion que hace que se actualice el mapa cada vez que se hace zoom
+const eventoMoveZoom =()=>{
+    var level = MDM6('getZoomLevel');
+    if (level > 9 && level < 13) {
+        addCapas({'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false});
+    } else if (level >= 13) {
+        addCapas({'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true});
+    } else {
+        addCapas({'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false});
+    }
+};
+
 
 // Función buscar clave
 const buscarUE = () => {

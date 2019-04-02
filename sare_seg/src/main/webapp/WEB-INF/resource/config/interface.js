@@ -30,7 +30,7 @@ var controlConfig = {
             activePrecision: false
         },
         mousewheel: {
-            disable: true,
+            disable: false,
             message: 'Para hacer zoom presione Ctrl + Scroll '
         },
         level: true

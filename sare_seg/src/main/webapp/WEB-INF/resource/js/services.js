@@ -1,28 +1,25 @@
 var urlServices = {
-    /* map: {
-     url: 'http://seguimientoce2014.inegi.org.mx/NLB/balancer.do?map=/opt/map/mdm60/ce2014.map&', //  prod
-     //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/VISUALIZADOR_censo_poblacion_2018.map&transparent=true&', //dev CLAVE=00&LAYERS=cestatalr,cmunr,clocr,C109',// ,wdenue 200c,201c,202c,203c,203c1,203c2', 
-     //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/VISUALIZADOR_censo_poblacion_2018.map&transparent=true&', //dev CLAVE=00&LAYERS=cestatalr,cmunr,clocr,C109',// ,wdenue 200c,201c,202c,203c,203c1,203c2', 
-     label: 'economicos',
-     type: 'Wms'
-     }*/
     map: {
-        url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SeguimientoCA2016.map', //PROD
-        //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SeguimientoCA2016.map',
-        //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/mgn2018.map',
-        label: 'ca',
+        url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SARE_RENEM_EGE_2018.map&', //  Consuelo
+        //url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_RENEM_EGE_2018.map&',
+        label: 'sare',
         type: 'Wms'
     },
-    mapBase: {
-        url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/pruebas_seguimiento_censo_poblacion_2019_base.map',
-        label: "seguimiento_base",
+    mapDENUE: {
+        url: 'https://gaia.inegi.org.mx/NLB/tunnel/wms/mdm6wms?map=/opt/map/mdm60/mdm61vector.map&',
+        label: 'denue',
         type: 'Wms'
     },
-    mapAvance:{
-       //url:'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/censo_poblacion_avance_operativo_2019.map' , //pruebas consuelo 
-       url:'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/censo_poblacion_avance_operativo_2019.map' , //produccion gaia
-       label:"seguimiento_oper",
-       type:'Wms'
+    mapLeyDENUE: {
+        url: 'http://10.152.11.6/fcgi-bin/ms62/mapserv.exe?map=/opt/map/mdm60/mdm61texto.map&',
+        label: 'ley_denue',
+        type: 'Wms'
+    },
+    mapLeyMap: {
+        //url: 'http://10.106.12.178/cgi-bin/mapserv.exe?map=../../map/SARE_2016_renem.map&Request=GetLegendGraphic&format=image/png&Version=1.1.1&Service=WMS&LAYER=c101',
+        url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE2016.map&Request=GetLegendGraphic&format=image/png&Version=1.1.1&Service=WMS&LAYER=c101',
+        label: 'ley_denue',
+        type: 'Wms'
     },
     serviceAvanceOperativo: {
         url: 'getAvanceOperativo.do',
@@ -105,7 +102,7 @@ var urlServices = {
         url: 'getPersonalOcupado.do',
         label: 'personal',
         type: 'GET',
-    },    
+    },
     ServiceIngresos: {
         url: 'getIngresos.do',
         label: 'personal',
@@ -141,8 +138,6 @@ var urlServices = {
         label: 'getDatosClasesPorFiltro',
         type: 'GET'
     },
-
-    
     getListadoUnidadesEconomicas: {
         url: 'getListadoUnidadesEconomicas.do',
         label: 'getListadoUnidadesEconomicas.do',
