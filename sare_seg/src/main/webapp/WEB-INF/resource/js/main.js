@@ -47,7 +47,6 @@ const addLayerEconomicas = (chk,option) => {
             }
         }
     } else {
-        //layersSARE.pop(chk.id);
         layersSARE.splice(layersSARE.indexOf(chk.id), 1);
     }
     console.log("layersSARE " + layersSARE);
