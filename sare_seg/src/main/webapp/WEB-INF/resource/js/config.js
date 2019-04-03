@@ -26,7 +26,7 @@ var projectParams = {
         }
     ],
     //'onLoad': init,
-    //'onIdentify': identify,
+    'onIdentify': identify,
     'onMoveEnd': eventoMoveZoom,
     'onZoomEnd': eventoMoveZoom,
 

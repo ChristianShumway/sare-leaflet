@@ -209,17 +209,17 @@
             <div class="items-radio">  
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('identificar')" id="identificar" name="radio" type="radio"/>
+                <input id="identificar" value="identificar" name="accion" type="radio"/>
                 <label for="identificar">Identificar</label>
               </div>
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('puntear')" id="puntear" name="radio" type="radio"/>
+                <input  id="puntear" value="puntear" name="accion" type="radio"/>
                 <label for="puntear">Puntear</label>
               </div>
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('calle')" id="v-calle" name="radio" type="radio"/>
+                <input id="v-calle" value="v_calle" name="accion" type="radio"/>
                 <label for="v-calle">Vista Calle</label>
               </div>
 

@@ -21,8 +21,8 @@ var urlServices = {
         label: 'ley_denue',
         type: 'Wms'
     },
-    serviceAvanceOperativo: {
-        url: 'getAvanceOperativo.do',
+    serviceIdentifyUE: {
+        url: 'getListUEbyXY.do',
         type: 'get'
     },
     serviceAvanceSemanalOperativo: {

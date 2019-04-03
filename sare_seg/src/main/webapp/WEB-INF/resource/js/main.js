@@ -399,10 +399,144 @@ const handleFormValidations = () => {
 
 }
 
-// Función al seleccionar opciones identificar, puntear  y vista calle
-const HandleWhatDoYouWantToDo = request => {
-  alert(request)
+const identify=(coor)=>{
+    HandleWhatDoYouWantToDo(coor)
 }
+
+
+// Función al seleccionar opciones identificar, puntear  y vista calle
+const HandleWhatDoYouWantToDo = (coor) => {
+    let request=$('input:radio[name=accion]:checked').val();
+    switch(request)
+        {
+            case 'identificar':
+                identificaUE(coor.lon, coor.lat);
+            break;
+            case 'puntear':
+            break;
+            case 'calle':
+            break;
+            
+        }
+}
+
+//Funcion para identificar la unidad economica y llamar el servicio
+const identificaUE=(x,y)=>{
+    let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : '';
+    capas += ($('#checkbox-matrices').is(":checked")) ? 'Matrices,' : '';
+    capas += ($('#checkbox-sucursal').is(":checked")) ? 'Sucursales,' : '';
+    capas += ($('#checkbox-unicos').is(":checked")) ? 'Unicos,' : '';
+    capas += ($('#checkbox-postes').is(":checked")) ? 'Postes,' : '';
+    capas = capas.slice(0, -1);
+    if(capas.lenght===0)
+    {
+        mostrarMensaje();
+    }
+    else{
+        callServicioIdentificar(capas,x,y);
+    }
+}
+
+//Funcion que muestra el sweetAlert
+
+const mostrarMensaje=()=>{
+    swal({
+            title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
+            text: 'Selecciones una capa de información',
+            showConfirmButton: true,
+            confirmButtonColor: "#DD6B55",
+            allowEscapeKey: true,
+            allowOutsideClick: true,
+            html: true,
+            animation: true
+        });
+        MDM6('hideMarkers', 'identify');
+        xycoorsx = '';
+        xycoorsy = '';
+}
+
+//Funcion que manda llamar el servicio para identificar las unidades económicas
+const callServicioIdentificar=(capas,x,y)=>
+{
+    sendAJAX(urlServices['serviceIdentifyUE'].url, {'x': x, 'y': y, 't': capas}, urlServices['serviceIdentifyUE'].type, function (data) {
+        boxModal.close();
+        if (data[0].operation) {
+            if (typeof data[0].datos.mensaje.messages === 'undefined') {
+                MDM6('hideMarkers', 'identify');
+                var dataToFrm = data[0].datos.datos;
+                modalShowInfoUE(dataToFrm, capas);
+            } else {
+                boxModal.close();
+                $('#btnRatificaSi').attr('disabled', false);
+                $('#btnRatificaNo').attr('disabled', false);
+                swal({
+                    title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
+                    text: data[0].datos.mensaje.messages,
+                    showConfirmButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                    html: true,
+                    animation: true
+                });
+
+                MDM6('hideMarkers', 'identify');
+                xycoorsx = '';
+                xycoorsy = '';
+            }
+
+        } else {
+
+        }
+    }, function () {
+        swal({
+            title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
+            text: '<i class="fa fa-refresh fa-spin"></i> Por favor espere un momento',
+            showConfirmButton: false,
+
+            html: true
+        });
+    });
+}
+//muestra mensaje con la tabla que contiene la información de las unidades economicas para el establecimiento seleccionado
+var modalShowInfoUE = function (rows, capas) {
+    capas = capas.split(",");
+    //swal.close();
+    swal({
+        title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">Identificación de Unidades Económicas</h2>',
+        text: '<div id="tabL"></div>',
+        html: true,
+        confirmButtonText: 'Aceptar',
+        customClass: 'swal-wide',
+        confirmButtonColor: '#01579b',
+        onOpen: cargaTemplateIdentificaUE(rows)
+    });
+
+};
+
+const cargaTemplateIdentificaUE=rows=> {
+    loadTemplate('tabL', "resource/views/table_UE.html?frm=" + Math.random(),
+            function () {
+                //interpreta la respuesta
+                rows.forEach(function (o, i) {
+                    var html = '';
+                    o.datos.forEach(function (ob, ix) {
+                        var objDetalle = JSON.stringify(ob);
+                        if (o.capa === 'eje') {
+                            html += "<tr><td>" + ob.tipovial + "</td><td>" + ob.nomvial + "</td></tr>";
+                        } else {
+                            html += "<tr><td>" + ob.cve_unica + "</td><td>" + ob.nom_est + "</td><td>" + ob.razon_soc + "</td><td><a title='Detalle' onclick='buildDetalle(" + objDetalle + ")'><i class='material-icons icFicha'>assignment</a></td></tr>";
+                        }
+                    });
+                    $('#tabUE_' + o.capa + ' tbody').html(html);
+//añade el option al select
+                    $('#slcapa').append($('<option>', {value: o.capa, text: o.capa, selected: true}));
+                    $('#slcapa').show();
+                    showUEficha(o.capa);
+                });
+            });
+}
+
 
 // función boton opción cancelar
 const handleCancelClick = () => {
