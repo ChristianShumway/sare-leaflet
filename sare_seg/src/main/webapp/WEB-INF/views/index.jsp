@@ -35,6 +35,8 @@
     <script src='resources/js/actionsDom.js'></script>
     <script src='resources/js/objFormulario.js'></script>
     <script src="resources/js/config.js" type="text/javascript"></script>
+     <!-- FONT AWSOME -->
+        <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" type="text/css"/>
   </head>
 
   <body>
@@ -159,7 +161,7 @@
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
+                    <input type="checkbox" checked="true" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -171,7 +173,7 @@
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-denue" onchange="handleChangeOptions('denue')">
+                    <input type="checkbox" checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -214,7 +216,7 @@
               </div>
 
               <div class="radio-option">
-                <input  id="puntear" value="puntear" name="accion" type="radio"/>
+                  <input  id="puntear" checked="true" value="puntear" name="accion" type="radio"/>
                 <label for="puntear">Puntear</label>
               </div>
 

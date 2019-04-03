@@ -1,11 +1,14 @@
 <div class="qL"> </div>
 <div class="">
-    <select id="slcapa" name="slcapa" class="pure-u-1-1" onchange="">
+    <select id="slcapa" name="slcapa" class="pure-u-1-1" onchange="showUEficha(this.value)">
+        <!--        <option value="wdenue">DENUE</option>
+                <option value="unidades">Sucursales</option>-->
     </select>
 </div>
+
 <br>
 <div class="left-align">
-    <a id="btnIdentificaRegresar" onclick="">
+    <a id="btnIdentificaRegresar" onclick="showUEficha($('#slcapa').val())">
         <i class="material-icons">
             arrow_back
         </i>   Regresar

@@ -25,6 +25,10 @@ var urlServices = {
         url: 'getListUEbyXY.do',
         type: 'get'
     },
+    serviceIdentifyStreetView:{
+        url: 'transformCoords.do',
+        type: 'get'
+    },
     serviceAvanceSemanalOperativo: {
         url: 'getAvanceSemanalOperativo.do',
         type: 'get'
@@ -68,10 +72,6 @@ var urlServices = {
     },
     logoutService: {
         url: 'logout.do',
-        type: 'get'
-    },
-    serviceIdentifyStreetView: {
-        url: 'getCoordsGeo.do',
         type: 'get'
     },
     serviceServiciosFiltro: {

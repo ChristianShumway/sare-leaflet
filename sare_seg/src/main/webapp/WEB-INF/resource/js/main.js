@@ -414,12 +414,39 @@ const HandleWhatDoYouWantToDo = (coor) => {
             break;
             case 'puntear':
             break;
-            case 'calle':
+            case 'v_calle':
+                StreetView(coor.lon,coor.lat);
             break;
             
         }
 }
 
+//Funcion para inicializar la vista de calle
+
+const StreetView=(x,y)=>{
+    modalGoogleMap(x, y, 'mercator');
+}
+
+//modal que manda llamar la vista de calle
+const modalGoogleMap=(x,y,tc)=>{
+    if(tc==='mercator'){
+        sendAJAX(urlServices['serviceIdentifyStreetView'].url, {'proyecto':1,'x': x, 'y': y}, urlServices['serviceIdentifyStreetView'].type, function (data) {
+            if (data[0].operation) {
+                MDM6('hideMarkers', 'identify');
+                //$('div.modal-dialog').css({width: '750px'});
+                //initializeStreetView(data[0].datos['x'], data[0].datos['y']);
+                ubicacion = data[0].datos['y'] + ',' + data[0].datos['x'];
+                //alert(ubicacion);
+                var url = 'http://maps.google.com/maps?q=&layer=c&cbll=' + ubicacion + '&cbp=';
+                //alert(url);
+                setTimeout(function () {
+                    win = window.open(url, "_blank", "width=800,height=600,top=150,left=200");
+                }, 200);
+
+            }
+        }, '');
+    }
+}
 //Funcion para identificar la unidad economica y llamar el servicio
 const identificaUE=(x,y)=>{
     let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : '';
@@ -440,11 +467,11 @@ const identificaUE=(x,y)=>{
 //Funcion que muestra el sweetAlert
 
 const mostrarMensaje=()=>{
-    swal({
+    swal.fire({
             title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
             text: 'Selecciones una capa de información',
             showConfirmButton: true,
-            confirmButtonColor: "#DD6B55",
+            confirmButtonColor: "#0f0f0f",
             allowEscapeKey: true,
             allowOutsideClick: true,
             html: true,
@@ -458,25 +485,24 @@ const mostrarMensaje=()=>{
 //Funcion que manda llamar el servicio para identificar las unidades económicas
 const callServicioIdentificar=(capas,x,y)=>
 {
-    sendAJAX(urlServices['serviceIdentifyUE'].url, {'x': x, 'y': y, 't': capas}, urlServices['serviceIdentifyUE'].type, function (data) {
-        boxModal.close();
+    sendAJAX(urlServices['serviceIdentifyUE'].url, {'proyecto':1,'x': x, 'y': y, 'opciones': capas}, urlServices['serviceIdentifyUE'].type, function (data) {
         if (data[0].operation) {
-            if (typeof data[0].datos.mensaje.messages === 'undefined') {
+            if (data[0].datos.mensaje.messages === null) {
                 MDM6('hideMarkers', 'identify');
                 var dataToFrm = data[0].datos.datos;
                 modalShowInfoUE(dataToFrm, capas);
             } else {
-                boxModal.close();
+                swal.close();
                 $('#btnRatificaSi').attr('disabled', false);
                 $('#btnRatificaNo').attr('disabled', false);
-                swal({
-                    title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
+                swal.fire({
+                    type:'error',
+                    title: 'Identificación de Unidades Económicas',
                     text: data[0].datos.mensaje.messages,
                     showConfirmButton: true,
-                    confirmButtonColor: "#DD6B55",
+                    confirmButtonColor: "#5562eb",
                     allowEscapeKey: true,
                     allowOutsideClick: true,
-                    html: true,
                     animation: true
                 });
 
@@ -489,33 +515,41 @@ const callServicioIdentificar=(capas,x,y)=>
 
         }
     }, function () {
-        swal({
-            title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
-            text: '<i class="fa fa-refresh fa-spin"></i> Por favor espere un momento',
-            showConfirmButton: false,
-
-            html: true
-        });
+          swal({
+          title: 'Identificación de Unidades Económicas!',
+          text: 'Por favor espere un momento',
+          timer: 5000,
+          onOpen: function () {
+            swal.showLoading()
+          }
+        }).then(
+          function () {},
+          function (dismiss) {
+            if (dismiss === 'timer') {
+              console.log('I was closed by the timer')
+            }
+          }
+        )
     });
 }
 //muestra mensaje con la tabla que contiene la información de las unidades economicas para el establecimiento seleccionado
 var modalShowInfoUE = function (rows, capas) {
     capas = capas.split(",");
-    //swal.close();
-    swal({
+    swal.fire({
         title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">Identificación de Unidades Económicas</h2>',
-        text: '<div id="tabL"></div>',
-        html: true,
+        type:'info',
+        width: '800px',
+        html: '<div id="tabL"></div>',
         confirmButtonText: 'Aceptar',
         customClass: 'swal-wide',
-        confirmButtonColor: '#01579b',
+        confirmButtonColor: '#0f0f0f',
         onOpen: cargaTemplateIdentificaUE(rows)
     });
 
 };
 
 const cargaTemplateIdentificaUE=rows=> {
-    loadTemplate('tabL', "resource/views/table_UE.html?frm=" + Math.random(),
+    loadTemplate('tabL', "resources/templates/table_UE.html?frm=" + Math.random(),
             function () {
                 //interpreta la respuesta
                 rows.forEach(function (o, i) {
@@ -529,12 +563,87 @@ const cargaTemplateIdentificaUE=rows=> {
                         }
                     });
                     $('#tabUE_' + o.capa + ' tbody').html(html);
-//añade el option al select
+                    //añade el option al select
                     $('#slcapa').append($('<option>', {value: o.capa, text: o.capa, selected: true}));
                     $('#slcapa').show();
                     showUEficha(o.capa);
                 });
             });
+}
+//esta función oculta las tables que no solicito el usuario para mostrar en la opción identificar
+const showUEficha=ficha=> {
+    //escondo las 2 fichas
+    $("#tabUE_DENUE").hide();
+    $("#tabUE_Matrices").hide();
+    $("#tabUE_Sucursales").hide();
+    $("#tabUE_detalle").hide();
+    $("#tabUE_eje").hide();
+    //enciendo la ficha que me dan
+    $('#btnIdentificaRegresar').css('display', 'none');
+    $("#tabUE_" + ficha).show();
+}
+
+//esta función muestra el detalle de los elementos devueltos por el servicio que identifica contenidas en la ficha
+const buildDetalle =ficha=> {
+    showUEficha('detalle');
+    $('#btnIdentificaRegresar').css('display', 'flex');
+    ficha.actividad = (typeof ficha.actividad !== 'undefined') ? ficha.actividad : '-';
+    ficha.cor_indust = (typeof ficha.cor_indust !== 'undefined') ? ficha.cor_indust : '-';
+    ficha.cve_ageb = (typeof ficha.cve_ageb !== 'undefined') ? ficha.cve_ageb : '-';
+    ficha.cve_ent = (typeof ficha.cve_ent !== 'undefined') ? ficha.cve_ent : '-';
+    ficha.cve_loc = (typeof ficha.cve_loc !== 'undefined') ? ficha.cve_loc : '-';
+    ficha.cve_mun = (typeof ficha.cve_mun !== 'undefined') ? ficha.cve_mun : '-';
+    ficha.cve_mza = (typeof ficha.cve_mza !== 'undefined') ? ficha.cve_mza : '-';
+    ficha.cve_unica = (typeof ficha.cve_unica !== 'undefined') ? ficha.cve_unica : '-';
+    ficha.nom_est = (typeof ficha.nom_est !== 'undefined') ? ficha.nom_est : '-';
+    ficha.nomasen = (typeof ficha.nomasen !== 'undefined') ? ficha.nomasen : '-';
+    ficha.nomvial = (typeof ficha.nomvial !== 'undefined') ? ficha.nomvial : '-';
+    ficha.numextalf = (typeof ficha.numextalf !== 'undefined') ? ficha.numextalf : '-';
+    ficha.numextnum = (typeof ficha.numextnum !== 'undefined') ? ficha.numextnum : '-';
+    ficha.numintalf = (typeof ficha.numintalf !== 'undefined') ? ficha.numintalf : '-';
+    ficha.numintnum = (typeof ficha.numintnum !== 'undefined') ? ficha.numintnum : '-';
+    ficha.razon_soc = (typeof ficha.razon_soc !== 'undefined') ? ficha.razon_soc : '-';
+    ficha.tipo_vial = (typeof ficha.tipo_vial !== 'undefined') ? ficha.tipo_vial : '-';
+    ficha.tipoasen = (typeof ficha.tipoasen !== 'undefined') ? ficha.tipoasen : '-';
+
+
+
+    $(".modal-footer").append('<button type="button" class="pure-button" id="btn_regresar" onclick="showUEficha($(\'#slcapa\').val())">Regresar</button>');
+    $("#tabUE_detalle").html('<table class="pure-table tabUE" id="tabUE_detalleTab"><tbody></tbody></table>');
+
+    var html = '<tr><td>Razón Social</td><td>' + ficha.razon_soc + '</td></tr>';
+    if (ficha.actividad !== '-')
+        html += '<tr><td>Actividad</td><td>' + ficha.actividad + '</td></tr>'
+    if (ficha.cve_ent !== '-')
+        html += '<tr><td>Entidad</td><td>' + ficha.cve_ent + '</td></tr>'
+    if (ficha.cve_mun !== '-')
+        html += '<tr><td>Municipio</td><td>' + ficha.cve_mun + '</td></tr>'
+    if (ficha.cve_loc !== '-')
+        html += '<tr><td>Localidad</td><td>' + ficha.cve_loc + '</td></tr>'
+    if (ficha.cve_ageb !== '-')
+        html += '<tr><td>AGEB</td><td>' + ficha.cve_ageb + '</td></tr>'
+    if (ficha.cve_mza !== '-')
+        html += '<tr><td>Manzana</td><td>' + ficha.cve_mza + '</td></tr>'
+    if (ficha.tipo_vial !== '-')
+        html += '<tr><td>Tipo Vialidad</td><td>' + ficha.tipo_vial + '</td></tr>'
+    if (ficha.nomvial !== '-')
+        html += '<tr><td>Nombre Vialidad</td><td>' + ficha.nomvial + '</td></tr>'
+    if (ficha.numextnum !== '-')
+        html += '<tr><td>Número Ext</td><td>' + ficha.numextnum + '</td></tr>'
+    if (ficha.numextalf !== '-')
+        html += '<tr><td>Número Ext (letra)</td><td>' + ficha.numextalf + '</td></tr>'
+    if (ficha.numintnum !== '-')
+        html += '<tr><td>Número Int</td><td>' + ficha.numintnum + '</td></tr>'
+    if (ficha.numintalf !== '-')
+        html += '<tr><td>Número Int (letra)</td><td>' + ficha.numintalf + '</td></tr>'
+    if (ficha.tipoasen !== '-')
+        html += '<tr><td>Tipo de Asentamiento</td><td>' + ficha.tipoasen + '</td></tr>'
+    if (ficha.nomasen !== '-')
+        html += '<tr><td>Nombre Asentamiento</td><td>' + ficha.nomasen + '</td></tr>'
+    if (ficha.cor_indust !== '-')
+        html += '<tr><td>Corredor Industrial</td><td>' + ficha.cor_indust + '</td></tr>'
+
+    $('#tabUE_detalleTab tbody').html(html);
 }
 
 
