@@ -4,7 +4,8 @@ let finPaginacion = screen.width <= '480' ? 5 : 7
 let inicioClavesVista = 0
 let finClavesVista = 9
 let dataCleeListNew = {}
-screen.width <= '480' 
+let dataResultSearchClee = {}
+let cleeListType = 'normal'
 
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
@@ -56,7 +57,6 @@ const handleViewCleeList = () => {
     data => { 
 
       dataCleeListNew = data[0]
-      console.log(data[0])
       popupCleeList(data[0].datos)
       
     }, 
@@ -65,10 +65,17 @@ const handleViewCleeList = () => {
 }
 
 const popupCleeList = data => {
-  const clavesPorVista = 10
+  console.log(data)
+  const notFoundClee = document.getElementById('wrap-list-not-found')
+  //totalClaves == 0 ? notFoundClee.classList.remove('wrap-inactive') : null
+  if (data.length == 0){
+    notFoundClee.classList.remove('wrap-inactive')
+    return
+  }
+
   Swal.fire({
     title: '<strong>LISTA CLAVES</strong>',
-    html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista, clavesPorVista),
+    html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista),
     showCloseButton: true,
     showConfirmButton: false,
     showCancelButton: false,
@@ -77,26 +84,35 @@ const popupCleeList = data => {
 }
 
 
-const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista, clavesPorVista) => {
-
+const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
+  let tabla = ''
+  const clavesPorVista = 10
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
   console.log(data)
+  let posicionFinal = ''
+  finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
+  //alert(totalClaves)
 
-  let tabla = `
+  tabla = `
     <div id='container-search-cleelist' class='container-search-cleelist'>
       <span class='text-search-cleelist'>Filtrar:</span>
       <div class="wrap-input-search-cleelist">
         <input type='text' id='search-cleelist' name='search-cleelist'  onkeypress="handleSearchCleeEnter(event)" />
       </div>
     </div>
+
+    <div class='wrap-list items not-found wrap-inactive' id="wrap-list-not-found">
+      <div class='item-lists'><span></span>NO SE ENCONTRARON REFERENCIAS</div>
+    </div>
+    
     <div id='container-cleelist' class='container-cleelist row'>
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
         <div class='title-column'>Código</div>
       </div>`
 
-      for(let num = inicioClavesVista; num <= finClavesVista; num ++){
+      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list'><span>${idue}</span></div>
@@ -112,9 +128,9 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
           actualPagina == 1 ? setTimeout( () => document.getElementById('pagination-back').classList.add('disabled'), 300 ) : false
           actualPagina == totalPaginaciones ? setTimeout( () => document.getElementById('pagination-next').classList.add('disabled'), 300 ) : false
           for(let pag = inicioPaginacion; pag<=finPaginacion; pag++){
-            tabla+= `<li onclick='handlePaginationActive(${pag})' class='waves-effect' id='pag-${pag}'><a>${pag}</a></li>`
+            tabla+= `<li onclick='handlePaginationActive(${pag}, ${totalPaginaciones})' class='waves-effect' id='pag-${pag}'><a>${pag}</a></li>`
             const pagActive = document.getElementById('pag-1')
-            //setTimeout( () => console.log(document.getElementById(`pag-${pag}`)), 300 )
+            
             if(pag == actualPagina){
               setTimeout( () => document.getElementById(`pag-${pag}`).classList.add('active'), 300 )
             }
@@ -122,16 +138,15 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
           tabla += `<li onclick='handlePaginationActive(${actualPagina}+1)' id="pagination-next" class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
         </ul>`
       
-        totalClaves <= 7 ? setTimeout( () => document.getElementById('pagination-clee').style.display = 'none', 100 ) : false
+        //totalClaves <= 10 ? setTimeout( () => document.getElementById('pagination-clee').style.display = 'none', 100 ) : false
 
-      
     tabla +=`</div>`
 
-  //console.log(data)
   return tabla
 }
 
-const handlePaginationActive = page => {
+const handlePaginationActive = (page, totalPag) => {
+  //alert(totalPag)
   if (page > actualPagina || page < actualPagina){
     inicioClavesVista = (page -1) * 10
     finClavesVista = inicioClavesVista + 9
@@ -141,14 +156,18 @@ const handlePaginationActive = page => {
   }
 
   if (page == finPaginacion) {
-    //finPaginacion = screen.width <= '480' ? 5 : 7
-    if(screen.width <= '480'){
-      inicioPaginacion = inicioPaginacion + 3
-      finPaginacion = finPaginacion + 3
-    } else {
-      inicioPaginacion = inicioPaginacion + 5
-      finPaginacion = finPaginacion + 5
-    }
+    // if(finPaginacion <= totalPag){
+      if(screen.width <= '480'){
+        inicioPaginacion = inicioPaginacion + 3
+        finPaginacion = finPaginacion + 3
+      } else {
+        inicioPaginacion = inicioPaginacion + 5
+        finPaginacion = finPaginacion + 5
+      }
+    // } else {
+    //   finPaginacion = totalPag
+    // }
+
   } else if( page == inicioPaginacion) {
     if (page !== 1){
       if(screen.width <= '480'){
@@ -160,9 +179,32 @@ const handlePaginationActive = page => {
       }
     }
   }
+  
+  if( inicioPaginacion < 1 ){
+    inicioPaginacion = 1
+    screen.width <= '480' 
+      ? finPaginacion = inicioPaginacion +  (totalPag <= 4 ? totalPag - 1 : 4)
+      : finPaginacion = inicioPaginacion +  (totalPag <= 6 ? totalPag - 1 : 6)
+  }
+
+  if( finPaginacion > totalPag ){
+    finPaginacion = totalPag
+    screen.width <= '480' 
+      ? inicioPaginacion = finPaginacion - (totalPag <= 3 ? totalPag - 1 : 3)
+      : inicioPaginacion = finPaginacion - (totalPag <= 5 ? totalPag - 1 : 5)
+  }
+
 
   actualPagina = page
-  handleViewCleeList()
+  //console.log(dataCleeListNew)
+  if(cleeListType == 'normal'){
+    popupCleeList(dataCleeListNew.datos)
+  } else if (cleeListType == 'busqueda'){
+    popupCleeList(dataResultSearchClee.datos)
+  }
+  //const containerCleeList = document.getElementById('container-cleelist')
+  //containerCleeList.innerHTML = ''
+  //cleeList(dataCleeListNew.datos, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista)
   
   console.log(`pagina actual ${actualPagina}`)
   console.log(inicioPaginacion)
@@ -170,6 +212,7 @@ const handlePaginationActive = page => {
   console.log(inicioClavesVista)
   console.log(finClavesVista)
 }
+
 
 const handleSearchCleeEnter = e =>  {
   tecla = (document.all) ? e.keyCode : e.which;
@@ -188,23 +231,39 @@ const handleSearchCleeList = () => {
     finPaginacion = screen.width <= '480' ? 5 : 7
     inicioClavesVista = 0
     finClavesVista = 9
+    cleeListType = 'normal'
     handleViewCleeList()
   } else {
-    const result = data.find( clee => clee.idue == inputValue.value)
-    if (!result) {
-      alert('no se encontraron')
-    } else {
-      arrayCleeFind.push(result)
-      inicioClavesVista = 0
-      finClavesVista = arrayCleeFind.length - 1
-      inicioPaginacion = 1
-      finPaginacion = arrayCleeFind.length
-      popupCleeList(arrayCleeFind)
-    }
+
+    // encontar similitudes referente al valor de la busqueda y agregarlos a un nuevo objeto
+    data.map (item => {
+      if(item.idue.indexOf(inputValue.value) != -1){
+        arrayCleeFind.push(item)
+      }
+    })
+
+    // filtramos solo los que no son repetidos
+    let result = arrayCleeFind.filter((valorActual, indiceActual, arreglo) => {
+      return arreglo.findIndex(valorDelArreglo => JSON.stringify(valorDelArreglo) === JSON.stringify(valorActual)) === indiceActual
+    })
+
+    const totalPaginaciones = Math.ceil(result.length/10)
+    const numPaginaciones = screen.width <= '480' ? 5 : 7
+    const paginacionesAvanzar = totalPaginaciones >= numPaginaciones ? numPaginaciones : totalPaginaciones
+
+    actualPagina = 1
+    inicioPaginacion = 1
+    finPaginacion = paginacionesAvanzar
+    inicioClavesVista = 0
+    result.length > 10 ? finClavesVista = 9 : finClavesVista = result.length - 1
+  
+    cleeListType = 'busqueda'
+    dataResultSearchClee.datos = result
+    popupCleeList(dataResultSearchClee.datos)
+  
   }
 
 }
-
 
 
 // Función ratificar

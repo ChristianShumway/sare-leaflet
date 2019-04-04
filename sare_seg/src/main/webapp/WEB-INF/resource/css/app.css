@@ -235,6 +235,21 @@ nav ul a {
   background: #b2ebf2;
 }
 
+.wrap-list.items.not-found{
+  display: grid;
+  grid-template-columns: 100%;
+  color: white;
+  font-weight: bold;
+  padding: 20px 0;
+  margin-bottom: 10px;
+  margin-top: -15px;
+  background: #ff8a65;
+}
+
+.wrap-inactive{
+  display: none !important;
+}
+
 .wrap-input-search-cleelist{
   margin-bottom: 20px;
 }
