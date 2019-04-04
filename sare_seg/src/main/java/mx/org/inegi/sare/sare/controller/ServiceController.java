@@ -9,8 +9,10 @@ package mx.org.inegi.sare.sare.controller;
 import com.google.gson.Gson;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
+import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
@@ -19,9 +21,12 @@ import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
+import mx.org.inegi.sare.sare_services.BackingListUEbyXY;
 import mx.org.inegi.sare.sare_services.BackingLogin;
 import mx.org.inegi.sare.sare_services.BackingPunteoSare;
+import mx.org.inegi.sare.sare_services.BackingReportes;
 import mx.org.inegi.sare.sare_services.BackingSincroniza;
+import mx.org.inegi.sare.sare_services.BackingTransformCoordtoGeo;
 import mx.org.inegi.sare.sare_services.BackingValidacionesSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -73,6 +78,18 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingLogin")
     private BackingLogin BackingLogin;
+    
+    @Autowired
+    @Qualifier("BackingReportes")
+    private BackingReportes BackingReportes;
+    
+    @Autowired
+    @Qualifier("BackingListUEbyXY")
+    private BackingListUEbyXY BackingListUEbyXY;
+    
+    @Autowired
+    @Qualifier("BackingTransformCoordtoGeo")
+    private BackingTransformCoordtoGeo BackingTransformCoordtoGeo;
 
     @RequestMapping(value = "getCP.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
@@ -124,6 +141,11 @@ public class ServiceController {
         String ip = request.getRemoteAddr();
         return BackingActivacion.getActivaCveunicaPunteo(proyecto, usuario, id_ue, ip);
     }
+    
+    @RequestMapping(value = "getListUEbyXY.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getListUEbyXY(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x,@RequestParam(value = "y") String y,@RequestParam(value = "opciones") String opciones, HttpServletRequest request) throws Exception {
+        return BackingListUEbyXY.getListUEbyXY(proyecto, x, y, opciones);
+    }
 
     @RequestMapping(value = "guardarUE.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services guardarUE(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "obj") String obj, @RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
@@ -134,9 +156,23 @@ public class ServiceController {
     }
     
     @RequestMapping(value = "login.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password,@RequestParam(value = "acceso") String acceso,@RequestParam(value = "clave_operativa") String clave_operativa,@RequestParam(value = "id_deftramo") String id_deftramo,@RequestParam(value = "nombre") String nombre,@RequestParam(value = "ce") String ce,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "consulta") String consulta, HttpServletRequest request) throws Exception {
-        return BackingLogin.login(proyecto, usuario, password, acceso,clave_operativa,id_deftramo,nombre,ce,id_ue,consulta, request);
+    public cat_respuesta_services login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password,@RequestParam(value = "acceso") String acceso,@RequestParam(value = "clave_operativa") String clave_operativa,@RequestParam(value = "id_deftramo") String id_deftramo,@RequestParam(value = "nombre") String nombre,@RequestParam(value = "ce") String ce,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "consulta") String consulta, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingLogin.login(proyecto, usuario, password, acceso,clave_operativa,id_deftramo,nombre,ce,id_ue,consulta, request, response);
     }
     
+    @RequestMapping(value = "Login.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services Login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingLogin.login(proyecto, usuario, password, request, response);
+    }
+    
+    @RequestMapping(value = "Reportes.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services Reportes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "tipo") String tipo,@RequestParam(value = "reporte") String reporte,@RequestParam(value = "ce") String ce, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingReportes.getReporte(proyecto,tipo,reporte,ce, request, response);
+    }
+    
+    @RequestMapping(value = "transformCoords.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_coordenadas transformCoords(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "x") String x,@RequestParam(value = "y") String y) throws Exception {
+        return BackingTransformCoordtoGeo.transformCoords(proyecto,x,y);
+    }
     
 }

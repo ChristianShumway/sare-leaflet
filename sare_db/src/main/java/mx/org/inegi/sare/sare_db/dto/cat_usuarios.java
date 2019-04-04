@@ -23,7 +23,20 @@ public class cat_usuarios {
     private Boolean masivo;
     private Boolean consulta;
     private String id_deftramo;
+    private String ip;
+    private String pass;
+    private String proyecto;
 
+    public cat_usuarios() {
+    }
+
+    public cat_usuarios(String nombre, String cve_unica, String id_deftramo, String ip) {
+        this.nombre = nombre;
+        this.cve_unica = cve_unica;
+        this.id_deftramo = id_deftramo;
+        this.ip = ip;
+    }
+    
     public cat_usuarios(String usuario, String nombre, String ce, String jc, String ta, Integer perfil, String tramo_control, Boolean success, String cve_unica, Boolean masivo, Boolean consulta, String id_deftramo) {
         this.usuario = usuario;
         this.nombre = nombre;
@@ -39,6 +52,35 @@ public class cat_usuarios {
         this.id_deftramo = id_deftramo;
     }
 
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(String proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    
+    
+    
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    
+    
     public String getUsuario() {
         return usuario;
     }

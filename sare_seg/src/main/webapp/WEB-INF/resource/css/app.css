@@ -28,12 +28,23 @@ body{
   align-items: center;
   transition: .5s;
 }
-
+.swal2-icon.swal2-info{
+    left: 2rem;
+}
+.swal2-popup .swal2-header{
+    flex-direction: row !important;
+}
+.swal2-popup .swal2-title{
+    
+}
 #btn-top:hover {
   background-color: #555;
   transform: scale(1.05)
 }
-
+#tabUE_detalle{
+    max-height: 350px;
+    overflow-y: scroll; 
+}
 /* HEADER */
 .navbar-fixed {
   z-index: 9997 !important;

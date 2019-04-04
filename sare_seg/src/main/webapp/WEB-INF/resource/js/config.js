@@ -16,28 +16,21 @@ var projectParams = {
             tiled: false,
             format: 'png'
         },
-         {
+        {
             type: urlServices['mapLeyDENUE'].type,
             label: urlServices['mapLeyDENUE'].label,
             url: urlServices['mapLeyDENUE'].url,
             layer: [''],
             tiled: false,
             format: 'png'
-        },
-        {
-            type: urlServices['mapLeyMap'].type,
-            label: urlServices['mapLeyMap'].label,
-            url: urlServices['mapLeyMap'].url,
-            layer: [''],
-            tiled: false,
-            format: 'png'
         }
     ],
-    'onLoad': init,
-    //'onIdentify': eventoIdentificar,
-    //'onZoomEnd':endzoom,
+    //'onLoad': init,
+    'onIdentify': identify,
+    'onMoveEnd': eventoMoveZoom,
+    'onZoomEnd': eventoMoveZoom,
+
     'btnTogglePanels': true
-    
 };
 
 

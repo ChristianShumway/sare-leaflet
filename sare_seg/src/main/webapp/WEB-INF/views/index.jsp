@@ -34,6 +34,9 @@
     <script src='resources/js/jquery-2.1.1.min.js'></script>
     <script src='resources/js/actionsDom.js'></script>
     <script src='resources/js/objFormulario.js'></script>
+    <script src="resources/js/config.js" type="text/javascript"></script>
+     <!-- FONT AWSOME -->
+        <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" type="text/css"/>
   </head>
 
   <body>
@@ -142,11 +145,11 @@
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
               <div class="check-option">
-                <p class="option-title" id="option-altas">Altas</p>
+                <p class="option-title" id="option-unicos">Unicos</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-altas" onchange="handleChangeOptions('altas')">
+                    <input type="checkbox" id="checkbox-unicos" onchange="handleChangeOptions('unicos')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -158,7 +161,7 @@
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
+                    <input type="checkbox" checked="true" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -170,7 +173,7 @@
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-denue" onchange="handleChangeOptions('denue')">
+                    <input type="checkbox" checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -208,17 +211,17 @@
             <div class="items-radio">  
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('identificar')" id="identificar" name="radio" type="radio"/>
+                <input id="identificar" value="identificar" name="accion" type="radio"/>
                 <label for="identificar">Identificar</label>
               </div>
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('puntear')" id="puntear" name="radio" type="radio"/>
+                  <input  id="puntear" checked="true" value="puntear" name="accion" type="radio"/>
                 <label for="puntear">Puntear</label>
               </div>
 
               <div class="radio-option">
-                <input onclick="HandleWhatDoYouWantToDo('calle')" id="v-calle" name="radio" type="radio"/>
+                <input id="v-calle" value="v_calle" name="accion" type="radio"/>
                 <label for="v-calle">Vista Calle</label>
               </div>
 
