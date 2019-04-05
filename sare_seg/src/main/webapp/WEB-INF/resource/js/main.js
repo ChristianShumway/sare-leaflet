@@ -186,7 +186,6 @@ const handleViewCleeList = () => {
 const popupCleeList = data => {
   console.log(data)
   const notFoundClee = document.getElementById('wrap-list-not-found')
-  //totalClaves == 0 ? notFoundClee.classList.remove('wrap-inactive') : null
   if (data.length == 0){
     notFoundClee.classList.remove('wrap-inactive')
     return
@@ -199,9 +198,13 @@ const popupCleeList = data => {
     showConfirmButton: false,
     showCancelButton: false,
     focusConfirm: false,
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    onClose: () => {
+      cleeListType = 'normal'
+    }
   })
 }
-
 
 const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
   let tabla = ''
@@ -211,7 +214,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   console.log(data)
   let posicionFinal = ''
   finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
-  //alert(totalClaves)
 
   tabla = `
     <div id='container-search-cleelist' class='container-search-cleelist'>
@@ -248,7 +250,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
           actualPagina == totalPaginaciones ? setTimeout( () => document.getElementById('pagination-next').classList.add('disabled'), 300 ) : false
           for(let pag = inicioPaginacion; pag<=finPaginacion; pag++){
             tabla+= `<li onclick='handlePaginationActive(${pag}, ${totalPaginaciones})' class='waves-effect' id='pag-${pag}'><a>${pag}</a></li>`
-            const pagActive = document.getElementById('pag-1')
             
             if(pag == actualPagina){
               setTimeout( () => document.getElementById(`pag-${pag}`).classList.add('active'), 300 )
@@ -257,15 +258,12 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
           tabla += `<li onclick='handlePaginationActive(${actualPagina}+1)' id="pagination-next" class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
         </ul>`
       
-        //totalClaves <= 10 ? setTimeout( () => document.getElementById('pagination-clee').style.display = 'none', 100 ) : false
-
     tabla +=`</div>`
 
   return tabla
 }
 
 const handlePaginationActive = (page, totalPag) => {
-  //alert(totalPag)
   if (page > actualPagina || page < actualPagina){
     inicioClavesVista = (page -1) * 10
     finClavesVista = inicioClavesVista + 9
@@ -275,7 +273,6 @@ const handlePaginationActive = (page, totalPag) => {
   }
 
   if (page == finPaginacion) {
-    // if(finPaginacion <= totalPag){
       if(screen.width <= '480'){
         inicioPaginacion = inicioPaginacion + 3
         finPaginacion = finPaginacion + 3
@@ -283,9 +280,6 @@ const handlePaginationActive = (page, totalPag) => {
         inicioPaginacion = inicioPaginacion + 5
         finPaginacion = finPaginacion + 5
       }
-    // } else {
-    //   finPaginacion = totalPag
-    // }
 
   } else if( page == inicioPaginacion) {
     if (page !== 1){
@@ -315,15 +309,11 @@ const handlePaginationActive = (page, totalPag) => {
 
 
   actualPagina = page
-  //console.log(dataCleeListNew)
   if(cleeListType == 'normal'){
     popupCleeList(dataCleeListNew.datos)
   } else if (cleeListType == 'busqueda'){
     popupCleeList(dataResultSearchClee.datos)
   }
-  //const containerCleeList = document.getElementById('container-cleelist')
-  //containerCleeList.innerHTML = ''
-  //cleeList(dataCleeListNew.datos, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista)
   
   console.log(`pagina actual ${actualPagina}`)
   console.log(inicioPaginacion)
@@ -346,7 +336,6 @@ const handleSearchCleeList = () => {
   if (inputValue.value == ''){
     actualPagina = 1
     inicioPaginacion = 1
-    //finPaginacion = 7
     finPaginacion = screen.width <= '480' ? 5 : 7
     inicioClavesVista = 0
     finClavesVista = 9
@@ -482,9 +471,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
 
 //Funcion para inicializar la vista de calle
 
-const StreetView=(x,y)=>{
-    modalGoogleMap(x, y, 'mercator');
-}
+const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 
 //modal que manda llamar la vista de calle
 const modalGoogleMap=(x,y,tc)=>{
@@ -506,28 +493,24 @@ const modalGoogleMap=(x,y,tc)=>{
         }, '');
     }
 }
+
 //Funcion para identificar la unidad economica y llamar el servicio
-const identificaUE=(x,y)=>{
-    let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : '';
-    capas += ($('#checkbox-matrices').is(":checked")) ? 'Matrices,' : '';
-    capas += ($('#checkbox-sucursal').is(":checked")) ? 'Sucursales,' : '';
-    capas += ($('#checkbox-unicos').is(":checked")) ? 'Unicos,' : '';
-    capas += ($('#checkbox-postes').is(":checked")) ? 'Postes,' : '';
-    capas = capas.slice(0, -1);
-    if(capas.lenght===0)
-    {
-        mostrarMensaje();
-    }
-    else{
-        callServicioIdentificar(capas,x,y);
-    }
+const identificaUE = (x,y) => {
+  let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : ''
+  capas += ($('#checkbox-matrices').is(":checked")) ? 'Matrices,' : ''
+  capas += ($('#checkbox-sucursal').is(":checked")) ? 'Sucursales,' : ''
+  capas += ($('#checkbox-unicos').is(":checked")) ? 'Unicos,' : ''
+  capas += ($('#checkbox-postes').is(":checked")) ? 'Postes,' : ''
+  capas = capas.slice(0, -1)
+
+  capas.length === 0 ? mostrarMensaje() : callServicioIdentificar(capas,x,y)
 }
 
 //Funcion que muestra el sweetAlert
 
 const mostrarMensaje=()=>{
     swal.fire({
-            title: '<i class="fa fa-map-marker"></i> Identificación de Unidades Económicas',
+            title: 'Identificación de Unidades Económicas',
             text: 'Selecciones una capa de información',
             showConfirmButton: true,
             confirmButtonColor: "#0f0f0f",
@@ -591,59 +574,71 @@ const callServicioIdentificar=(capas,x,y)=>
         )
     });
 }
+
 //muestra mensaje con la tabla que contiene la información de las unidades economicas para el establecimiento seleccionado
-var modalShowInfoUE = function (rows, capas) {
-    capas = capas.split(",");
-    swal.fire({
-        title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">Identificación de Unidades Económicas</h2>',
-        type:'info',
-        width: '800px',
-        html: '<div id="tabL"></div>',
-        confirmButtonText: 'Aceptar',
-        customClass: 'swal-wide',
-        confirmButtonColor: '#0f0f0f',
-        onOpen: cargaTemplateIdentificaUE(rows)
-    });
+const modalShowInfoUE = (rows, capas) => {
+  capas = capas.split(",")
+  const sizeScreen = screen.width <= '768' ? '90%' : '80%'
 
-};
-
-const cargaTemplateIdentificaUE=rows=> {
-    loadTemplate('tabL', "resources/templates/table_UE.html?frm=" + Math.random(),
-            function () {
-                //interpreta la respuesta
-                rows.forEach(function (o, i) {
-                    var html = '';
-                    o.datos.forEach(function (ob, ix) {
-                        var objDetalle = JSON.stringify(ob);
-                        if (o.capa === 'eje') {
-                            html += "<tr><td>" + ob.tipovial + "</td><td>" + ob.nomvial + "</td></tr>";
-                        } else {
-                            html += "<tr><td>" + ob.cve_unica + "</td><td>" + ob.nom_est + "</td><td>" + ob.razon_soc + "</td><td><a title='Detalle' onclick='buildDetalle(" + objDetalle + ")'><i class='material-icons icFicha'>assignment</a></td></tr>";
-                        }
-                    });
-                    $('#tabUE_' + o.capa + ' tbody').html(html);
-                    //añade el option al select
-                    $('#slcapa').append($('<option>', {value: o.capa, text: o.capa, selected: true}));
-                    $('#slcapa').show();
-                    showUEficha(o.capa);
-                });
-            });
+  swal.fire({
+    title: '<h3 class="title-modal-ue">Identificación de Unidades Económicas</h3>',
+    //type:'info',
+    width: sizeScreen,
+    html: '<div id="tabL"></div>',
+    confirmButtonText: 'Aceptarr',
+    customClass: 'swal-wide',
+    confirmButtonColor: '#0f0f0f',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    showConfirmButton: false,
+    showCloseButton: true,
+    onOpen: cargaTemplateIdentificaUE(rows)
+  })
 }
+
+const cargaTemplateIdentificaUE = rows => {
+  loadTemplate('tabL', "resources/templates/table_UE.html?frm=" + Math.random(), () => {
+    
+    //interpreta la respuesta
+    rows.forEach(function (o, i) {
+      let html = ''
+
+      o.datos.forEach(function (ob, ix) {
+        const objDetalle = JSON.stringify(ob)
+        o.capa === 'eje' 
+          ? html += `<tr> <td>${ob.tipovial}</td> <td>${ob.nomvial}</td> </tr>`
+          : html += `<tr class='row-cont-ue'> 
+            <td>${ob.cve_unica}</td> 
+            <td>${ob.nom_est}</td>
+            <td>${ob.razon_soc}</td>
+            <td> <a title='Detalle' onclick='buildDetalle(${objDetalle})'> <i class='material-icons icFicha'> assignment </a> </td>
+          </tr>`
+      })
+
+      $('#tabUE_' + o.capa + ' tbody').html(html)
+      //añade el option al select
+      $('#slcapa').append($('<option>', {value: o.capa, text: o.capa, selected: true}))
+      $('#slcapa').show()
+      showUEficha(o.capa)
+    })
+  })
+}
+
 //esta función oculta las tables que no solicito el usuario para mostrar en la opción identificar
-const showUEficha=ficha=> {
-    //escondo las 2 fichas
-    $("#tabUE_DENUE").hide();
-    $("#tabUE_Matrices").hide();
-    $("#tabUE_Sucursales").hide();
-    $("#tabUE_detalle").hide();
-    $("#tabUE_eje").hide();
-    //enciendo la ficha que me dan
-    $('#btnIdentificaRegresar').css('display', 'none');
-    $("#tabUE_" + ficha).show();
+const showUEficha = ficha => {
+  //escondo las 2 fichas
+  $("#tabUE_DENUE").hide()
+  $("#tabUE_Matrices").hide()
+  $("#tabUE_Sucursales").hide()
+  $("#tabUE_detalle").hide()
+  $("#tabUE_eje").hide()
+  //enciendo la ficha que me dan
+  $('#btnIdentificaRegresar').css('display', 'none')
+  $("#tabUE_" + ficha).show()
 }
 
 //esta función muestra el detalle de los elementos devueltos por el servicio que identifica contenidas en la ficha
-const buildDetalle =ficha=> {
+const buildDetalle = ficha => {
     showUEficha('detalle');
     $('#btnIdentificaRegresar').css('display', 'flex');
     ficha.actividad = (typeof ficha.actividad !== 'undefined') ? ficha.actividad : '-';
@@ -665,42 +660,25 @@ const buildDetalle =ficha=> {
     ficha.tipo_vial = (typeof ficha.tipo_vial !== 'undefined') ? ficha.tipo_vial : '-';
     ficha.tipoasen = (typeof ficha.tipoasen !== 'undefined') ? ficha.tipoasen : '-';
 
-
-
     $(".modal-footer").append('<button type="button" class="pure-button" id="btn_regresar" onclick="showUEficha($(\'#slcapa\').val())">Regresar</button>');
     $("#tabUE_detalle").html('<table class="pure-table tabUE" id="tabUE_detalleTab"><tbody></tbody></table>');
 
-    var html = '<tr><td>Razón Social</td><td>' + ficha.razon_soc + '</td></tr>';
-    if (ficha.actividad !== '-')
-        html += '<tr><td>Actividad</td><td>' + ficha.actividad + '</td></tr>'
-    if (ficha.cve_ent !== '-')
-        html += '<tr><td>Entidad</td><td>' + ficha.cve_ent + '</td></tr>'
-    if (ficha.cve_mun !== '-')
-        html += '<tr><td>Municipio</td><td>' + ficha.cve_mun + '</td></tr>'
-    if (ficha.cve_loc !== '-')
-        html += '<tr><td>Localidad</td><td>' + ficha.cve_loc + '</td></tr>'
-    if (ficha.cve_ageb !== '-')
-        html += '<tr><td>AGEB</td><td>' + ficha.cve_ageb + '</td></tr>'
-    if (ficha.cve_mza !== '-')
-        html += '<tr><td>Manzana</td><td>' + ficha.cve_mza + '</td></tr>'
-    if (ficha.tipo_vial !== '-')
-        html += '<tr><td>Tipo Vialidad</td><td>' + ficha.tipo_vial + '</td></tr>'
-    if (ficha.nomvial !== '-')
-        html += '<tr><td>Nombre Vialidad</td><td>' + ficha.nomvial + '</td></tr>'
-    if (ficha.numextnum !== '-')
-        html += '<tr><td>Número Ext</td><td>' + ficha.numextnum + '</td></tr>'
-    if (ficha.numextalf !== '-')
-        html += '<tr><td>Número Ext (letra)</td><td>' + ficha.numextalf + '</td></tr>'
-    if (ficha.numintnum !== '-')
-        html += '<tr><td>Número Int</td><td>' + ficha.numintnum + '</td></tr>'
-    if (ficha.numintalf !== '-')
-        html += '<tr><td>Número Int (letra)</td><td>' + ficha.numintalf + '</td></tr>'
-    if (ficha.tipoasen !== '-')
-        html += '<tr><td>Tipo de Asentamiento</td><td>' + ficha.tipoasen + '</td></tr>'
-    if (ficha.nomasen !== '-')
-        html += '<tr><td>Nombre Asentamiento</td><td>' + ficha.nomasen + '</td></tr>'
-    if (ficha.cor_indust !== '-')
-        html += '<tr><td>Corredor Industrial</td><td>' + ficha.cor_indust + '</td></tr>'
+    var html = `<tr class='tr-none'><td class='td-title'>Razón Social</td><td> ${ficha.razon_soc} </td></tr>`
+    ficha.actividad !== '-' ? html += `<tr class='tr-par'> <td class='td-title'>Actividad</td> <td> ${ficha.actividad} </td></tr>` : false
+    ficha.cve_ent !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Entidad</td><td> ${ficha.cve_ent} </td></tr>` : false
+    ficha.cve_mun !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Municipio</td><td> ${ficha.cve_mun} </td></tr>` : false
+    ficha.cve_loc !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Localidad</td><td> ${ficha.cve_loc} </td></tr>` : false
+    ficha.cve_ageb !== '-' ? html += `<tr class='tr-par'><td class='td-title'>AGEB</td><td> ${ficha.cve_ageb} </td></tr>` : false
+    ficha.cve_mza !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Manzana</td><td> ${ficha.cve_mza} </td></tr>` : false
+    ficha.tipo_vial !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Tipo Vialidad</td><td> ${ficha.tipo_vial} </td></tr>` : false
+    ficha.nomvial !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Nombre Vialidad</td><td> ${ficha.nomvial} </td></tr>` : false
+    ficha.numextnum !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Número Ext</td><td> ${ficha.numextnum} </td></tr>` : false
+    ficha.numextalf !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Número Ext (letra)</td><td> ${ficha.numextalf} </td></tr>` : false
+    ficha.numintnum !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Número Int</td><td> ${ficha.numintnum} </td></tr>` : false
+    ficha.numintalf !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Número Int (letra)</td><td> ${ficha.numintalf} </td></tr>` : false
+    ficha.tipoasen !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Tipo de Asentamiento</td><td> ${ficha.tipoasen} </td></tr>` : false
+    ficha.nomasen !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Nombre Asentamiento</td><td> ${ficha.nomasen} </td></tr>` : false
+    ficha.cor_indust !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Corredor Industrial</td><td> ${ficha.cor_indust} </td></tr>` : false
 
     $('#tabUE_detalleTab tbody').html(html);
 }

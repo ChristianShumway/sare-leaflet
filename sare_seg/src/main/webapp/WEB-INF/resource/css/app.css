@@ -396,8 +396,6 @@ nav ul a {
 .btn-ratifica:active{
   transform: scale(0.95)
 }
-
-
 /* END CONTAINER RATIFICA */
 
 /* CONTAINER MAP AND OPTIONS */
@@ -441,8 +439,6 @@ nav ul a {
 }
 
 .check-option{
-  /* border: 1px solid red; */
-  /* margin: 5px 0; */
   padding: 5px 0;
 }
 
@@ -492,13 +488,12 @@ nav ul a {
   background-color: rgba(84, 224, 199, .4) !important;
 }
 
-
 .radio-option {
-  /* background-color: #fff; */
   display: block;
   margin: 5px 0;
   position: relative;
 }
+
 .radio-option label {
   padding: 12px 30px;
   width: 100%;
@@ -513,6 +508,7 @@ nav ul a {
   font-size: 12px;
   color: white;
 }
+
 .radio-option label:before {
   width: 10px;
   height: 10px;
@@ -528,6 +524,7 @@ nav ul a {
   opacity: 0;
   z-index: -1;
 }
+
 .radio-option label:after {
   width: 26px;
   height: 26px;
@@ -547,18 +544,22 @@ nav ul a {
   cursor: pointer;
   transition: all 200ms ease-in;
 }
+
 .radio-option input:checked ~ label {
   color: #fff;
 }
+
 .radio-option input:checked ~ label:before {
   -webkit-transform: translate(-50%, -50%) scale3d(56, 56, 1);
           transform: translate(-50%, -50%) scale3d(56, 56, 1);
   opacity: 1;
 }
+
 .radio-option input:checked ~ label:after {
   background-color: #54E0C7;
   border-color: #54E0C7;
 }
+
 .radio-option input {
   width: 32px;
   height: 32px;
@@ -577,6 +578,21 @@ nav ul a {
 *::before,
 *::after {
   box-sizing: inherit;
+}
+
+.title-modal-ue{
+  border-bottom: 1px solid lightgray; 
+  padding-bottom:10px;
+  width: 100%;
+}
+
+.swal2-popup .swal2-title{
+  width: 100% !important;
+}
+
+.icFicha{
+  color: #5562eb;
+  cursor: pointer;
 }
 /* end options */
 
@@ -1122,6 +1138,18 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
   }
   /* end alerts map */
 
+  .row-cont-ue{
+    font-size: 12px;
+  }
+
+  #tabUE_DENUE{
+    width: 800px;
+  }
+
+  #tabL{
+    overflow-x: scroll;
+  }
+
   /* END CONTAINER MAP AND OPTIONS */
 
   /* CONTAINER FORM */
@@ -1332,6 +1360,33 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
     left: 10px;
   }
   /* end alerts map */
+
+  .title-modal-ue{
+    font-size: 18px;
+  }
+
+  .wrap-back-ue{
+    display: inline-block;
+  }
+
+  .btn-back-ue{
+    justify-content: flex-end;
+    align-items: center;
+    border: 1px solid gray;
+    padding: 8px 16px;
+    background: #54E0C7;
+    color: white;
+    box-shadow: 2px 2px 6px grey;
+    cursor: pointer;
+  }
+
+  .tr-none{
+    background: #e0f7fa;
+  }
+
+  .tr-par{
+    background: #b2ebf2;
+  }
   /* END CONTAINER MAP AND OPTIONS */
 
   /* CONTAINER FORM */
