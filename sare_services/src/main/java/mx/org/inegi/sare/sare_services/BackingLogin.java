@@ -50,7 +50,7 @@ public class BackingLogin {
         Respuesta=getAuthValidWeb(usuario,password,ip);
         if(Respuesta.getMensaje().getType().equals("Exito"))
         {
-            response.sendRedirect("index.html");
+           // response.sendRedirect("index.html");
         }
         return Respuesta;
     } 

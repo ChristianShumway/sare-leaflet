@@ -109,8 +109,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 {
                     fila = new cat_vw_punteo_sare(
                         rs.getString("cestatal")!=null?rs.getString("cestatal"):"",
-                        rs.getString("coorx")!=null?new BigDecimal(rs.getString("coorx")):new BigDecimal(0),
-                        rs.getString("coory")!=null?new BigDecimal(rs.getString("coory")):new BigDecimal(0), 
+                        rs.getString("coorx")!=null?new BigDecimal(rs.getString("coorx").replace(",", ".")):new BigDecimal(0),
+                        rs.getString("coory")!=null?new BigDecimal(rs.getString("coory").replace(",",".")):new BigDecimal(0), 
                         rs.getString("c154")!=null?rs.getString("c154"):"",
                         rs.getString("descrubic")!=null?rs.getString("descrubic"):"",
                         rs.getString("e03")!=null?rs.getString("e03"):"",
@@ -139,11 +139,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         rs.getString("id_ue")!=null?new BigDecimal(rs.getString("id_ue")):new BigDecimal(0),
                         rs.getString("origen")!=null?new BigDecimal(rs.getString("origen")): new BigDecimal(0), 
                         rs.getString("estatus_punteo")!=null?rs.getString("estatus_punteo"):"",
-                        rs.getString("tipo_e10")!=null?new BigDecimal(rs.getString("tipo_e10")):new BigDecimal(0),
-                        rs.getString("tipo_e10_a")!=null?new BigDecimal(rs.getString("tipo_e10_a")):new BigDecimal(0),
-                        rs.getString("tipo_e10_b")!=null?new BigDecimal(rs.getString("tipo_e10_b")):new BigDecimal(0), 
-                        rs.getString("tipo_e10_c")!=null?new BigDecimal(rs.getString("tipo_e10_c")): new BigDecimal(0), 
-                        rs.getString("tipo_e14")!=null?new BigDecimal(rs.getString("tipo_e14")):new BigDecimal(0), 
+                        rs.getString("tipo_e10")!=null?rs.getString("tipo_e10"):"",
+                        rs.getString("tipo_e10_a")!=null?rs.getString("tipo_e10_a"):"",
+                        rs.getString("tipo_e10_b")!=null?rs.getString("tipo_e10_b"):"", 
+                        rs.getString("tipo_e10_c")!=null?rs.getString("tipo_e10_c"): "", 
+                        rs.getString("tipo_e14")!=null?rs.getString("tipo_e14"):"", 
                         rs.getString("tipo_e19")!=null?rs.getString("tipo_e19"):"");
                     resultado.add(fila);
                 }
@@ -203,19 +203,19 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         rs.getString("e07")!=null? rs.getString("e07"):"", 
                         rs.getString("e08")!=null?rs.getString("e08"):"",
                         rs.getString("e09")!=null?rs.getString("e09"):"",
-                        rs.getString("tipo_e10")!=null?new BigDecimal(rs.getString("tipo_e10")):new BigDecimal(0),
+                        rs.getString("tipo_e10")!=null?rs.getString("tipo_e10"):"",
                         rs.getString("e10")!=null?rs.getString("e10"):"",
                         rs.getString("e10_cvevial")!=null?rs.getString("e10_cvevial"):"",
                         rs.getString("e10_cveseg")!=null?rs.getString("e10_cveseg"):"",
                         rs.getString("e11")!=null?new BigDecimal(rs.getString("e11")):new BigDecimal(0),
                         rs.getString("e11_a")!=null?rs.getString("e11_a"):"",
-                        rs.getString("tipo_e14")!=null?new BigDecimal(rs.getString("tipo_e14")):new BigDecimal(0),
+                        rs.getString("tipo_e14")!=null?rs.getString("tipo_e14"):"",
                         rs.getString("e14")!=null?rs.getString("e14"):"",
-                        rs.getString("tipo_e10_a")!=null?new BigDecimal(rs.getString("tipo_e10_a")):new BigDecimal(0),
+                        rs.getString("tipo_e10_a")!=null?rs.getString("tipo_e10_a"):"",
                         rs.getString("e10_a")!=null?rs.getString("e10_a"):"",
-                        rs.getString("tipo_e10_b")!=null?new BigDecimal(rs.getString("tipo_e10_b")):new BigDecimal(0), 
+                        rs.getString("tipo_e10_b")!=null?rs.getString("tipo_e10_b"):"", 
                         rs.getString("e10_b")!=null?rs.getString("e10_b"):"",
-                        rs.getString("tipo_e10_c")!=null?new BigDecimal(rs.getString("tipo_e10_c")):new BigDecimal(0),
+                        rs.getString("tipo_e10_c")!=null?rs.getString("tipo_e10_c"):"",
                         rs.getString("e10_c")!=null?rs.getString("e10_c"):"",
                         rs.getString("descrubic")!=null?rs.getString("descrubic"):"",
                         rs.getString("coorx")!=null?new BigDecimal(rs.getString("coorx")):new BigDecimal(0),
@@ -347,7 +347,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         String regresa="";
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(null,null,"",null,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO);
+         sql = getSql(cat_vw_punteo_sare,null,"",null,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO);
         
         regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() 
         {
@@ -387,14 +387,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             sql=filtrarSqlEge(ce,id_ue);
                             break;
                         case GETCLAVESPG:
-                             sql.append("SELECT distinct id_ue FROM ").append(esquemaPg).append(".td_ue_suc ");
+                             sql.append("SELECT distinct id_ue FROM ").append(schemapgEge).append(".td_ue_suc ");
                             break;
                         case GETDATOSINMUEBLES:
                              sql.append("SELECT id_ue,e03,e03n,e04,e04n,e05,e05n,e06,e07,e08,e09,tipo_e10,e10,e10_cvevial,e10_cveseg,e11,e11_a,tipo_e14,e14,tipo_e10_a,e10_a,tipo_e10_b")
                              .append(",e10_b,tipo_e10_c,e10_c,descrubic, coord_x coorx, coord_y coory,cod_resultado,tipo_reg,e12,e12p,e19,tipo_e19,e20,e13,cve_unica_duplicada clave_unica_duplicada, ")
                              .append("xmin(buffer(the_geom_merc,50))||','||ymin(buffer(the_geom_merc,50))||','||Xmax(buffer(the_geom_merc,50))||','||Ymax(buffer(the_geom_merc,50)) extent, ")
                              .append(" e10a_cvevial,e10a_cveseg,e10b_cvevial,e10b_cveseg,e10c_cvevial,e10c_cveseg,tipo_administracion,codigo_carretera,tramo_camino,margen,cadenamiento")
-                             .append(" FROM ").append(esquemaPg).append(".inmuebles where cve_unica=? limit 1");
+                             .append(" FROM ").append(schemapgEge).append(".inmuebles where cve_unica=? limit 1");
                              break;
                         case GETEXTENTCVEGEO:
                             sql=GetSqlExtent(proyecto,metodo,params,tabla,rural,cat_vw_punteo_sare);
@@ -403,7 +403,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             sql=GetSqlExtent(proyecto,metodo,params,tabla,rural,cat_vw_punteo_sare);
                             break;
                         case GETNOMBREBUSQUEDA:
-                            sql.append("select descripcion from ").append(esquemaPg).append(".").append(tabla).append(" where tipo_e10=?");
+                            sql.append("select descripcion from ").append(schemapgEge).append(".").append(tabla).append(" where tipo_e10=?");
                             break;
                         case GETNOMBREBUSQUEDAOCL:
                             sql.append("select ").append(campo).append(" from ").append(schemamdm).append(".").append(tabla).append(" where cve_ent= '").append(cat_vw_punteo_sare.getE03()).append("'");
@@ -420,7 +420,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             sql.append("UPDATE ").append(schemaocl).append(".TD_UE_SUC set SARE_ST='10' where CVE_UNICA=? and sare_st<>'01'");
                             break;
                         case GETVALCOORGEO:
-                            sql.append("select ").append(esquemaPg).append(".val_coord_geo(?,?) valida");
+                            sql.append("select ").append(schemapgEge).append(".val_coord_geo(?,?) valida");
                             break;
                     }
                     break;
@@ -440,7 +440,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 
             if(ce.equals("00"))
             {
-                sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where sare_st='10' and id_ue = ").append(id_ue);
+                sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue);
             }
             else
             {

@@ -46,6 +46,7 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     @Override
     public List<cat_codigo_postal> getCP(String cve_ent, Integer proyecto) throws Exception 
     {
+        listaCP=new ArrayList<>();
         StringBuilder sql;
         sql=getSql(proyecto);
        listaCP= jdbcTemplate.query(sql.toString(),new Object[]{cve_ent}, new ResultSetExtractor<List<cat_codigo_postal>>() 

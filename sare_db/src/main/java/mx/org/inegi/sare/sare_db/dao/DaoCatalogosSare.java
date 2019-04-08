@@ -39,6 +39,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
     
     @Override
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception{
+        resultado=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos);
@@ -67,7 +68,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
-                sql.append("SELECT cve_ent,nom_ent,cp_inicial,cp_final FROM ").append(schemapg).append(".cat_codigo_postal where cve_ent=?");
+                sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(schemapg).append(".cat_asentamientos_humanos order by descripcion)");
                 break;
             case Construccion:
                 break;

@@ -29,6 +29,18 @@ var urlServices = {
         url: 'transformCoords.do',
         type: 'get'
     },
+    serviceSearch: {
+        url: 'getbusqueda.do',
+        type: 'post'
+    },
+    serviceCP:{
+        url: 'getCP.do',
+        type: 'POST'
+    },
+    serviceCatalogoAsentamientos: {
+        url: 'getCatAsentamientosHumanos.do',
+        type: 'POST'
+    },
     serviceAvanceSemanalOperativo: {
         url: 'getAvanceSemanalOperativo.do',
         type: 'get'

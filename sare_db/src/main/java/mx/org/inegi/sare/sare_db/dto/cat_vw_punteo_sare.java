@@ -55,11 +55,11 @@ public class cat_vw_punteo_sare {
     private BigDecimal JC;
     private BigDecimal ORIGEN;
     private String SARE_ST;
-    private BigDecimal TIPO_E10;
-    private BigDecimal TIPO_E10_A;
-    private BigDecimal TIPO_E10_B;
-    private BigDecimal TIPO_E10_C;
-    private BigDecimal TIPO_E14;
+    private String TIPO_E10;
+    private String TIPO_E10_A;
+    private String TIPO_E10_B;
+    private String TIPO_E10_C;
+    private String TIPO_E14;
     private String TIPO_E19;
     private String TRAMO_CONTROL;
     private Integer estatus_punteo;
@@ -75,7 +75,6 @@ public class cat_vw_punteo_sare {
     private String Tipo_e10_an;
     private String Tipo_e10_bn;
     private String Tipo_e10_cn;
-    
     private String tramo_control;
     private String cvegeo;
     private String tipoarea;
@@ -94,8 +93,8 @@ public class cat_vw_punteo_sare {
     public cat_vw_punteo_sare(BigDecimal CE, BigDecimal COORD_X, BigDecimal COORD_Y, String DESCRUBIC, String E03, String E03N, String E04, String E04N, 
             String E05, String E05N, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B,
             String E10_C, BigDecimal E11, String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, String E19, String E20, 
-            BigDecimal ID_UE, BigDecimal ORIGEN, BigDecimal TIPO_E10, BigDecimal TIPO_E10_A, BigDecimal TIPO_E10_B, BigDecimal TIPO_E10_C, 
-            BigDecimal TIPO_E14, String TIPO_E19, String TRAMO_CONTROL, String punteo, String e10_cvevial, String e12p, String cvegeo, 
+            BigDecimal ID_UE, BigDecimal ORIGEN, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, 
+            String TIPO_E14, String TIPO_E19, String TRAMO_CONTROL, String punteo, String e10_cvevial, String e12p, String cvegeo, 
             String Mod_cat, String Cveft, String Cvegeo2016, String E10_e, String E23, BigDecimal Id_inmueble, BigDecimal Id_deftramo) {
         this.CE = CE;
         this.COORD_X = COORD_X;
@@ -149,8 +148,8 @@ public class cat_vw_punteo_sare {
     
 
     public cat_vw_punteo_sare(BigDecimal ID_UE, String E03, String E03N, String E04, String E04N, String E05, String E05N, String E06, String E07, String E08, String E09,
-            BigDecimal TIPO_E10, String E10, String e10_cvevial, String e10_cveseg, BigDecimal E11, String E11A, BigDecimal TIPO_E14, String E14,
-            BigDecimal TIPO_E10_A, String E10_A, BigDecimal TIPO_E10_B, String E10_B, BigDecimal TIPO_E10_C, String E10_C, String DESCRUBIC,
+            String TIPO_E10, String E10, String e10_cvevial, String e10_cveseg, BigDecimal E11, String E11A, String TIPO_E14, String E14,
+            String TIPO_E10_A, String E10_A, String TIPO_E10_B, String E10_B, String TIPO_E10_C, String E10_C, String DESCRUBIC,
             BigDecimal COORD_X, BigDecimal COORD_Y, String cod_resultado, String tipo_reg, String E12, String e12p, String E19, String TIPO_E19,
             String E20, BigDecimal E13, String cve_unica_duplicada) {
         this.ID_UE = ID_UE;
@@ -192,7 +191,13 @@ public class cat_vw_punteo_sare {
         this.cve_unica_duplicada = cve_unica_duplicada;
     }
 
-    public cat_vw_punteo_sare(BigDecimal A, BigDecimal CE, String CE_DESCRIPCION, String CESTATAL, String CLEE_EMP, BigDecimal COORD_X, BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E03N, String E04, String E04N, String E05, String E05N, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11, String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, String E23A, BigDecimal ID_DEFTRAMO, BigDecimal ID_EVENTO, BigDecimal ID_UE, BigDecimal JA, BigDecimal JC, BigDecimal ORIGEN, String SARE_ST, BigDecimal TIPO_E10, BigDecimal TIPO_E10_A, BigDecimal TIPO_E10_B, BigDecimal TIPO_E10_C, BigDecimal TIPO_E14, String TIPO_E19, String TRAMO_CONTROL) {
+    public cat_vw_punteo_sare(BigDecimal A, BigDecimal CE, String CE_DESCRIPCION, String CESTATAL, String CLEE_EMP, BigDecimal COORD_X,
+            BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E03N, String E04, String E04N, String E05, String E05N,
+            String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11,
+            String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19,
+            String E20, String E23A, BigDecimal ID_DEFTRAMO, BigDecimal ID_EVENTO, BigDecimal ID_UE, BigDecimal JA, BigDecimal JC, 
+            BigDecimal ORIGEN, String SARE_ST, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, 
+            String TIPO_E14, String TIPO_E19, String TRAMO_CONTROL) {
         this.A = A;
         this.CE = CE;
         this.CE_DESCRIPCION = CE_DESCRIPCION;
@@ -244,7 +249,11 @@ public class cat_vw_punteo_sare {
         this.TRAMO_CONTROL = TRAMO_CONTROL;
     }
 
-    public cat_vw_punteo_sare(String CESTATAL, BigDecimal COORD_X, BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E04, String E05, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11, String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, String SARE_ST, BigDecimal TIPO_E10, BigDecimal TIPO_E10_A, BigDecimal TIPO_E10_B, BigDecimal TIPO_E10_C, BigDecimal TIPO_E14, String TIPO_E19) {
+    public cat_vw_punteo_sare(String CESTATAL, BigDecimal COORD_X, BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E04, 
+            String E05, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11, 
+            String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, 
+            String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, String SARE_ST, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, 
+            String TIPO_E10_C, String TIPO_E14, String TIPO_E19) {
         this.CESTATAL = CESTATAL;
         this.COORD_X = COORD_X;
         this.COORD_Y = COORD_Y;
@@ -812,43 +821,43 @@ public class cat_vw_punteo_sare {
         this.SARE_ST = SARE_ST;
     }
 
-    public BigDecimal getTIPO_E10() {
+    public String getTIPO_E10() {
         return TIPO_E10;
     }
 
-    public void setTIPO_E10(BigDecimal TIPO_E10) {
+    public void setTIPO_E10(String TIPO_E10) {
         this.TIPO_E10 = TIPO_E10;
     }
 
-    public BigDecimal getTIPO_E10_A() {
+    public String getTIPO_E10_A() {
         return TIPO_E10_A;
     }
 
-    public void setTIPO_E10_A(BigDecimal TIPO_E10_A) {
+    public void setTIPO_E10_A(String TIPO_E10_A) {
         this.TIPO_E10_A = TIPO_E10_A;
     }
 
-    public BigDecimal getTIPO_E10_B() {
+    public String getTIPO_E10_B() {
         return TIPO_E10_B;
     }
 
-    public void setTIPO_E10_B(BigDecimal TIPO_E10_B) {
+    public void setTIPO_E10_B(String TIPO_E10_B) {
         this.TIPO_E10_B = TIPO_E10_B;
     }
 
-    public BigDecimal getTIPO_E10_C() {
+    public String getTIPO_E10_C() {
         return TIPO_E10_C;
     }
 
-    public void setTIPO_E10_C(BigDecimal TIPO_E10_C) {
+    public void setTIPO_E10_C(String TIPO_E10_C) {
         this.TIPO_E10_C = TIPO_E10_C;
     }
 
-    public BigDecimal getTIPO_E14() {
+    public String getTIPO_E14() {
         return TIPO_E14;
     }
 
-    public void setTIPO_E14(BigDecimal TIPO_E14) {
+    public void setTIPO_E14(String TIPO_E14) {
         this.TIPO_E14 = TIPO_E14;
     }
 
