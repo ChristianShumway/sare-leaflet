@@ -2,6 +2,7 @@ let objDataHeight = {}
 const arrayNameWraps = ['referencia', 'ubicacion-geografica', 'domicilio', 'asentamiento', 'entre-vialidades', 'calle-posterior', 'edificio']
 
 window.onload = () => {
+  handleSessionActive()
   handleHideForm()
   init();
 }

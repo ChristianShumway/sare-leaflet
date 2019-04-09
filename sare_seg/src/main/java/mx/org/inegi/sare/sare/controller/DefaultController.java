@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-/**
- *
- * @author LIDIA.VAZQUEZ
- */
+
 @Controller
 public class DefaultController {
     
@@ -35,16 +32,6 @@ public class DefaultController {
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
     public String index2(ModelMap map) {
         return "index";
-    }
-
-    @RequestMapping(value = "/mapa.html", method = RequestMethod.GET)
-    public String index3(ModelMap map) {
-        return "index";
-    }
-
-    @RequestMapping(value = "/carrusel.html", method = RequestMethod.GET)
-    public String carru(ModelMap map) {
-        return "carrusel";
     }
     
 }

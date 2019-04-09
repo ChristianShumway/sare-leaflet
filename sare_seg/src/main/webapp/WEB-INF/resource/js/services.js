@@ -142,5 +142,10 @@ var urlServices = {
         url: 'getListadoUnidadesEconomicas.do',
         label: 'getListadoUnidadesEconomicas.do',
         type: 'GET'
+    },
+    serviceLogin: {
+        url: 'http://10.106.12.2:8080/sare/Login.do',
+        label: 'Login.do',
+        type: 'GET'
     }
 };

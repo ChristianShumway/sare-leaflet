@@ -1,11 +1,4 @@
-<%-- 
-    Document   : index
-    Created on : 18/02/2019, 10:30:15 AM
-    Author     : LIDIA.VAZQUEZ
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -72,7 +65,7 @@
             <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
             <li><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
             <li><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
-            <li><a href="#!"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+            <li><a onclick="handleLogOut()"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
           </ul>
           <!-- END MENU MOVIL -->
         </div>
@@ -557,7 +550,7 @@
           <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
           <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li>
           <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li>
-          <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>
+          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>
         </ul>
       </div>
       <!-- END CONTAINER OPTIONS BUTTONS -->

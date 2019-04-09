@@ -1,3 +1,4 @@
+const dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
 let actualPagina = 1
 let inicioPaginacion = 1
 let finPaginacion = screen.width <= '480' ? 5 : 7
@@ -6,9 +7,9 @@ let finClavesVista = 9
 let dataCleeListNew = {}
 let dataResultSearchClee = {}
 let cleeListType = 'normal'
-
 let layersSARE = ['c100', 'c101', /*'cc200', 'cc201', 'cc202', 'cc203', 'cc2031', 'cc2032',*/ 'wdenue'];
 
+console.log(dataUserFromLoginLocalStorage)
 
 const init=()=>{
         addCapas({'checked': true, 'id': 'unidades'});
@@ -745,4 +746,26 @@ const alertToastForm = title => {
   })
 }
 
+const handleLogOut = () =>{
+  localStorage.clear()
+  window.location.href = './'
+}
+
+const handleSessionActive = () => {
+  if (!dataUserFromLoginLocalStorage){
+    alertToastForm('No se ha iniciado sesión')
+    setTimeout( () => window.location.href = './' , 1500 )
+  }
+}
+
+// ALERTA NORMAL 
+const alertPosition = () => {
+  Swal.fire({
+    position: 'top-end',
+    type: 'success',
+    title: 'Your work has been saved',
+    showConfirmButton: false,
+    timer: 1500
+  })
+}
 

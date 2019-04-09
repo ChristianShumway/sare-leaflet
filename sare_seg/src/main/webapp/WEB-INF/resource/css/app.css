@@ -153,6 +153,7 @@ nav ul a {
   margin-bottom: 0;
   transition: .3s;
 }
+
 .wrap-search .input-field input[type='text']:hover{
   background: #e3f2fd;
 }
