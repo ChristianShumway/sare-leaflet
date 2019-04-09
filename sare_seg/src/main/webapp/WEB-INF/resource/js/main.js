@@ -1175,68 +1175,69 @@ async function OpenReportes (size, action) {
     }   
 }
 
-var imprimir=function(){ 
-    $('#window_bottom').hide(); 
-    var data = $('#map').html(); 
-    $('#window_bottom').show(); 
-    var ventana = window.open('', '', 'height=1000,width=1024'); 
-    ventana.document.open(); 
-    ventana.document.write('<html><head ><title>'+titulo_impresion+'</title>'); 
-    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>'); 
-    ventana.document.write('<script src="resources/js/main.js"></script>'); 
-    if (navigator.userAgent.indexOf("Chrome") !== -1) { 
-        ventana.document.write('<style type="text/css"  media="print"> '+ 
-                '@page{size:portrait;}html { width:29.4cm;height:30.62cm;}'+ 
-                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}'+ 
-                '.divMapa{page-break-after : always;} '+ 
-                '.olControlMousePosition{display:none;} '+ 
-                '#OpenLayers_Control_ScaleLine_4{display:none;}'+ 
-                '#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} '+ 
-                '</style>'); 
-    } else if (navigator.userAgent.indexOf("Firefox") !== -1) { 
-        ventana.document.write('<style type="text/css"  media="print"> @page{size:portrait;}html { width:28.4cm;height:29.90cm;}'+ 
-                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.08cm;margin-left:-1.0cm;} '+ 
-                '.divMapa{page-break-after : always;}'+ 
-                '.olControlMousePosition{display:none;} '+ 
-                '#OpenLayers_Control_ScaleLine_4{display:none;}'+ 
-                '  #OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>'); 
-    } else if (navigator.userAgent.indexOf('Trident') !== -1) { 
-        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>'); 
-    } 
-    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>'); 
-    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/materialize.css"/>'); 
-    ventana.document.write('<script src="resources/js/materialize.min.js"></script>'); 
-    ventana.document.write('</head>'); 
-    ventana.document.write('<body>'); 
-    ventana.document.write('<div class="" id="" >'); 
-    ventana.document.write(data); 
-    ventana.document.write('</div>'); 
-    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">'+ 
-            '<div class="modal-content">'+ 
-                '<div> Cargando</div>'+ 
-                      '<div class="preloader-wrapper big active">'+     
-                           '<div class="spinner-layer spinner-blue-only">'+ 
-                               '<div class="circle-clipper left">'+ 
-                                    '<div class="circle"></div>'+ 
-                               '</div>'+ 
-                               '<div class="gap-patch">'+ 
-                               '<div class="circle"></div>'+ 
-                            '</div>'+ 
-                            '<div class="circle-clipper right">'+ 
-                                 '<div class="circle"></div>'+ 
-                            '</div>'+ 
-                      '</div>'+ 
-                '</div>'+           
-            '</div>'+    
-            '</div>'); 
-    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},5000);</script>'); 
-    ventana.document.write('</body>'); 
-    ventana.document.write('</html>'); 
-    ventana.document.close(); 
-    setTimeout(function () { 
-        ventana.print(); 
-        ventana.close(); 
+var imprimir=function(){
+    $('#window_bottom').hide();
+    var data = $('#map').html();
+    $('#window_bottom').show();
+    var ventana = window.open('', '', 'height=1000,width=1024');
+    ventana.document.open();
+    ventana.document.write('<html><head ><title>'+titulo_impresion+'</title>');
+    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
+    ventana.document.write('<script src="resources/js/main.js"></script>');
+    if (navigator.userAgent.indexOf("Chrome") !== -1) {
+        ventana.document.write('<style type="text/css"  media="print"> '+
+                '@page{size:portrait;}html { width:29.4cm;height:30.62cm;}'+
+                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}'+
+                '.divMapa{page-break-after : always;} '+
+                '.olControlMousePosition{display:none;} '+
+                '#OpenLayers_Control_ScaleLine_4{display:none;}'+
+                '#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} '+
+                '</style>');
+    } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+        ventana.document.write('<style type="text/css"  media="print"> @page{size:portrait;}html { width:28.4cm;height:29.90cm;}'+
+                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.08cm;margin-left:-1.0cm;} '+
+                '.divMapa{page-break-after : always;}'+
+                '.olControlMousePosition{display:none;} '+
+                '#OpenLayers_Control_ScaleLine_4{display:none;}'+
+                '  #OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
+    } else if (navigator.userAgent.indexOf('Trident') !== -1) {
+        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
+    }
+    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
+    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/materialize.css"/>');
+    ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
+    ventana.document.write('</head>');
+    ventana.document.write('<body>');
+    ventana.document.write('<div class="" id="" >');
+    ventana.document.write(data);
+    ventana.document.write('</div>');
+    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">'+
+            '<div class="modal-content">'+
+                '<div> Cargando</div>'+
+                      '<div class="preloader-wrapper big active">'+    
+                           '<div class="spinner-layer spinner-blue-only">'+
+                               '<div class="circle-clipper left">'+
+                                    '<div class="circle"></div>'+
+                               '</div>'+
+                               '<div class="gap-patch">'+
+                               '<div class="circle"></div>'+
+                            '</div>'+
+                            '<div class="circle-clipper right">'+
+                                 '<div class="circle"></div>'+
+                            '</div>'+
+                      '</div>'+
+                '</div>'+          
+            '</div>'+   
+            '</div>');
+    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},5000);</script>');
+    ventana.document.write('</body>');
+    ventana.document.write('</html>');
+    ventana.document.close();
+    setTimeout(function () {
+        ventana.print();
+        ventana.close();
     }, 6000);
+}
 
 }
 
