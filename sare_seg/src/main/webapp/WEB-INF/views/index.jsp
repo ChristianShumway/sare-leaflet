@@ -240,6 +240,10 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
+                  <input placeholder="CLEE_EST" id="id_UE" name="id_UE" type="text" disabled >
+                  <label for="id_UE">CLEE_EST</label>
+                </div>
+                <div class="input-field">
                   <input placeholder="Origen" id="origen" name="origen" type="text" disabled >
                   <label for="origen">Origen</label>
                 </div>
@@ -256,8 +260,8 @@
                   <label for="e09">Razón Social</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="SCIAN" id="codigo_scian" name="codigo_scian" type="text" disabled >
-                  <label for="codigo_scian">SCIAN</label>
+                  <input placeholder="SCIAN" id="e17_DESC" name="e17_DESC" type="text" disabled >
+                  <label for="e17_DESC">SCIAN</label>
                 </div>
                 <div class="input-field">
                   <a onclick="handleActionTarget('ubicacion-geografica')" class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
@@ -280,23 +284,23 @@
                   <label for="e03">Entidad Federativa (Clave)</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre" id="e03n" name="e03n" type="text" disabled >
-                  <label for="e03n">Entidad Federativa (Nombre)</label>
+                  <input placeholder="Nombre" id="e03N" name="e03N" type="text" disabled >
+                  <label for="e03N">Entidad Federativa (Nombre)</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="Clave" id="e04" name="e04" type="text" disabled >
                   <label for="e04">Municipio o Delegación (Clave)</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre" id="e04n" name="e04n" type="text" disabled >
-                  <label for="e04n">Municipio o Delegación (Nombre)</label>
+                  <input placeholder="Nombre" id="e04N" name="e04N" type="text" disabled >
+                  <label for="e04N">Municipio o Delegación (Nombre)</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Clave" id="e05n" name="e05n" type="text" disabled >
-                  <label for="e05n">Localidad (Clave)</label>
+                  <input placeholder="Clave" id="e05" name="e05" type="text" disabled >
+                  <label for="e05N">Localidad (Clave)</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre" id="e05" name="e05" type="text" disabled >
+                  <input placeholder="Nombre" id="e05N" name="e05N" type="text" disabled >
                   <label for="e05">Localidad (Nombre)</label>
                 </div>
                 <div class="input-field">
@@ -376,15 +380,13 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-asentamiento">
                 <div class="input-field">
-                  <select id="tipo_e14" name="tipo_e14" disabled>
-                    <option value="" disabled selected>Seleccione...</option>
-                    <option value="1">Option 1</option>
+                  <select class="browser-default" id="tipo_E14" name="tipo_E14">
                   </select>
-                  <label for="tipo_e14">Tipo de Asentamiento Humano</label>
+                  <label id="labeltipo_E14" for="tipo_E14">Tipo de Asentamiento Humano</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Código Postal" id="e14_a" name="e14_a" type="text" disabled >
-                  <label for="e14_a">Código Postal</label>
+                  <input placeholder="Código Postal" id="e14_A" name="e14_A" type="text" disabled >
+                  <label for="e14_A">Código Postal</label>
                 </div>
                 <div id="cp_val"></div>
                 <div class="input-field">
@@ -420,11 +422,9 @@
                   <label for="e10a_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field">
-                  <select id="tipo_e10_a" name="tipo_e10_a" disabled>
-                    <option value="" disabled selected>Seleccione...</option>
-                    <option value="1">Option 1</option>
+                  <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
-                  <label for="tipo_e10_a">Nombre de la Vialidad No.1</label>
+                  <label id="labele10_A" for="e10_A">Nombre de la Vialidad No.1</label>
                 </div>
                 <div class="input-field">
                   <input id="tipo_e10_b" name="tipo_e10_b" type="text" hidden >
@@ -438,11 +438,9 @@
                   <label for="e10b_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field">
-                  <select id="tipo_e10_b" name="tipo_e10_b" disabled>
-                    <option value="" disabled selected>Seleccione</option>
-                    <option value="1">Option 1</option>
+                  <select class="browser-default" id="e10_B" name="e10_B">
                   </select>
-                  <label for="tipo_e10_b">Nombre de la Vialidad No.2</label>
+                  <label id="labele10_B" for="e10_B">Nombre de la Vialidad No.2</label>
                 </div>
                 <div class="input-field btns-prev-next">
                   <a onclick="handleActionTarget('asentamiento')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
@@ -473,13 +471,9 @@
                   <label for="e10c_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field">
-                  <select id="e10_c" name="e10_c" disabled>
-                    <option value="" disabled selected>Seleccione...</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
+                  <select class="browser-default" id="e10_C" name="e10_C">
                   </select>
-                  <label for="e10_c">Nombre de la Vialidad</label>
+                  <label id="labele10_C" for="e10_C">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
                   <textarea id="descrubic" name="descrubic" class="materialize-textarea" disabled></textarea>
@@ -503,15 +497,12 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-edificio">
                 <div class="input-field">
-                  <input placeholder="E12 Edificio" id="e12" name="e12" type="text" disabled >
-                  <label for="e12">E12 Edificio</label>
+                  <input placeholder="E12 Edificio" id="E12" name="E12" type="text" disabled >
+                  <label for="E12">E12 Edificio</label>
                 </div>
                 <div class="input-field">
                   <select id="tipo_e19" name="tipo_e19">
                     <option value="" disabled selected>Seleccione...</option>
-                    <option value="1">Option 1</option>
-                    <option value="2">Option 2</option>
-                    <option value="3">Option 3</option>
                   </select>
                   <label for="tipo_e19">Tipo de Corredor o Centro Comercial</label>
                 </div>
@@ -520,8 +511,8 @@
                   <label for="e19">E19 Nombre</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="E12P Piso" id="e12p" name="e12p" type="text" disabled >
-                  <label for="e12p">E12P Piso</label>
+                  <input placeholder="E12P Piso" id="E12p" name="E12p" type="text" disabled >
+                  <label for="E12p">E12P Piso</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E20 No. Local" id="e20" name="e20" type="text" disabled >

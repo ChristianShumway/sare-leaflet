@@ -24,9 +24,9 @@ const objForm = [
     title:'title-referencia'
   },
   {
-    id:'codigo_scian',
+    id:'e17_DESC',
     key: 'referencia',
-    name:'codigo_scian',
+    name:'e17_DESC',
     title:'title-referencia'
   },
   {
@@ -36,9 +36,9 @@ const objForm = [
     title:'title-ubicacion-geografica',
   },
   {
-    id:'e03n',
+    id:'e03N',
     key: 'ubicacion-geografica',
-    name:'e03n',
+    name:'e03N',
     title:'title-ubicacion-geografica',
   },
   {
@@ -48,15 +48,15 @@ const objForm = [
     title:'title-ubicacion-geografica',
   },
   {
-    id:'e04n',
+    id:'e04N',
     key: 'ubicacion-geografica',
-    name:'e04n',
+    name:'e04N',
     title:'title-ubicacion-geografica',
   },
   {
-    id:'e05n',
+    id:'e05N',
     key: 'ubicacion-geografica',
-    name:'e05n',
+    name:'e05N',
     title:'title-ubicacion-geografica',
   },
   {
@@ -77,48 +77,84 @@ const objForm = [
     name:'e07',
     title:'title-ubicacion-geografica',
   },
+ 
+  
 ]
 
 const inputsEditables = [
   {
-    id:'origen',
+    id:'tipo_e10n',
+  },
+  
+  {
+    id:'e10',
   },
   {
-    id:'c154',
+    id:'e10_e',
   },
   {
-    id:'e08',
+    id:'e11',
   },
   {
-    id:'e09',
+    id:'e11_a',
   },
   {
-    id:'codigo_scian',
+    id:'e13',
   },
   {
-    id:'e03',
+    id:'e13_a',
   },
   {
-    id:'e03n',
+    id:'e14_A',
   },
   {
-    id:'e04',
+    id:'e14',
   },
   {
-    id:'e04n',
+    id:'tipo_e10_an',
   },
   {
-    id:'e05n',
+    id:'tipo_e10_bn',
   },
   {
-    id:'e05',
+    id:'tipo_e10_cn',
   },
   {
-    id:'e06',
+    id:'descrubic',
   },
   {
-    id:'e07',
-  },  
+    id:'E12',
+  },
+  {
+    id:'e19',
+  },
+  {
+    id:'E12p',
+  },
+  {
+    id:'e20',
+  },
+  {
+    id:'id_UE',
+  },
+]
+
+let inputsVialidades=[
+   {
+    nombre:'tipo_e10n' 
+   },
+   {
+    nombre:'e10' 
+   },
+   {
+    nombre:'tipo_e10_an'
+   },
+   {
+    nombre:'tipo_e10_bn'   
+   },
+   {
+    nombre:'tipo_e10_cn'  
+   },
 ]
 
 let inputsByWrap = {}

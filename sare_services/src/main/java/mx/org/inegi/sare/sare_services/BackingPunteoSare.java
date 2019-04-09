@@ -45,6 +45,7 @@ public class BackingPunteoSare
     }
     
     public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, String r, String ce, String tr){
+        Respuesta=new cat_respuesta_services();
         cat_coordenadas coordMercator;
         cat_ubicacion_punteo ubicacion_punteo = null;
         cat_vial cat_vial = null;

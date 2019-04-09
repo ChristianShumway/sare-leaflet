@@ -91,12 +91,12 @@ public class ServiceController {
     @Qualifier("BackingTransformCoordtoGeo")
     private BackingTransformCoordtoGeo BackingTransformCoordtoGeo;
 
-    @RequestMapping(value = "getCP.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingValidacionesSare.getcatcp(cve_ent, proyecto);
     }
 
-    @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_asentamientos_humanos> getCatAsentamientosHumanos(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingCatalogosSare.getCatalogoAsentamientosHumanos(proyecto);
     }
@@ -111,7 +111,7 @@ public class ServiceController {
         return BackingGetClaves.getListadoUnidadesEconomicasBloqueadas(proyecto, id_ue, tramo);
     }
 
-    @RequestMapping(value = "getbusqueda.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getbusqueda.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services getbusqueda(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "p") String p, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "ce") String ce, @RequestParam(value = "usuario") String usuario, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         int t = Integer.MIN_VALUE;
         Boolean consulta = true;
@@ -121,7 +121,7 @@ public class ServiceController {
         return BackingBusqueda.getBusqueda(proyecto, t, tramo, ce, usuario, id_ue, consulta);
     }
 
-    @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x, @RequestParam(value = "y") String y, @RequestParam(value = "tc") String tc, @RequestParam(value = "r") String r, @RequestParam(value = "ce") String ce, @RequestParam(value = "tr") String tr) throws Exception {
         return BackingPunteo.getDatabyCoords(proyecto, x, y, tc, r, ce, tr);
     }

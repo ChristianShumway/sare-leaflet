@@ -26,6 +26,8 @@ public class cat_usuarios {
     private String ip;
     private String pass;
     private String proyecto;
+    private String acceso;
+    private String cve_operativa;
 
     public cat_usuarios() {
     }
@@ -52,6 +54,24 @@ public class cat_usuarios {
         this.id_deftramo = id_deftramo;
     }
 
+    public String getCve_operativa() {
+        return cve_operativa;
+    }
+
+    public void setCve_operativa(String cve_operativa) {
+        this.cve_operativa = cve_operativa;
+    }
+
+    
+    public String getAcceso() {
+        return acceso;
+    }
+
+    public void setAcceso(String acceso) {
+        this.acceso = acceso;
+    }
+
+    
     public String getPass() {
         return pass;
     }

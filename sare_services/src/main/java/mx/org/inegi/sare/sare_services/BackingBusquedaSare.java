@@ -17,6 +17,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -34,7 +35,7 @@ public class BackingBusquedaSare {
 
     @Autowired
     @Qualifier("DaoTransformaCartografia")
-    DaoTransformaCartografia DaoTransformaCartografia;
+    InterfaceTransformaCoordenadas DaoTransformaCartografia;
 
     boolean mza800 = false;
 
@@ -180,12 +181,12 @@ public class BackingBusquedaSare {
                                                 }   
                                                }
                                           }
-                                          if(element.getCOORD_X()!=null && !String.valueOf(element.getCOORD_X()).equals("") && element.getCOORD_Y()!=null && String.valueOf(element.getCOORD_Y()).equals(""))
+                                          if(element.getCOORD_X()!=null && !String.valueOf(element.getCOORD_X()).equals("") && element.getCOORD_Y()!=null && !String.valueOf(element.getCOORD_Y()).equals(""))
                                           {
                                                 extent=InterfaceBusquedaSare.getExtentBusquedaCvegeo(element,proyecto, 0, null, mza800, null);
                                                 cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
                                                 cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
-                                                coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto,String.valueOf(cX),String.valueOf(cY), "geo");
+                                                coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto,"geo",String.valueOf(cX),String.valueOf(cY));
                                                 if(coord_merc!=null)
                                                 {
                                                     element.setCOORD_X(new BigDecimal(coord_merc.getX()));
