@@ -6,6 +6,7 @@ let finClavesVista = 9
 let dataCleeListNew = {}
 let dataResultSearchClee = {}
 let cleeListType = 'normal'
+let titulo_impresion='SARE'
 
 let layersSARE = ['c100', 'c101', /*'cc200', 'cc201', 'cc202', 'cc203', 'cc2031', 'cc2032',*/ 'wdenue'];
 
@@ -767,4 +768,156 @@ const alertToastForm = title => {
   })
 }
 
+/* METODOS PARA LAS OPCIONES DEL MENU INFERIOR IMPRESION Y REPORTES*/
+const opcionMenu = opcion => {    
+    switch (opcion){        
+        case 2:
+            OpenReportes('desktop', 'vista')
+            break;
+        case 3:
+          OpenReportes('movil', 'vista')
+            break;
+        case 4:
+          imprimir();
+    }    
+}
 
+
+async function OpenReportes (size, action) {
+    const {value: reporte} = await Swal.fire({
+      title: action == 'vista' ? 'Reportes' : 'Descarga de Reportes',
+      input: 'select',
+      inputOptions: {
+        '1': 'Reporte de Avance de Registros Punteados',   
+        '2': 'Reporte de Establecimientos Pendientes de Punteo',   
+      },
+      inputPlaceholder: 'Selecciona un Reporte',
+      showCancelButton: true,
+      confirmButtonText:'Generar',
+      cancelButtonText:'Cancelar',
+      inputValidator: (value) => {
+        return new Promise((resolve) => {
+          if (value === '1' || value === '2'|| value === '3') {
+            resolve()
+          } else {
+            resolve('Selecciona el reporte a visualizar')
+          }
+        })
+      }
+    })
+    
+    if (reporte) {
+        let src = urlServices['serviceReporte'].url + '?proyecto=1&tipo=PDF&reporte=' + reporte +'&ce=00&ran=' + Math.random();
+        let leyenda = ''
+        let srcExcel = urlServices['serviceReporte'].url + '?proyecto=1&tipo=EXCEL&reporte=' + reporte +'&ce=00&ran=' + Math.random();
+       
+        if(reporte === '1'){
+            leyenda = 'Descargaste reporte de manzanas'
+        } else if (reporte === '2'){
+            leyenda = 'Descargaste reporte de localidades'
+        }
+
+        if (action == 'vista'){
+            if (size == 'desktop'){
+                Swal.fire({
+                    title: '<strong>Reporte</strong>',
+                    width: '100%',
+                    html: `<iframe class='iframe-reporte' src=${src}></iframe>`,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    focusConfirm: false,
+                })
+            } else  if (size == 'movil'){
+                window.open(src, 'fullscreen=yes')
+            } 
+        } else if (action == 'descarga'){
+            window.location.href = srcExcel    
+        }
+    }  
+}
+
+
+
+var imprimir=function(){
+    $('#window_bottom').hide();
+    var data = $('#map').html();
+    $('#window_bottom').show();
+    var ventana = window.open('', '', 'height=1000,width=1024');
+    ventana.document.open();
+    ventana.document.write('<html><head ><title>'+titulo_impresion+'</title>');
+    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
+    ventana.document.write('<script src="resources/js/main.js"></script>');
+    if (navigator.userAgent.indexOf("Chrome") !== -1) {
+        ventana.document.write('<style type="text/css"  media="print"> '+
+                '@page{size:portrait;}html { width:29.4cm;height:30.62cm;}'+
+                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}'+
+                '.divMapa{page-break-after : always;} '
+                '.olControlMousePosition{display:none;} '+
+                '#OpenLayers_Control_ScaleLine_4{display:none;}'+
+                '#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} '+
+                '</style>');
+    } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+        ventana.document.write('<style type="text/css"  media="print"> @page{size:portrait;}html { width:28.4cm;height:29.90cm;}'+
+                'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.08cm;margin-left:-1.0cm;} '+
+                '.divMapa{page-break-after : always;}'+
+                '.olControlMousePosition{display:none;} '+
+                '#OpenLayers_Control_ScaleLine_4{display:none;}'+
+                '  #OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
+    } else if (navigator.userAgent.indexOf('Trident') !== -1) {
+        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
+    }
+    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
+    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/materialize.css"/>');
+    ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
+    ventana.document.write('</head>');
+    ventana.document.write('<body>');
+    ventana.document.write('<div class="" id="" >');
+    ventana.document.write(data);
+    ventana.document.write('</div>');
+    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">'+
+            '<div class="modal-content">'+
+                '<div> Cargando</div>'+
+                      '<div class="preloader-wrapper big active">'+    
+                           '<div class="spinner-layer spinner-blue-only">'+
+                               '<div class="circle-clipper left">'+
+                                    '<div class="circle"></div>'+
+                               '</div>'+
+                               '<div class="gap-patch">'+
+                               '<div class="circle"></div>'+
+                            '</div>'+
+                            '<div class="circle-clipper right">'+
+                                 '<div class="circle"></div>'+
+                            '</div>'+
+                      '</div>'+
+                '</div>'+          
+            '</div>'+   
+            '</div>');
+    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},5000);</script>');
+    ventana.document.write('</body>');
+    ventana.document.write('</html>');
+    ventana.document.close();
+    setTimeout(function () {
+        ventana.print();
+        ventana.close();
+    }, 6000);
+}
+
+function modal2() {        
+    $('.modal').modal();    
+    $('.modal').modal('open');
+}
+
+
+function closeModal2() {               
+    $('.modal').modal('close');
+}
+
+function setClassPrint() {
+    $('#OpenLayers_Map_5_OpenLayers_ViewPort').css({
+      'left': '-310',
+        'width': '110%'
+    }); 
+}
+
+/* FIN OPCIONES DEL MENU INFERIOR DERECHO IMPRESION Y REPORTES*/

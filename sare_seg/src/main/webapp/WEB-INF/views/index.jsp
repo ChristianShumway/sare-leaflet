@@ -15,7 +15,7 @@
     <title>SARE 2019</title>
      <!-- Compiled and minified CSS -->
      <script src='resources/js/services.js'></script>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+     <link rel="stylesheet" href="resources/css/materialize.css">
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.css">
@@ -70,7 +70,7 @@
             <li><a class="subheader">Opciones</a></li>
             <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>
             <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
-            <li><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
+            <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
             <li><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
             <li><a href="#!"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
           </ul>
@@ -555,8 +555,8 @@
         <ul>
           <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
           <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
-          <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li>
-          <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li>
+          <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li>
+          <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li>
           <li><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>
         </ul>
       </div>

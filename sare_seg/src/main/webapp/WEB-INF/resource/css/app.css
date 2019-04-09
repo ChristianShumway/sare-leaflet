@@ -856,6 +856,14 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
   height: 100% !important;
 }
 /*  end estilos alert toast pisados */
+.btn-reportes-movil{
+    display: none;
+}
+
+.iframe-reporte{
+    width: 100% !important;
+    height: 500px;
+}
 
 /* END CONTAINER OPTIONS BUTTONS */
 
@@ -876,6 +884,15 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
   font-family: 'Roboto', sans-serif;
 }
 /* END FOOTER */
+
+/*VENTANA DE IMPRESION */
+.modal {
+  top: 40%!important;
+  overflow: hidden!important;
+  width: 11%!important;
+}
+
+/* */
 
 @media (min-width:993px) and (max-width:1220px){
   /* CONTAINER MAP AND OPTIONS */
@@ -1151,7 +1168,16 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
     width: 60px;
   }
   /* END CONTAINER FOOTER */
+  /* CONTAINER OPTIONS BUTTONS */
+  .btn-reportes-desktop{
+      display: none;
+  }
   
+  .btn-reportes-movil{
+      display: block;
+  }
+  
+  /* END CONTAINER OPTIONS BUTTONS */
   #btn-top {
     right: 25px;
     bottom: 15px;
