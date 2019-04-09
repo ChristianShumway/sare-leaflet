@@ -7,9 +7,6 @@ let dataCleeListNew = {}
 let xycoorsx;
 let xycoorsy;
 screen.width <= '480'
-let dataResultSearchClee = {}
-let cleeListType = 'normal'
-let titulo_impresion='SARE'
 
 let layersSARE = ['c100', 'c101', 'wdenue'];
 
@@ -1051,17 +1048,7 @@ const alertToastForm = title => {
   })
 }
 
-/* METODOS PARA LAS OPCIONES DEL MENU INFERIOR IMPRESION Y REPORTES*/
-const opcionMenu = opcion => {    
-    switch (opcion){        
-        case 2:
-            OpenReportes('desktop', 'vista')
-            break;
-        case 3:
-          OpenReportes('movil', 'vista')
-            break;
-        case 4:
-          imprimir();
-    }    
-}
+
+
+
 

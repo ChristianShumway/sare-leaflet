@@ -96,7 +96,7 @@ var urlServices = {
         type: 'GET'
     },
     serviceReporte: {
-        url: 'Reportes.do',
+        url: 'getReporte',
         label: 'reporte',
         type: 'GET'
     },
