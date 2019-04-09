@@ -852,7 +852,7 @@ var imprimir=function(){
         ventana.document.write('<style type="text/css"  media="print"> '+
                 '@page{size:portrait;}html { width:29.4cm;height:30.62cm;}'+
                 'body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}'+
-                '.divMapa{page-break-after : always;} '
+                '.divMapa{page-break-after : always;} '+
                 '.olControlMousePosition{display:none;} '+
                 '#OpenLayers_Control_ScaleLine_4{display:none;}'+
                 '#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} '+
@@ -901,7 +901,7 @@ var imprimir=function(){
         ventana.print();
         ventana.close();
     }, 6000);
-}
+} 
 
 function modal2() {        
     $('.modal').modal();    
