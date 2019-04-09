@@ -86,7 +86,7 @@ const addCapas = chk => {
   MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } });
 }
 
-//Funcion para agregar capas cuando ya tenemos agregadas en las capas
+//Funcion para agregar capas cuando ya tenemos agregadas en el array de las capas
 
 const remLay = item => {
   var index = layersSARE.indexOf(item);
@@ -872,50 +872,54 @@ const callServicioIdentificar = (capas, x, y) => {
 }
 
 //muestra mensaje con la tabla que contiene la información de las unidades economicas para el establecimiento seleccionado
-const modalShowInfoUE = (rows, capas) => {
-  capas = capas.split(",")
-  const sizeScreen = screen.width <= '768' ? '90%' : '80%'
-
-  swal.fire({
-    title: '<h3 class="title-modal-ue">Identificación de Unidades Económicas</h3>',
-    //type:'info',
-    width: sizeScreen,
-    html: '<div id="tabL"></div>',
-    confirmButtonText: 'Aceptar',
-    customClass: 'swal-wide',
-    confirmButtonColor: '#0f0f0f',
-    allowEscapeKey: false,
-    allowOutsideClick: false,
-    showConfirmButton: false,
-    showCloseButton: true,
-    onOpen: cargaTemplateIdentificaUE(rows)
-  });
-
-};
+const modalShowInfoUE = (rows, capas) => { 
+  capas = capas.split(",") 
+  const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
+ 
+  swal.fire({ 
+    title: '<h3 class="title-modal-ue">Identificación de Unidades Económicas</h3>', 
+    //type:'info', 
+    width: sizeScreen, 
+    html: '<div id="tabL"></div>', 
+    confirmButtonText: 'Aceptarr', 
+    customClass: 'swal-wide', 
+    confirmButtonColor: '#0f0f0f', 
+    allowEscapeKey: false, 
+    allowOutsideClick: false, 
+    showConfirmButton: false, 
+    showCloseButton: true, 
+    onOpen: cargaTemplateIdentificaUE(rows) 
+  }) 
+} 
 
 //Funcion que arma el html con la información de la unidad económica seleccionada
-const cargaTemplateIdentificaUE = rows => {
-  loadTemplate('tabL', "resources/templates/table_UE.html?frm=" + Math.random(),
-    function () {
-      //interpreta la respuesta
-      rows.forEach(function (o, i) {
-        var html = '';
-        o.datos.forEach(function (ob, ix) {
-          var objDetalle = JSON.stringify(ob);
-          if (o.capa === 'eje') {
-            html += "<tr><td>" + ob.tipovial + "</td><td>" + ob.nomvial + "</td></tr>";
-          } else {
-            html += "<tr><td>" + ob.cve_unica + "</td><td>" + ob.nom_est + "</td><td>" + ob.razon_soc + "</td><td><a title='Detalle' onclick='buildDetalle(" + objDetalle + ")'><i class='material-icons icFicha'>assignment</a></td></tr>";
-          }
-        });
-        $('#tabUE_' + o.capa + ' tbody').html(html);
-        //añade el option al select
-        $('#slcapa').append($('<option>', { value: o.capa, text: o.capa, selected: true }));
-        $('#slcapa').show();
-        showUEficha(o.capa);
-      });
-    });
-}
+const cargaTemplateIdentificaUE = rows => { 
+  loadTemplate('tabL', "resources/templates/table_UE.html?frm=" + Math.random(), () => { 
+     
+    //interpreta la respuesta 
+    rows.forEach(function (o, i) { 
+      let html = '' 
+ 
+      o.datos.forEach(function (ob, ix) { 
+        const objDetalle = JSON.stringify(ob) 
+        o.capa === 'eje'  
+          ? html += `<tr> <td>${ob.tipovial}</td> <td>${ob.nomvial}</td> </tr>` 
+          : html += `<tr class='row-cont-ue'>  
+            <td>${ob.cve_unica}</td>  
+            <td>${ob.nom_est}</td> 
+            <td>${ob.razon_soc}</td> 
+            <td> <a title='Detalle' onclick='buildDetalle(${objDetalle})'> <i class='material-icons icFicha'> assignment </a> </td> 
+          </tr>` 
+      }) 
+ 
+      $('#tabUE_' + o.capa + ' tbody').html(html) 
+      //añade el option al select 
+      $('#slcapa').append($('<option>', {value: o.capa, text: o.capa, selected: true})) 
+      $('#slcapa').show() 
+      showUEficha(o.capa) 
+    }) 
+  }) 
+} 
 //función que oculta las tables que no solicito el usuario para mostrar en la opción identificar
 const showUEficha = ficha => {
   //escondo las 2 fichas
@@ -957,37 +961,22 @@ const buildDetalle = ficha => {
   $(".modal-footer").append('<button type="button" class="pure-button" id="btn_regresar" onclick="showUEficha($(\'#slcapa\').val())">Regresar</button>');
   $("#tabUE_detalle").html('<table class="pure-table tabUE" id="tabUE_detalleTab"><tbody></tbody></table>');
 
-  var html = '<tr><td>Razón Social</td><td>' + ficha.razon_soc + '</td></tr>';
-  if (ficha.actividad !== '-')
-    html += '<tr><td>Actividad</td><td>' + ficha.actividad + '</td></tr>'
-  if (ficha.cve_ent !== '-')
-    html += '<tr><td>Entidad</td><td>' + ficha.cve_ent + '</td></tr>'
-  if (ficha.cve_mun !== '-')
-    html += '<tr><td>Municipio</td><td>' + ficha.cve_mun + '</td></tr>'
-  if (ficha.cve_loc !== '-')
-    html += '<tr><td>Localidad</td><td>' + ficha.cve_loc + '</td></tr>'
-  if (ficha.cve_ageb !== '-')
-    html += '<tr><td>AGEB</td><td>' + ficha.cve_ageb + '</td></tr>'
-  if (ficha.cve_mza !== '-')
-    html += '<tr><td>Manzana</td><td>' + ficha.cve_mza + '</td></tr>'
-  if (ficha.tipo_vial !== '-')
-    html += '<tr><td>Tipo Vialidad</td><td>' + ficha.tipo_vial + '</td></tr>'
-  if (ficha.nomvial !== '-')
-    html += '<tr><td>Nombre Vialidad</td><td>' + ficha.nomvial + '</td></tr>'
-  if (ficha.numextnum !== '-')
-    html += '<tr><td>Número Ext</td><td>' + ficha.numextnum + '</td></tr>'
-  if (ficha.numextalf !== '-')
-    html += '<tr><td>Número Ext (letra)</td><td>' + ficha.numextalf + '</td></tr>'
-  if (ficha.numintnum !== '-')
-    html += '<tr><td>Número Int</td><td>' + ficha.numintnum + '</td></tr>'
-  if (ficha.numintalf !== '-')
-    html += '<tr><td>Número Int (letra)</td><td>' + ficha.numintalf + '</td></tr>'
-  if (ficha.tipoasen !== '-')
-    html += '<tr><td>Tipo de Asentamiento</td><td>' + ficha.tipoasen + '</td></tr>'
-  if (ficha.nomasen !== '-')
-    html += '<tr><td>Nombre Asentamiento</td><td>' + ficha.nomasen + '</td></tr>'
-  if (ficha.cor_indust !== '-')
-    html += '<tr><td>Corredor Industrial</td><td>' + ficha.cor_indust + '</td></tr>'
+  var html = `<tr class='tr-none'><td class='td-title'>Razón Social</td><td> ${ficha.razon_soc} </td></tr>` 
+    ficha.actividad !== '-' ? html += `<tr class='tr-par'> <td class='td-title'>Actividad</td> <td> ${ficha.actividad} </td></tr>` : false 
+    ficha.cve_ent !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Entidad</td><td> ${ficha.cve_ent} </td></tr>` : false 
+    ficha.cve_mun !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Municipio</td><td> ${ficha.cve_mun} </td></tr>` : false 
+    ficha.cve_loc !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Localidad</td><td> ${ficha.cve_loc} </td></tr>` : false 
+    ficha.cve_ageb !== '-' ? html += `<tr class='tr-par'><td class='td-title'>AGEB</td><td> ${ficha.cve_ageb} </td></tr>` : false 
+    ficha.cve_mza !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Manzana</td><td> ${ficha.cve_mza} </td></tr>` : false 
+    ficha.tipo_vial !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Tipo Vialidad</td><td> ${ficha.tipo_vial} </td></tr>` : false 
+    ficha.nomvial !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Nombre Vialidad</td><td> ${ficha.nomvial} </td></tr>` : false 
+    ficha.numextnum !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Número Ext</td><td> ${ficha.numextnum} </td></tr>` : false 
+    ficha.numextalf !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Número Ext (letra)</td><td> ${ficha.numextalf} </td></tr>` : false 
+    ficha.numintnum !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Número Int</td><td> ${ficha.numintnum} </td></tr>` : false 
+    ficha.numintalf !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Número Int (letra)</td><td> ${ficha.numintalf} </td></tr>` : false 
+    ficha.tipoasen !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Tipo de Asentamiento</td><td> ${ficha.tipoasen} </td></tr>` : false 
+    ficha.nomasen !== '-' ? html += `<tr class='tr-none'><td class='td-title'>Nombre Asentamiento</td><td> ${ficha.nomasen} </td></tr>` : false 
+    ficha.cor_indust !== '-' ? html += `<tr class='tr-par'><td class='td-title'>Corredor Industrial</td><td> ${ficha.cor_indust} </td></tr>` : false 
 
   $('#tabUE_detalleTab tbody').html(html);
 }
