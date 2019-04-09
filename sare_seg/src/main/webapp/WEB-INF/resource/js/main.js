@@ -1239,7 +1239,6 @@ var imprimir=function(){
     }, 6000);
 }
 
-}
 
 function modal2() {         
     $('.modal').modal();     
