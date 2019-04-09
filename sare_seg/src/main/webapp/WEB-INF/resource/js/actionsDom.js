@@ -93,6 +93,7 @@ const handleVisibleRatifica = () => {
   }
 }
 
+
 // función que muestra alerta que indica que hay que puntear
 const handleShowAlertPickMap = () => {
   const wrapAlertPick = document.getElementById('wrap-alert-pick')

@@ -41,9 +41,9 @@ var urlServices = {
         url: 'getCatAsentamientosHumanos.do',
         type: 'POST'
     },
-    serviceAvanceSemanalOperativo: {
-        url: 'getAvanceSemanalOperativo.do',
-        type: 'get'
+    serviceIdentify: {
+        url: 'getDatabyCoords.do',
+        type: 'POST'
     },
     serviceAvancePorEntidadOperativo: {
         url: 'getAvancePorEntidadOperativo.do',

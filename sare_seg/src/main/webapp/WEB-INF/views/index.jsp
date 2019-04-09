@@ -247,6 +247,10 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
+                  <input placeholder="CLEE_EST" id="id_UE" name="id_UE" type="text" disabled >
+                  <label for="id_UE">CLEE_EST</label>
+                </div>
+                <div class="input-field">
                   <input placeholder="Origen" id="origen" name="origen" type="text" disabled >
                   <label for="origen">Origen</label>
                 </div>

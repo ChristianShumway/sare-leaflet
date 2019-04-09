@@ -15,6 +15,7 @@ public class cat_respuesta_services {
     
     private Object datos;
     private cat_mensaje mensaje;
+    private cat_usuarios usuario;
     
      public cat_respuesta_services() {
         mensaje = new cat_mensaje();
@@ -25,6 +26,23 @@ public class cat_respuesta_services {
         this.datos = datos;
         this.mensaje = mensaje;
     }
+
+    public cat_respuesta_services(Object datos, cat_mensaje mensaje, cat_usuarios usuario) {
+        this.datos = datos;
+        this.mensaje = mensaje;
+        this.usuario = usuario;
+    }
+     
+
+    public cat_usuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(cat_usuarios usuario) {
+        this.usuario = usuario;
+    }
+    
+     
 
     public Object getDatos() {
         return datos;

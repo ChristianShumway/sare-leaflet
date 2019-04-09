@@ -117,40 +117,44 @@ const inputsEditables = [
     id:'tipo_e10_bn',
   },
   {
-    id:'descrubic',
-  },
-  {
     id:'tipo_e10_cn',
   },
   {
-    id:'e12',
+    id:'descrubic',
+  },
+  {
+    id:'E12',
   },
   {
     id:'e19',
   },
   {
-    id:'e12p',
+    id:'E12p',
   },
   {
     id:'e20',
   },
   {
-    id:'tipo_E14',
+    id:'id_UE',
   },
-  {
-    id:'tipo_e10_b',
-  },
-  {
-    id:'e10_A',
-  },
-  {
-    id:'e10_B',
-  },
-  {
-    id:'e10_C',
-  },
-  
- 
+]
+
+let inputsVialidades=[
+   {
+    nombre:'tipo_e10n' 
+   },
+   {
+    nombre:'e10' 
+   },
+   {
+    nombre:'tipo_e10_an'
+   },
+   {
+    nombre:'tipo_e10_bn'   
+   },
+   {
+    nombre:'tipo_e10_cn'  
+   },
 ]
 
 let inputsByWrap = {}

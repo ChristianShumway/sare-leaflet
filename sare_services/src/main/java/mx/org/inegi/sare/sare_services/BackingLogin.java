@@ -46,12 +46,19 @@ public class BackingLogin {
     public cat_respuesta_services login(Integer proyecto, String usuario, String password,HttpServletRequest request, HttpServletResponse response) throws IOException
     {
         cat_respuesta_services Respuesta;
+        cat_usuarios user=new cat_usuarios();
         String ip="";
         Respuesta=getAuthValidWeb(usuario,password,ip);
         if(Respuesta.getMensaje().getType().equals("Exito"))
         {
-           // response.sendRedirect("index.html");
+           user.setUsuario(usuario);
+           user.setNombre("cuenta.usuario");
+           user.setAcceso("Administrador");
+           user.setCe("00");
+           user.setTramo_control("00000000000");
+           user.setCve_operativa("00000000000");
         }
+        Respuesta.setUsuario(user);
         return Respuesta;
     } 
     

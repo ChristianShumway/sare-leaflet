@@ -131,12 +131,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
-  const viewSearchContainer = document.getElementById('arrow-search')
-  const tituloBusqueda = document.getElementById('titulo-busqueda')
   const claveBusqueda = document.getElementById('clave-busqueda')
-  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
-  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
-
   if (claveBusqueda.value == '') {
     Swal.fire({
       position: 'bottom-end',
@@ -148,21 +143,15 @@ const buscarUE = () => {
   } else {
     // animación btns
     findUE(claveBusqueda.value);
-    wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
-    wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
-    wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
-    wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
-
-    viewSearchContainer.removeAttribute('onclick')
-    tituloBusqueda.removeAttribute('onclick')
-    handleVisibleSearch()
-    handleVisibleRatifica()
-
   }
 }
 //Función que busca la id_ue
 
 const findUE = (id_ue) => {
+  const tituloBusqueda = document.getElementById('titulo-busqueda')
+  const viewSearchContainer = document.getElementById('arrow-search')
+  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
+  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -172,7 +161,16 @@ const findUE = (id_ue) => {
       timer: 2000
     })
   } else {
-     callServiceFindUE(id_ue);
+    callServiceFindUE(id_ue);
+    wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
+    wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
+    wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
+    wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
+
+    viewSearchContainer.removeAttribute('onclick')
+    tituloBusqueda.removeAttribute('onclick')
+    handleVisibleSearch()
+    handleVisibleRatifica()
   }
 
 }
@@ -241,7 +239,7 @@ const validateCoord=data=>{
     }
     else
     {
-        //si trae coordenadas xy valorará lo de ratificar y mostrará la chincheta sobre el mapa
+        //si trae coordenadas xy mostrará la chincheta sobre el mapa
         xycoorsx=data[0].datos.datos[0].coord_X;
         xycoorsy=data[0].datos.datos[0].coord_Y;
         MDM6('addMarker', {lon: parseFloat(data[0].datos.datos[0].coord_X), lat: parseFloat(data[0].datos.datos[0].coord_Y), type: 'routen', params: {nom: 'Ubicación Original', desc: data[0].datos.datos[0].coord_X + ", " + data[0].datos.datos[0].coord_Y}});
@@ -264,6 +262,7 @@ const fillForm=data=>{
                     }
     });
     fillCatalogo();
+    handleActionTargetRef()
 }
 
 //función que llena el catalogo al hacer la busqueda
@@ -284,7 +283,6 @@ const fillCatalogo=()=>{
                 }
             });
             label.style.display="none";
-            //$('#tipo_e14').prop('selectedIndex', 0);
         } else {
 
         }
@@ -522,16 +520,158 @@ const ratificar = request => {
     handleActionTargetRef()
     handleActionButtons('enabled')
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-    punteo(xycoorsx, xycoorsy, 'mercator', r);
+    handlePunteo(xycoorsx, xycoorsy, 'mercator', r);
   }
   else{
       handleShowAlertPickMap()
       enabledInputs()
       handleActionTargetRef()
-      handleActionButtons('enabled')
       xycoorsx = '';
       xycoorsy = '';
+      MDM6('hideMarkers', 'identify');
+      
   }
+}
+
+//Funcion que lleva a cabo el punteo del establecimient
+
+const handlePunteo=(x,y,tc,r)=>{
+    let id_ue=document.getElementById('id_UE');
+    let ce='00'
+    let tr='00000000'
+    let u='cuenta.usuario'
+    callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
+}
+
+//Función que llama al servicio para el punteo de unidades economicas
+
+const callServicePunteo=(x,y,tc,r,id_ue,ce,tr,u)=>{
+    sendAJAX(urlServices['serviceIdentify'].url, 
+    {
+        'proyecto':1,
+        'x': x, 
+        'y': y, 
+        'tc': tc, 
+        'r': r, 
+        'ce': ce, 
+        'tr': tr
+    }, urlServices['serviceIdentify'].type, function (data) {
+        
+        if (data[0].operation) 
+        {
+            if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) 
+            {
+                actualizaForm(data[0].datos.datos);
+            }
+            else
+            {
+                if (typeof data[0].datos.mensaje.type !== 'undefined') 
+                {
+                     if (data[0].datos.mensaje.type === 'confirmar') 
+                     {
+                         swal.fire({
+                            title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
+                            type: 'error',
+                            confirmButtonText: 'Aceptar',
+                            customClass: 'swal-wide',
+                            confirmButtonColor: '#0f0f0f',
+                          });
+                     }
+                     else
+                     {
+                         if (data[0].datos.mensaje.type === 'error') 
+                         {
+                            swal.fire
+                            ({
+                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
+                                type: 'error',
+                                confirmButtonText: 'Aceptar',
+                                customClass: 'swal-wide',
+                                confirmButtonColor: '#0f0f0f',
+                            });
+                         }
+                         else
+                         {
+                             swal.fire
+                             ({
+                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
+                                type: 'error',
+                                confirmButtonText: 'Aceptar',
+                                customClass: 'swal-wide',
+                                confirmButtonColor: '#0f0f0f',
+                             });
+
+
+                            if (r === 's') 
+                            {
+                                $('#btnRatificaSi').attr('disabled', false);
+                                $('#btnRatificaNo').attr('disabled', false);
+                                $("#btnRatificaNo").click();
+                            }
+                            MDM6('hideMarkers', 'identify');
+                            xycoorsx = '';
+                            xycoorsy = '';              
+                         }
+                     }
+                  }
+            }
+        }
+        else
+        {
+             MDM6('hideMarkers', 'identify');
+             swal.fire({
+                            title: 'Punteo no realizado'+data[0].messages,
+                            type: 'error',
+                            confirmButtonText: 'Aceptar',
+                            customClass: 'swal-wide',
+                            confirmButtonColor: '#0f0f0f',
+                      });
+             
+        }
+        
+        
+    },function ()
+    {
+        swal
+        ({
+            title: 'Buscando información de punteo!',
+            text: 'Por favor espere un momento',
+            timer: 2000,
+            onOpen: function () {
+              swal.showLoading()
+            }
+        }).then(
+        function () { },
+        function (dismiss) {
+          if (dismiss === 'timer') {
+            console.log('I was closed by the timer')
+          }
+        }
+      )
+        
+    });
+}
+
+//Funcion que actualiza el formulario al hacer el punteo
+
+let infodenue;
+const actualizaForm=data=>{
+    //inicializa entrevialidades
+    if(typeof data.e10_X!=='undefined'){
+        infodenue = true;
+        let node,newnode,oldnew;
+        //si traigo entrevialidades
+        let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
+        idEleToInput.forEach(function (o, i) {
+            $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
+        });
+        var idEleToSelect = ['e10_A', 'e10_B', 'e10_C'];
+        idEleToSelect.forEach(function (o, i) {
+            var html = '<option value="Seleccione">Seleccione</option>';
+            $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>');
+            $('#' + o).html(html);
+        });
+    }
 }
 
 // Función validación de formulario campos vacios
@@ -603,7 +743,6 @@ const HandleWhatDoYouWantToDo = (coor) => {
       identificaUE(coor.lon, coor.lat);
       break;
     case 'puntear':
-      buscarUE();
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
