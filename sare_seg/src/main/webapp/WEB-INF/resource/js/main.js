@@ -54,7 +54,6 @@ const addLayerEconomicas = (chk, option) => {
   } else {
     layersSARE.splice(layersSARE.indexOf(chk.id), 1);
   }
-  console.log("layersSARE " + layersSARE);
   MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } });
 };
 
@@ -222,7 +221,6 @@ const callServiceFindUE=(id_ue)=>{
         function () { },
         function (dismiss) {
           if (dismiss === 'timer') {
-            console.log('I was closed by the timer')
           }
         }
       )
@@ -359,7 +357,6 @@ const handleViewCleeList = () => {
     data => {
 
       dataCleeListNew = data[0]
-      console.log(data[0])
       popupCleeList(data[0].datos)
 
     },
@@ -394,7 +391,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   const clavesPorVista = 10
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves / clavesPorVista)
-  console.log(data)
   let posicionFinal = ''
   finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
 
@@ -440,8 +436,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
 
 
   tabla += `</div>`
-
-  //console.log(data)
   return tabla
 }
 
@@ -485,12 +479,6 @@ const handlePaginationActive = (page, totalPag) => {
   } else if (cleeListType == 'busqueda'){
     popupCleeList(dataResultSearchClee.datos)
   }
-  
-  console.log(`pagina actual ${actualPagina}`)
-  console.log(inicioPaginacion)
-  console.log(finPaginacion)
-  console.log(inicioClavesVista)
-  console.log(finClavesVista)
 }
 
 const handleSearchCleeEnter = e => {
@@ -665,7 +653,6 @@ const callServicePunteo=(x,y,tc,r,id_ue,ce,tr,u)=>{
         function () { },
         function (dismiss) {
           if (dismiss === 'timer') {
-            console.log('I was closed by the timer')
           }
         }
       )
@@ -735,7 +722,6 @@ const handleFormValidations = () => {
     }
 
   }
-  console.log(inputsByWrap)
   let objNameWraps = Object.keys(inputsByWrap)
 
   for (let wrap = 0; wrap < objNameWraps.length; wrap++) {
@@ -879,7 +865,6 @@ const callServicioIdentificar = (capas, x, y) => {
         function () { },
         function (dismiss) {
           if (dismiss === 'timer') {
-            console.log('I was closed by the timer')
           }
         }
       )
