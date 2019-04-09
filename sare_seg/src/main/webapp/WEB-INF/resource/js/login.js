@@ -107,8 +107,7 @@ const handleClickValidaUsuario = () => {
         localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
         window.location.href =  './index.html'
       }
-      
-      //console.log(dataUserObj)    
+        
       
     }, 
     () => {}

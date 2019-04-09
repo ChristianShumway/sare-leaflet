@@ -149,7 +149,6 @@ const handleActionTarget = wrap => {
     const container = document.getElementById(`title-${name}`)
     const contenidoInputs = document.getElementById(`inputs-${name}`)
     let visible = container.dataset.visible
-    console.log(name)
     
     if (name == wrap) {
       if(visible == 'hide'){
