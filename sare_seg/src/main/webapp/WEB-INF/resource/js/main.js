@@ -376,7 +376,7 @@ const popupCleeList = data => {
 
   Swal.fire({
     title: '<strong>LISTA CLAVES</strong>',
-    html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista, clavesPorVista),
+    html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista),
     showCloseButton: true,
     showConfirmButton: false,
     showCancelButton: false,
