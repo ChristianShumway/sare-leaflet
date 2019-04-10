@@ -507,7 +507,7 @@ const handlePaginationActive = (page, totalPag) => {
 const handleSearchCleeEnter = e =>  {
   const key = window.event ? e.which : e.keyCode
   key < 48 || key > 57 ? e.preventDefault() : false
-  
+
   tecla = (document.all) ? e.keyCode : e.which;
   tecla == 13 ? handleSearchCleeList(e) : false
 }
@@ -597,110 +597,78 @@ const handlePunteo=(x,y,tc,r)=>{
 
 //Función que llama al servicio para el punteo de unidades economicas
 
-const callServicePunteo=(x,y,tc,r,id_ue,ce,tr,u)=>{
-    sendAJAX(urlServices['serviceIdentify'].url, 
-    {
-        'proyecto':1,
-        'x': x, 
-        'y': y, 
-        'tc': tc, 
-        'r': r, 
-        'ce': ce, 
-        'tr': tr
-    }, urlServices['serviceIdentify'].type, function (data) {
+const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
+  sendAJAX(urlServices['serviceIdentify'].url, 
+  {
+    'proyecto':1,
+    'x': x, 
+    'y': y, 
+    'tc': tc, 
+    'r': r, 
+    'ce': ce, 
+    'tr': tr
+  }, urlServices['serviceIdentify'].type,  data => {
         
-        if (data[0].operation) 
-        {
-            if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) 
-            {
-                actualizaForm(data[0].datos.datos);
+    if (data[0].operation) {
+      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        actualizaForm(data[0].datos.datos)
+      }
+      else {
+        if (typeof data[0].datos.mensaje.type !== 'undefined') {
+          if (data[0].datos.mensaje.type === 'confirmar') {
+            showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
+          }
+          else {
+            if (data[0].datos.mensaje.type === 'error') {
+              showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
             }
-            else
-            {
-                if (typeof data[0].datos.mensaje.type !== 'undefined') 
-                {
-                     if (data[0].datos.mensaje.type === 'confirmar') 
-                     {
-                         swal.fire({
-                            title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                            type: 'error',
-                            confirmButtonText: 'Aceptar',
-                            customClass: 'swal-wide',
-                            confirmButtonColor: '#0f0f0f',
-                          });
-                     }
-                     else
-                     {
-                         if (data[0].datos.mensaje.type === 'error') 
-                         {
-                            swal.fire
-                            ({
-                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                                type: 'error',
-                                confirmButtonText: 'Aceptar',
-                                customClass: 'swal-wide',
-                                confirmButtonColor: '#0f0f0f',
-                            });
-                         }
-                         else
-                         {
-                             swal.fire
-                             ({
-                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                                type: 'error',
-                                confirmButtonText: 'Aceptar',
-                                customClass: 'swal-wide',
-                                confirmButtonColor: '#0f0f0f',
-                             });
-
-
-                            if (r === 's') 
-                            {
-                                $('#btnRatificaSi').attr('disabled', false);
-                                $('#btnRatificaNo').attr('disabled', false);
-                                $("#btnRatificaNo").click();
-                            }
-                            MDM6('hideMarkers', 'identify');
-                            xycoorsx = '';
-                            xycoorsy = '';              
-                         }
-                     }
-                  }
+            else {
+              showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
+              if (r === 's') {
+                $('#btnRatificaSi').attr('disabled', false)
+                $('#btnRatificaNo').attr('disabled', false)
+                $("#btnRatificaNo").click()
+              }
+              MDM6('hideMarkers', 'identify')
+              xycoorsx = ''
+              xycoorsy = ''             
             }
-        }
-        else
-        {
-             MDM6('hideMarkers', 'identify');
-             swal.fire({
-                            title: 'Punteo no realizado'+data[0].messages,
-                            type: 'error',
-                            confirmButtonText: 'Aceptar',
-                            customClass: 'swal-wide',
-                            confirmButtonColor: '#0f0f0f',
-                      });
-             
-        }
-        
-        
-    },function ()
-    {
-        swal
-        ({
-            title: 'Buscando información de punteo!',
-            text: 'Por favor espere un momento',
-            timer: 2000,
-            onOpen: function () {
-              swal.showLoading()
-            }
-        }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
           }
         }
-      )
+      }
+    }
+    else {
+      MDM6('hideMarkers', 'identify')
+      showAlertPunteo(`Punteo no realizado ${data[0].messages}`)    
+    }     
         
-    });
+  }, () => {
+    swal ({
+      title: 'Buscando información de punteo!',
+      text: 'Por favor espere un momento',
+      timer: 2000,
+      onOpen: () => swal.showLoading()
+    })
+    .then(
+      () => { },
+       dismiss => {
+        if (dismiss === 'timer') {
+        }
+      }
+    )
+        
+  })
+}
+
+// función sweetaler errores punteo
+const showAlertPunteo = title =>{
+  swal.fire ({
+    title,
+    type: 'error',
+    showCloseButton: true,
+    showConfirmButton: false,
+    customClass: 'swal-wide',
+  }) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
