@@ -239,6 +239,16 @@ nav ul a {
   font-weight: 600;
 }
 
+.wrap-list .item-list{
+  color: #424242;
+  font-family: 'roboto', 'Times New Roman', Times, serif;
+}
+
+.wrap-list .item-list.clave{
+  cursor: pointer;
+  font-weight: 500;
+}
+
 .wrap-list.items:nth-child(even){
   background: #e0f7fa;
 }

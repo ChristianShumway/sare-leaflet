@@ -131,7 +131,6 @@ const eventoMoveZoom = () => {
   }
 };
 
-
 // Función buscar clave
 const buscarUE = () => {
   const claveBusqueda = document.getElementById('clave-busqueda')
@@ -374,7 +373,7 @@ const popupCleeList = data => {
   }
 
   Swal.fire({
-    title: '<strong>LISTA CLAVES</strong>',
+    title: '<strong style="width:100%">CLAVES DISPONIBLES</strong>',
     html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista),
     showCloseButton: true,
     showConfirmButton: false,
@@ -418,7 +417,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
       for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154} = data[num]
         tabla += `<div class='wrap-list items'>
-          <div class='item-list'><span>${idue}</span></div>
+          <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
           <div class='item-list'><span>${c154}</span></div>
         </div>`
       }
@@ -506,6 +505,9 @@ const handlePaginationActive = (page, totalPag) => {
 
 
 const handleSearchCleeEnter = e =>  {
+  const key = window.event ? e.which : e.keyCode
+  key < 48 || key > 57 ? e.preventDefault() : false
+  
   tecla = (document.all) ? e.keyCode : e.which;
   tecla == 13 ? handleSearchCleeList(e) : false
 }
@@ -1067,7 +1069,11 @@ const handleActionButtons = res => {
 const handleSearchCleeValidation = e => {
   const key = window.event ? e.which : e.keyCode
   key < 48 || key > 57 ? e.preventDefault() : false
+
+  tecla = (document.all) ? e.keyCode : e.which;
+  tecla == 13 ? buscarUE(e) : false
 }
+
 
 // alertas formulario
 const alertToastForm = title => {
