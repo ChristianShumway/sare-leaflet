@@ -158,3 +158,38 @@ let inputsVialidades=[
 ]
 
 let inputsByWrap = {}
+
+const arrayErrores = [
+  {
+    value: 'b1',
+    mensaje: 'Los parámetros tramo de control y/o clave unica no tienen datos o son incorrectos'
+  },
+  {
+    value: 'b2',
+    mensaje: 'La clave única no existe o no está disponible para su tramo de control'
+  },
+  {
+    value: 'b2a',
+    mensaje: 'La clave única ya se encuentra registrada previamente'
+  },
+  {
+    value: 'b3',
+    mensaje: 'Error en la busqueda del acercamiento'
+  },
+  {
+    value: 'b4',
+    mensaje: 'La UE seleccionada ya fue georreferiada anteriormente'
+  },
+  {
+    value: 'b5',
+    mensaje: 'La UE no tiene estatus de punteo'
+  },
+  {
+    value: 'b6',
+    mensaje: 'Sin coordenadas'
+  },
+  {
+    value: 'b10',
+    mensaje: 'No hay sesión activa'
+  },
+]

@@ -165,3 +165,21 @@ const handleActionTarget = wrap => {
 const handleHideForm = () => {
   arrayNameWraps.map( name => handleVisibleForm(name) )
 } 
+
+//función que muestra modulo de ratificar y oculta el de busqueda
+const handleShowRaticaHideSearch = () => {
+  const tituloBusqueda = document.getElementById('titulo-busqueda')
+  const viewSearchContainer = document.getElementById('arrow-search')
+  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
+  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
+
+  wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
+  wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
+  wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
+  wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
+
+  viewSearchContainer.removeAttribute('onclick')
+  tituloBusqueda.removeAttribute('onclick')
+  handleVisibleSearch()
+  handleVisibleRatifica()
+}
