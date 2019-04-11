@@ -121,6 +121,10 @@ const ordenaLayer = () => {
   }
 }
 
+const zoom=()=>{
+    
+}
+
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
   var level = MDM6('getZoomLevel');
@@ -181,7 +185,6 @@ const callServiceFindUE=(id_ue)=>{
         'id_ue': id_ue},
     urlServices['serviceSearch'].type, function (data) 
     {
-      console.log(data)
         if(data[0].operation)
         {
             //muestra mensaje si hay error
@@ -720,7 +723,7 @@ const actualizaForm=data=>{
       xycoorsx = data.coord_x;
       xycoorsy = data.coord_y;
       MDM6('hideMarkers', 'identify');
-      //MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
+      MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
       isChange = true;
     for (var entry in data) 
     {

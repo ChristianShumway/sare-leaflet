@@ -4,7 +4,6 @@ const arrayNameWraps = ['referencia', 'ubicacion-geografica', 'domicilio', 'asen
 window.onload = () => {
   handleSessionActive()
   handleHideForm()
-  init();
 }
 
 // Función para mostar u ocultar modulo de busqueda de clave
