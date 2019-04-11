@@ -14,6 +14,8 @@ let dataResultSearchClee = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
 
+let bandera_ratificar=false
+
 
 const init = () => {
   addCapas({ 'checked': true, 'id': 'unidades' });
@@ -144,6 +146,7 @@ const buscarUE = () => {
     })
   } else {
     // animación btns
+    bandera_ratificar=false;
     findUE(claveBusqueda.value);
   }
 }
@@ -312,23 +315,23 @@ const getCp=ce=>{
 
 //Función que valida si los datos vienen correctos al hacer la busqueda
 const showModalMsgError = (data) => {
-  if (typeof data[0].datos.e !== 'undefined') {
+  if (typeof data[0].datos.datos.e !== 'undefined') {
     var mensaje = '';
-    if (data[0].datos.e === 'b1') {
+    if (data[0].datos.datos.e === 'b1') {
       mensaje = 'Los parámetros tramo de control y/o clave unica no tienen datos o son incorrectos ';
-    } else if (data[0].datos.e === 'b2') {
+    } else if (data[0].datos.datos.e === 'b2') {
       mensaje = 'La clave única no existe o no está disponible para su tramo de control';
-    } else if (data[0].datos.e === 'b2a') {
+    } else if (data[0].datos.datos.e === 'b2a') {
       mensaje = 'La clave única ya se encuentra registrada previamente';
-    } else if (data[0].datos.e === 'b3') {
+    } else if (data[0].datos.datos.e === 'b3') {
       mensaje = 'Error en la busqueda del acercamiento';
-    } else if (data[0].datos.e === 'b4') {
+    } else if (data[0].datos.datos.e === 'b4') {
       mensaje = 'La UE seleccionada ya fue georreferiada anteriormente';
-    } else if (data[0].datos.e === 'b5') {
+    } else if (data[0].datos.datos.e === 'b5') {
       mensaje = 'La UE no tiene estatus de punteo';
-    } else if (data[0].datos.e === 'b6') {
+    } else if (data[0].datos.datos.e === 'b6') {
       mensaje = 'Sin coordenadas';
-    } else if (data[0].datos.e === 'b10') {
+    } else if (data[0].datos.datos.e === 'b10') {
       mensaje = 'No hay sesión activa';
     }
 
@@ -573,14 +576,20 @@ const ratificar = request => {
     handleActionButtons('enabled')
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
     handlePunteo(xycoorsx, xycoorsy, 'mercator', r);
+    bandera_ratificar=true
   }
   else{
-      handleShowAlertPickMap()
-      enabledInputs()
-      handleActionTargetRef()
-      xycoorsx = '';
-      xycoorsy = '';
-      MDM6('hideMarkers', 'identify');
+      if(request=='no')
+      {
+        let level = MDM6('getZoomLevel');
+        handleShowAlertPickMap()
+        enabledInputs()
+        handleActionTargetRef()
+        xycoorsx = '';
+        xycoorsy = '';
+        MDM6('hideMarkers', 'identify');
+        
+      }
       
   }
 }
@@ -691,6 +700,220 @@ const actualizaForm=data=>{
             $('#' + o).html(html);
         });
     }
+    else
+    {
+      infodenue = false;
+      var idTipo_e10_xn = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
+      var e10x = ['e10', 'e10_A', 'e10_B', 'e10_C'];
+      idTipo_e10_xn.forEach(function (o, i) 
+      {
+        $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="asignaTipoVial(this)"><option value="Seleccione">Seleccione</option></select>');
+      });
+      e10x.forEach(function (o, i) 
+      {
+          $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" >');
+      });
+    }
+    var arrValid = ['e03', 'e04', 'e05', 'e06'];
+    arrValid.push('e07');
+    var success = true;
+    arrValid.forEach(function (o, i) 
+    {
+        if (data[o] !== '' || typeof data[o] !== '') 
+        {
+            success = success & true;
+        } else 
+        {
+            success = success & false;
+        }
+    });
+    if(!success)
+    {
+      swal.fire({
+        title: 'La información geoestadística esta incompleta.',
+        text: ' Favor de realizar una vez mas el punteo.',
+        showConfirmButton: true,
+        confirmButtonColor: "#5562eb",
+        allowEscapeKey: true,
+        allowOutsideClick: true,
+        html: true,
+        animation: true
+      });
+    }
+      xycoorsx = data.coord_x;
+      xycoorsy = data.coord_y;
+      MDM6('hideMarkers', 'identify');
+      MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
+      isChange = true;
+    for (var entry in data) 
+    {
+      if (entry == 'e10_X') 
+      {
+        var arrData = data[entry];
+        var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>';
+        calles = [];
+        objCalles = [];
+        arrData.forEach(function (o, i) 
+        {
+          objCalles.push(o);
+          calles.push(o.e10_X_cvevial);
+          //calles.push(o.e10_X_cvevial + '|' + o.e10_X_cveseg);
+          html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+        });
+          $('#e10_A').html(html);
+          $('#e10_B').html(html);
+          if (arrData.length > 2) 
+          {
+            $('#e10_C').html(html);
+            $('#e10_C').attr('disabled', false);
+          } else 
+          {
+            $('#e10_C').attr('disabled', true);
+          }
+      }
+      else
+      {
+        if (entry == 'catVial') 
+        {
+          var arrData = data[entry];
+          var html = '';
+          if(arrData!=null)
+          {
+                arrData.forEach(function (o, i) 
+                {
+                  html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10n + '">' + o.tipo_e10n + '</option>';
+                });
+
+                var idElemAppend = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
+                idElemAppend.forEach(function (o, i) 
+                {
+                  $('#' + o).append(html);
+                });
+          }
+        }
+        else
+        {
+          if (entry === 'e05') 
+          {
+            if (data[entry] === '') 
+            {
+              $("#e05n").attr('disabled', false).removeAttr('readonly');
+              $(".msj-punteo").html("Capture la localidad").show();
+            }
+            $('#' + entry).val(data[entry]);
+          }
+          else
+          {
+            $('#' + entry).val(data[entry]);
+          }
+        }
+      }
+    }
+     
+}
+
+//Asigna Tipo_Vial
+
+var asignaTipoVial = function (e) {
+    var optionSelected = $("option:selected", e);
+    var tipo_e10 = $(optionSelected).attr('data-tipo');
+    if (e.id === 'tipo_e10n') 
+    {
+        //limpia campos de pestaña Datos Vialidad
+        $("#tipo_administracion").prop('disabled', true).val(null);
+        $("#derecho_transito").prop('disabled', true).val(null);
+        $("#codigo_carretera").prop('disabled', true).val(null);
+        $("#tramo_camino").prop('disabled', true).val(null);
+        $("#cadenamiento").prop('disabled', true).val(null);
+        $("#margen").prop('disabled', true).val(null);
+        //tabVialidad();
+        $('#tipo_e10').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10").val('Ninguno');
+
+    } else if (e.id === 'tipo_e10_an') {
+        $('#tipo_e10_a').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_a").val('Ninguno');
+    } else if (e.id === 'tipo_e10_bn') {
+        $('#tipo_e10_b').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_b").val('Ninguno');
+    } else if (e.id === 'tipo_e10_cn') {
+        $('#tipo_e10_c').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_c").val('Ninguno');
+    }
+
+};
+
+//Funcion elimina duplicados
+
+const eliminaDuplicados=(cmb)=> {
+    var optionSelected = $("option:selected", cmb);
+    var cveseg = $(optionSelected).attr('data-cveseg');
+    var cvevial = $(optionSelected).attr('data-cvevial');
+    var tipo_e10 = $(optionSelected).attr('data-tipo');
+    var tipo_e10n = $(optionSelected).attr('data-tipon');
+    var e10 = $(optionSelected).val();
+    var cmbs = ["e10_A", "e10_B", "e10_C"];
+    $.each(cmbs, function (i, cm) {
+
+        if (cm === cmb.id || e10.toLowerCase() === 'sin referencia' || e10.toLowerCase() === 'ninguno') {
+            //$("#" + cm + " option[value='Seleccione']").remove();
+            $("#" + cm + "n").val('Ninguno');
+        } else if (cvevial !== '') {
+            $("#" + cm + " option[data-cvevial='" + cvevial + "']").remove();
+            //$("#" + cm + " option[data-cvevial='" + cvevial + "'][data-cveseg='" + cveseg + "']").remove();
+        }
+    });
+    if (cmb.id === 'e10_A') {
+        $('#tipo_e10_a').val(tipo_e10);
+        $('#e10a_cvevial').val(cvevial);
+        $('#tipo_e10_an').val(tipo_e10n);
+        $('#e10a_cveseg').val(cveseg);
+    } else if (cmb.id === 'e10_B') {
+        $('#tipo_e10_b').val(tipo_e10);
+        $('#e10b_cvevial').val(cvevial);
+        $('#tipo_e10_bn').val(tipo_e10n);
+        $('#e10b_cveseg').val(cveseg);
+    } else if (cmb.id === 'e10_C') {
+        $('#tipo_e10_c').val(tipo_e10);
+        $('#e10c_cvevial').val(cvevial);
+        $('#tipo_e10_cn').val(tipo_e10n);
+        $('#e10c_cveseg').val(cveseg);
+    }
+
+    addLiberados();
+}
+
+const addLiberados=()=> {
+    var cmbs = ["e10_A", "e10_B", "e10_C"];
+    var ocupados = [];
+    $.each(cmbs, function (i, cm) {
+        if ($("#" + cm).val() !== "Seleccione") {
+            //var opcSel = $('#' + cm + ' option:selected').attr('data-cvevial') + '|' + $('#' + cm + ' option:selected').attr('data-cveseg');
+            var opcSel = $('#' + cm + ' option:selected').attr('data-cvevial');
+            ocupados.push(opcSel);
+        }
+    });
+    var libres = $(calles).not(ocupados).get();
+    $.each(libres, function (i, libre) {
+        var l = libre.split("|");
+        $.each(cmbs, function (i, cm) {
+            // reviso si la opcion libre ya esta en el combo
+            //if ($("#" + cm + " option[data-cvevial='" + l[0] + "'][data-cveseg='" + l[1] + "']").length === 0) {
+            if ($("#" + cm + " option[data-cvevial='" + libre + "']").length === 0) {
+                //no existe el elemento y hay que agregarlo
+                objCalles.forEach(function (o, i) {
+                    if (libre === o.e10_X_cvevial) {
+                        var html = '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '" value="' + o.e10_X + '">' + o.e10_X + '</option>';
+                        $("#" + cm).append(html);
+                    }
+                });
+            }
+        });
+    });
 }
 
 // Función validación de formulario campos vacios
@@ -761,12 +984,69 @@ const HandleWhatDoYouWantToDo = (coor) => {
       identificaUE(coor.lon, coor.lat);
       break;
     case 'puntear':
+        identificar(coor);
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
       break;
 
   }
+}
+
+const identificar=(coor)=>{
+     MDM6('hideMarkers', 'identify');
+     let level = MDM6('getZoomLevel');
+     let id_ue=document.getElementById('id_UE')
+     const visible = document.getElementById('container-ratifica').dataset.visible
+     
+     if(id_ue!='')
+     {
+        if(visible=='show')
+        {
+            Swal.fire(
+            {
+                position: 'bottom-end',
+                type: 'error',
+                title: 'Debe definir si la posición es correcta o incorrecta en el formulario',
+                showConfirmButton: true,
+                timer: 2000
+            })
+        }
+        else
+        {
+          if(bandera_ratificar)
+          {
+               Swal.fire
+               ({
+                    position: 'bottom-end',
+                    type: 'error',
+                    title: 'El punto ha sido ratificado y no se puede mover, si desea repuntear porfavor presione el botón con el simbolo X',
+                    showConfirmButton: true,
+                    timer: 2000
+               })
+          }else{
+              if(level<=13)
+              {
+                    Swal.fire
+                    ({
+                        position: 'bottom-end',
+                        type: 'warning',
+                        title: 'Realice '+(14-level)+' acercamientos más sobre el mapa, para ubicar correctamente la unidad económica',
+                        showConfirmButton: true,
+                    })
+                MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+              }
+              else
+              {
+                //Lo deja puntear y agrega el punto
+                    MDM6('hideMarkers', 'identify');
+                    MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
+                    handlePunteo(coor.lon, coor.lat, 'mercator', 'n');
+              }
+          }
+           
+        }
+     }
 }
 
 //Funcion para inicializar la vista de calle

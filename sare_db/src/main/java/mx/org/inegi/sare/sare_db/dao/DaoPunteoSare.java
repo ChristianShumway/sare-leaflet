@@ -7,6 +7,7 @@ package mx.org.inegi.sare.sare_db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
@@ -50,7 +51,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     boolean isMza;
     String entidad;
     cat_ubicacion_punteo ubicacion_punteo;
-    cat_vial cat_vial;
+    List<cat_vial> cat_vial;
     String tipo_vial;
     List<cat_vial> cat_tipo_vial;
 
@@ -102,6 +103,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     
      @Override
     public boolean isPuntoinMza(Integer proyecto,String x, String y) {
+        isMza=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.ISMANZANA);
@@ -125,6 +127,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     
     @Override
     public String getEntidad(Integer proyecto, String x, String y) {
+        entidad=null;
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, "",x, y,Metodo.GETENTIDAD);
@@ -148,6 +151,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
      @Override
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto,String ce, String x, String y) 
     {
+        ubicacion_punteo=new cat_ubicacion_punteo();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,ce, x, y,Metodo.GETPUNTEO);
@@ -187,22 +191,25 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
     
      @Override
-    public cat_vial validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto, String ce, String x, String y) 
+    public List<cat_vial> validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto, String ce, String x, String y) 
     {
+        cat_vial=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, ent,x, y,Metodo.VALPUNTEO);
-        cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<cat_vial>() 
+        cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<List<cat_vial>>() 
         {
             @Override
-            public cat_vial extractData(ResultSet rs) throws SQLException, DataAccessException 
+            public List<cat_vial> extractData(ResultSet rs) throws SQLException, DataAccessException 
             {
                 cat_vial fila = null;
+                List<cat_vial> lista=new ArrayList<>();
                 while (rs.next()) 
                 {
                     fila = new cat_vial(null, rs.getString("tipovial"), rs.getString("nomvial"), rs.getString("cvevial"), rs.getString("cveseg"));
+                    lista.add(fila);
                 }
-                return fila;
+                return lista;
             }
         });
 
@@ -210,6 +217,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
     @Override
     public String getTipoVial(Integer proyecto, String tipoE10Xn) {
+       tipo_vial=null;
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"","", "",Metodo.GET_TIPO_VIAL);
@@ -257,6 +265,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Override
     public cat_ubicacion_punteo getInfoPunteoRural(Integer proyecto, String x, String y) 
     {
+        ubicacion_punteo=new cat_ubicacion_punteo();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.GETPUNTEORURAL);
