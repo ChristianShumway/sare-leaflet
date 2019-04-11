@@ -763,6 +763,17 @@ nav ul a {
   color:gray;
 }
 
+.wrap-form .input-field select.browser-default{
+  margin-bottom: 25px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+  padding: 2px 5px;
+  background: #fafafa !important;
+  margin-top: 3px;
+  box-sizing: border-box;
+  color: gray !important;
+}
+
 .select-wrapper input.select-dropdown {
   margin-bottom: 20px !important;
 }
