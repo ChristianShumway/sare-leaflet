@@ -229,14 +229,14 @@ const showDataInterfaz=data=>{
 //valida coordenadas xy en caso de venir vacias ya no hará nada
 const validateCoord=data=>{
     if (typeof data[0].datos.datos[0].coord_X === 'undefined' || typeof data[0].datos.datos[0].coord_Y === 'undefined') {
-        ratificar('no');
+        //ratificar('no');
     }
     else
     {
         //si trae coordenadas xy mostrará la chincheta sobre el mapa
         xycoorsx=data[0].datos.datos[0].coord_X;
         xycoorsy=data[0].datos.datos[0].coord_Y;
-        MDM6('addMarker', {lon: parseFloat(data[0].datos.datos[0].coord_X), lat: parseFloat(data[0].datos.datos[0].coord_Y), type: 'routen', params: {nom: 'Ubicación Original', desc: data[0].datos.datos[0].coord_X + ", " + data[0].datos.datos[0].coord_Y}});
+        MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}});
         
     }
     fillForm(data);
@@ -559,7 +559,6 @@ const ratificar = request => {
   else{
       if(request=='no')
       {
-        let level = MDM6('getZoomLevel');
         handleShowAlertPickMap()
         enabledInputs()
         handleActionTargetRef()
@@ -721,7 +720,7 @@ const actualizaForm=data=>{
       xycoorsx = data.coord_x;
       xycoorsy = data.coord_y;
       MDM6('hideMarkers', 'identify');
-      MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
+      //MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
       isChange = true;
     for (var entry in data) 
     {
@@ -1020,6 +1019,7 @@ const identificar=(coor)=>{
                     MDM6('hideMarkers', 'identify');
                     MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
                     handlePunteo(coor.lon, coor.lat, 'mercator', 'n');
+                    handleHideAlertPickMap()
               }
           }
            

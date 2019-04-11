@@ -108,7 +108,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.ISMANZANA);
         String point = "POINT(" + x + " " + y + ")";
-        isMza=jdbcTemplatemdm.query(sql.toString(),new Object[]{point}, new ResultSetExtractor<Boolean>() 
+        isMza=jdbcTemplatemdm.query(sql.toString(),new Object[]{point,point}, new ResultSetExtractor<Boolean>() 
         {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -348,8 +348,10 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("ageb limit 1");
                 break;
                 case ISMANZANA:
-                    sql.append("select case when count(gid)>0 then true else false end contenido from ").append(schemamdm).append(".manzanas");
-                    sql.append(" where ST_ContainsProperly(the_geom,buffer(geomfromtext(?,900913),1))=true");
+                    sql.append("select case when resultado<>0 or resultado is null then false else true end contenido from(");
+                    sql.append("select sum(case when contenida=false then 1 else 0 end) resultado from (");
+                    sql.append("select *,ST_ContainsProperly(the_geom,buffer(geomfromtext(?,900913),1)) contenida from (");
+                    sql.append("select gid,tipomza,the_geom from ").append(schemamdm).append(".manzanas where st_intersects(the_geom,buffer(geomfromtext(?,900913),1)))a)b)c");
                 break;
                 case GETENTIDAD:
                     sql.append("SELECT cve_ent FROM ").append(schemamdm).append(".ent WHERE st_intersects(the_geom,ST_GeomFromText(?,900913)) ");
