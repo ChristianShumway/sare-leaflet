@@ -5,8 +5,8 @@ var treeConfig = {
         B1: {
             type: 'Wms',
             label: 'Topogr&aacute;fico gris - INEGI ',
-            img: '../../resource/img/mapaBase/mapa_gris.jpg',
-            url: ['http://gaiamapas1.inegi.org.mx/mdmCache/service/wms?', 'http://gaiamapas3.inegi.org.mx/mdmCache/service/wms?', 'http://gaiamapas2.inegi.org.mx/mdmCache/service/wms?'],
+            img: '../../resources/img/mapaBase/mapa_gris.jpg',
+            url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?'],
             layer: 'MapaBaseTopograficov61_sinsombreado_gris',
             rights: 'Derechos Reservados &copy; INEGI',
             tiled: true,
@@ -19,7 +19,7 @@ var treeConfig = {
         B2: {
             type: 'Wms',
             label: 'Topogr&aacute;fico - INEGI',
-            img: '../../resource/img/mapaBase/Wms.jpg',
+            img: '../../resources/img/mapaBase/Wms.jpg',
             url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?'],
             layer: 'MapaBaseTopograficov61_sinsombreado',
             rights: '&copy; INEGI 2013',
@@ -29,17 +29,19 @@ var treeConfig = {
 
         },
         B3: {
-            type: 'Bing',
-            label: 'Bing maps',
-            img: '../../resource/img/mapaBase/Bing.jpg',
-            key: 'At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT',
-            layer: 'Aerial',
-            rights: '&copy; Bing Maps'
+           ype: 'Wms',
+            label: 'Ortofotos - INEGI',
+            img: 'baseOrtos.jpg',
+            url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?'],
+            layer: 'MapaBaseOrtofoto',
+            rights: '&copy; INEGI 2013',
+            tiled: true,
+            desc: 'CONJUNTO DE IMAGENES AEREAS ORTORECTIFICADAS A DIVERSAS ESCALAS Y RESOLUCIONES, PROVENIENTES DEL ACERVO DE ORTOFOTOS DE INEGI Y QUE CORRESPONDEN A TOMAS REALIZADAS EN EL LAPSO 2005-2012.'
         },
         B4: {
             type: 'Wms',
             label: 'Hipsogr&aacute;fico - INEGI',
-            img: '../../resource/img/mapaBase/baseHipsografico.jpg',
+            img: '../../resources/img/mapaBase/baseHipsografico.jpg',
             url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?'],
             layer: 'MapaBaseHipsografico',
             rights: '&copy; INEGI 2013',
@@ -50,16 +52,24 @@ var treeConfig = {
         B5: {
             type: 'Osm',
             label: 'Open Street Map',
-            img: '../../resource/img/mapaBase/Osm.jpg',
+            img: '../../resources/img/mapaBase/Osm.jpg',
             rights: '&copy; OpenStreetMap contributors'
         },
         B6: {
-            type: 'Google',
-            label: 'Google Satellite',
-            img: '../../resource/img/mapaBase/Google.jpg',
-            layer: 'google.maps.MapTypeId.SATELLITE',
-            rights: '&copy; Google'
-        }
+            type: 'Bing',
+            label: 'Bing maps',
+            img: '../../resources/img/mapaBase/Bing.jpg',
+            key: 'At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT',
+            layer: 'Aerial',
+            rights: '&copy; Bing Maps'
+        },
+        B7: {
+            type: 'Esri',
+            label: 'Esri map',
+            img: '../../resources/img/mapaBase/Esri.jpg',
+            url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
+            rights: '&copy; ESRI'
+        },
     },
     layers: {
         groups: {

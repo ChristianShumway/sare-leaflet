@@ -33,9 +33,10 @@ var projectParams = {
             format: 'png'
         }
     ],
-    'onLoad': init,
-    'onIdentify': identificar,
-    //'onZoomEnd':endzoom,
+    'onLoad': init,  
+    'onIdentify': identify,
+    'onMoveEnd': zoom,
+    'onZoomEnd': zoom,
     'btnTogglePanels': true
     
 };
