@@ -152,11 +152,8 @@ const buscarUE = () => {
 }
 //Función que busca la id_ue
 
-const findUE = (id_ue) => {
-  const tituloBusqueda = document.getElementById('titulo-busqueda')
-  const viewSearchContainer = document.getElementById('arrow-search')
-  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
-  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
+const findUE = id_ue => {
+  
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -166,16 +163,8 @@ const findUE = (id_ue) => {
       timer: 2000
     })
   } else {
-    callServiceFindUE(id_ue);
-    wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
-    wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
-    wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
-    wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
-
-    viewSearchContainer.removeAttribute('onclick')
-    tituloBusqueda.removeAttribute('onclick')
-    handleVisibleSearch()
-    handleVisibleRatifica()
+    callServiceFindUE(id_ue)
+    //handleShowRaticaHideSearch()
   }
 
 }
@@ -192,6 +181,7 @@ const callServiceFindUE=(id_ue)=>{
         'id_ue': id_ue},
     urlServices['serviceSearch'].type, function (data) 
     {
+      console.log(data)
         if(data[0].operation)
         {
             //muestra mensaje si hay error
@@ -314,27 +304,13 @@ const getCp=ce=>{
 }
 
 //Función que valida si los datos vienen correctos al hacer la busqueda
-const showModalMsgError = (data) => {
-  if (typeof data[0].datos.datos.e !== 'undefined') {
-    var mensaje = '';
-    if (data[0].datos.datos.e === 'b1') {
-      mensaje = 'Los parámetros tramo de control y/o clave unica no tienen datos o son incorrectos ';
-    } else if (data[0].datos.datos.e === 'b2') {
-      mensaje = 'La clave única no existe o no está disponible para su tramo de control';
-    } else if (data[0].datos.datos.e === 'b2a') {
-      mensaje = 'La clave única ya se encuentra registrada previamente';
-    } else if (data[0].datos.datos.e === 'b3') {
-      mensaje = 'Error en la busqueda del acercamiento';
-    } else if (data[0].datos.datos.e === 'b4') {
-      mensaje = 'La UE seleccionada ya fue georreferiada anteriormente';
-    } else if (data[0].datos.datos.e === 'b5') {
-      mensaje = 'La UE no tiene estatus de punteo';
-    } else if (data[0].datos.datos.e === 'b6') {
-      mensaje = 'Sin coordenadas';
-    } else if (data[0].datos.datos.e === 'b10') {
-      mensaje = 'No hay sesión activa';
-    }
+const showModalMsgError = data => {
+  const dataE =  data[0].datos.datos.e
+  let mensaje
 
+  if (typeof dataE !== 'undefined') {
+    arrayErrores.map( error => dataE === error.value ? mensaje = error.mensaje : false )
+  
     Swal.fire
       ({
         position: 'bottom-end',
@@ -343,6 +319,8 @@ const showModalMsgError = (data) => {
         showConfirmButton: false,
         timer: 2000
       })
+  } else {
+    handleShowRaticaHideSearch()
   }
 }
 
@@ -1090,12 +1068,12 @@ const identificaUE = (x,y) => {
 
 //Funcion que muestra el sweetAlert
 
-const mostrarMensaje=()=>{
+const mostrarMensaje = () => {
   swal.fire({
     title: 'Identificación de Unidades Económicas',
     text: 'Seleccione una capa de información',
-    showConfirmButton: true,
-    confirmButtonColor: "#5562eb",
+    showCancelButton: true,
+    showConfirmButton: false,
     allowEscapeKey: true,
     allowOutsideClick: true,
     html: true,
@@ -1129,7 +1107,8 @@ const callServicioIdentificar = (capas, x, y) => {
             type: 'error',
             title: 'Identificación de Unidades Económicas',
             text: data[0].datos.mensaje.messages,
-            showConfirmButton: true,
+            showCloseButton: true,
+            showConfirmButton: false,
             confirmButtonColor: "#5562eb",
             allowEscapeKey: true,
             allowOutsideClick: true,
@@ -1211,6 +1190,7 @@ const cargaTemplateIdentificaUE = rows => {
     }) 
   }) 
 } 
+
 //función que oculta las tables que no solicito el usuario para mostrar en la opción identificar
 const showUEficha = ficha => {
   //escondo las 2 fichas
