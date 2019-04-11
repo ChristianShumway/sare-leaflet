@@ -27,7 +27,6 @@
     <script src='resources/js/jquery-2.1.1.min.js'></script>
     <script src='resources/js/actionsDom.js'></script>
     <script src='resources/js/objFormulario.js'></script>
-    <script src="resources/js/config.js" type="text/javascript"></script>
      <!-- FONT AWSOME -->
         <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" type="text/css"/>
   </head>
@@ -635,6 +634,6 @@
       })
     </script>
 
-    <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
+    <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>
 
 </html>

@@ -23,7 +23,7 @@ public interface InterfacePunteoSare {
     
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto,String ce, String x, String y);
     
-    public cat_vial validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto,String ce, String x, String y);
+    public List<cat_vial> validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto,String ce, String x, String y);
     
     public String getTipoVial(Integer proyecto, String tipoE10Xn); 
     

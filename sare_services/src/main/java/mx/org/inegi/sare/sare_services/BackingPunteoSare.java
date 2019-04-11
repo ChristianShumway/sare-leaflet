@@ -48,7 +48,8 @@ public class BackingPunteoSare
         Respuesta=new cat_respuesta_services();
         cat_coordenadas coordMercator;
         cat_ubicacion_punteo ubicacion_punteo = null;
-        cat_vial cat_vial = null;
+        List<cat_vial> cat_vial = null;
+        cat_vial vial=null;
         if(TipoCartografia.Geografica.getCodigo().equals(tc))
         {
             Double cX = Double.parseDouble(x.replace(",", "."));
@@ -80,26 +81,31 @@ public class BackingPunteoSare
                              {
                                  cat_vial=InterfacePunteoSare.validaInfoPunteoUrbano(ubicacion_punteo.getE03(),ubicacion_punteo.getCvegeo(),ubicacion_punteo.getCveft(),proyecto,ce,coordMercator.getX(), coordMercator.getY());
                                  ubicacion_punteo.setE10_X(new ArrayList<cat_vial>());
-                                 ubicacion_punteo.getE10_X().add(cat_vial);
+                                 ubicacion_punteo.setE10_X(cat_vial);
                                  switch(ubicacion_punteo.getE10_X().size())
                                  {
                                      case 2:
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
+                                        cat_vial.add(vial);
+                                        ubicacion_punteo.setE10_X(cat_vial);
                                      break;
                                      case 1:
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "999", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
+                                        cat_vial.add(vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "999", "");
+                                        cat_vial.add(vial);
+                                        ubicacion_punteo.setE10_X(cat_vial);
                                      break;
                                      case 0:
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "999", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
-                                        cat_vial = new cat_vial(null, "Ninguno", "Ninguno", "FFF", "");
-                                        ubicacion_punteo.getE10_X().add(cat_vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "000", "");
+                                        cat_vial.add(vial);
+                                        ubicacion_punteo.setE10_X(cat_vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "999", "");
+                                        cat_vial.add(vial);
+                                        ubicacion_punteo.setE10_X(cat_vial);
+                                        vial = new cat_vial(null, "Ninguno", "Ninguno", "FFF", "");
+                                        cat_vial.add(vial);
+                                        ubicacion_punteo.setE10_X(cat_vial);
                                      break;
                                  }
                                  

@@ -34,7 +34,7 @@ var projectParams = {
         }
     ],
     'onLoad': init,
-    //'onIdentify': eventoIdentificar,
+    'onIdentify': identificar,
     //'onZoomEnd':endzoom,
     'btnTogglePanels': true
     
