@@ -382,7 +382,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="tipo_E14" name="tipo_E14">
                   </select>
-                  <label id="labeltipo_E14" for="tipo_E14">Tipo de Asentamiento Humano</label>
+                  <label id="labeltipo_E14" for="tipo_E14" class="active">Tipo de Asentamiento Humano</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="Código Postal" id="e14_A" name="e14_A" type="text" disabled >
@@ -424,7 +424,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
-                  <label id="labele10_A" for="e10_A">Nombre de la Vialidad No.1</label>
+                  <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
                 </div>
                 <div class="input-field">
                   <input id="tipo_e10_b" name="tipo_e10_b" type="text" hidden >
@@ -440,7 +440,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_B" name="e10_B">
                   </select>
-                  <label id="labele10_B" for="e10_B">Nombre de la Vialidad No.2</label>
+                  <label id="labele10_B" for="e10_B" class="active">Nombre de la Vialidad No.2</label>
                 </div>
                 <div class="input-field btns-prev-next">
                   <a onclick="handleActionTarget('asentamiento')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
@@ -473,7 +473,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_C" name="e10_C">
                   </select>
-                  <label id="labele10_C" for="e10_C">Nombre de la Vialidad</label>
+                  <label id="labele10_C" for="e10_C" class="active">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
                   <textarea id="descrubic" name="descrubic" class="materialize-textarea" disabled></textarea>
@@ -501,10 +501,10 @@
                   <label for="E12">E12 Edificio</label>
                 </div>
                 <div class="input-field">
-                  <select id="tipo_e19" name="tipo_e19">
+                  <select class="browser-default" id="tipo_e19" name="tipo_e19">
                     <option value="" disabled selected>Seleccione...</option>
                   </select>
-                  <label for="tipo_e19">Tipo de Corredor o Centro Comercial</label>
+                  <label for="tipo_e19" class="active">Tipo de Corredor o Centro Comercial</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E19 Nombre" id="e19" name="e19" type="text" disabled >

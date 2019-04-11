@@ -240,44 +240,35 @@ const validateCoord=data=>{
 }
 
 //función para llenar el formulario
-
-const fillForm=data=>{
-    let label;
-    $.each(data[0].datos.datos[0], function (i, e) {
-         if (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14') {
-                        label=document.getElementById("label"+i+"");
-                        $("#" + i).html("<option value='" + e + "'>" + e + "</option>");
-                        label.style.display="none";
-                    } else {
-                        $("#" + i).val(e);
-                    }
-    });
-    fillCatalogo();
-    handleActionTargetRef()
+const fillForm = data => {
+  $.each( data[0].datos.datos[0], (i, e) => {
+    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14') 
+      ? $("#" + i).html("<option value='" + e + "'>" + e + "</option>")
+      : $("#" + i).val(e);
+  })
+  fillCatalogo()
+  handleActionTargetRef()
 }
 
 //función que llena el catalogo al hacer la busqueda
+const fillCatalogo = () => {
+  sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
+    {'proyecto':1}, 
+    urlServices['serviceCatalogoAsentamientos'].type, 
+    data => {
+      if (data[0].operation) {
+        let arrAsent = data[0].datos
+        let opcSelected =document.getElementById('tipo_E14')
+            
+        arrAsent.forEach( (o, i) => {
+          (o.tipo_e14 === opcSelected.value) 
+          ? $('#tipo_E14').append(`<option value="${o.tipo_e14}" selected>${o.descripcion}</option>`)
+          : $('#tipo_E14').append(`<option value="${o.tipo_e14}">${o.descripcion}</option>`)
+        })
 
-const fillCatalogo=()=>{
-    sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, {
-        'proyecto':1
-    }, urlServices['serviceCatalogoAsentamientos'].type, function (data) {
-        if (data[0].operation) {
-            let arrAsent = data[0].datos;
-            let opcSelected =document.getElementById('tipo_E14').value;
-            let label =document.getElementById('labeltipo_E14');
-            arrAsent.forEach(function (o, i) {
-                if (o.tipo_e14 === opcSelected) {
-                    $('#tipo_E14').append('<option value="' + o.tipo_e14 + '" selected>' + o.descripcion + '</option>');
-                } else {
-                    $('#tipo_E14').append('<option value="' + o.tipo_e14 + '">' + o.descripcion + '</option>');
-                }
-            });
-            label.style.display="none";
-        } else {
-
-        }
-    }, '');
+      } else { }
+    }, 
+  '')
 }
 
 //Función que hace zoom con el extent al hacer la busqueda
