@@ -260,15 +260,16 @@ const fillCatalogo = () => {
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
-        let arrAsent = data[0].datos
-        let opcSelected =document.getElementById('tipo_E14')
-            
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('tipo_E14')            
+        
         arrAsent.forEach( (o, i) => {
-          (o.tipo_e14 === opcSelected.value) 
-          ? $('#tipo_E14').append(`<option value="${o.tipo_e14}" selected>${o.descripcion}</option>`)
-          : $('#tipo_E14').append(`<option value="${o.tipo_e14}">${o.descripcion}</option>`)
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripcion) )
+          opt.value = o.tipo_e14
+          o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
         })
-
       } else { }
     }, 
   '')
