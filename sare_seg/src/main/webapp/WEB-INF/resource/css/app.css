@@ -7,7 +7,9 @@ body{
   position: relative;
   margin-top: 0px;
 }
-
+#mdm6DinamicPanel{
+    display: block!important
+} 
 #btn-top {
   position: fixed;
   bottom: 23px;

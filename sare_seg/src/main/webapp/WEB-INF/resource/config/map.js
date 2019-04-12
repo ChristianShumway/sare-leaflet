@@ -1,4 +1,4 @@
-var MapConfig = {
+    var MapConfig = {
         layers:[
             {
                     type:'Wms',

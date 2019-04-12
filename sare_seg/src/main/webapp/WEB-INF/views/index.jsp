@@ -15,17 +15,23 @@
      
      <!-- <script src="resources/js/jquery-2.1.1.min.js"  ></script> -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.js"></script>
-    <script src="resources/js/sendAjax.js" type="text/javascript"></script>
-    <script src="resources/js/main.js" type="text/javascript"></script>
-    <script src="resources/config/dataSource.js" type="text/javascript"></script>
+    <script src="resources/js/sendAjax.js" type="text/javascript"></script><script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/map.js" type="text/javascript"></script>
-    <script src="resources/config/config.js" type="text/javascript"></script>
+    <!-- cargamos archivos de configuración del mapa-->
+     <script src="resources/config/dataSource.js" type="text/javascript"></script>
+    <script src="resources/config/map.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
+    
+    
+    <script src="resources/js/main.js" type="text/javascript"></script>
+    
+    
     <!-- Compiled and minified JavaScript -->
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
     <script src='resources/js/jquery-2.1.1.min.js'></script>
     <script src='resources/js/actionsDom.js'></script>
+    <script src="resources/config/config.js" type="text/javascript"></script>
     <script src='resources/js/objFormulario.js'></script>
      <!-- FONT AWSOME -->
         <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" type="text/css"/>

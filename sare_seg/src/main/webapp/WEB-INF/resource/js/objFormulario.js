@@ -139,6 +139,18 @@ const inputsEditables = [
   },
 ]
 
+let inputsVialidadesClean=[
+  {
+    id:'e10_A',
+  },
+  {
+    id:'e10_B',
+  },
+  {
+    id:'e10_C',
+  },
+]
+
 let inputsVialidades=[
    {
     nombre:'tipo_e10n' 
@@ -192,4 +204,118 @@ const arrayErrores = [
     value: 'b10',
     mensaje: 'No hay sesión activa'
   },
+]
+
+const inputsClean = [
+  {
+    id:'id_UE',
+  },
+  {
+    id:'origen',
+  },
+  {
+    id:'c154',
+  },
+  {
+    id:'e08',
+  },
+  {
+    id:'e09',
+  },
+  {
+    id:'e17_DESC',
+  },
+  {
+    id:'e03',
+  },
+  {
+    id:'e03N',
+  },
+  {
+    id:'e04',
+  },
+  {
+    id:'e04N',
+  },
+  {
+    id:'e05',
+  },
+  {
+    id:'e05N',
+  },
+  {
+    id:'e06',
+  },
+  {
+    id:'e07',
+  },
+  {
+    id:'tipo_e10n',
+  },
+  
+  {
+    id:'e10',
+  },
+  {
+    id:'e10_e',
+  },
+  {
+    id:'e11',
+  },
+  {
+    id:'e11_a',
+  },
+  {
+    id:'e13',
+  },
+  {
+    id:'e13_a',
+  },
+  {
+    id:'e14_A',
+  },
+  {
+    id:'e14',
+  },
+  {
+    id:'tipo_e10_an',
+  },
+  {
+    id:'tipo_e10_bn',
+  },
+  {
+    id:'tipo_e10_cn',
+  },
+  {
+    id:'descrubic',
+  },
+  {
+    id:'E12',
+  },
+  {
+    id:'e19',
+  },
+  {
+    id:'E12p',
+  },
+  {
+    id:'e20',
+  },
+  {
+    id:'id_UE',
+  },
+  {
+    id:'e10_A',
+  },
+  {
+    id:'e10_B',
+  },
+  {
+    id:'e10_C',
+  },
+  {
+    id:'clave-busqueda',
+  },
+  
+  
 ]

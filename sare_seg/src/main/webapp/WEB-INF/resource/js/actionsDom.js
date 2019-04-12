@@ -93,6 +93,17 @@ const handleVisibleRatifica = () => {
   }
 }
 
+//Funcion para ocultar modulo de ratificar y modulo de busqueda
+const handleVisibleRatificaandbusqueda = () => {
+  const containerRatifica = document.getElementById('container-ratifica')
+  let visible = containerRatifica.dataset.visible
+  if(visible == 'show'){
+    containerRatifica.animate([{ height:'auto' , opacity:1, padding:'10px 0'}, {height:0, opacity:0, padding:0}], {duration:500, fill:'forwards'})
+    containerRatifica.dataset.visible = 'hide'
+  } 
+}
+
+
 
 // función que muestra alerta que indica que hay que puntear
 const handleShowAlertPickMap = () => {
@@ -181,4 +192,14 @@ const handleShowRaticaHideSearch = () => {
   tituloBusqueda.removeAttribute('onclick')
   handleVisibleSearch()
   handleVisibleRatifica()
+}
+
+//funcion que limpia los formularios
+
+const handleCleanForms=()=>
+{
+    inputsClean.map(input => document.getElementById(input.id).value="")
+    $("#e10_A").empty().attr("disabled", true);
+    $("#e10_B").empty().attr("disabled", true);
+    $("#e10_C").empty().attr("disabled", true);
 }

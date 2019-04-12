@@ -244,7 +244,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"","", "",Metodo.GET_CAT_TIPO_VIAL);
-        jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<cat_vial>() 
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_vial>() 
         {
             @Override
             public cat_vial extractData(ResultSet rs) throws SQLException, DataAccessException 

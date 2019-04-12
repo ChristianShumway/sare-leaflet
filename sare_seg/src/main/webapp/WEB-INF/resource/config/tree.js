@@ -31,7 +31,7 @@ var treeConfig = {
         B3: {
            ype: 'Wms',
             label: 'Ortofotos - INEGI',
-            img: 'baseOrtos.jpg',
+            img: '../../resources/img/mapaBase/baseOrtos.jpg',
             url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?'],
             layer: 'MapaBaseOrtofoto',
             rights: '&copy; INEGI 2013',
@@ -69,11 +69,10 @@ var treeConfig = {
             img: '../../resources/img/mapaBase/Esri.jpg',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
             rights: '&copy; ESRI'
-        },
+        }
     },
     layers: {
         groups: {
         }
-
     }
 };
