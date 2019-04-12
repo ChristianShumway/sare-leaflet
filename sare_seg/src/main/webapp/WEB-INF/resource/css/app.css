@@ -810,6 +810,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
   text-overflow: ellipsis;
 }
 
+.wrap-form .input-field select:focus{
+  border-bottom: 1px solid transparent !important;
+}
+
 .next-wrap{
   display: flex;
   justify-content: flex-end;
