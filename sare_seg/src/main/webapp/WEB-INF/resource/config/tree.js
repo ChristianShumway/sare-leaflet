@@ -69,11 +69,10 @@ var treeConfig = {
             img: '../../resources/img/mapaBase/Esri.jpg',
             url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',
             rights: '&copy; ESRI'
-        },
+        }
     },
     layers: {
         groups: {
         }
-
     }
 };

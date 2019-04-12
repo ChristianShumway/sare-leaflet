@@ -49,6 +49,10 @@ var urlServices = {
         url: 'liberacve.do',
         type: 'get'
     },
+    serviceSaveUE: {
+        url: 'guardarUE.do',
+        type: 'POST'
+    },
     serviceGetExtent: {
         url: 'getExtent.do',
         type: 'get'
@@ -62,97 +66,16 @@ var urlServices = {
         //url: 'http://10.106.12.23:8080/sisac_2018/getLogin.do',
         type: 'get'
     },
-    serviceUnidadesActividad: {
-        url: 'getUnidadesPorActividad.do',
-        type: 'get'
-    },
-    serviceCascaronFiltro: {
-        url: 'getCascaronFiltro.do',
-        type: 'get'
-    },
-    serviceNivelDesagregacion: {
-        url: 'getNivelDesagregacion.do',
-        type: 'get'
-    },
-    serviceTramosControl: {
-        url: 'getDataTramos.do',
-        type: 'get'
-    },
-    serviceCascaronBusqueda: {
-        url: 'getCascaronBusqueda.do',
-        type: 'get'
-    },
-    logoutService: {
-        url: 'logout.do',
-        type: 'get'
-    },
-    serviceServiciosFiltro: {
-        url: 'getServiciosFiltro.do',
-        type: 'get'
-    },
-    filtroTcar: {
-        url: 'getFiltroTcar.do',
-        label: 'filtro',
-        type: 'GET'
-    },
+    
     serviceReporte: {
         url: 'Reportes.do',
         label: 'reporte',
         type: 'GET'
     },
-    serviceAvanceDiarioOperativo: {
-        url: 'getAvanceDiarioOperativo.do',
-        label: 'avancediario',
-        type: 'GET'
-    },
-    serviceGetRanking: {
-        url: 'getRanking.do',
-        label: 'ranking',
-        type: 'GET',
-    },
-    ServiceGetPersonalOcupado: {
-        url: 'getPersonalOcupado.do',
-        label: 'personal',
-        type: 'GET',
-    },
-    ServiceIngresos: {
-        url: 'getIngresos.do',
-        label: 'personal',
-        type: 'GET',
-    },
+    
     validaSesion: {
         url: 'validaSesion.do',
         label: 'validarSesion',
-        type: 'GET'
-    },
-    tarjetonRanking: {
-        url: 'getTarjetonRanking.do',
-        label: 'tarjetaRanking',
-        type: 'GET'
-    },
-    serviceGetActividadPorSector: {
-        url: 'getActividadPorSector.do',
-        label: 'actividad',
-        type: 'GET'
-    },
-    serviceGetDatosLeyenda: {
-        url: 'getDatosLeyenda.do',
-        label: 'actividad',
-        type: 'GET'
-    },
-    servicePersonalOcupadoXClase: {
-        url: 'getActividadPorSector.do',
-        label: 'servicePersonalOcupadoXClase',
-        type: 'GET'
-    },
-    getDatosClasesPorFiltro: {
-        url: 'getDatosClasesPorFiltro.do',
-        label: 'getDatosClasesPorFiltro',
-        type: 'GET'
-    },
-    getListadoUnidadesEconomicas: {
-        url: 'getListadoUnidadesEconomicas.do',
-        label: 'getListadoUnidadesEconomicas.do',
         type: 'GET'
     }
     
