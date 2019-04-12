@@ -597,14 +597,14 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-            showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
+            showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
-              showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
+              showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
             }
             else {
-              showAlertPunteo(`Condiciones insuficientes de punteo: ${data[0].datos.mensaje.messages}`)
+              showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
               if (r === 's') {
                 $('#btnRatificaSi').attr('disabled', false)
                 $('#btnRatificaNo').attr('disabled', false)
@@ -642,9 +642,10 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 // función sweetaler errores punteo
-const showAlertPunteo = title =>{
+const showAlertPunteo = (title, text) =>{
   swal.fire ({
     title,
+    text,
     type: 'error',
     showCloseButton: true,
     showConfirmButton: false,
@@ -943,10 +944,7 @@ const handleFormValidations = () => {
 
 }
 
-const identify = (coor) => {
-  HandleWhatDoYouWantToDo(coor)
-}
-
+const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 
 // Función al seleccionar opciones identificar, puntear  y vista calle
 const HandleWhatDoYouWantToDo = (coor) => {
@@ -965,87 +963,65 @@ const HandleWhatDoYouWantToDo = (coor) => {
   }
 }
 
-const identificar=(coor)=>{
-     MDM6('hideMarkers', 'identify');
-     let level = MDM6('getZoomLevel');
-     let id_ue=document.getElementById('id_UE')
-     const visible = document.getElementById('container-ratifica').dataset.visible
+const identificar = coor => {
+  MDM6('hideMarkers', 'identify')
+  let level = MDM6('getZoomLevel')
+  const id_ue = document.getElementById('id_UE')
+  let visible = document.getElementById('container-ratifica').dataset.visible
      
-     if(id_ue!='')
-     {
-        if(visible=='show')
-        {
-            Swal.fire(
-            {
-                position: 'bottom-end',
-                type: 'error',
-                title: 'Debe definir si la posición es correcta o incorrecta en el formulario',
-                showConfirmButton: true,
-                timer: 2000
-            })
+  if(id_ue != '')
+  {
+    if(visible=='show')
+    {
+      showAlertIdentify('error', 'Debe definir si la posición es correcta o incorrecta en el formulario')
+    } else {
+      if(bandera_ratificar){
+        showAlertIdentify('error', 'El punto ha sido ratificado y no se puede mover', 'si desea repuntear porfavor presione el botón con el simbolo X')
+      } else {
+        if (level<=13) {
+          showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
+          MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+        } else {
+          //Lo deja puntear y agrega el punto
+          MDM6('hideMarkers', 'identify')
+          MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
+          handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+          handleHideAlertPickMap()
         }
-        else
-        {
-          if(bandera_ratificar)
-          {
-               Swal.fire
-               ({
-                    position: 'bottom-end',
-                    type: 'error',
-                    title: 'El punto ha sido ratificado y no se puede mover, si desea repuntear porfavor presione el botón con el simbolo X',
-                    showConfirmButton: true,
-                    timer: 2000
-               })
-          }else{
-              if(level<=13)
-              {
-                    Swal.fire
-                    ({
-                        position: 'bottom-end',
-                        type: 'warning',
-                        title: 'Realice '+(14-level)+' acercamientos más sobre el mapa, para ubicar correctamente la unidad económica',
-                        showConfirmButton: true,
-                    })
-                MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-              }
-              else
-              {
-                //Lo deja puntear y agrega el punto
-                    MDM6('hideMarkers', 'identify');
-                    MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
-                    handlePunteo(coor.lon, coor.lat, 'mercator', 'n');
-                    handleHideAlertPickMap()
-              }
-          }
-           
-        }
-     }
+      }    
+    }
+  }
+}
+
+const showAlertIdentify = (type, title, text='') => {
+  Swal.fire({
+    type,
+    title,
+    text,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 2000
+  })
 }
 
 //Funcion para inicializar la vista de calle
-
 const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 
 //modal que manda llamar la vista de calle
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      {
-        'proyecto': 1,
-        'x': x,
-        'y': y
-      },
-      urlServices['serviceIdentifyStreetView'].type, function (data) {
+      { 'proyecto': 1, 'x': x, 'y': y},
+      urlServices['serviceIdentifyStreetView'].type, 
+      data => {
         if (data[0].operation) {
-          MDM6('hideMarkers', 'identify');
-          ubicacion = data[0].datos['y'] + ',' + data[0].datos['x'];
-          var url = 'http://maps.google.com/maps?q=&layer=c&cbll=' + ubicacion + '&cbp=';
-          setTimeout(function () {
-            win = window.open(url, "_blank", "width=800,height=600,top=150,left=200");
-          }, 200);
-
+          MDM6('hideMarkers', 'identify')
+          ubicacion =`${data[0].datos['y']} , ${ data[0].datos['x']}`
+          let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
+          setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
         }
-      }, '');
+      },''
+    )
   }
 }
 
