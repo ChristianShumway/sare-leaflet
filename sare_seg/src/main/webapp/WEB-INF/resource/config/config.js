@@ -34,9 +34,9 @@ var projectParams = {
         }
     ],
     'onLoad': init,  
-    'onIdentify': identify,
-    'onMoveEnd': zoom,
-    'onZoomEnd': zoom,
+    'onIdentify': identif,
+    'onMoveEnd': zooma,
+    'onZoomEnd': zooma,
     'btnTogglePanels': true
     
 };

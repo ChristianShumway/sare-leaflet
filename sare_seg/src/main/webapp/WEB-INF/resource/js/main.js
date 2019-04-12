@@ -121,7 +121,7 @@ const ordenaLayer = () => {
   }
 }
 
-const zoom=()=>{
+const zooma=()=>{
     
 }
 
@@ -157,7 +157,8 @@ const buscarUE = () => {
 //Función que busca la id_ue
 
 const findUE = id_ue => {
-  
+  xycoorsx=''
+  xycoorsy=''
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -548,7 +549,7 @@ const ratificar = request => {
     handleActionTargetRef()
     handleActionButtons('enabled')
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', r);
+    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r');
     bandera_ratificar=true
   }
   else{
@@ -569,6 +570,8 @@ const ratificar = request => {
 //Funcion que lleva a cabo el punteo del establecimient
 
 const handlePunteo=(x,y,tc,r)=>{
+    xycoorsx=''
+    xycoorsy=''
     let id_ue=document.getElementById('id_UE');
     let ce='00'
     let tr='00000000'
@@ -633,8 +636,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     .then(
       () => { },
        dismiss => {
-        if (dismiss === 'timer') {
-        }
       }
     )
         
@@ -943,7 +944,7 @@ const handleFormValidations = () => {
 
 }
 
-const identify = (coor) => {
+const identif = (coor) => {
   HandleWhatDoYouWantToDo(coor)
 }
 

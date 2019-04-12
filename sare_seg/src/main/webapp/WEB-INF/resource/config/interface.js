@@ -16,7 +16,7 @@ var controlConfig = {
             custom: null,
             fixedLayer: null
         },
-//        elevation: false,
+        elevation: false,
         onOver: {
             showPolygon: false,
             color: {
@@ -29,10 +29,10 @@ var controlConfig = {
         measure: {
             activePrecision: false
         },
-//        mousewheel: {
-//            disable: false,
-//            message: 'Para hacer zoom presione Ctrl + Scroll '
-//        },
+        mousewheel: {
+            disable: false,
+            message: 'Para hacer zoom presione Ctrl + Scroll '
+        },
         level: true
     },
     system: {
