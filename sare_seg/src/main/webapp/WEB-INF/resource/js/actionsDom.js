@@ -182,3 +182,10 @@ const handleShowRaticaHideSearch = () => {
   handleVisibleSearch()
   handleVisibleRatifica()
 }
+
+//funcion que limpia los formularios
+
+const handleCleanForms=()=>
+{
+    inputsClean.map(input => document.getElementById(input.id).value="")
+}

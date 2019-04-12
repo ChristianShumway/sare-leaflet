@@ -955,9 +955,11 @@ const HandleWhatDoYouWantToDo = (coor) => {
   switch (request) {
     case 'identificar':
       identificaUE(coor.lon, coor.lat);
+      
       break;
     case 'puntear':
         identificar(coor);
+        handleActionButtons('enabled')
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
@@ -1251,9 +1253,67 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
-  //$('.button-collapse').sideNav('hide')
+  let id_ue=document.getElementById('id_UE').value
   disabledInputs()
   handleActionButtons('disabled')
+  if(id_ue!=''){
+      //llamar servicio que libera la clave y limpia el form
+      callServiceLiberaClave(id_ue)
+
+  }
+  else
+  {
+      //limpia el formulario
+      cleanForm()
+  }
+}
+
+const callServiceLiberaClave=(id_ue)=>{
+    sendAJAX(urlServices['serviceLiberaClave'].url, 
+    {
+        'proyecto':1,
+        'id_ue': id_ue
+        
+    }, urlServices['serviceLiberaClave'].type, function (data) 
+        {
+            if (data[0].operation) 
+            {
+                //limpia la forma sin avisarle al usuario
+                cleanForm();
+            } else 
+            {
+                swal({
+                    title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
+                    text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
+                    showConfirmButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                    html: true,
+                    animation: true
+                });
+            }
+        }, function () {
+        });
+    
+    
+}
+
+const cleanForm=()=>
+{
+    //limpia formularios
+    handleCleanForms()
+    //posicion el mapa en su posicion inicial
+    MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995);
+    //oculta el marcador azul
+    MDM6('hideMarkers', 'identify');
+    //oculta el marcador naranja
+    MDM6('hideMarkers', 'routen');
+    //contrae la opcion de busqueda
+    handleVisibleSearch()
+    //contrae la tarjeta de referencia
+    handleVisibleForm('referencia')
+    
 }
 
 // Función habilitar inputs formulario

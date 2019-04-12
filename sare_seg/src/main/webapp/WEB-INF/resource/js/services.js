@@ -45,8 +45,8 @@ var urlServices = {
         url: 'getDatabyCoords.do',
         type: 'POST'
     },
-    serviceAvancePorEntidadOperativo: {
-        url: 'getAvancePorEntidadOperativo.do',
+    serviceLiberaClave: {
+        url: 'liberacve.do',
         type: 'get'
     },
     serviceGetExtent: {
