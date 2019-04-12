@@ -139,6 +139,18 @@ const inputsEditables = [
   },
 ]
 
+let inputsVialidadesClean=[
+  {
+    id:'e10_A',
+  },
+  {
+    id:'e10_B',
+  },
+  {
+    id:'e10_C',
+  },
+]
+
 let inputsVialidades=[
    {
     nombre:'tipo_e10n' 

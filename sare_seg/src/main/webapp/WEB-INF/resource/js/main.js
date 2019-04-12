@@ -170,6 +170,10 @@ const findUE = id_ue => {
   } else {
     callServiceFindUE(id_ue)
     //handleShowRaticaHideSearch()
+    //habilita boton cancelar
+    const cancelOption = document.getElementById('item-cancel-option')
+    cancelOption.removeAttribute('disabled')
+    
   }
 
 }
@@ -1309,10 +1313,14 @@ const cleanForm=()=>
     MDM6('hideMarkers', 'identify');
     //oculta el marcador naranja
     MDM6('hideMarkers', 'routen');
-    //contrae la opcion de busqueda
-    handleVisibleSearch()
     //contrae la tarjeta de referencia
     handleVisibleForm('referencia')
+    //deshabilita botones limpiar y guardar
+    handleActionButtons('disabled')
+    //oculta div ratificar y busqueda
+    handleVisibleRatificaandbusqueda()
+    //oculta busqueda
+    handleVisibleSearch()
     
 }
 
