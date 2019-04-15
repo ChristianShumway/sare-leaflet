@@ -33,6 +33,11 @@ var urlServices = {
         url: 'getbusqueda.do',
         type: 'post'
     },
+    getListadoUnidadesEconomicas: {  
+        url: 'getListadoUnidadesEconomicas.do',  
+        label: 'getListadoUnidadesEconomicas.do',  
+        type: 'GET'  
+    },   
     serviceCP:{
         url: 'getCP.do',
         type: 'POST'

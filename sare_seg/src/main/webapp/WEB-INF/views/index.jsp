@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="resources/css/app.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/animate.css" rel="stylesheet" type="text/css"/>
     <title>SARE 2019</title>
      <!-- Compiled and minified CSS -->
