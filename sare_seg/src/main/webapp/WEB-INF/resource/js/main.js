@@ -16,6 +16,8 @@ let titulo_impresion='SARE'
 
 let bandera_ratificar=false
 
+let punteo,mod_cat;
+
 
 const init = () => {
   addCapas({ 'checked': true, 'id': 'unidades' });
@@ -287,6 +289,7 @@ const fillCatalogo = () => {
 const acercarWithExtent = (data) => {
   let res = data[0].datos.datos[0].extent.split(",");
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
+   MDM6('updateSize');
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -610,11 +613,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
             }
             else {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-              if (r === 's') {
-                $('#btnRatificaSi').attr('disabled', false)
-                $('#btnRatificaNo').attr('disabled', false)
-                $("#btnRatificaNo").click()
-              }
               MDM6('hideMarkers', 'identify')
               xycoorsx = ''
               xycoorsy = ''             
@@ -660,6 +658,8 @@ const showAlertPunteo = (title, text) =>{
 
 let infodenue;
 const actualizaForm=data=>{
+    punteo=data.punteo;
+    mod_cat=data.mod_cat;
     //inicializa entrevialidades
     if(typeof data.e10_X!=='undefined'){
         infodenue = true;
@@ -897,7 +897,8 @@ const handleFormValidations = () => {
   const totalInputs = objForm.length
   let inputsInfo = 0
   //$('.button-collapse').sideNav('hide')
-
+if(punteo=='U' && mod_cat=='1')
+{
   for (let input = 0; input < objForm.length; input++) {
     const { id, name, title, key } = objForm[input]
     const element = document.getElementById(id)
@@ -906,7 +907,8 @@ const handleFormValidations = () => {
 
     !inputsByWrap[key] ? inputsByWrap[key] = true : false
 
-    if (element.value == '') {
+    if (element.value == '' || element.value=='Seleccione') 
+    {
       element.style.borderColor = 'red'
       element.classList.add('animated', 'shake')
       visible == 'hide' ? handleVisibleForm(key) : false
@@ -920,9 +922,9 @@ const handleFormValidations = () => {
       wrapTitle.id == title &&
         wrapTitle.classList.add('error')
       element.focus()
-
       break
-    } else {
+    } else 
+    {
       element.style.borderColor = '#eeeeee'
       containerInputsVisible = true
       inputsInfo++
@@ -943,8 +945,42 @@ const handleFormValidations = () => {
     }
   }
 
-  inputsInfo == totalInputs && alert('no hay inputs vacios')
+  inputsInfo == totalInputs && showViewPreliminar()
+}
+else
+{
+    if(punteo=='R' && mod_cat=='1')
+    {
+        
+    }
+}
 
+}
+
+const showViewPreliminar=(d)=>{
+    loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
+            function () {
+
+                $('div.modal-dialog').css({width: '750px'});
+                //separa los parametros 
+                d = d.replace(/Seleccione/g, '');
+                var dpv = d.split("&");
+                //var dpvi= dpv.split("=");
+                $.each(dpv, function (i, e) {
+                    var idobj = e.split("=");
+                    //$('#cve_unica_pv').text('algo');
+
+                    var a = decodeURIComponent(idobj[1]);
+                    a = a.replace(/\+/g, ' ');
+                    ObjectRequest[idobj[0]] = a;
+                    //$("#" + idobj[0] + "_pv").text(decodeURIComponent(idobj[1]).replace('+', " "));
+                    $("#" + idobj[0] + "_pv").text(a);
+                });
+                ObjectRequest['cve_ce'] = usrObj.ce;
+                ObjectRequest['id_deftramo'] = usrObj.id_deftramo;
+                $(".modal-body").css("overflow-y", "scroll");
+                $(".modal-body").css("height", "300px");
+            });
 }
 
 const identify = (coor) => HandleWhatDoYouWantToDo(coor)

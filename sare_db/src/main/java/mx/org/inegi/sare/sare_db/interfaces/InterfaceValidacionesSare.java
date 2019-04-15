@@ -16,4 +16,6 @@ public interface InterfaceValidacionesSare {
     
     public List<cat_codigo_postal> getCP(String CP, Integer proyecto) throws Exception;
     
+    public String isValidCpMsj(String CP,String entidad, Integer proyecto) throws Exception;
+    
 }
