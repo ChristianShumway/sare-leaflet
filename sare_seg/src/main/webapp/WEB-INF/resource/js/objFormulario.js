@@ -77,8 +77,24 @@ const objForm = [
     name:'e07',
     title:'title-ubicacion-geografica',
   },
- 
-  
+  {
+    id:'e10_A',
+    key: 'entre-vialidades',
+    name:'Nombre de vialidad 1',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'e10_B',
+    key: 'entre-vialidades',
+    name:'Nombre de vialidad 2',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'e10_C',
+    key: 'calle-posterior',
+    name:'Nombre de vialidad',
+    title:'title-calle-posterior',
+  },
 ]
 
 const inputsEditables = [

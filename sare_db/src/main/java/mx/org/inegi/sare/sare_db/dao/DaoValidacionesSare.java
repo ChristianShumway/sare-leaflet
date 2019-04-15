@@ -39,6 +39,11 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     private JdbcTemplate jdbcTemplate;
     
  
+     public enum MetodosValida
+    {
+        getCP,validaCP
+    }
+    
     private ProyectosEnum ProyectosEnum;
     
      List<cat_codigo_postal> listaCP = new ArrayList<>(); 
@@ -48,7 +53,7 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     {
         listaCP=new ArrayList<>();
         StringBuilder sql;
-        sql=getSql(proyecto);
+        sql=getSql(proyecto,MetodosValida.getCP);
        listaCP= jdbcTemplate.query(sql.toString(),new Object[]{cve_ent}, new ResultSetExtractor<List<cat_codigo_postal>>() 
        {
             @Override
@@ -69,12 +74,44 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     }
     
     
-    private StringBuilder getSql(Integer proyecto)
+    @Override
+    public String isValidCpMsj(String CP, String entidad, Integer proyecto) throws Exception {
+        String valida;
+        StringBuilder sql;
+        sql=getSql(proyecto,MetodosValida.validaCP);
+       valida= jdbcTemplate.query(sql.toString(),new Object[]{CP,entidad}, new ResultSetExtractor<String>() 
+       {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                
+                String valida = null;
+                while (rs.next()) 
+                {
+                    valida=rs.getString(1);
+
+                }
+                
+                return valida;
+            }
+        });
+       return valida;
+    }
+    
+    private StringBuilder getSql(Integer proyecto, MetodosValida valida)
     {
         StringBuilder sql = new StringBuilder();
             if(Objects.equals(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE.getCódigo(), proyecto))
             {
-                sql.append("SELECT cve_ent,nom_ent,cp_inicial,cp_final FROM ").append(schema).append(".cat_codigo_postal where cve_ent=?");
+                switch(valida){
+                    case getCP:
+                        sql.append("SELECT cve_ent,nom_ent,cp_inicial,cp_final FROM ").append(schema).append(".cat_codigo_postal where cve_ent=?");
+                    break;
+                    case validaCP:
+                        sql.append("SELECT ").append(schema).append(".valida_cp_txt(?,?) ");
+                    break;
+                }
+                
             }
             else
             {
@@ -123,6 +160,8 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
             }
         return sql;
     }
+
+    
 }
 
 

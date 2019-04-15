@@ -77,6 +77,13 @@ var urlServices = {
         url: 'validaSesion.do',
         label: 'validarSesion',
         type: 'GET'
+    },
+    getListadoUnidadesEconomicas: {
+        url: 'getListadoUnidadesEconomicas.do',
+        label: 'getListadoUnidadesEconomicas.do',
+        type: 'GET'
     }
+ 
+    
     
 };
