@@ -37,18 +37,23 @@ public class BackingValidacionesSare {
     
     public cat_respuesta_services validacp(String cp, String entidad, Integer proyecto) throws Exception{
         cat_respuesta_services respuesta=new cat_respuesta_services();
-        try{
+        try
+        {
         respuesta.setDatos(InterfaceValidacionesSare.isValidCpMsj(cp, entidad, proyecto));
-        }catch(FileNotFoundException ex){
+        }catch(FileNotFoundException ex)
+        {
             respuesta.setMensaje(new cat_mensaje("false", "Fallo al conectar a la base de datos"));  
             Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, ex);
-        }catch(SQLException ex){
+        }catch(SQLException ex)
+        {
             respuesta.setMensaje(new cat_mensaje("false", "Fallo al validar Codigo Postal")); 
             Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(respuesta.getDatos()==""){
+        if("".equals(respuesta.getDatos().toString()) || respuesta.getDatos()==null)
+        {
         respuesta.setMensaje(new cat_mensaje("true", ""));
-        }else{
+        }else
+        {
          respuesta.setMensaje(new cat_mensaje("false", respuesta.getDatos().toString()));   
         }
         return respuesta;

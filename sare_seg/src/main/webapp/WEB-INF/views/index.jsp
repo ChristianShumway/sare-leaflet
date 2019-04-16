@@ -23,7 +23,6 @@
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
     
-    
     <script src="resources/js/main.js" type="text/javascript"></script>
     
     
@@ -232,7 +231,7 @@
 
       <!-- CONTAINER FORM -->
       <section class="container-form" id="container-form">
-        <form>
+        <form id="frmSARE">
           <div class="row row-form">
             
             <!-- OPCIÓN REFERENCIA -->
