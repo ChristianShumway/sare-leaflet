@@ -437,6 +437,10 @@ nav ul a {
 .custom-scaleControl-pos-aditional {
   top: 65px !important;
 }
+
+.custom-scaleControl {
+  height: 52px !important;
+}
 /* end estilos pisados mapa */
 
 /* options */
@@ -519,7 +523,7 @@ nav ul a {
   transition: color 200ms ease-in;
   overflow: hidden;
   font-size: 12px;
-  color: white;
+  color: white !important;
 }
 
 .radio-option label:before {
@@ -544,9 +548,13 @@ nav ul a {
   content: '';
   border: 2px solid #D1D7DC;
   background-color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
-  background-repeat: no-repeat;
-  background-position: -1px 0px;
+  /* background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E "); */
+  /* background-image: url('./../images/iconos/checked.svg'); */
+  background: url('./../images/iconos/checked.png') !important;
+  background-repeat: no-repeat !important;
+  /* background-position: -1px 0px; */
+  background-position: center center !important;
+  background-size: 15px !important;
   border-radius: 50%;
   z-index: 2;
   position: absolute;
@@ -569,7 +577,7 @@ nav ul a {
 }
 
 .radio-option input:checked ~ label:after {
-  background-color: #54E0C7;
+  background-color: #54E0C7 !important;
   border-color: #54E0C7;
 }
 
@@ -1380,8 +1388,11 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
   }
 
   .custom-scaleControl {
-    right: 36px !important;
+    /* right: 36px !important; */
+    right: 8px !important;
     top: 11px !important;
+    width: 26px !important;
+    height: 50px !important;
   }
 
   .custom-scaleControl-gps {

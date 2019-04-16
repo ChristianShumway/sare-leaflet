@@ -543,8 +543,6 @@ const handleSearchCleeList = () => {
 
 }
 
-
-
 // Función ratificar
 const ratificar = request => {
   const viewSearchContainer = document.getElementById('arrow-search')
