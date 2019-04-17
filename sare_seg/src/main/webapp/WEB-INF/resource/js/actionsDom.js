@@ -4,7 +4,6 @@ const arrayNameWraps = ['referencia', 'ubicacion-geografica', 'domicilio', 'asen
 window.onload = () => {
   handleSessionActive()
   handleHideForm()
-  init();
 }
 
 // Función para mostar u ocultar modulo de busqueda de clave
@@ -94,6 +93,17 @@ const handleVisibleRatifica = () => {
   }
 }
 
+//Funcion para ocultar modulo de ratificar y modulo de busqueda
+const handleVisibleRatificaandbusqueda = () => {
+  const containerRatifica = document.getElementById('container-ratifica')
+  let visible = containerRatifica.dataset.visible
+  if(visible == 'show'){
+    containerRatifica.animate([{ height:'auto' , opacity:1, padding:'10px 0'}, {height:0, opacity:0, padding:0}], {duration:500, fill:'forwards'})
+    containerRatifica.dataset.visible = 'hide'
+  } 
+}
+
+
 
 // función que muestra alerta que indica que hay que puntear
 const handleShowAlertPickMap = () => {
@@ -165,3 +175,31 @@ const handleActionTarget = wrap => {
 const handleHideForm = () => {
   arrayNameWraps.map( name => handleVisibleForm(name) )
 } 
+
+//función que muestra modulo de ratificar y oculta el de busqueda
+const handleShowRaticaHideSearch = () => {
+  const tituloBusqueda = document.getElementById('titulo-busqueda')
+  const viewSearchContainer = document.getElementById('arrow-search')
+  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
+  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
+
+  wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
+  wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
+  wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
+  wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
+
+  viewSearchContainer.removeAttribute('onclick')
+  tituloBusqueda.removeAttribute('onclick')
+  handleVisibleSearch()
+  handleVisibleRatifica()
+}
+
+//funcion que limpia los formularios
+
+const handleCleanForms=()=>
+{
+    inputsClean.map(input => document.getElementById(input.id).value="")
+    $("#e10_A").empty().attr("disabled", true);
+    $("#e10_B").empty().attr("disabled", true);
+    $("#e10_C").empty().attr("disabled", true);
+}

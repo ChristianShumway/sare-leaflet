@@ -1,12 +1,12 @@
 var controlConfig = {
     ui: {
         denueTurista: true, //herramienta �Que hay aqui?
-        miniBaseMap: false,
+        miniBaseMap: true,
         startupTotorial: false,
         layersBar: false,
         autoOpenThemeBar: false,
-        toolBar: false, //barra de descarga compartir, imprimir y ayuda
-        tool_gps: false //boton GPS en control de vista
+        toolBar: true, //barra de descarga compartir, imprimir y ayuda
+        tool_gps: true //boton GPS en control de vista
     },
     map: {
         geolocation: false,

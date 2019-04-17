@@ -95,6 +95,11 @@ public class ServiceController {
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingValidacionesSare.getcatcp(cve_ent, proyecto);
     }
+    
+    @RequestMapping(value = "validaCP.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services validaCP(@RequestParam(value = "codigo") String codigo,@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingValidacionesSare.validacp(codigo,cve_ent, proyecto);
+    }
 
     @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_asentamientos_humanos> getCatAsentamientosHumanos(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {

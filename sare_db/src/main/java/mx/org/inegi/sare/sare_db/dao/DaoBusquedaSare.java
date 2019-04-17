@@ -311,7 +311,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          proyectos=getProyecto(proyecto);
          sql = getSql(null,null,"",null,"",proyectos,"", "",MetodosBusqueda.LIBERACLAVEUNICAORACLE);
         
-        if(jdbcTemplate.update(sql.toString(),new Object[]{cve_unica})>0)
+        if(jdbcTemplateocl.update(sql.toString(),new Object[]{cve_unica})>0)
         {
           regresa=true; 
         }
@@ -417,8 +417,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             }
                             break;
                         case LIBERACLAVEUNICAORACLE:
-                            sql.append("UPDATE ").append(schemaocl).append(".TD_UE_SUC set SARE_ST='10' where CVE_UNICA=? and sare_st<>'01'");
-                            break;
+                            sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST='10' where id_ue=? and sare_st<>'01'");                            break;
                         case GETVALCOORGEO:
                             sql.append("select ").append(schemapgEge).append(".val_coord_geo(?,?) valida");
                             break;

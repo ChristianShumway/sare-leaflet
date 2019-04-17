@@ -14,6 +14,12 @@ let dataResultSearchClee = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
 
+let bandera_ratificar=false
+
+let punteo,mod_cat;
+
+var ObjectRequest = {};
+
 
 const init = () => {
   addCapas({ 'checked': true, 'id': 'unidades' });
@@ -119,6 +125,10 @@ const ordenaLayer = () => {
   }
 }
 
+const zooma=()=>{
+    
+}
+
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
   var level = MDM6('getZoomLevel');
@@ -130,7 +140,6 @@ const eventoMoveZoom = () => {
     addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false });
   }
 };
-
 
 // Función buscar clave
 const buscarUE = () => {
@@ -145,16 +154,15 @@ const buscarUE = () => {
     })
   } else {
     // animación btns
+    bandera_ratificar=false;
     findUE(claveBusqueda.value);
   }
 }
 //Función que busca la id_ue
 
-const findUE = (id_ue) => {
-  const tituloBusqueda = document.getElementById('titulo-busqueda')
-  const viewSearchContainer = document.getElementById('arrow-search')
-  const wrapSiRatifica = document.getElementById('wrap-si-ratifica')
-  const wrapNoRatifica = document.getElementById('wrap-no-ratifica')
+const findUE = id_ue => {
+  xycoorsx=''
+  xycoorsy=''
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -164,16 +172,12 @@ const findUE = (id_ue) => {
       timer: 2000
     })
   } else {
-    callServiceFindUE(id_ue);
-    wrapSiRatifica.classList.add('animated', 'slideInLeft', 'slow')
-    wrapNoRatifica.classList.add('animated', 'slideInRight', 'slow')
-    wrapSiRatifica.addEventListener('animationend', () => wrapSiRatifica.classList.remove('animated', 'slideInLeft', 'slow'))
-    wrapNoRatifica.addEventListener('animationend', () => wrapNoRatifica.classList.remove('animated', 'slideInRight', 'slow'))
-
-    viewSearchContainer.removeAttribute('onclick')
-    tituloBusqueda.removeAttribute('onclick')
-    handleVisibleSearch()
-    handleVisibleRatifica()
+    callServiceFindUE(id_ue)
+    //handleShowRaticaHideSearch()
+    //habilita boton cancelar
+    const cancelOption = document.getElementById('item-cancel-option')
+    cancelOption.removeAttribute('disabled')
+    
   }
 
 }
@@ -244,57 +248,50 @@ const validateCoord=data=>{
         //si trae coordenadas xy mostrará la chincheta sobre el mapa
         xycoorsx=data[0].datos.datos[0].coord_X;
         xycoorsy=data[0].datos.datos[0].coord_Y;
-        MDM6('addMarker', {lon: parseFloat(data[0].datos.datos[0].coord_X), lat: parseFloat(data[0].datos.datos[0].coord_Y), type: 'routen', params: {nom: 'Ubicación Original', desc: data[0].datos.datos[0].coord_X + ", " + data[0].datos.datos[0].coord_Y}});
+        MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}});
         
     }
     fillForm(data);
 }
 
 //función para llenar el formulario
-
-const fillForm=data=>{
-    let label;
-    $.each(data[0].datos.datos[0], function (i, e) {
-         if (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14') {
-                        label=document.getElementById("label"+i+"");
-                        $("#" + i).html("<option value='" + e + "'>" + e + "</option>");
-                        label.style.display="none";
-                    } else {
-                        $("#" + i).val(e);
-                    }
-    });
-    fillCatalogo();
-    handleActionTargetRef()
+const fillForm = data => {
+  $.each( data[0].datos.datos[0], (i, e) => {
+    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14') 
+      ? $("#" + i).html("<option value='" + e + "'>" + e + "</option>")
+      : $("#" + i).val(e);
+  })
+  fillCatalogo()
+  handleActionTargetRef()
 }
 
 //función que llena el catalogo al hacer la busqueda
-
-const fillCatalogo=()=>{
-    sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, {
-        'proyecto':1
-    }, urlServices['serviceCatalogoAsentamientos'].type, function (data) {
-        if (data[0].operation) {
-            let arrAsent = data[0].datos;
-            let opcSelected =document.getElementById('tipo_E14').value;
-            let label =document.getElementById('labeltipo_E14');
-            arrAsent.forEach(function (o, i) {
-                if (o.tipo_e14 === opcSelected) {
-                    $('#tipo_E14').append('<option value="' + o.tipo_e14 + '" selected>' + o.descripcion + '</option>');
-                } else {
-                    $('#tipo_E14').append('<option value="' + o.tipo_e14 + '">' + o.descripcion + '</option>');
-                }
-            });
-            label.style.display="none";
-        } else {
-
-        }
-    }, '');
+const fillCatalogo = () => {
+  sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
+    {'proyecto':1}, 
+    urlServices['serviceCatalogoAsentamientos'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('tipo_E14')            
+        
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripcion) )
+          opt.value = o.tipo_e14
+          o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
 }
 
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = (data) => {
   let res = data[0].datos.datos[0].extent.split(",");
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
+   MDM6('updateSize');
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -312,27 +309,13 @@ const getCp=ce=>{
 }
 
 //Función que valida si los datos vienen correctos al hacer la busqueda
-const showModalMsgError = (data) => {
-  if (typeof data[0].datos.e !== 'undefined') {
-    var mensaje = '';
-    if (data[0].datos.e === 'b1') {
-      mensaje = 'Los parámetros tramo de control y/o clave unica no tienen datos o son incorrectos ';
-    } else if (data[0].datos.e === 'b2') {
-      mensaje = 'La clave única no existe o no está disponible para su tramo de control';
-    } else if (data[0].datos.e === 'b2a') {
-      mensaje = 'La clave única ya se encuentra registrada previamente';
-    } else if (data[0].datos.e === 'b3') {
-      mensaje = 'Error en la busqueda del acercamiento';
-    } else if (data[0].datos.e === 'b4') {
-      mensaje = 'La UE seleccionada ya fue georreferiada anteriormente';
-    } else if (data[0].datos.e === 'b5') {
-      mensaje = 'La UE no tiene estatus de punteo';
-    } else if (data[0].datos.e === 'b6') {
-      mensaje = 'Sin coordenadas';
-    } else if (data[0].datos.e === 'b10') {
-      mensaje = 'No hay sesión activa';
-    }
+const showModalMsgError = data => {
+  const dataE =  data[0].datos.datos.e
+  let mensaje
 
+  if (typeof dataE !== 'undefined') {
+    arrayErrores.map( error => dataE === error.value ? mensaje = error.mensaje : false )
+  
     Swal.fire
       ({
         position: 'bottom-end',
@@ -341,6 +324,8 @@ const showModalMsgError = (data) => {
         showConfirmButton: false,
         timer: 2000
       })
+  } else {
+    handleShowRaticaHideSearch()
   }
 }
 
@@ -374,7 +359,7 @@ const popupCleeList = data => {
   }
 
   Swal.fire({
-    title: '<strong>LISTA CLAVES</strong>',
+    title: '<strong style="width:100%">CLAVES DISPONIBLES</strong>',
     html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista),
     showCloseButton: true,
     showConfirmButton: false,
@@ -418,7 +403,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
       for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154} = data[num]
         tabla += `<div class='wrap-list items'>
-          <div class='item-list'><span>${idue}</span></div>
+          <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
           <div class='item-list'><span>${c154}</span></div>
         </div>`
       }
@@ -506,6 +491,9 @@ const handlePaginationActive = (page, totalPag) => {
 
 
 const handleSearchCleeEnter = e =>  {
+  const key = window.event ? e.which : e.keyCode
+  key < 48 || key > 57 ? e.preventDefault() : false
+
   tecla = (document.all) ? e.keyCode : e.which;
   tecla == 13 ? handleSearchCleeList(e) : false
 }
@@ -555,8 +543,6 @@ const handleSearchCleeList = () => {
 
 }
 
-
-
 // Función ratificar
 const ratificar = request => {
   const viewSearchContainer = document.getElementById('arrow-search')
@@ -570,15 +556,20 @@ const ratificar = request => {
     handleActionTargetRef()
     handleActionButtons('enabled')
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', r);
+    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r');
+    bandera_ratificar=true
   }
   else{
-      handleShowAlertPickMap()
-      enabledInputs()
-      handleActionTargetRef()
-      xycoorsx = '';
-      xycoorsy = '';
-      MDM6('hideMarkers', 'identify');
+      if(request=='no')
+      {
+        handleShowAlertPickMap()
+        enabledInputs()
+        handleActionTargetRef()
+        xycoorsx = '';
+        xycoorsy = '';
+        MDM6('hideMarkers', 'identify');
+        
+      }
       
   }
 }
@@ -586,6 +577,8 @@ const ratificar = request => {
 //Funcion que lleva a cabo el punteo del establecimient
 
 const handlePunteo=(x,y,tc,r)=>{
+    xycoorsx=''
+    xycoorsy=''
     let id_ue=document.getElementById('id_UE');
     let ce='00'
     let tr='00000000'
@@ -595,116 +588,80 @@ const handlePunteo=(x,y,tc,r)=>{
 
 //Función que llama al servicio para el punteo de unidades economicas
 
-const callServicePunteo=(x,y,tc,r,id_ue,ce,tr,u)=>{
-    sendAJAX(urlServices['serviceIdentify'].url, 
-    {
-        'proyecto':1,
-        'x': x, 
-        'y': y, 
-        'tc': tc, 
-        'r': r, 
-        'ce': ce, 
-        'tr': tr
-    }, urlServices['serviceIdentify'].type, function (data) {
+const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
+  sendAJAX(urlServices['serviceIdentify'].url, 
+  {
+    'proyecto':1,
+    'x': x, 
+    'y': y, 
+    'tc': tc, 
+    'r': r, 
+    'ce': ce, 
+    'tr': tr
+  }, urlServices['serviceIdentify'].type,  data => {
         
-        if (data[0].operation) 
-        {
-            if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) 
-            {
-                actualizaForm(data[0].datos.datos);
+    if (data[0].operation) {
+      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        actualizaForm(data[0].datos.datos)
+      }
+      else {
+        if (typeof data[0].datos.mensaje.type !== 'undefined') {
+          if (data[0].datos.mensaje.type === 'confirmar') {
+            showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+          }
+          else {
+            if (data[0].datos.mensaje.type === 'error') {
+              showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
             }
-            else
-            {
-                if (typeof data[0].datos.mensaje.type !== 'undefined') 
-                {
-                     if (data[0].datos.mensaje.type === 'confirmar') 
-                     {
-                         swal.fire({
-                            title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                            type: 'error',
-                            confirmButtonText: 'Aceptar',
-                            customClass: 'swal-wide',
-                            confirmButtonColor: '#0f0f0f',
-                          });
-                     }
-                     else
-                     {
-                         if (data[0].datos.mensaje.type === 'error') 
-                         {
-                            swal.fire
-                            ({
-                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                                type: 'error',
-                                confirmButtonText: 'Aceptar',
-                                customClass: 'swal-wide',
-                                confirmButtonColor: '#0f0f0f',
-                            });
-                         }
-                         else
-                         {
-                             swal.fire
-                             ({
-                                title: 'Condiciones insuficientes de punteo:'+data[0].datos.mensaje.messages,
-                                type: 'error',
-                                confirmButtonText: 'Aceptar',
-                                customClass: 'swal-wide',
-                                confirmButtonColor: '#0f0f0f',
-                             });
-
-
-                            if (r === 's') 
-                            {
-                                $('#btnRatificaSi').attr('disabled', false);
-                                $('#btnRatificaNo').attr('disabled', false);
-                                $("#btnRatificaNo").click();
-                            }
-                            MDM6('hideMarkers', 'identify');
-                            xycoorsx = '';
-                            xycoorsy = '';              
-                         }
-                     }
-                  }
+            else {
+              showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+              MDM6('hideMarkers', 'identify')
+              xycoorsx = ''
+              xycoorsy = ''             
             }
-        }
-        else
-        {
-             MDM6('hideMarkers', 'identify');
-             swal.fire({
-                            title: 'Punteo no realizado'+data[0].messages,
-                            type: 'error',
-                            confirmButtonText: 'Aceptar',
-                            customClass: 'swal-wide',
-                            confirmButtonColor: '#0f0f0f',
-                      });
-             
-        }
-        
-        
-    },function ()
-    {
-        swal
-        ({
-            title: 'Buscando información de punteo!',
-            text: 'Por favor espere un momento',
-            timer: 2000,
-            onOpen: function () {
-              swal.showLoading()
-            }
-        }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
           }
         }
-      )
+      }
+    }
+    else {
+      MDM6('hideMarkers', 'identify')
+      showAlertPunteo(`Punteo no realizado ${data[0].messages}`)    
+    }     
         
-    });
+  }, () => {
+    swal ({
+      title: 'Buscando información de punteo!',
+      text: 'Por favor espere un momento',
+      timer: 2000,
+      onOpen: () => swal.showLoading()
+    })
+    .then(
+      () => { },
+       dismiss => {
+      }
+    )
+        
+  })
+}
+
+// función sweetaler errores punteo
+const showAlertPunteo = (title, text) =>{
+  swal.fire ({
+    title,
+    text,
+    type: 'error',
+    showCloseButton: true,
+    showConfirmButton: false,
+    customClass: 'swal-wide',
+  }) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
 
 let infodenue;
 const actualizaForm=data=>{
+    punteo=data.punteo;
+    mod_cat=data.mod_cat;
     //inicializa entrevialidades
     if(typeof data.e10_X!=='undefined'){
         infodenue = true;
@@ -721,6 +678,220 @@ const actualizaForm=data=>{
             $('#' + o).html(html);
         });
     }
+    else
+    {
+      infodenue = false;
+      var idTipo_e10_xn = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
+      var e10x = ['e10', 'e10_A', 'e10_B', 'e10_C'];
+      idTipo_e10_xn.forEach(function (o, i) 
+      {
+        $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="asignaTipoVial(this)"><option value="Seleccione">Seleccione</option></select>');
+      });
+      e10x.forEach(function (o, i) 
+      {
+          $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" >');
+      });
+    }
+    var arrValid = ['e03', 'e04', 'e05', 'e06'];
+    arrValid.push('e07');
+    var success = true;
+    arrValid.forEach(function (o, i) 
+    {
+        if (data[o] !== '' || typeof data[o] !== '') 
+        {
+            success = success & true;
+        } else 
+        {
+            success = success & false;
+        }
+    });
+    if(!success)
+    {
+      swal.fire({
+        title: 'La información geoestadística esta incompleta.',
+        text: ' Favor de realizar una vez mas el punteo.',
+        showConfirmButton: true,
+        confirmButtonColor: "#5562eb",
+        allowEscapeKey: true,
+        allowOutsideClick: true,
+        html: true,
+        animation: true
+      });
+    }
+      xycoorsx = data.coord_x;
+      xycoorsy = data.coord_y;
+      MDM6('hideMarkers', 'identify');
+      MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
+      isChange = true;
+    for (var entry in data) 
+    {
+      if (entry == 'e10_X') 
+      {
+        var arrData = data[entry];
+        var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>';
+        calles = [];
+        objCalles = [];
+        arrData.forEach(function (o, i) 
+        {
+          objCalles.push(o);
+          calles.push(o.e10_X_cvevial);
+          //calles.push(o.e10_X_cvevial + '|' + o.e10_X_cveseg);
+          html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+        });
+          $('#e10_A').html(html);
+          $('#e10_B').html(html);
+          if (arrData.length > 2) 
+          {
+            $('#e10_C').html(html);
+            $('#e10_C').attr('disabled', false);
+          } else 
+          {
+            $('#e10_C').attr('disabled', true);
+          }
+      }
+      else
+      {
+        if (entry == 'catVial') 
+        {
+          var arrData = data[entry];
+          var html = '';
+          if(arrData!=null)
+          {
+                arrData.forEach(function (o, i) 
+                {
+                  html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10n + '">' + o.tipo_e10n + '</option>';
+                });
+
+                var idElemAppend = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
+                idElemAppend.forEach(function (o, i) 
+                {
+                  $('#' + o).append(html);
+                });
+          }
+        }
+        else
+        {
+          if (entry === 'e05') 
+          {
+            if (data[entry] === '') 
+            {
+              $("#e05n").attr('disabled', false).removeAttr('readonly');
+              $(".msj-punteo").html("Capture la localidad").show();
+            }
+            $('#' + entry).val(data[entry]);
+          }
+          else
+          {
+            $('#' + entry).val(data[entry]);
+          }
+        }
+      }
+    }
+     
+}
+
+//Asigna Tipo_Vial
+
+var asignaTipoVial = function (e) {
+    var optionSelected = $("option:selected", e);
+    var tipo_e10 = $(optionSelected).attr('data-tipo');
+    if (e.id === 'tipo_e10n') 
+    {
+        //limpia campos de pestaña Datos Vialidad
+        $("#tipo_administracion").prop('disabled', true).val(null);
+        $("#derecho_transito").prop('disabled', true).val(null);
+        $("#codigo_carretera").prop('disabled', true).val(null);
+        $("#tramo_camino").prop('disabled', true).val(null);
+        $("#cadenamiento").prop('disabled', true).val(null);
+        $("#margen").prop('disabled', true).val(null);
+        //tabVialidad();
+        $('#tipo_e10').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10").val('Ninguno');
+
+    } else if (e.id === 'tipo_e10_an') {
+        $('#tipo_e10_a').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_a").val('Ninguno');
+    } else if (e.id === 'tipo_e10_bn') {
+        $('#tipo_e10_b').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_b").val('Ninguno');
+    } else if (e.id === 'tipo_e10_cn') {
+        $('#tipo_e10_c').val(tipo_e10);
+        if (tipo_e10 === '22')
+            $("#e10_c").val('Ninguno');
+    }
+
+};
+
+//Funcion elimina duplicados
+
+const eliminaDuplicados=(cmb)=> {
+    var optionSelected = $("option:selected", cmb);
+    var cveseg = $(optionSelected).attr('data-cveseg');
+    var cvevial = $(optionSelected).attr('data-cvevial');
+    var tipo_e10 = $(optionSelected).attr('data-tipo');
+    var tipo_e10n = $(optionSelected).attr('data-tipon');
+    var e10 = $(optionSelected).val();
+    var cmbs = ["e10_A", "e10_B", "e10_C"];
+    $.each(cmbs, function (i, cm) {
+
+        if (cm === cmb.id || e10.toLowerCase() === 'sin referencia' || e10.toLowerCase() === 'ninguno') {
+            //$("#" + cm + " option[value='Seleccione']").remove();
+            $("#" + cm + "n").val('Ninguno');
+        } else if (cvevial !== '') {
+            $("#" + cm + " option[data-cvevial='" + cvevial + "']").remove();
+            //$("#" + cm + " option[data-cvevial='" + cvevial + "'][data-cveseg='" + cveseg + "']").remove();
+        }
+    });
+    if (cmb.id === 'e10_A') {
+        $('#tipo_e10_a').val(tipo_e10);
+        $('#e10a_cvevial').val(cvevial);
+        $('#tipo_e10_an').val(tipo_e10n);
+        $('#e10a_cveseg').val(cveseg);
+    } else if (cmb.id === 'e10_B') {
+        $('#tipo_e10_b').val(tipo_e10);
+        $('#e10b_cvevial').val(cvevial);
+        $('#tipo_e10_bn').val(tipo_e10n);
+        $('#e10b_cveseg').val(cveseg);
+    } else if (cmb.id === 'e10_C') {
+        $('#tipo_e10_c').val(tipo_e10);
+        $('#e10c_cvevial').val(cvevial);
+        $('#tipo_e10_cn').val(tipo_e10n);
+        $('#e10c_cveseg').val(cveseg);
+    }
+
+    addLiberados();
+}
+
+const addLiberados=()=> {
+    var cmbs = ["e10_A", "e10_B", "e10_C"];
+    var ocupados = [];
+    $.each(cmbs, function (i, cm) {
+        if ($("#" + cm).val() !== "Seleccione") {
+            //var opcSel = $('#' + cm + ' option:selected').attr('data-cvevial') + '|' + $('#' + cm + ' option:selected').attr('data-cveseg');
+            var opcSel = $('#' + cm + ' option:selected').attr('data-cvevial');
+            ocupados.push(opcSel);
+        }
+    });
+    var libres = $(calles).not(ocupados).get();
+    $.each(libres, function (i, libre) {
+        var l = libre.split("|");
+        $.each(cmbs, function (i, cm) {
+            // reviso si la opcion libre ya esta en el combo
+            //if ($("#" + cm + " option[data-cvevial='" + l[0] + "'][data-cveseg='" + l[1] + "']").length === 0) {
+            if ($("#" + cm + " option[data-cvevial='" + libre + "']").length === 0) {
+                //no existe el elemento y hay que agregarlo
+                objCalles.forEach(function (o, i) {
+                    if (libre === o.e10_X_cvevial) {
+                        var html = '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '" value="' + o.e10_X + '">' + o.e10_X + '</option>';
+                        $("#" + cm).append(html);
+                    }
+                });
+            }
+        });
+    });
 }
 
 // Función validación de formulario campos vacios
@@ -728,7 +899,8 @@ const handleFormValidations = () => {
   const totalInputs = objForm.length
   let inputsInfo = 0
   //$('.button-collapse').sideNav('hide')
-
+if(punteo=='U' && mod_cat=='1')
+{
   for (let input = 0; input < objForm.length; input++) {
     const { id, name, title, key } = objForm[input]
     const element = document.getElementById(id)
@@ -737,7 +909,8 @@ const handleFormValidations = () => {
 
     !inputsByWrap[key] ? inputsByWrap[key] = true : false
 
-    if (element.value == '') {
+    if (element.value == '' || element.value=='Seleccione') 
+    {
       element.style.borderColor = 'red'
       element.classList.add('animated', 'shake')
       visible == 'hide' ? handleVisibleForm(key) : false
@@ -751,9 +924,9 @@ const handleFormValidations = () => {
       wrapTitle.id == title &&
         wrapTitle.classList.add('error')
       element.focus()
-
       break
-    } else {
+    } else 
+    {
       element.style.borderColor = '#eeeeee'
       containerInputsVisible = true
       inputsInfo++
@@ -774,14 +947,85 @@ const handleFormValidations = () => {
     }
   }
 
-  inputsInfo == totalInputs && alert('no hay inputs vacios')
+  inputsInfo == totalInputs && validaCp()
+}
+else
+{
+    if(punteo=='R' && mod_cat=='1')
+    {
+        
+    }
+}
 
 }
 
-const identify = (coor) => {
-  HandleWhatDoYouWantToDo(coor)
+const validaCp=()=>{
+    sendAJAX(urlServices['serviceValCP'].url, {
+        'codigo': $("#e14_A").val(),
+        'cve_ent': $("#e03").val(),
+        'proyecto':1}, 
+    urlServices['serviceValCP'].type, function (data) 
+    {
+        if (data[0].operation) 
+        {
+            if (data[0].datos.result === false) 
+            {
+                
+            }
+            else
+            {
+                var myform = $('#frmSARE');
+                var disabled = myform.find(':input:disabled').removeAttr('disabled');
+                var d = myform.serialize();
+                d += "&tramo_control=" + dataUserFromLoginLocalStorage.tramo_control;
+                d += "&coord_x=" + xycoorsx + "&coord_y=" + xycoorsy;
+                var u = dataUserFromLoginLocalStorage.nombre;
+                var htmlDiv = "<div id='vista'> </div>";
+                const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
+                 swal.fire({ 
+                    title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
+                    width: sizeScreen, 
+                    html: htmlDiv, 
+                    confirmButtonText: 'Aceptarr', 
+                    customClass: 'swal-wide', 
+                    confirmButtonColor: '#0f0f0f', 
+                    allowEscapeKey: false, 
+                    allowOutsideClick: false, 
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    showCloseButton: true, 
+                    onOpen: showViewPreliminar(d) 
+                }) 
+            }
+        }
+    },function (){
+        
+    });
 }
 
+const showViewPreliminar=(d)=>{
+    loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
+            function () {
+                //separa los parametros 
+                d = d.replace(/Seleccione/g, '');
+                var dpv = d.split("&");
+                //var dpvi= dpv.split("=");
+                $.each(dpv, function (i, e) {
+                    var idobj = e.split("=");
+                    //$('#cve_unica_pv').text('algo');
+
+                    var a = decodeURIComponent(idobj[1]);
+                    a = a.replace(/\+/g, ' ');
+                    ObjectRequest[idobj[0]] = a;
+                    //$("#" + idobj[0] + "_pv").text(decodeURIComponent(idobj[1]).replace('+', " "));
+                    $("#" + idobj[0] + "_pv").text(a);
+                });
+                //ObjectRequest['cve_ce'] = dataUserFromLoginLocalStorage.ce;
+                //ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.id_deftramo;
+            });
+}
+
+const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 
 // Función al seleccionar opciones identificar, puntear  y vista calle
 const HandleWhatDoYouWantToDo = (coor) => {
@@ -789,8 +1033,11 @@ const HandleWhatDoYouWantToDo = (coor) => {
   switch (request) {
     case 'identificar':
       identificaUE(coor.lon, coor.lat);
+      
       break;
     case 'puntear':
+        identificar(coor);
+        handleActionButtons('enabled')
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
@@ -799,30 +1046,65 @@ const HandleWhatDoYouWantToDo = (coor) => {
   }
 }
 
-//Funcion para inicializar la vista de calle
+const identificar = coor => {
+  MDM6('hideMarkers', 'identify')
+  let level = MDM6('getZoomLevel')
+  const id_ue = document.getElementById('id_UE')
+  let visible = document.getElementById('container-ratifica').dataset.visible
+     
+  if(id_ue != '')
+  {
+    if(visible=='show')
+    {
+      showAlertIdentify('error', 'Debe definir si la posición es correcta o incorrecta en el formulario')
+    } else {
+      if(bandera_ratificar){
+        showAlertIdentify('error', 'El punto ha sido ratificado y no se puede mover', 'si desea repuntear porfavor presione el botón con el simbolo X')
+      } else {
+        if (level<=13) {
+          showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
+          MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+        } else {
+          //Lo deja puntear y agrega el punto
+          MDM6('hideMarkers', 'identify')
+          MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
+          handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+          handleHideAlertPickMap()
+        }
+      }    
+    }
+  }
+}
 
+const showAlertIdentify = (type, title, text='') => {
+  Swal.fire({
+    type,
+    title,
+    text,
+    position: 'bottom-end',
+    showConfirmButton: false,
+    timer: 2000
+  })
+}
+
+//Funcion para inicializar la vista de calle
 const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 
 //modal que manda llamar la vista de calle
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      {
-        'proyecto': 1,
-        'x': x,
-        'y': y
-      },
-      urlServices['serviceIdentifyStreetView'].type, function (data) {
+      { 'proyecto': 1, 'x': x, 'y': y},
+      urlServices['serviceIdentifyStreetView'].type, 
+      data => {
         if (data[0].operation) {
-          MDM6('hideMarkers', 'identify');
-          ubicacion = data[0].datos['y'] + ',' + data[0].datos['x'];
-          var url = 'http://maps.google.com/maps?q=&layer=c&cbll=' + ubicacion + '&cbp=';
-          setTimeout(function () {
-            win = window.open(url, "_blank", "width=800,height=600,top=150,left=200");
-          }, 200);
-
+          MDM6('hideMarkers', 'identify')
+          ubicacion =`${data[0].datos['y']} , ${ data[0].datos['x']}`
+          let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
+          setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
         }
-      }, '');
+      },''
+    )
   }
 }
 
@@ -840,12 +1122,12 @@ const identificaUE = (x,y) => {
 
 //Funcion que muestra el sweetAlert
 
-const mostrarMensaje=()=>{
+const mostrarMensaje = () => {
   swal.fire({
     title: 'Identificación de Unidades Económicas',
     text: 'Seleccione una capa de información',
-    showConfirmButton: true,
-    confirmButtonColor: "#5562eb",
+    showCancelButton: true,
+    showConfirmButton: false,
     allowEscapeKey: true,
     allowOutsideClick: true,
     html: true,
@@ -879,7 +1161,8 @@ const callServicioIdentificar = (capas, x, y) => {
             type: 'error',
             title: 'Identificación de Unidades Económicas',
             text: data[0].datos.mensaje.messages,
-            showConfirmButton: true,
+            showCloseButton: true,
+            showConfirmButton: false,
             confirmButtonColor: "#5562eb",
             allowEscapeKey: true,
             allowOutsideClick: true,
@@ -961,6 +1244,7 @@ const cargaTemplateIdentificaUE = rows => {
     }) 
   }) 
 } 
+
 //función que oculta las tables que no solicito el usuario para mostrar en la opción identificar
 const showUEficha = ficha => {
   //escondo las 2 fichas
@@ -1025,9 +1309,71 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
-  //$('.button-collapse').sideNav('hide')
+  let id_ue=document.getElementById('id_UE').value
   disabledInputs()
   handleActionButtons('disabled')
+  if(id_ue!=''){
+      //llamar servicio que libera la clave y limpia el form
+      callServiceLiberaClave(id_ue)
+
+  }
+  else
+  {
+      //limpia el formulario
+      cleanForm()
+  }
+}
+
+const callServiceLiberaClave=(id_ue)=>{
+    sendAJAX(urlServices['serviceLiberaClave'].url, 
+    {
+        'proyecto':1,
+        'id_ue': id_ue
+        
+    }, urlServices['serviceLiberaClave'].type, function (data) 
+        {
+            if (data[0].operation) 
+            {
+                //limpia la forma sin avisarle al usuario
+                cleanForm();
+            } else 
+            {
+                swal({
+                    title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
+                    text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
+                    showConfirmButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    allowEscapeKey: true,
+                    allowOutsideClick: true,
+                    html: true,
+                    animation: true
+                });
+            }
+        }, function () {
+        });
+    
+    
+}
+
+const cleanForm=()=>
+{
+    //limpia formularios
+    handleCleanForms()
+    //posicion el mapa en su posicion inicial
+    MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995);
+    //oculta el marcador azul
+    MDM6('hideMarkers', 'identify');
+    //oculta el marcador naranja
+    MDM6('hideMarkers', 'routen');
+    //contrae la tarjeta de referencia
+    handleVisibleForm('referencia')
+    //deshabilita botones limpiar y guardar
+    handleActionButtons('disabled')
+    //oculta div ratificar y busqueda
+    handleVisibleRatificaandbusqueda()
+    //oculta busqueda
+    handleVisibleSearch()
+    
 }
 
 // Función habilitar inputs formulario
@@ -1067,7 +1413,11 @@ const handleActionButtons = res => {
 const handleSearchCleeValidation = e => {
   const key = window.event ? e.which : e.keyCode
   key < 48 || key > 57 ? e.preventDefault() : false
+
+  tecla = (document.all) ? e.keyCode : e.which;
+  tecla == 13 ? buscarUE(e) : false
 }
+
 
 // alertas formulario
 const alertToastForm = title => {

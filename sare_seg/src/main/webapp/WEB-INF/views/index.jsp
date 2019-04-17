@@ -4,32 +4,37 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="resources/css/app.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/animate.css" rel="stylesheet" type="text/css"/>
     <title>SARE 2019</title>
      <!-- Compiled and minified CSS -->
      <script src='resources/js/services.js'></script>
      <link rel="stylesheet" href="resources/css/materialize.css">
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+     <link href="resources/css/material-icons.css" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
-     <link rel="stylesheet" href="resources/css/sweetalert2.min.css" type="text/css"/>
+     <link rel="stylesheet" href="resources/css/sweetalert2.min.css">
      
      <!-- <script src="resources/js/jquery-2.1.1.min.js"  ></script> -->
     <script src="resources/js/sweetalert2.min.js"></script>
-    <script src="resources/js/sendAjax.js" type="text/javascript"></script>
-    <script src="resources/js/main.js" type="text/javascript"></script>
-    <script src="resources/config/dataSource.js" type="text/javascript"></script>
+    <script src="resources/js/sendAjax.js" type="text/javascript"></script><script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/map.js" type="text/javascript"></script>
-    <script src="resources/config/config.js" type="text/javascript"></script>
+    <!-- cargamos archivos de configuración del mapa-->
+     <script src="resources/config/dataSource.js" type="text/javascript"></script>
+    <script src="resources/config/map.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
+    
+    <script src="resources/js/main.js" type="text/javascript"></script>
+    
+    
     <!-- Compiled and minified JavaScript -->
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
     <script src='resources/js/jquery-2.1.1.min.js'></script>
     <script src='resources/js/actionsDom.js'></script>
+    <script src="resources/config/config.js" type="text/javascript"></script>
     <script src='resources/js/objFormulario.js'></script>
-    <script src="resources/js/config.js" type="text/javascript"></script>
      <!-- FONT AWSOME -->
-        <link href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" rel="stylesheet" type="text/css"/>
+        <link href="resources/css/fontawesome.css" rel="stylesheet" type="text/css"/>
   </head>
 
   <body>
@@ -227,7 +232,7 @@
 
       <!-- CONTAINER FORM -->
       <section class="container-form" id="container-form">
-        <form>
+        <form id="frmSARE">
           <div class="row row-form">
             
             <!-- OPCIÓN REFERENCIA -->
@@ -382,7 +387,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="tipo_E14" name="tipo_E14">
                   </select>
-                  <label id="labeltipo_E14" for="tipo_E14">Tipo de Asentamiento Humano</label>
+                  <label id="labeltipo_E14" for="tipo_E14" class="active">Tipo de Asentamiento Humano</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="Código Postal" id="e14_A" name="e14_A" type="text" disabled >
@@ -424,7 +429,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
-                  <label id="labele10_A" for="e10_A">Nombre de la Vialidad No.1</label>
+                  <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
                 </div>
                 <div class="input-field">
                   <input id="tipo_e10_b" name="tipo_e10_b" type="text" hidden >
@@ -440,7 +445,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_B" name="e10_B">
                   </select>
-                  <label id="labele10_B" for="e10_B">Nombre de la Vialidad No.2</label>
+                  <label id="labele10_B" for="e10_B" class="active">Nombre de la Vialidad No.2</label>
                 </div>
                 <div class="input-field btns-prev-next">
                   <a onclick="handleActionTarget('asentamiento')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
@@ -473,7 +478,7 @@
                 <div class="input-field">
                   <select class="browser-default" id="e10_C" name="e10_C">
                   </select>
-                  <label id="labele10_C" for="e10_C">Nombre de la Vialidad</label>
+                  <label id="labele10_C" for="e10_C" class="active">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
                   <textarea id="descrubic" name="descrubic" class="materialize-textarea" disabled></textarea>
@@ -501,10 +506,10 @@
                   <label for="E12">E12 Edificio</label>
                 </div>
                 <div class="input-field">
-                  <select id="tipo_e19" name="tipo_e19">
+                  <select class="browser-default" id="tipo_e19" name="tipo_e19">
                     <option value="" disabled selected>Seleccione...</option>
                   </select>
-                  <label for="tipo_e19">Tipo de Corredor o Centro Comercial</label>
+                  <label for="tipo_e19" class="active">Tipo de Corredor o Centro Comercial</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E19 Nombre" id="e19" name="e19" type="text" disabled >
@@ -635,6 +640,9 @@
       })
     </script>
 
-    <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
+<!--    <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>-->
+<!-- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>  trasplante de api-->
+ <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx" type="text/javascript"></script> <!-- trasplante de api-->
+
 
 </html>

@@ -7,6 +7,7 @@ package mx.org.inegi.sare.sare_db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
@@ -50,7 +51,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     boolean isMza;
     String entidad;
     cat_ubicacion_punteo ubicacion_punteo;
-    cat_vial cat_vial;
+    List<cat_vial> cat_vial;
     String tipo_vial;
     List<cat_vial> cat_tipo_vial;
 
@@ -102,11 +103,12 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     
      @Override
     public boolean isPuntoinMza(Integer proyecto,String x, String y) {
+        isMza=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.ISMANZANA);
         String point = "POINT(" + x + " " + y + ")";
-        isMza=jdbcTemplatemdm.query(sql.toString(),new Object[]{point}, new ResultSetExtractor<Boolean>() 
+        isMza=jdbcTemplatemdm.query(sql.toString(),new Object[]{point,point}, new ResultSetExtractor<Boolean>() 
         {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -125,6 +127,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     
     @Override
     public String getEntidad(Integer proyecto, String x, String y) {
+        entidad=null;
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, "",x, y,Metodo.GETENTIDAD);
@@ -148,6 +151,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
      @Override
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto,String ce, String x, String y) 
     {
+        ubicacion_punteo=new cat_ubicacion_punteo();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,ce, x, y,Metodo.GETPUNTEO);
@@ -187,22 +191,25 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
     
      @Override
-    public cat_vial validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto, String ce, String x, String y) 
+    public List<cat_vial> validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto, String ce, String x, String y) 
     {
+        cat_vial=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, ent,x, y,Metodo.VALPUNTEO);
-        cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<cat_vial>() 
+        cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<List<cat_vial>>() 
         {
             @Override
-            public cat_vial extractData(ResultSet rs) throws SQLException, DataAccessException 
+            public List<cat_vial> extractData(ResultSet rs) throws SQLException, DataAccessException 
             {
                 cat_vial fila = null;
+                List<cat_vial> lista=new ArrayList<>();
                 while (rs.next()) 
                 {
                     fila = new cat_vial(null, rs.getString("tipovial"), rs.getString("nomvial"), rs.getString("cvevial"), rs.getString("cveseg"));
+                    lista.add(fila);
                 }
-                return fila;
+                return lista;
             }
         });
 
@@ -210,6 +217,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
     @Override
     public String getTipoVial(Integer proyecto, String tipoE10Xn) {
+       tipo_vial=null;
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"","", "",Metodo.GET_TIPO_VIAL);
@@ -236,7 +244,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
        StringBuilder sql;
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"","", "",Metodo.GET_CAT_TIPO_VIAL);
-        jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<cat_vial>() 
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_vial>() 
         {
             @Override
             public cat_vial extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -257,6 +265,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Override
     public cat_ubicacion_punteo getInfoPunteoRural(Integer proyecto, String x, String y) 
     {
+        ubicacion_punteo=new cat_ubicacion_punteo();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.GETPUNTEORURAL);
@@ -339,8 +348,10 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("ageb limit 1");
                 break;
                 case ISMANZANA:
-                    sql.append("select case when count(gid)>0 then true else false end contenido from ").append(schemamdm).append(".manzanas");
-                    sql.append(" where ST_ContainsProperly(the_geom,buffer(geomfromtext(?,900913),1))=true");
+                    sql.append("select case when resultado<>0 or resultado is null then false else true end contenido from(");
+                    sql.append("select sum(case when contenida=false then 1 else 0 end) resultado from (");
+                    sql.append("select *,ST_ContainsProperly(the_geom,buffer(geomfromtext(?,900913),1)) contenida from (");
+                    sql.append("select gid,tipomza,the_geom from ").append(schemamdm).append(".manzanas where st_intersects(the_geom,buffer(geomfromtext(?,900913),1)))a)b)c");
                 break;
                 case GETENTIDAD:
                     sql.append("SELECT cve_ent FROM ").append(schemamdm).append(".ent WHERE st_intersects(the_geom,ST_GeomFromText(?,900913)) ");
