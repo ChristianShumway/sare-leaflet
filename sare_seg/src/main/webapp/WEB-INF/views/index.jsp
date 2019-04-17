@@ -11,10 +11,10 @@
      <link rel="stylesheet" href="resources/css/materialize.css">
      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.css">
+     <link rel="stylesheet" href="resources/css/sweetalert2.min.css" type="text/css"/>
      
      <!-- <script src="resources/js/jquery-2.1.1.min.js"  ></script> -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.js"></script>
+    <script src="resources/js/sweetalert2.min.js"></script>
     <script src="resources/js/sendAjax.js" type="text/javascript"></script>
     <script src="resources/js/main.js" type="text/javascript"></script>
     <script src="resources/config/dataSource.js" type="text/javascript"></script>
