@@ -29,13 +29,13 @@ public class DefaultController {
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
             @RequestParam(value = "nombre", defaultValue = "") String nombre,
             @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
+            @RequestParam(value = "proyecto", defaultValue = "") String proyecto,
             HttpServletRequest request) {
-        if (
-            acceso!=null && !acceso.equals("")&& 
-            clave_operativa!=null && !clave_operativa.equals("")&& 
-            nombre!=null && !nombre.equals("") &&
-            tramo_control!=null && !tramo_control.equals("") 
-                ) {
+        if (acceso != null && !acceso.equals("")
+                && clave_operativa != null && !clave_operativa.equals("")
+                && nombre != null && !nombre.equals("")
+                && tramo_control != null && !tramo_control.equals("")
+                && proyecto != null && proyecto.equals("")) {
             return "login";
         } else {
             return "error";
@@ -44,24 +44,26 @@ public class DefaultController {
 
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
     public String index2(
-            @RequestParam(value = "u", defaultValue = "") String u,
-            @RequestParam(value = "p", defaultValue = "") String p,
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
-            @RequestParam(value = "id_deftramo", defaultValue = "") String id_deftramo,
             @RequestParam(value = "nombre", defaultValue = "") String nombre,
-            @RequestParam(value = "ce", defaultValue = "") String ce,
-            @RequestParam(value = "cve_unica", defaultValue = "") String cve_unica,
-            @RequestParam(value = "consulta", defaultValue = "") String consulta,
+            @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
+            @RequestParam(value = "proyecto", defaultValue = "") String proyecto,
             HttpServletRequest request) {
-        return "index";
+        if (acceso != null && !acceso.equals("")
+                && clave_operativa != null && !clave_operativa.equals("")
+                && nombre != null && !nombre.equals("")
+                && tramo_control != null && !tramo_control.equals("")
+                && proyecto != null && proyecto.equals("")) {
+            return "login";
+        } else {
+            return "error";
+        }
     }
-
 
     @RequestMapping(value = "/error.html", method = RequestMethod.GET)
     public String index3(ModelMap map) {
         return "error";
     }
-    
 
 }
