@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
+import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
@@ -181,4 +182,8 @@ public class ServiceController {
         return BackingTransformCoordtoGeo.transformCoords(proyecto,x,y);
     }
     
+    @RequestMapping(value = "getCatConjuntosComerciales.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_conjunto_comercial> getCatConjuntosComerciales(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getCatalogoConjuntosComerciales(proyecto);
+    }
 }

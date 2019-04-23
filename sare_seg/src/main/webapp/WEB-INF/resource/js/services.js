@@ -90,8 +90,12 @@ var urlServices = {
         url: 'validaSesion.do',
         label: 'validarSesion',
         type: 'GET'
+    },
+    serviceCatalogoConjuntosComerciales: {
+        url: 'getCatConjuntosComerciales.do',
+        type: 'POST',
+        label: 'catConjuntosComerciales'
     }
- 
     
     
 };

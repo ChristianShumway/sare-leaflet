@@ -57,7 +57,7 @@ public class DefaultController {
                 && proyecto != null ) {
             return "login";
         } else {
-            return "error";
+            return "index";
         }
     }
 

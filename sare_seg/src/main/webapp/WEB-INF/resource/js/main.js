@@ -235,12 +235,13 @@ const validateCoord = data => {
 //función para llenar el formulario
 const fillForm = data => {
   $.each( data[0].datos.datos[0], (i, e) => {
-    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14') 
+    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14'|| i=='tipo_E19') 
       ? $("#" + i).html("<option value='" + e + "'>" + e + "</option>")
       : $("#" + i).val(e);
   })
   fillCatalogo()
   handleActionTargetRef()
+  fillCatalogoConjuntosComerciales()
 }
 
 //función que llena el catalogo al hacer la busqueda
@@ -258,6 +259,30 @@ const fillCatalogo = () => {
           opt.appendChild( document.createTextNode(o.descripcion) )
           opt.value = o.tipo_e14
           o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
+
+//función que llena el catalogo al hacer la busqueda
+const fillCatalogoConjuntosComerciales = () => {
+  sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
+    {'proyecto':1}, 
+    urlServices['serviceCatalogoConjuntosComerciales'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('tipo_E19')            
+        
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripcion) )
+          opt.value = o.tipo_e19  
+           console.log(" el valor de O es ");
+          console.log(opcSelected.value );
+          o.tipo_e19 === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
         })
       } else { }

@@ -7,6 +7,7 @@ package mx.org.inegi.sare.sare_services;
 
 import java.util.List;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
+import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +27,12 @@ public class BackingCatalogosSare {
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos (Integer proyecto) throws Exception 
     {
         List<cat_asentamientos_humanos> catAsentamientosHumanos = InterfaceCatalogosSare.getCatalogoAsentamientosHumanos(proyecto);
+        return catAsentamientosHumanos;
+    }
+    
+     public List<cat_conjunto_comercial> getCatalogoConjuntosComerciales (Integer proyecto) throws Exception 
+    {
+        List<cat_conjunto_comercial> catAsentamientosHumanos = InterfaceCatalogosSare.getCatalogoConjuntoComercial(proyecto);
         return catAsentamientosHumanos;
     }
     

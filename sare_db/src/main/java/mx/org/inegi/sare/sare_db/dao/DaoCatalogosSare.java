@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
+import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,6 +37,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
     private JdbcTemplate jdbcTemplate;
     
     private List<cat_asentamientos_humanos> resultado=new ArrayList<>();
+    private List<cat_conjunto_comercial> resultadoCC=new ArrayList<>();
     
     @Override
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception{
@@ -62,6 +64,32 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
        return resultado; 
         
     }
+    
+    @Override
+    public List<cat_conjunto_comercial> getCatalogoConjuntoComercial(Integer proyecto) throws Exception{
+        resultadoCC=new ArrayList<>();
+        StringBuilder sql;
+        super.proyectos=super.getProyecto(proyecto);
+        sql=getSqlConjuntocomercial(super.proyectos);
+
+        resultadoCC=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<List<cat_conjunto_comercial>>() 
+        {
+            @Override
+            public List<cat_conjunto_comercial> extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                cat_conjunto_comercial fila;
+                while(rs.next())
+                {
+                    fila=new cat_conjunto_comercial(rs.getString("id_tipocomercial"), rs.getString("descripcion"), rs.getString("tipo_e19"));
+                    resultadoCC.add(fila);
+                }
+                return resultadoCC;
+            }
+        });
+        
+       return resultadoCC; 
+        
+    }
 
     private StringBuilder getSql(ProyectosEnum proyecto){
         StringBuilder sql = new StringBuilder();
@@ -69,6 +97,31 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
         {
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(schemapg).append(".cat_asentamientos_humanos order by descripcion)");
+                break;
+            case Construccion:
+                break;
+            case Convenios:
+                break;
+            case Muestra_Rural:
+                break;
+            case Operativo_Masivo:
+                break;
+            case Organismos_Operadores_De_Agua:
+                break;
+            case Pesca_Mineria:
+                break;
+            case Transportes:
+                break;
+        }
+        return sql;
+    }
+    
+    private StringBuilder getSqlConjuntocomercial(ProyectosEnum proyecto){
+        StringBuilder sql = new StringBuilder();
+        switch(proyecto)
+        {
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(schemapg).append(".cat_tipo_conjunto_comercial");
                 break;
             case Construccion:
                 break;
