@@ -42,6 +42,10 @@ var urlServices = {
         url: 'getCP.do',
         type: 'POST'
     },
+    serviceValCP:{
+        url: 'validaCP.do',
+        type: 'GET'
+    },
     serviceCatalogoAsentamientos: {
         url: 'getCatAsentamientosHumanos.do',
         type: 'POST'

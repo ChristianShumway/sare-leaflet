@@ -18,6 +18,8 @@ let bandera_ratificar=false
 
 let punteo, mod_cat
 
+var ObjectRequest = {};
+
 
 const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
 
@@ -922,7 +924,7 @@ if(punteo=='U' && mod_cat=='1')
     }
   }
 
-  inputsInfo == totalInputs && showViewPreliminar()
+  inputsInfo == totalInputs && validaCp()
 }
 else
 {
@@ -934,11 +936,53 @@ else
 
 }
 
+const validaCp=()=>{
+    sendAJAX(urlServices['serviceValCP'].url, {
+        'codigo': $("#e14_A").val(),
+        'cve_ent': $("#e03").val(),
+        'proyecto':1}, 
+    urlServices['serviceValCP'].type, function (data) 
+    {
+        if (data[0].operation) 
+        {
+            if (data[0].datos.result === false) 
+            {
+                
+            }
+            else
+            {
+                var myform = $('#frmSARE');
+                var disabled = myform.find(':input:disabled').removeAttr('disabled');
+                var d = myform.serialize();
+                d += "&tramo_control=" + dataUserFromLoginLocalStorage.tramo_control;
+                d += "&coord_x=" + xycoorsx + "&coord_y=" + xycoorsy;
+                var u = dataUserFromLoginLocalStorage.nombre;
+                var htmlDiv = "<div id='vista'> </div>";
+                const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
+                 swal.fire({ 
+                    title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
+                    width: sizeScreen, 
+                    html: htmlDiv, 
+                    confirmButtonText: 'Aceptarr', 
+                    customClass: 'swal-wide', 
+                    confirmButtonColor: '#0f0f0f', 
+                    allowEscapeKey: false, 
+                    allowOutsideClick: false, 
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    showCloseButton: true, 
+                    onOpen: showViewPreliminar(d) 
+                }) 
+            }
+        }
+    },function (){
+        
+    });
+}
+
 const showViewPreliminar=(d)=>{
     loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
             function () {
-
-                $('div.modal-dialog').css({width: '750px'});
                 //separa los parametros 
                 d = d.replace(/Seleccione/g, '');
                 var dpv = d.split("&");
@@ -953,10 +997,8 @@ const showViewPreliminar=(d)=>{
                     //$("#" + idobj[0] + "_pv").text(decodeURIComponent(idobj[1]).replace('+', " "));
                     $("#" + idobj[0] + "_pv").text(a);
                 });
-                ObjectRequest['cve_ce'] = usrObj.ce;
-                ObjectRequest['id_deftramo'] = usrObj.id_deftramo;
-                $(".modal-body").css("overflow-y", "scroll");
-                $(".modal-body").css("height", "300px");
+                //ObjectRequest['cve_ce'] = dataUserFromLoginLocalStorage.ce;
+                //ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.id_deftramo;
             });
 }
 
