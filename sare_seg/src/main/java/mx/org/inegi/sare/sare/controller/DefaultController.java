@@ -57,12 +57,11 @@ public class DefaultController {
         return "index";
     }
 
-<<<<<<< HEAD
-=======
+
     @RequestMapping(value = "/error.html", method = RequestMethod.GET)
     public String index3(ModelMap map) {
         return "error";
     }
     
->>>>>>> hotfix
+
 }
