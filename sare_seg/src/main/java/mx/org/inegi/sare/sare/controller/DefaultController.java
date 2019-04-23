@@ -33,5 +33,10 @@ public class DefaultController {
     public String index2(ModelMap map) {
         return "index";
     }
+
+    @RequestMapping(value = "/error.html", method = RequestMethod.GET)
+    public String index3(ModelMap map) {
+        return "error";
+    }
     
 }
