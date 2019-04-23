@@ -5,8 +5,8 @@ let finPaginacion = screen.width <= '480' ? 5 : 7
 let inicioClavesVista = 0
 let finClavesVista = 9
 let dataCleeListNew = {}
-let xycoorsx;
-let xycoorsy;
+let xycoorsx
+let xycoorsy
 screen.width <= '480'
 
 let layersSARE = ['c100', 'c101', 'wdenue'];
@@ -16,14 +16,12 @@ let titulo_impresion='SARE'
 
 let bandera_ratificar=false
 
-let punteo,mod_cat;
+let punteo, mod_cat
 
 var ObjectRequest = {};
 
 
-const init = () => {
-  addCapas({ 'checked': true, 'id': 'unidades' });
-}
+const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
 
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
@@ -40,36 +38,35 @@ const handleChangeOptions = option => {
 }
 
 //funcion para agregar capas en las opciones Matrice,unicos,denue
-
 const addLayerEconomicas = (chk, option) => {
-  var idWms = urlServices['map'].label;
+  var idWms = urlServices['map'].label
   if (chk.checked === true) {
     if (layersSARE.indexOf(chk.id) < 0) {
       switch (option) {
         case 'denue':
-          addLay('wdenue');
+          addLay('wdenue')
         case 'unicos':
-          addLay('c101u');
+          addLay('c101u')
         case 'matrices':
-          addLay('C101M');
+          addLay('C101M')
         case 'postes':
-          addLay('c104');
+          addLay('c104')
         case 'sucursal':
-          addLay('c101');
+          addLay('c101')
       }
     }
   } else {
-    layersSARE.splice(layersSARE.indexOf(chk.id), 1);
+    layersSARE.splice(layersSARE.indexOf(chk.id), 1)
   }
-  MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } });
-};
+  MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } })
+}
 
 //Funcion agregar capas en el mapa en la opcion sucursales
 const addCapas = chk => {
-  var idWms = urlServices['map'].label;
+  var idWms = urlServices['map'].label
   if (chk.checked == true) {
     if (layersSARE.indexOf('c101') < 0) {
-      addLay('c101');
+      addLay('c101')
     }
   } else {
     if (chk.checked === 'noFalse') {
@@ -79,67 +76,55 @@ const addCapas = chk => {
       remLay('c101')
     }
     if (typeof chk.mza !== 'undefined' && chk.mza === true) {
-      remLay('c103');
-      addLay('c102');
-      addLay('c102r');
+      remLay('c103')
+      addLay('c102')
+      addLay('c102r')
     }
     if (typeof chk.ageb !== 'undefined' && chk.ageb === true) {
-      remLay('c102');
-      remLay('c102r');
-      addLay('c103');
+      remLay('c102')
+      remLay('c102r')
+      addLay('c103')
     }
   }
-  ordenaLayer();
-  MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } });
+  ordenaLayer()
+  MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } })
 }
 
 //Funcion para agregar capas cuando ya tenemos agregadas en el array de las capas
-
 const remLay = item => {
-  var index = layersSARE.indexOf(item);
-  if (index >= 0) {
-    layersSARE.splice(index, 1);
-  }
+  var index = layersSARE.indexOf(item)
+  index >= 0 && (layersSARE.splice(index, 1) )
 }
 
 //Funcion para llenar arreglo con las capas que van en el mapa
-
 const addLay = item => {
-  var index = layersSARE.indexOf(item);
-  if (index < 0) {
-    layersSARE.push(item);
-  }
+  var index = layersSARE.indexOf(item)
+  index < 0 && ( layersSARE.push(item) )
 }
 
 //Funcion para ordenar las capas que llegan al mapa
-
 const ordenaLayer = () => {
   if (layersSARE.indexOf('c102') > 0) {
-    remLay('c102');
-    remLay('c102r');
-    layersSARE.unshift('c102');
-    layersSARE.unshift('c102r');
+    remLay('c102')
+    remLay('c102r')
+    layersSARE.unshift('c102')
+    layersSARE.unshift('c102r')
   } else if (layersSARE.indexOf('c103') > 0) {
-    remLay('c103');
-    layersSARE.unshift('c103');
+    remLay('c103')
+    layersSARE.unshift('c103')
   }
 }
 
-const zooma=()=>{
-    
+const zooma = () => {
 }
 
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
-  var level = MDM6('getZoomLevel');
-  if (level > 9 && level < 13) {
-    addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false });
-  } else if (level >= 13) {
-    addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true });
-  } else {
-    addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false });
-  }
-};
+  var level = MDM6('getZoomLevel')
+  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false })
+  : level >= 13 ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true })
+  : addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false })
+}
 
 // Función buscar clave
 const buscarUE = () => {
@@ -154,12 +139,12 @@ const buscarUE = () => {
     })
   } else {
     // animación btns
-    bandera_ratificar=false;
-    findUE(claveBusqueda.value);
+    bandera_ratificar=false
+    findUE(claveBusqueda.value)
   }
 }
-//Función que busca la id_ue
 
+//Función que busca la id_ue
 const findUE = id_ue => {
   xycoorsx=''
   xycoorsy=''
@@ -177,81 +162,74 @@ const findUE = id_ue => {
     //habilita boton cancelar
     const cancelOption = document.getElementById('item-cancel-option')
     cancelOption.removeAttribute('disabled')
-    
   }
-
 }
 
 //Función que manda llamar el servicio que regresa la busqueda
-
 const callServiceFindUE=(id_ue)=>{
-    sendAJAX(urlServices['serviceSearch'].url, {
-        'proyecto':1,
-        'p':'1',
-        'tramo': '00000000000',
-        'ce': '00', 
-        'usuario':'lidia.vazquez',
-        'id_ue': id_ue},
-    urlServices['serviceSearch'].type, function (data) 
-    {
-        if(data[0].operation)
-        {
-            //muestra mensaje si hay error
-            showModalMsgError(data);
-            //realiza acercamiento en el mapa
-            acercarWithExtent(data);
-            //comienza a mostrar datos en la interfaz
-            showDataInterfaz(data);
+  sendAJAX(urlServices['serviceSearch'].url, 
+  {
+    'proyecto':1,
+    'p':'1',
+    'tramo': '00000000000',
+    'ce': '00', 
+    'usuario':'lidia.vazquez',
+    'id_ue': id_ue
+  },
+  urlServices['serviceSearch'].type, 
+  data => {
+    if(data[0].operation){
+      //muestra mensaje si hay error
+      showModalMsgError(data)
+      //realiza acercamiento en el mapa
+      acercarWithExtent(data)
+      //comienza a mostrar datos en la interfaz
+      showDataInterfaz(data)
+    } else {
+      Swal.fire({
+        position: 'bottom-end',
+        type: 'warning',
+        title: data[0].messages[0] + "! Porfavor intente nuevamente",
+        showConfirmButton: false,
+        timer: 2000
+      })  
+    }    
+  }, () => {
+    swal({
+      title: 'Buscando información de la clave:' +id_ue,
+      text: 'Por favor espere un momento',
+      timer: 2000,
+      onOpen:  () => swal.showLoading() 
+    })
+    .then( () => { },
+      dismiss => {
+        if (dismiss === 'timer') {
         }
-        else
-        {
-            Swal.fire({
-                position: 'bottom-end',
-                type: 'warning',
-                title: data[0].messages[0] + "! Porfavor intente nuevamente",
-                showConfirmButton: false,
-                timer: 2000
-            })  
-        }    
-           
-    }, function () {
-        swal({
-        title: 'Buscando información de la clave:' +id_ue,
-        text: 'Por favor espere un momento',
-        timer: 2000,
-        onOpen: function () {
-          swal.showLoading()
-        }
-      }).then(
-        function () { },
-        function (dismiss) {
-          if (dismiss === 'timer') {
-          }
-        }
-      )
-    });
+      }
+    )
+  })
 }
 
 //Comienza a mostrar datos en la interfaz
-const showDataInterfaz=data=>{
-    //obtiene el código postal
-    getCp(data[0].datos.datos[0].e03);
-    validateCoord(data);
+const showDataInterfaz = data => {
+  //obtiene el código postal
+  getCp(data[0].datos.datos[0].e03)
+  validateCoord(data)
 }
+
 //valida coordenadas xy en caso de venir vacias ya no hará nada
-const validateCoord=data=>{
-    if (typeof data[0].datos.datos[0].coord_X === 'undefined' || typeof data[0].datos.datos[0].coord_Y === 'undefined') {
-        ratificar('no');       
-    }
-    else
-    {
-        //si trae coordenadas xy mostrará la chincheta sobre el mapa
-        xycoorsx=data[0].datos.datos[0].coord_X;
-        xycoorsy=data[0].datos.datos[0].coord_Y;
-        MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}});
-        
-    }
-    fillForm(data);
+const validateCoord = data => {
+  if (typeof data[0].datos.datos[0].coord_X === 'undefined' || typeof data[0].datos.datos[0].coord_Y === 'undefined') {
+      //ratificar('no')
+  }
+  else
+  {
+    //si trae coordenadas xy mostrará la chincheta sobre el mapa
+    xycoorsx = data[0].datos.datos[0].coord_X
+    xycoorsy = data[0].datos.datos[0].coord_Y
+    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}})    
+  }
+  fillForm(data)
 }
 
 //función para llenar el formulario
@@ -288,24 +266,23 @@ const fillCatalogo = () => {
 }
 
 //Función que hace zoom con el extent al hacer la busqueda
-const acercarWithExtent = (data) => {
-  let res = data[0].datos.datos[0].extent.split(",");
-  MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
-   MDM6('updateSize');
+const acercarWithExtent = data => {
+  let res = data[0].datos.datos[0].extent.split(",")
+  MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
+  MDM6('updateSize')
 }
 
 //Función que llama el servicio para obtener el código postal
-
 const getCp=ce=>{
-    sendAJAX(urlServices['serviceCP'].url, 
-    {
-        'cve_ent': ce,
-        'proyecto':1
-    }, urlServices['serviceCP'].type, function (data) 
-    {
-        cpObj = data[0].datos;
-    }, function () {
-    });
+  sendAJAX(
+    urlServices['serviceCP'].url, 
+    { 'cve_ent': ce, 'proyecto':1 }, 
+    urlServices['serviceCP'].type, 
+    data => {
+      cpObj = data[0].datos
+    }, 
+    () => {}
+  )
 }
 
 //Función que valida si los datos vienen correctos al hacer la busqueda
