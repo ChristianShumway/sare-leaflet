@@ -16,7 +16,7 @@ let titulo_impresion='SARE'
 
 let bandera_ratificar=false
 
-let punteo, mod_cat
+let punteo,mod_cat,cve_geo,cve_geo2016,cveft,e10_cve_vial;
 
 var ObjectRequest = {};
 
@@ -639,6 +639,10 @@ let infodenue;
 const actualizaForm=data=>{
     punteo=data.punteo;
     mod_cat=data.mod_cat;
+    cve_geo=data.cvegeo;
+    cve_geo2016=data.cvegeo2016;
+    cveft=data.cveft;
+    e10_cve_vial=data.e10_cvevial;
     //inicializa entrevialidades
     if(typeof data.e10_X!=='undefined'){
         infodenue = true;
@@ -959,8 +963,9 @@ const validaCp=()=>{
                 var u = dataUserFromLoginLocalStorage.nombre;
                 var htmlDiv = "<div id='vista'> </div>";
                 const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
-                 swal.fire({ 
-                    title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
+                
+            Swal.fire({
+              title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
                     width: sizeScreen, 
                     html: htmlDiv, 
                     confirmButtonText: 'Aceptarr', 
@@ -972,9 +977,75 @@ const validaCp=()=>{
                     showCancelButton: true,
                     showCloseButton: true, 
                     onOpen: showViewPreliminar(d) 
-                }) 
+            }).then((result) => {
+              if (result.value) {
+                sendAJAX(urlServices['serviceSaveUEAlter'].url, {'proyecto':1,'obj': JSON.stringify(ObjectRequest),'usuario':u}, urlServices['serviceSaveUEAlter'].type, function (data) 
+                        {
+                           if (data[0].operation) 
+                           {
+                            if (data[0].datos.mensaje.type === 'false') 
+                            {
+                                swal.fire({
+                                        title: "Error",
+                                        text: data[0].datos.mensaje.messages,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Aceptar',
+                                        confirmButtonColor: '#4d4d4d',
+                                        type: "error"
+                                    }); 
+                                    return;
+                            }
+                            else
+                            {
+                               cleanForm()
+                               MDM6('hideMarkers', 'identify');
+                               swal.fire(
+                                {
+                                            title: 'Guardado',
+                                            text: 'El punto ha sido almacenado correctamente',
+                                            type: "success",
+                                            confirmButtonColor: "#DD6B55",
+                                            allowEscapeKey: true,
+                                            allowOutsideClick: true,
+                                            html: true,
+                                            animation: true
+                                                    //timer: 2500
+                                });
+                            }
+                           }
+                           else
+                           {
+                             swal.fire
+                             ({
+                                            title: 'Error',
+                                            text: 'Error de conexion!',
+                                            type: "error",
+                                            confirmButtonColor: "#DD6B55",
+                                            allowEscapeKey: true,
+                                            allowOutsideClick: true,
+                                            html: true,
+                                            animation: true
+                                                    //timer: 2500
+                                });  
+                           }
+                          
+                        }, function (){
+                            swal.fire({
+                                title: 'Guardando',
+                                text: 'Almacenando información, por favor espere un momento',
+                                type: "info",
+                                allowEscapeKey: true,
+                                allowOutsideClick: true,
+                                html: true,
+                                animation: true
+                                        //timer: 2500
+                            });
+                        });
+                    
+                    }
+                }); 
+              }
             }
-        }
     },function (){
         
     });
@@ -983,22 +1054,29 @@ const validaCp=()=>{
 const showViewPreliminar=(d)=>{
     loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
             function () {
-                //separa los parametros 
                 d = d.replace(/Seleccione/g, '');
                 var dpv = d.split("&");
-                //var dpvi= dpv.split("=");
                 $.each(dpv, function (i, e) {
                     var idobj = e.split("=");
-                    //$('#cve_unica_pv').text('algo');
-
                     var a = decodeURIComponent(idobj[1]);
                     a = a.replace(/\+/g, ' ');
                     ObjectRequest[idobj[0]] = a;
-                    //$("#" + idobj[0] + "_pv").text(decodeURIComponent(idobj[1]).replace('+', " "));
                     $("#" + idobj[0] + "_pv").text(a);
                 });
-                //ObjectRequest['cve_ce'] = dataUserFromLoginLocalStorage.ce;
-                //ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.id_deftramo;
+                
+                ObjectRequest['Cvegeo2016'] = cve_geo2016;
+                ObjectRequest['Cvegeo'] = cve_geo;
+                ObjectRequest['CE'] = dataUserFromLoginLocalStorage.ce;
+                ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramoControl;
+                ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramoControl;
+                ObjectRequest['mod_cat'] = mod_cat;
+                ObjectRequest['punteo'] = punteo;
+                ObjectRequest['coordx'] = xycoorsx;
+                ObjectRequest['coordy'] = xycoorsy;
+                ObjectRequest['coordx'] = xycoorsx;
+                ObjectRequest['coordy'] = xycoorsy;
+                ObjectRequest['Cveft'] = cveft;
+                ObjectRequest['e10_cvevial'] = e10_cve_vial;
             });
 }
 

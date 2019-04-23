@@ -33,6 +33,10 @@ var urlServices = {
         url: 'getbusqueda.do',
         type: 'post'
     },
+    serviceSaveUEAlter: {
+        url: 'guardarUE.do',
+        type: 'get'
+    },
     getListadoUnidadesEconomicas: {  
         url: 'getListadoUnidadesEconomicas.do',  
         label: 'getListadoUnidadesEconomicas.do',  
@@ -85,11 +89,6 @@ var urlServices = {
     validaSesion: {
         url: 'validaSesion.do',
         label: 'validarSesion',
-        type: 'GET'
-    },
-    getListadoUnidadesEconomicas: {
-        url: 'getListadoUnidadesEconomicas.do',
-        label: 'getListadoUnidadesEconomicas.do',
         type: 'GET'
     }
  

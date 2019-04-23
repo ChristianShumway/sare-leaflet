@@ -8,8 +8,7 @@ package mx.org.inegi.sare.sare_db.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
-import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
-import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceGuardarUE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,11 +54,11 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
     
     @Override
-    public Integer getValidaUe(Integer proyecto, cat_vw_punteo_sare inmueble) {
+    public Integer getValidaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
         StringBuilder sql;
         int regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,null,MetodosGuardar.getValidaUe, "");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getValidaUe, "");
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -76,11 +75,11 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
     
     @Override
-    public String getClaveProvisional(Integer proyecto, cat_vw_punteo_sare inmueble, String capa) {
+    public String getClaveProvisional(Integer proyecto, cat_vw_punteo_sare_guardado inmueble, String capa) {
         StringBuilder sql;
         String regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,null,MetodosGuardar.getClaveProvisional,capa);
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getClaveProvisional,capa);
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -96,11 +95,11 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
     
     @Override
-    public boolean getGuardaUe(Integer proyecto, cat_vw_punteo_sare inmueble) {
+    public boolean getGuardaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
         StringBuilder sql;
         boolean regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,null,MetodosGuardar.getGuardaUe, "");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getGuardaUe, "");
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -119,18 +118,18 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     
     
     @Override
-    public String e23a(Integer proyecto, cat_vw_punteo_sare inmueble) {
+    public String e23a(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
         StringBuilder sql;
         String regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,null,MetodosGuardar.getE23A,"");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getE23A,"");
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String regresar = null;
                 while(rs.next())
                 {
-                    regresar = rs.getString("clave");
+                    regresar = rs.getString("E23A");
                 }
                 return regresar;
             }
@@ -139,25 +138,25 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
 
     @Override
-    public Integer getidDeftramo(Integer proyecto, cat_vw_punteo_sare inmueble) {
+    public Integer getidDeftramo(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
         StringBuilder sql;
         Integer regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,null,MetodosGuardar.getidDeftramo,"");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getidDeftramo,"");
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
                 Integer regresar = null;
                 while(rs.next())
                 {
-                    regresar = rs.getInt("clave");
+                    regresar = rs.getInt("id_deftramo");
                 }
                 return regresar;
             }
         });
         return regresa; 
     }
-    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare inmueble,MetodosGuardar metodo, String capa)
+    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa)
     {
         StringBuilder sql=new StringBuilder();
         switch(proyecto)
@@ -167,79 +166,79 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 {
                     case getValidaUe:
                         sql.append("SELECT ").append(schemapg).append(".valida_ue_sare('")
-                                .append(inmueble.getID_UE()).append("','")
-                                .append(inmueble.getTRAMO_CONTROL()).append("','")
+                                .append(inmueble.getId_UE()).append("','")
+                                .append(inmueble.gettramo_control()).append("','")
                                 .append(inmueble.getPunteo()).append("','")
                                 .append(inmueble.getMod_cat()).append("','")
                                 .append(inmueble.getE14_A()).append("','")
                                 .append(inmueble.getE03()).append("','")
                                 .append(inmueble.getE05()).append("','")
                                 .append(inmueble.getE07()).append("','")
-                                .append(inmueble.getE11A()).append("','")
-                                .append(inmueble.getTIPO_E14()).append("','")
+                                .append(inmueble.getE11_a()).append("','")
+                                .append(inmueble.getTipo_E14()).append("','")
                                 .append(inmueble.getE12()).append("','")
                                 .append(inmueble.getE12p()).append("','")
                                 .append(inmueble.getE13()).append("','")
-                                .append(inmueble.getE13A()).append("','")
-                                .append(inmueble.getTIPO_E19()).append("','")
+                                .append(inmueble.getE13_a()).append("','")
+                                .append(inmueble.getTipo_e19()).append("','")
                                 .append(inmueble.getE19()).append("','")
                                 .append(inmueble.getE20()).append("','")
-                                .append(inmueble.getE11()).append("')");
+                                .append(inmueble.getE11()).append("') resultado");
                         break;
                     case getClaveProvisional:
-                        sql.append("SELECT ").append(schemapg).append(".calcula_cveprov(").append(inmueble.getTRAMO_CONTROL()).append(",").append(capa).append(" clave");
+                        sql.append("SELECT ").append(schemapg).append(".calcula_cveprov(").append(inmueble.gettramo_control()).append(",").append(capa).append(" ) clave");
                         break;
                     case getGuardaUe:
-                        sql.append("SELECT ").append(schemapg).append(".registra_ue_sare(").append(inmueble.getID_UE()).append(",")
-                                .append(inmueble.getTRAMO_CONTROL()).append(",").append(inmueble.getCvegeo().toUpperCase()).append(",")
-                                .append(inmueble.getCE().toString().toUpperCase()).append(",").append(inmueble.getE03().toUpperCase()).append(",")
-                                .append(inmueble.getE03N().toUpperCase()).append(",").append(inmueble.getE04().toUpperCase()).append(",")
-                                .append(inmueble.getE04N().toUpperCase()).append(",")
-                                .append(inmueble.getE05().toUpperCase()).append(",")
-                                .append(inmueble.getE05N().toUpperCase()).append(",")
-                                .append(inmueble.getE06().toUpperCase()).append(",")
-                                .append(inmueble.getE07().toUpperCase()).append(",")
-                                .append(inmueble.getCveft()).append(",")
-                                .append(inmueble.getE08()).append(",")
-                                .append(inmueble.getE09()).append(",")
-                                .append(inmueble.getTIPO_E10()).append(",")
-                                .append(inmueble.getE10()).append(",")
-                                .append(inmueble.getE11()).append(",")
-                                .append(inmueble.getE11A()).append(",")
-                                .append(inmueble.getE12()).append(",")
-                                .append(inmueble.getE12p()).append(",")
-                                .append(inmueble.getE13()).append(",")
-                                .append(inmueble.getE13A()).append(",")
-                                .append(inmueble.getTIPO_E14()).append(",")
-                                .append(inmueble.getE14()).append(",")
-                                .append(inmueble.getE14_A()).append(",")
-                                .append(inmueble.getTIPO_E10_A()).append(",")
-                                .append(inmueble.getE10_A()).append(",")
-                                .append(inmueble.getTIPO_E10_B()).append(",")
-                                .append(inmueble.getE10_B()).append(",")
-                                .append(inmueble.getTIPO_E10_C().toString().toUpperCase()).append(",")
-                                .append(inmueble.getE10_C().toUpperCase()).append(",")
-                                .append(inmueble.getE10_e().toUpperCase()).append(",")
-                                .append(inmueble.getDESCRUBIC().toUpperCase()).append(",")
-                                .append(inmueble.getCOORD_X()).append(",")
-                                .append(inmueble.getCOORD_Y()).append(",")
-                                .append(inmueble.getE19().toUpperCase()).append(",")
-                                .append(inmueble.getTIPO_E19()).append(",")
-                                .append(inmueble.getPunteo()).append(",")
-                                .append(inmueble.getMod_cat()).append(",")
-                                .append(inmueble.getORIGEN().toString().toUpperCase()).append(",")
-                                .append(inmueble.getCvegeo2016().toUpperCase()).append(",")
-                                .append(inmueble.getE20().toUpperCase()).append(",")
-                                .append(inmueble.getID_DEFTRAMO()).append(",")
-                                .append(inmueble.getE10_cvevial()).append(",")
-                                .append(inmueble.getE23()).append(") resultado");
+                        sql.append("SELECT ").append(schemapg).append(".registra_ue_sare('").append(inmueble.getId_UE()).append("','")
+                                .append(inmueble.getTramo_control()).append("','").append(inmueble.getCvegeo().toUpperCase()).append("','")
+                                .append(inmueble.getCE().toUpperCase()).append("','").append(inmueble.getE03().toUpperCase()).append("','")
+                                .append(inmueble.getE03N().toUpperCase()).append("','").append(inmueble.getE04().toUpperCase()).append("','")
+                                .append(inmueble.getE04N().toUpperCase()).append("','")
+                                .append(inmueble.getE05().toUpperCase()).append("','")
+                                .append(inmueble.getE05N().toUpperCase()).append("','")
+                                .append(inmueble.getE06().toUpperCase()).append("','")
+                                .append(inmueble.getE07().toUpperCase()).append("','")
+                                .append(inmueble.getCveft()).append("','")
+                                .append(inmueble.getE08()).append("','")
+                                .append(inmueble.getE09()).append("','")
+                                .append(inmueble.getTipo_e10()).append("','")
+                                .append(inmueble.getE10()).append("','")
+                                .append(inmueble.getE11()).append("','")
+                                .append(inmueble.getE11_a()).append("','")
+                                .append(inmueble.getE12()).append("','")
+                                .append(inmueble.getE12p()).append("','")
+                                .append(inmueble.getE13()).append("','")
+                                .append(inmueble.getE13_a()).append("','")
+                                .append(inmueble.getTipo_E14()).append("','")
+                                .append(inmueble.getE14()).append("','")
+                                .append(inmueble.getE14_A()).append("','")
+                                .append(inmueble.getTipo_e10_a()).append("','")
+                                .append(inmueble.getE10_A().toUpperCase()).append("','")
+                                .append(inmueble.getTipo_e10_b()).append("','")
+                                .append(inmueble.getE10_B().toUpperCase()).append("','")
+                                .append(inmueble.getTipo_e10_c().toUpperCase()).append("','")
+                                .append(inmueble.getE10_C().toUpperCase()).append("','")
+                                .append(inmueble.getE10_e().toUpperCase()).append("','")
+                                .append(inmueble.getDescrubic().toUpperCase()).append("','")
+                                .append(inmueble.getCoordx()).append("','")
+                                .append(inmueble.getCoordy()).append("','")
+                                .append(inmueble.getE19().toUpperCase()).append("','")
+                                .append(inmueble.getTipo_e19() == null?"":inmueble.getTipo_e19()).append("','")
+                                .append(inmueble.getPunteo()).append("','")
+                                .append(inmueble.getMod_cat()).append("','")
+                                .append(inmueble.getOrigen().toUpperCase()).append("','")
+                                .append(inmueble.getCvegeo2016().toUpperCase()).append("','")
+                                .append(inmueble.getE20().toUpperCase()).append("','")
+                                .append(inmueble.getId_deftramo()).append("','")
+                                .append(inmueble.getE10_cvevial()).append("','")
+                                .append(inmueble.getE23()).append("') resultado");
                         break;
                     case getE23A:
-                        sql.append("SELECT E23A FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getID_UE()); 
+                        sql.append("SELECT E23A FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE()); 
                         break;
                     case getidDeftramo:
                         sql.append("SELECT id_deftramo");
-                        sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getID_UE());
+                        sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE());
                         break;
                         
                 }
