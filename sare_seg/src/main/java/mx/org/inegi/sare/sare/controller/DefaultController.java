@@ -29,13 +29,13 @@ public class DefaultController {
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
             @RequestParam(value = "nombre", defaultValue = "") String nombre,
             @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
-            @RequestParam(value = "proyecto", defaultValue = "") String proyecto,
+            @RequestParam(value = "proyecto", defaultValue = "") Integer proyecto,
             HttpServletRequest request) {
         if (acceso != null && !acceso.equals("")
                 && clave_operativa != null && !clave_operativa.equals("")
                 && nombre != null && !nombre.equals("")
                 && tramo_control != null && !tramo_control.equals("")
-                && proyecto != null && proyecto.equals("")) {
+                && proyecto != null ) {
             return "login";
         } else {
             return "error";
@@ -48,13 +48,13 @@ public class DefaultController {
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
             @RequestParam(value = "nombre", defaultValue = "") String nombre,
             @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
-            @RequestParam(value = "proyecto", defaultValue = "") String proyecto,
+            @RequestParam(value = "proyecto", defaultValue = "") Integer proyecto,
             HttpServletRequest request) {
         if (acceso != null && !acceso.equals("")
                 && clave_operativa != null && !clave_operativa.equals("")
                 && nombre != null && !nombre.equals("")
                 && tramo_control != null && !tramo_control.equals("")
-                && proyecto != null && proyecto.equals("")) {
+                && proyecto != null ) {
             return "login";
         } else {
             return "error";
