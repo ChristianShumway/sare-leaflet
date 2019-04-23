@@ -16,6 +16,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
@@ -155,7 +156,7 @@ public class ServiceController {
     @RequestMapping(value = "guardarUE.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services guardarUE(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "obj") String obj, @RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
         Gson gson = new Gson();
-        cat_vw_punteo_sare inmueble = (cat_vw_punteo_sare) gson.fromJson(obj, cat_vw_punteo_sare.class);
+        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
         String ip = request.getRemoteAddr();
         return BackingGuardar.SaveUE(proyecto, inmueble, usuario, ip);
     }

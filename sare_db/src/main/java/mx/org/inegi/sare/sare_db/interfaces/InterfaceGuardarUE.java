@@ -6,6 +6,7 @@
 package mx.org.inegi.sare.sare_db.interfaces;
 
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 
 /**
  *
@@ -13,15 +14,15 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
  */
 public interface InterfaceGuardarUE {
     
-    public Integer getValidaUe(Integer proyecto, cat_vw_punteo_sare inmueble);
+    public Integer getValidaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble);
     
-    public String getClaveProvisional(Integer proyecto,cat_vw_punteo_sare inmueble, String capa);
+    public String getClaveProvisional(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, String capa);
     
-    public boolean getGuardaUe(Integer proyecto,cat_vw_punteo_sare inmueble);
+    public boolean getGuardaUe(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     
-    public String e23a(Integer proyecto,cat_vw_punteo_sare inmueble);
+    public String e23a(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     
-    public Integer getidDeftramo(Integer proyecto,cat_vw_punteo_sare inmueble);
+    public Integer getidDeftramo(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     
     
 }

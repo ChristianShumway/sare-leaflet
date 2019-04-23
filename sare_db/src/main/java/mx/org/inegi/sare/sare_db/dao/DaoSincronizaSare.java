@@ -74,7 +74,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 while(rs.next())
                 {
                     fila = new cat_vw_punteo_sare(
-                        rs.getString("cve_ce")!=null  && !"".equals(rs.getString("cve_ce")) ?new BigDecimal(rs.getString("cve_ce")):new BigDecimal(0),
+                        rs.getString("cve_ce")!=null  && !"".equals(rs.getString("cve_ce")) ?rs.getString("cve_ce"):"",
                         rs.getString("coord_x")!=null && !"".equals(rs.getString("coord_x"))?new BigDecimal(rs.getString("coord_x")):new BigDecimal(0),
                         rs.getString("coord_y")!=null && !"".equals(rs.getString("coord_y"))?new BigDecimal(rs.getString("coord_y")):new BigDecimal(0), 
                         rs.getString("descrubic")!=null ?rs.getString("descrubic"):"",
@@ -736,7 +736,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                             append(inmueble.getE04()).append("','").append(inmueble.getE05()).append("','").append(String.valueOf(inmueble.getPunteo()).equals("R")?"'0000'":inmueble.getE06()).append("')");
                     break;
                 case ValidateTrAgebs:
-                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_AGEBS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");
+                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_AGEBS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("'");/* AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");*/
                     break;
                 case InsertaTrAgebs:
                     sql.append("insert into ").append(schemaocl).append(".TR_AGEBS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,ID_DEFTRAMO) values ('").append(inmueble.getE03()).append("','").
@@ -749,14 +749,14 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     sql.append("insert into ").append(schemaocl).append(".TC_MANZANAS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA) values (").append(inmueble.getE03()).append(",").
                             append(inmueble.getE04()).append(",").append(inmueble.getE05()).append(",").append(String.valueOf(inmueble.getPunteo()).equals("R")?"0000":inmueble.getE06()).append(",").append(inmueble.getE07()).append(")");
                 case ValidateTrManzanas:
-                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_MANZANAS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND CVE_MZA='").append(inmueble.getE07()).append("' AND ID_DEFTRAMO='").append(inmueble.getID_DEFTRAMO()).append("'");
+                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_MANZANAS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND CVE_MZA='").append(inmueble.getE07()).append("' AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");
                     break;
                 case InsertaTrManzanas:
                     sql.append("insert into ").append(schemaocl).append(".TR_MANZANAS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA,ID_DEFTRAMO,TIPOAREA) values ('").append(inmueble.getE03()).append("','").
                             append(inmueble.getE04()).append("','").append(inmueble.getE05()).append("','").append(String.valueOf(inmueble.getPunteo()).equals("R")?"'0000'":inmueble.getE06()).append("','").append(inmueble.getE07()).append("','").append(inmueble.getID_DEFTRAMO()).append("','").append(inmueble.getPunteo()).append("')");
                     break;
                 case ValidateTrLocalidades:
-                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_LOCALIDADES WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND ID_DEFTRAMO='").append(inmueble.getID_DEFTRAMO()).append("'");
+                    sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(schemaocl).append(".TR_LOCALIDADES WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");
                     break;
                 case InsertaTrLocalidades:
                     sql.append("insert into ").append(schemaocl).append(".TR_LOCALIDADES (CVE_ENT,CVE_MUN,CVE_LOC,AGEB,DESCRIPCION,TIPO,ID_DEFTRAMO) values ('").append(inmueble.getE03()).append("','").

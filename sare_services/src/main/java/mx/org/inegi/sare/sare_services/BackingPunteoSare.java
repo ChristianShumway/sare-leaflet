@@ -117,7 +117,7 @@ public class BackingPunteoSare
                                     ubicacion_punteo.setE10_X(getVialidades(proyecto,ubicacion_punteo.getE10_X()));
                                     if(ubicacion_punteo.getTipo_e10n()!=null && !ubicacion_punteo.getTipo_e10n().equals(""))
                                     {
-                                        ubicacion_punteo.setTipo_e10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.getTipo_e10n()));
+                                        ubicacion_punteo.setTipo_e10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.getTipo_e10n().toLowerCase()));
                                     }
                                  }
                                  if(ubicacion_punteo.getMod_cat()==2)

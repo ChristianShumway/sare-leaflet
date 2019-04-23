@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 public class cat_vw_punteo_sare {
 
     private BigDecimal A;
-    private BigDecimal CE;
+    private String CE;
     private String CE_DESCRIPCION;
     private String CESTATAL;
     private String CLEE_EMP;
@@ -90,7 +90,7 @@ public class cat_vw_punteo_sare {
     public cat_vw_punteo_sare() {
     }
 
-    public cat_vw_punteo_sare(BigDecimal CE, BigDecimal COORD_X, BigDecimal COORD_Y, String DESCRUBIC, String E03, String E03N, String E04, String E04N, 
+    public cat_vw_punteo_sare(String CE, BigDecimal COORD_X, BigDecimal COORD_Y, String DESCRUBIC, String E03, String E03N, String E04, String E04N, 
             String E05, String E05N, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B,
             String E10_C, BigDecimal E11, String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, String E19, String E20, 
             BigDecimal ID_UE, BigDecimal ORIGEN, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, 
@@ -191,7 +191,7 @@ public class cat_vw_punteo_sare {
         this.cve_unica_duplicada = cve_unica_duplicada;
     }
 
-    public cat_vw_punteo_sare(BigDecimal A, BigDecimal CE, String CE_DESCRIPCION, String CESTATAL, String CLEE_EMP, BigDecimal COORD_X,
+    public cat_vw_punteo_sare(BigDecimal A, String CE, String CE_DESCRIPCION, String CESTATAL, String CLEE_EMP, BigDecimal COORD_X,
             BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E03N, String E04, String E04N, String E05, String E05N,
             String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11,
             String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19,
@@ -493,11 +493,11 @@ public class cat_vw_punteo_sare {
         this.A = A;
     }
 
-    public BigDecimal getCE() {
+    public String getCE() {
         return CE;
     }
 
-    public void setCE(BigDecimal CE) {
+    public void setCE(String CE) {
         this.CE = CE;
     }
 
