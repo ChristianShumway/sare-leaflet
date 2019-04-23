@@ -20,18 +20,41 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 @Controller
 public class DefaultController {
-    
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index(ModelMap map) {
-        return "login";
+    public String index(ModelMap map,
+            @RequestParam(value = "acceso", defaultValue = "") String acceso,
+            @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
+            @RequestParam(value = "nombre", defaultValue = "") String nombre,
+            @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
+            HttpServletRequest request) {
+        if (
+            acceso!=null && !acceso.equals("")&& 
+            clave_operativa!=null && !clave_operativa.equals("")&& 
+            nombre!=null && !nombre.equals("") &&
+            tramo_control!=null && !tramo_control.equals("") 
+                ) {
+            return "login";
+        } else {
+            return "error";
+        }
     }
 
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
-    public String index2(ModelMap map) {
+    public String index2(
+            @RequestParam(value = "u", defaultValue = "") String u,
+            @RequestParam(value = "p", defaultValue = "") String p,
+            @RequestParam(value = "acceso", defaultValue = "") String acceso,
+            @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
+            @RequestParam(value = "id_deftramo", defaultValue = "") String id_deftramo,
+            @RequestParam(value = "nombre", defaultValue = "") String nombre,
+            @RequestParam(value = "ce", defaultValue = "") String ce,
+            @RequestParam(value = "cve_unica", defaultValue = "") String cve_unica,
+            @RequestParam(value = "consulta", defaultValue = "") String consulta,
+            HttpServletRequest request) {
         return "index";
     }
-    
+
 }
