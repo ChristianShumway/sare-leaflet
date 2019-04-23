@@ -36,7 +36,7 @@ public class DefaultController {
                 && nombre != null && !nombre.equals("")
                 && tramo_control != null && !tramo_control.equals("")
                 && proyecto != null ) {
-            return "login";
+            return "index";
         } else {
             return "error";
         }
