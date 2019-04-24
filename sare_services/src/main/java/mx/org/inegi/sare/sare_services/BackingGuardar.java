@@ -33,7 +33,7 @@ public class BackingGuardar extends BackingSincroniza {
         cat_vw_punteo_sare inmueble = inicializa(object);
 
         if (inmueble != null) {
-            if (inmueble.getID_UE() == null /*|| inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")*/) {
+            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
@@ -122,7 +122,7 @@ public class BackingGuardar extends BackingSincroniza {
         regresar.setTipo_e10_an(inmueble.getTipo_e10_an());
         regresar.setE10_A(inmueble.getE10_A());
         regresar.setTIPO_E10_B(inmueble.getTipo_e10_b());
-        regresar.setE10_cvevial(inmueble.getE10a_cvevial());
+        regresar.setE10_cvevial(inmueble.getE10_cvevial());
         regresar.setE10_B(inmueble.getE10_B());
         regresar.setTIPO_E10_C(inmueble.getTipo_e10_c());
         regresar.setE10_C(inmueble.getE10_C());
@@ -142,7 +142,6 @@ public class BackingGuardar extends BackingSincroniza {
         regresar.setCveft(inmueble.getCveft());
         regresar.setCOORD_X(inmueble.getCoordx());
         regresar.setCOORD_Y(inmueble.getCoordy());
-
         return regresar;
     }
 
