@@ -900,15 +900,10 @@ const addLiberados=()=> {
     });
 }
 
-// Función validación de formulario campos vacios
-const handleFormValidations = () => {
-  const totalInputs = objForm.length
-  let inputsInfo = 0
-  //$('.button-collapse').sideNav('hide')
-if(punteo=='U' && mod_cat=='1')
-{
-  for (let input = 0; input < objForm.length; input++) {
-    const { id, name, title, key } = objForm[input]
+const validations=(totalInputs,object)=>{
+   let inputsInfo = 0 
+    for (let input = 0; input < totalInputs; input++) {
+    const { id, name, title, key } = object[input]
     const element = document.getElementById(id)
     const wrapTitle = document.getElementById(title)
     let visible = wrapTitle.dataset.visible
@@ -955,15 +950,76 @@ if(punteo=='U' && mod_cat=='1')
 
   inputsInfo == totalInputs && validaCp()
 }
+
+// Función validación de formulario campos vacios
+const handleFormValidations = () => {
+  let totalInputs;
+  
+  //$('.button-collapse').sideNav('hide')
+if(punteo=='U' && mod_cat=='1')
+{
+    totalInputs = objForm.length
+    validations(totalInputs,objForm);
+}
 else
 {
     if(punteo=='R' && mod_cat=='1')
     {
+        validaCp()
+    }
+    else{
+    if(punteo=='R' && mod_cat=='2')
+    {
+        
+        if(validaEdificio()){
+            totalInputs = objFormCentrocomercial.length
+            validations(totalInputs,objFormCentrocomercial); 
+        }
+        else{
+            totalInputs = objFormRural.length
+        }
+        validations(totalInputs,objFormRural);
+        
+    }
         
     }
 }
 
 }
+const validaEdificio=()=>{
+    let bandera=0;
+    for (let input = 0; input < objFormCentrocomercial.length; input++) 
+    {
+    const { id, name, title, key } = objFormCentrocomercial[input]
+    const element = document.getElementById(id)
+    const wrapTitle = document.getElementById(title)
+    let visible = wrapTitle.dataset.visible
+
+    !inputsByWrap[key] ? inputsByWrap[key] = true : false
+    if(bandera>0){
+        break;
+    }else{
+        if (element.value == '' || element.value=='0') 
+        {
+            bandera=0;
+        }
+        else
+        {
+            bandera=1;
+        }
+      }
+    }
+    if(bandera==1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+const handleFormValidationsRural=()=>{
+    
+} 
 
 const validaCp = () => {
   sendAJAX(urlServices['serviceValCP'].url, 

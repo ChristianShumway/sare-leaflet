@@ -97,6 +97,59 @@ const objForm = [
   },
 ]
 
+const objFormRural=[
+   {
+    id:'descrubic',
+    key: 'calle-posterior',
+    name:'Descripción de la ubicación del establecimiento',
+    title:'title-calle-posterior'
+  },   
+]
+const objFormCentrocomercial=[
+   {
+    id:'E12p',
+    key: 'edificio',
+    name:'Piso del edificio',
+    title:'title-edificio'
+  }, 
+  {
+    id:'E12',
+    key: 'edificio',
+    name:'Numero de Edificio',
+    title:'title-edificio'
+  }, 
+  {
+    id:'e19',
+    key: 'edificio',
+    name:'Nombre Edificio',
+    title:'title-edificio'
+  }, 
+  {
+    id:'e20',
+    key: 'edificio',
+    name:'Numero de Local',
+    title:'title-edificio'
+  }, 
+  {
+    id:'e13',
+    key: 'domicilio',
+    name:'Numero interior',
+    title:'title-domicilio'
+  }, 
+  {
+    id:'e13_a',
+    key: 'domicilio',
+    name:'Letra interior',
+    title:'title-domicilio'
+  }, 
+  {
+    id:'tipo_E19',
+    key: 'edificio',
+    name:'Tipo de corredor o centro comercial',
+    title:'title-edificio'
+  }, 
+]
+
 const inputsEditables = [
   {
     id:'tipo_e10n',
