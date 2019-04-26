@@ -900,8 +900,9 @@ const addLiberados=()=> {
     });
 }
 
-const validations=(totalInputs,object)=>{
+const validations=(totalInputs,object,campo)=>{
    let inputsInfo = 0 
+   let msgInputEmpty;
     for (let input = 0; input < totalInputs; input++) {
     const { id, name, title, key } = object[input]
     const element = document.getElementById(id)
@@ -917,7 +918,15 @@ const validations=(totalInputs,object)=>{
       visible == 'hide' ? handleVisibleForm(key) : false
       inputsEmpty = true
       containerInputsVisible = false
-      const msgInputEmpty = `Favor de completar la información del campo ${name}`
+      if(campo!=undefined)
+      {
+           msgInputEmpty = `si no existe ${name} no debe existir ${campo}`
+      }
+      else
+      {
+          msgInputEmpty = `Favor de completar la información del campo ${name}` 
+      }
+      
       alertToastForm(msgInputEmpty)
       inputsByWrap[key] = false
       setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
@@ -973,12 +982,14 @@ else
         
         if(validaEdificio()){
             totalInputs = objFormCentrocomercial.length
-            validations(totalInputs,objFormCentrocomercial); 
+            validations(totalInputs,objFormCentrocomercial,campo); 
+            validations(totalInputs,objFormRural);
         }
         else{
             totalInputs = objFormRural.length
+            validations(totalInputs,objFormRural);
         }
-        validations(totalInputs,objFormRural);
+        
         
     }
         
@@ -986,6 +997,7 @@ else
 }
 
 }
+var campo;
 const validaEdificio=()=>{
     let bandera=0;
     for (let input = 0; input < objFormCentrocomercial.length; input++) 
@@ -1005,6 +1017,7 @@ const validaEdificio=()=>{
         }
         else
         {
+            campo=name;
             bandera=1;
         }
       }
