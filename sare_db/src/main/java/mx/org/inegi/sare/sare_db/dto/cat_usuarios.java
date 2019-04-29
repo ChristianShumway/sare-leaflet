@@ -10,7 +10,7 @@ package mx.org.inegi.sare.sare_db.dto;
  * @author LIDIA.VAZQUEZ
  */
 public class cat_usuarios {
-    
+
     private String usuario;
     private String nombre;
     private String ce;
@@ -25,7 +25,7 @@ public class cat_usuarios {
     private String id_deftramo;
     private String ip;
     private String pass;
-    private String proyecto;
+    private Integer proyecto;
     private String acceso;
     private String cve_operativa;
 
@@ -38,7 +38,7 @@ public class cat_usuarios {
         this.id_deftramo = id_deftramo;
         this.ip = ip;
     }
-    
+
     public cat_usuarios(String usuario, String nombre, String ce, String jc, String ta, Integer perfil, String tramo_control, Boolean success, String cve_unica, Boolean masivo, Boolean consulta, String id_deftramo) {
         this.usuario = usuario;
         this.nombre = nombre;
@@ -62,7 +62,6 @@ public class cat_usuarios {
         this.cve_operativa = cve_operativa;
     }
 
-    
     public String getAcceso() {
         return acceso;
     }
@@ -71,7 +70,6 @@ public class cat_usuarios {
         this.acceso = acceso;
     }
 
-    
     public String getPass() {
         return pass;
     }
@@ -80,17 +78,14 @@ public class cat_usuarios {
         this.pass = pass;
     }
 
-    public String getProyecto() {
+    public Integer getProyecto() {
         return proyecto;
     }
 
-    public void setProyecto(String proyecto) {
+    public void setProyecto(Integer proyecto) {
         this.proyecto = proyecto;
     }
 
-    
-    
-    
     public String getIp() {
         return ip;
     }
@@ -99,8 +94,6 @@ public class cat_usuarios {
         this.ip = ip;
     }
 
-    
-    
     public String getUsuario() {
         return usuario;
     }
@@ -197,7 +190,4 @@ public class cat_usuarios {
         this.id_deftramo = id_deftramo;
     }
 
-    
-    
-    
 }

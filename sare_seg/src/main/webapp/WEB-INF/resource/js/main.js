@@ -169,11 +169,11 @@ const findUE = id_ue => {
 const callServiceFindUE=(id_ue)=>{
   sendAJAX(urlServices['serviceSearch'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'p':'1',
-    'tramo': '00000000000',
-    'ce': '00', 
-    'usuario':'lidia.vazquez',
+    'tramo':dataUserFromLoginLocalStorage.tramoControl,
+    'ce': dataUserFromLoginLocalStorage.ce, 
+    'usuario':dataUserFromLoginLocalStorage.nombre,
     'id_ue': id_ue
   },
   urlServices['serviceSearch'].type, 
@@ -247,7 +247,7 @@ const fillForm = data => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogo = () => {
   sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
@@ -269,7 +269,7 @@ const fillCatalogo = () => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogoConjuntosComerciales = () => {
   sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoConjuntosComerciales'].type, 
     data => {
       if (data[0].operation) {
@@ -301,7 +301,7 @@ const acercarWithExtent = data => {
 const getCp=ce=>{
   sendAJAX(
     urlServices['serviceCP'].url, 
-    { 'cve_ent': ce, 'proyecto':1 }, 
+    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCP'].type, 
     data => {
       cpObj = data[0].datos
@@ -337,9 +337,9 @@ const handleViewCleeList = () => {
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '01000000000', 
-      'id_ue': 01,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue': dataUserFromLoginLocalStorage.ce,
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
@@ -593,7 +593,7 @@ const handlePunteo=(x,y,tc,r)=>{
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'x': x, 
     'y': y, 
     'tc': tc, 
@@ -969,7 +969,7 @@ const validaCp=()=>{
     sendAJAX(urlServices['serviceValCP'].url, {
         'codigo': $("#e14_A").val(),
         'cve_ent': $("#e03").val(),
-        'proyecto':1}, 
+        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceValCP'].type, function (data) 
     {
         if (data[0].operation) 
@@ -1004,7 +1004,7 @@ const validaCp=()=>{
                     onOpen: showViewPreliminar(d) 
             }).then((result) => {
               if (result.value) {
-                sendAJAX(urlServices['serviceSaveUEAlter'].url, {'proyecto':1,'obj': JSON.stringify(ObjectRequest),'usuario':u}, urlServices['serviceSaveUEAlter'].type, function (data) 
+                sendAJAX(urlServices['serviceSaveUEAlter'].url, {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,'obj': JSON.stringify(ObjectRequest),'usuario':u}, urlServices['serviceSaveUEAlter'].type, function (data) 
                         {
                            if (data[0].operation) 
                            {
@@ -1174,7 +1174,7 @@ const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      { 'proyecto': 1, 'x': x, 'y': y},
+      { 'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 'x': x, 'y': y},
       urlServices['serviceIdentifyStreetView'].type, 
       data => {
         if (data[0].operation) {
@@ -1222,7 +1222,7 @@ const mostrarMensaje = () => {
 const callServicioIdentificar = (capas, x, y) => {
   sendAJAX(urlServices['serviceIdentifyUE'].url,
     {
-      'proyecto': 1,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion,
       'x': x,
       'y': y,
       'opciones': capas
@@ -1407,7 +1407,7 @@ const handleCancelClick = () => {
 const callServiceLiberaClave=(id_ue)=>{
     sendAJAX(urlServices['serviceLiberaClave'].url, 
     {
-        'proyecto':1,
+        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
         'id_ue': id_ue
         
     }, urlServices['serviceLiberaClave'].type, function (data) 
