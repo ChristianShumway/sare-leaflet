@@ -16,7 +16,6 @@ import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
-import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
@@ -113,7 +112,7 @@ public class ServiceController {
         return BackingGetClaves.getListadoUnidadesEconomicas(proyecto, id_ue, tramo);
     }
 
-    @RequestMapping(value = "getListadoUnidadesEconomicasBloqueadas.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getListadoUnidadesEconomicasBloqueadas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         return BackingGetClaves.getListadoUnidadesEconomicasBloqueadas(proyecto, id_ue, tramo);
     }
@@ -185,5 +184,10 @@ public class ServiceController {
     @RequestMapping(value = "getCatConjuntosComerciales.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_conjunto_comercial> getCatConjuntosComerciales(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingCatalogosSare.getCatalogoConjuntosComerciales(proyecto);
+    }
+    
+    @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services desbloquea(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "usuario") String usuario) throws Exception {
+        return BackingCatalogosSare.desbloquea(proyecto,id_ue,usuario);
     }
 }

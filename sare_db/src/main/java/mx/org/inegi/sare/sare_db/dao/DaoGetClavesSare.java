@@ -41,15 +41,16 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
     
     UnidadesEconomicasEnum UnidadesEconomicasEnum;
     
-    private List<cat_get_claves> resultado=new ArrayList<>();
+    private List<cat_get_claves> resultado1;
     
     @Override
    public List<cat_get_claves> getListadoUnidadesEconomicas(Integer proyecto, String id_ue, String tramo) throws Exception 
    {
+        resultado1=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
-        resultado=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
+        resultado1=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
         {
             @Override
             public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -58,23 +59,24 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 while(rs.next())
                 {
                     fila=new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"));
-                    resultado.add(fila);
+                    resultado1.add(fila);
                 }
-                return resultado;
+                return resultado1;
             }
         });
         
-       return resultado; 
+       return resultado1; 
         
     }
    
     @Override
    public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas(Integer proyecto, String ce, String tramo) throws Exception 
    {
+        resultado1=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,ce,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo());
-        resultado=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
+        resultado1=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
         {
             @Override
             public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -83,13 +85,13 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 while(rs.next())
                 {
                     fila=new cat_get_claves(rs.getString("id_ue"), rs.getString("sare_st_usr"), rs.getString("sare_st_time"),rs.getString("DIFERENCIA_HORAS"),rs.getString("TIME_LOCK"));
-                    resultado.add(fila);
+                    resultado1.add(fila);
                 }
-                return resultado;
+                return resultado1;
             }
         });
         
-       return resultado; 
+       return resultado1; 
         
     }
 
@@ -138,7 +140,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
            {
                 if (ce.equals("00")) 
                 {
-                    sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, TO_CHAR(DIFERENCIA_DIAS, '00') || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+                    sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                     + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
                     + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
                     + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
@@ -148,7 +150,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     append(schemaocl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
                 } else 
                 {
-                    sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, TO_CHAR(DIFERENCIA_DIAS, '00') || 'dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+                    sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || 'dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                     + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
                     + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
                     + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
