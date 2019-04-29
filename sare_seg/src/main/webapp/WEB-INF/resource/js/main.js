@@ -1214,113 +1214,48 @@ const validaEdificio=()=>{
     const wrapTitle = document.getElementById(title)
     let visible = wrapTitle.dataset.visible
 
-const validaCp=()=>{
-    sendAJAX(urlServices['serviceValCP'].url, {
-        'codigo': $("#e14_A").val(),
-        'cve_ent': $("#e03").val(),
-        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
-    urlServices['serviceValCP'].type, function (data) 
+    !inputsByWrap[key] ? inputsByWrap[key] = true : false
+    if(bandera>0){
+        break;
+    }else{
+        if (element.value == '' || element.value=='0') 
     {
-        if (data[0].operation) 
-        {
-            if (data[0].datos.result === false) 
-            {
-                
+            bandera=0;
             }
             else
             {
-                var myform = $('#frmSARE');
-                var disabled = myform.find(':input:disabled').removeAttr('disabled');
-                var d = myform.serialize();
-                d += "&tramo_control=" + dataUserFromLoginLocalStorage.tramo_control;
-                d += "&coord_x=" + xycoorsx + "&coord_y=" + xycoorsy;
-                var u = dataUserFromLoginLocalStorage.nombre;
-                var htmlDiv = "<div id='vista'> </div>";
-                const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
-                
-            Swal.fire({
-              title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
-                    width: sizeScreen, 
-                    html: htmlDiv, 
-                    confirmButtonText: 'Aceptarr', 
-                    customClass: 'swal-wide', 
-                    confirmButtonColor: '#0f0f0f', 
-                    allowEscapeKey: false, 
-                    allowOutsideClick: false, 
-                    showConfirmButton: true,
-                    showCancelButton: true,
-                    showCloseButton: true, 
-                    onOpen: showViewPreliminar(d) 
-            }).then((result) => {
-              if (result.value) {
-                sendAJAX(urlServices['serviceSaveUEAlter'].url, {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,'obj': JSON.stringify(ObjectRequest),'usuario':u}, urlServices['serviceSaveUEAlter'].type, function (data) 
-                        {
-                           if (data[0].operation) 
-                           {
-                            if (data[0].datos.mensaje.type === 'false') 
-                            {
-                                swal.fire({
-                                        title: "Error",
-                                        text: data[0].datos.mensaje.messages,
-                                        showConfirmButton: true,
-                                        confirmButtonText: 'Aceptar',
-                                        confirmButtonColor: '#4d4d4d',
-                                        type: "error"
-                                    }); 
-                                    return;
+            campo=name;
+            bandera=1;
                             }
-                            else
-                            {
-                               cleanForm()
-                               MDM6('hideMarkers', 'identify');
-                               swal.fire(
-                                {
-                                            title: 'Guardado',
-                                            text: 'El punto ha sido almacenado correctamente',
-                                            type: "success",
-                                            confirmButtonColor: "#DD6B55",
-                                            allowEscapeKey: true,
-                                            allowOutsideClick: true,
-                                            html: true,
-                                            animation: true
-                                                    //timer: 2500
-                                });
                             }
                            }
-                           else
-                           {
-                             swal.fire
-                             ({
-                                            title: 'Error',
-                                            text: 'Error de conexion!',
-                                            type: "error",
-                                            confirmButtonColor: "#DD6B55",
-                                            allowEscapeKey: true,
-                                            allowOutsideClick: true,
-                                            html: true,
-                                            animation: true
-                                                    //timer: 2500
-                                });  
+    if(bandera==1){
+        return true;
                            }
+    else{
+        return false;
+    }
+}
                           
-                        }, function (){
-                            swal.fire({
-                                title: 'Guardando',
-                                text: 'Almacenando información, por favor espere un momento',
-                                type: "info",
-                                allowEscapeKey: true,
-                                allowOutsideClick: true,
-                                html: true,
-                                animation: true
-                                        //timer: 2500
-                            });
-                        });
+const handleFormValidationsRural=()=>{
                     
                     }
-                }); 
+
+const validaCp = () => {
+  sendAJAX(urlServices['serviceValCP'].url, 
+  {
+    'codigo': $("#e14_A").val(),
+    'cve_ent': $("#e03").val(),
+    'proyecto':1
+  }, 
+  urlServices['serviceValCP'].type, 
+  data => {
+    if (data[0].operation) {
+      if (data[0].datos.result === false) {
+          
               }
-            }
-    },function (){
+      else {
+        modalViewPreliminar()
         
       }
     }
