@@ -1,261 +1,190 @@
+<style>
+  .form-preview{
+    height: 50vh;
+    overflow-y: auto;
+  }
+
+  .txt-preliminar{
+    border-bottom: 1px solid lightgray; 
+    padding-bottom:10px; 
+    width:100%;
+  }
+
+  .wrap-titulo-encabezado{
+    background: #2d384a;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .wrap-titulo-encabezado i{
+    padding: 0 10px;
+  }
+
+  .wrap-titulo-encabezado.no-first{
+    margin-top: 20px;
+  }
+
+  .container-campos{
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .wrap-titulo-campo label{
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width:480px){
+    .txt-preliminar{
+      font-size: 1.7rem;
+    }
+    .wrap-info-campo{
+      margin-bottom: 10px;
+    }
+
+    .wrap-titulo-encabezado{
+      font-size: 1rem;
+    }
+
+    .wrap-titulo-encabezado i{
+      font-size: 1.5rem;
+    }
+  }
+</style>
 <form class="pure-form pure-form-aligned form-preview">
     
-    <h6><i class="material-icons">place</i> Referencia</h6>
+  <div class="wrap-titulo-encabezado"><i class="material-icons">place</i> Referencia</div>
+  
+  <div  class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e09_pv">Razón Social:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e09_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e08_pv">Nombre del establecimiento:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e08_pv"></span> </div>
+  </div>
 
-    <div  class="row left-align">
-        <div class="col s3">
-            <label for="e09_pv">Razón Social</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e09_pv">  </span>
-        </div>
-        
-        <div class="col s3 ">               
-            <label for="e08_pv">Nombre del establecimiento</label>
-        </div>
-         <div class="col s3 ">               
-            <span class="vistaprevia" id="e08_pv">  </span>
-        </div>
-    </div>
+  <div  class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="id_UE_pv">CLEE_EST:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="id_UE_pv"></span> </div>
+  </div>
 
-    <div class="row left-align">
-        <div class="col s3 ">        
-            <label for="id_UE_pv">CLEE_EST</label>
-        </div>
-        <div class="col">        
-            <span class="vistaprevia" id="id_UE_pv">  </span>
-        </div>
-    </div>
     
-    <h6><i class="material-icons">public</i> Ubicaci&oacute;n geogr&aacute;fica</h6>
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e03N_pv">Entidad Federativa</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e03N_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e04N_pv">Municipio o Delegaci&oacute;n</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e04N_pv">  </span>
-        </div>
-    </div>
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">public</i> Ubicaci&oacute;n geogr&aacute;fica</div>
+
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e03N_pv">Entidad Federativa:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e03N_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e04N_pv">Municipio o Delegaci&oacute;n:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e04N_pv"></span> </div>
+  </div>
     
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e05N_pv">Localidad</label>
-        </div>
-         <div class="col s3">
-            <span class="vistaprevia" id="e05N_pv">  </span>
-        </div>
-        <div class="col s3">
-            <label for="e06_pv">AGEB</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e06_pv">  </span>
-        </div>
-    </div>
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e05N_pv">Localidad:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e05N_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e06_pv">AGEB:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e06_pv"></span> </div>
+  </div>
     
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e07_pv">Manzana</label>
-        </div>
-        <div class="col">
-            <span class="vistaprevia" id="e07_pv">  </span>
-        </div>
-    </div>
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e07_pv">Manzana:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e07_pv"></span> </div>
+  </div>
 
-    <h6><i class="material-icons">local_convenience_store</i> Domicilio</h6>
-    <div class="row left-align">
-            
-        <div class="col s3">
-            <label for="tipo_e10n_pv">Tipo de vialidad</label>
-        </div>
-         <div class="col s3">
-            <span class="vistaprevia" id="tipo_e10n_pv">  </span>
-        </div>
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">local_convenience_store</i> Domicilio</div>
 
-        <div class="col s3">
-            <label for="e10_pv">Nombre de vialidad</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e10_pv">  </span>
-        </div>
-    </div>
-    
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e10_e_pv">Nombre E10_E</label>
-        </div>
-        <div class="col">
-            <span class="vistaprevia" id="e10_e_pv">  </span>
-        </div> 
-    </div>
+  <div class="row container-campos">     
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_e10n_pv">Tipo de vialidad:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_e10n_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e10_pv">Nombre de vialidad:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e10_pv"></span> </div>
+  </div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e10_e_pv">Nombre E10_E:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e10_e_pv"></span> </div> 
+  </div>
 
-    <div class="row left-align">
-         <div class="col s3">
-            <label for="e11_pv">N&uacute;mero exterior E11</label>
-        </div>
-         <div class="col s3">
-            <span class="vistaprevia" id="e11_pv">  </span>
-        </div>
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e11_pv">N&uacute;mero exterior E11:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e11_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e11_a_pv">Letra E11_A:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e11_a_pv"></span> </div>
+  </div>
 
-        <div class="col s3">
-            <label for="e11_a_pv">Letra E11_A </label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e11_a_pv">  </span>
-        </div>
-    </div>
-
-    <div class="row left-align">
-         <div class="col s3">
-            <label for="e13_pv">N&uacute;mero interior E13</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e13_pv">  </span>
-        </div>
-
-        <div class="col s3">
-            <label for="e13_a_pv">Letra E13_A </label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e13_a_pv">  </span>
-        </div>
-    </div>
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e13_pv">N&uacute;mero interior E13:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e13_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e13_a_pv">Letra E13_A:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e13_a_pv"></span> </div>
+  </div>
    
-
-
-    <h6><i class="material-icons">nature_people</i> Asentamiento</h6>
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">nature_people</i> Asentamiento</div>
     
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="tipo_E14_pv">Tipo de asentamiento humano</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="tipo_E14_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e14_A_pv">CP</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e14_A_pv">  </span>
-        </div>  
-    </div>
-        
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e14_pv">Nombre del asentamiento</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e14_pv">  </span>
-        </div>
-    </div>
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_E14_pv">Tipo de asentamiento humano:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_E14_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e14_A_pv">CP:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e14_A_pv"></span> </div>  
+  </div>
+      
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e14_pv">Nombre del asentamiento:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e14_pv"></span> </div>
+  </div>
     
-    <h6><i class="material-icons">local_movies</i> Entre vialidades</h6>
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="tipo_e10_an_pv">Tipo de vialidad 1</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="tipo_e10_an_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e10_A_pv">Nombre de vialidad 1</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e10_A_pv">  </span>
-        </div>
-    </div>
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">local_movies</i> Entre vialidades</div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_e10_an_pv">Tipo de vialidad 1:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_e10_an_pv"></span> </div> 
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e10_A_pv">Nombre de vialidad 1:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e10_A_pv"></span> </div>
+  </div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_e10_bn_pv">Tipo de vialidad 2:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_e10_bn_pv"></span> </div> 
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e10_B_pv">Nombre de vialidad 2:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e10_B_pv"></span> </div>
+  </div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_e10_cn_pv">Tipo de Calle posterior:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_e10_cn_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e10_C_pv">Nombre de calle posterior:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e10_C_pv"></span> </div>
+  </div>
     
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="tipo_e10_bn_pv">Tipo de vialidad 2</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="tipo_e10_bn_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e10_B_pv">Nombre de vialidad 2</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e10_B_pv">  </span>
-        </div>
-    </div>
-    
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="tipo_e10_cn_pv">Tipo de Calle posterior</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="tipo_e10_cn_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e10_C_pv">Nombre de calle posterior</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e10_C_pv">  </span>
-        </div>
-    </div>
-    
-    <h6><i class="material-icons">comment</i> Descripción de la ubicación</h6>
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="descrubic">Descrubic</label>
-        </div>
-        <div class="col s7">
-            <textarea rows="4" id="descrubic_pv" name="descrubic" readonly></textarea>
-        </div>
-    </div>
-    
-    <h6><i class="material-icons">location_city</i>  Edificio &oacute; Centro Comercial</h6>
-    
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="E12_pv">E12 Edificio</label>
-        </div>
-         <div class="col s3">
-            <span class="vistaprevia" id="e12_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="tipo_e19_pv">Tipo E19</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="tipo_e19_pv">  </span>
-        </div>
-    </div>
-    
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e12p_pv">E12P Piso</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e12p_pv">  </span>
-        </div>
-        
-        <div class="col s3">
-            <label for="e19_pv">E19 Nombre</label>
-        </div>
-        <div class="col s3">
-            <span class="vistaprevia" id="e19_pv">  </span>
-        </div>
-    </div>
-    
-    <div class="row left-align">
-        <div class="col s3">
-            <label for="e20_pv">E20 No Local</label>
-        </div>
-        <div class="col">
-            <span class="vistaprevia" id="e20_pv">  </span>
-        </div>
-    </div>
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">comment</i> Descripción de la ubicación</div>
+  
+  <div class="row container-campos">
+    <div class="col s12 m3 wrap-titulo-campo"> <label for="descrubic">Descrubic:</label> </div>
+    <div class="col s12 m7"> <textarea rows="4" id="descrubic_pv" name="descrubic" readonly></textarea> </div>
+  </div>
+  
+  <div class="wrap-titulo-encabezado no-first"><i class="material-icons">location_city</i>  Edificio &oacute; Centro Comercial</div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="E12_pv">E12 Edificio:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e12_pv"></span> </div>  
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="tipo_e19_pv">Tipo E19:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="tipo_e19_pv"></span> </div>
+  </div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e12p_pv">E12P Piso:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e12p_pv"></span> </div>
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e19_pv">E19 Nombre:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e19_pv"></span> </div>
+  </div>
+  
+  <div class="row container-campos">
+    <div class="col s6 m3 wrap-titulo-campo"> <label for="e20_pv">E20 No Local:</label> </div>
+    <div class="col s6 m3 wrap-info-campo"> <span class="vistaprevia" id="e20_pv">  </span> </div>
+  </div>
 
 </form>

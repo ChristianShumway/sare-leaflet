@@ -95,7 +95,15 @@ var urlServices = {
         url: 'getCatConjuntosComerciales.do',
         type: 'POST',
         label: 'catConjuntosComerciales'
+    },
+    serviceListaClavesBloqueadas: {
+        url: 'getListadoUnidadesEconomicasBloqueadas.do',
+        type: 'POST',
+        label: 'ListadoUnidadesEconomicasBloqueadas'
+    },
+    serviceDesbloqueoClavesBloqueadas: {
+        url: 'getListadoUnidadesEconomicasBloqueadas.do',
+        type: 'POST',
+        label: 'ListadoUnidadesEconomicasBloqueadas'
     }
-    
-    
 };
