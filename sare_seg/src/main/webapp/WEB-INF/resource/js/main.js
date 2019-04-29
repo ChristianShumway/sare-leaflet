@@ -2029,16 +2029,9 @@ var ActionSeleccionarTodos = function () {
 };
 
 var Actiondesbloquear = function (id_ue) {
-    var u = dataUserFromLoginLocalStorage.nombre;
-    var c;
-    if (banderaDesbloquear) {
-        
-        c = arrayClavesBloqueadasTodas;
-    } else {
-        c = arrayClavesBloqueadas;
-    }
+    
     //return;
-    swal({
+    swal.fire({
         title: 'se desbloqueara la claves? ' + id_ue,
         text: "",
         type: 'warning',
@@ -2047,47 +2040,40 @@ var Actiondesbloquear = function (id_ue) {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Correcto, Desbloquear!',
         cancelButtonText: 'Cancelar'
-    }, function (resp) {
-        if (resp) {
-            sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, {'l': c, 'u': u}, urlServices['serviceDesbloqueoClavesBloqueadas'].type, function (data) {
-                if (data[0].operation && typeof data[0].datos !== 'undefined' && data[0].datos !== null) {
-                    Desbloquear();
-                    arrayClavesBloqueadas = "";
-                    c="";
-                    banderaDesbloquear=false;
-                    //ordena de mayor a  menor
-                } else {
-                    swal({
-                        title: 'Error interno del servidor, reporte este error con su administrador!',
-                        text: '',
-                        showConfirmButton: true,
-                        confirmButtonColor: "#DD6B55",
-                        allowEscapeKey: true,
-                        allowOutsideClick: true,
-                        html: true,
-                        animation: true
-                    });
-                }
-            }, function () {
-            });
-        } else {
-            banderaDesbloquear=false;
-            arrayClavesBloqueadasTotal="";
-            arrayClavesBloqueadas="";
-            c="";
-            swal({
-                title: 'Se ha cancelado la operación',
-                text: '',
-                showConfirmButton: true,
-                confirmButtonColor: "#DD6B55",
-                allowEscapeKey: true,
-                allowOutsideClick: true,
-                html: true,
-                animation: true
-                        //timer: 2500
-            });
+    }).then(result => handleShowResultDesbloqueo(result,id_ue))
+}
+
+const handleShowResultDesbloqueo = (result,id_ue) => {
+  const user = dataUserFromLoginLocalStorage.nombre
+  if (result.value) {
+    sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
+    {
+      'proyecto':1,
+      'id_ue': id_ue,
+      'usuario':user
+    }, 
+    urlServices['serviceDesbloqueoClavesBloqueadas'].type, 
+    data => {
+      if (data[0].operation) {
+        if (data[0].datos.mensaje.type === 'false') {
+          handleShowSaveAlert('error', 'Error', data[0].datos.mensaje.messages, false)
+          return;
         }
-    });
-};
+        else {
+          cleanForm()
+          MDM6('hideMarkers', 'identify')
+          handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
+        }
+      }
+      
+      else {
+        handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
+      }
+    }, () => handleShowSaveAlert('info', 'Desbloqueando', 'Desbloqueando clave, por favor espere un momento', true)
+    )
+        
+  } //close if result.value
+}
+
 
 /*FIN CLAVES BLOQUEADAS*/

@@ -20,6 +20,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
+import mx.org.inegi.sare.sare_services.BackingDesbloqueo;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
 import mx.org.inegi.sare.sare_services.BackingListUEbyXY;
@@ -91,6 +92,10 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingTransformCoordtoGeo")
     private BackingTransformCoordtoGeo BackingTransformCoordtoGeo;
+    
+    @Autowired
+    @Qualifier("BackingDesbloqueo")
+    private BackingDesbloqueo BackingDesbloqueo;
 
     @RequestMapping(value = "getCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
@@ -188,6 +193,6 @@ public class ServiceController {
     
     @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services desbloquea(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "usuario") String usuario) throws Exception {
-        return BackingCatalogosSare.desbloquea(proyecto,id_ue,usuario);
+        return BackingDesbloqueo.Desbloqueo(proyecto,id_ue,usuario);
     }
 }

@@ -102,8 +102,8 @@ var urlServices = {
         label: 'ListadoUnidadesEconomicasBloqueadas'
     },
     serviceDesbloqueoClavesBloqueadas: {
-        url: 'getListadoUnidadesEconomicasBloqueadas.do',
+        url: 'desbloquea.do',
         type: 'POST',
-        label: 'ListadoUnidadesEconomicasBloqueadas'
+        label: 'desbloquea'
     }
 };

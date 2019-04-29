@@ -11,6 +11,8 @@ package mx.org.inegi.sare.sare_db.interfaces;
  */
 public interface InterfaceDesbloqueo {
     
-    public boolean VerificaDesbloqueo(Integer proyecto,String id_ue);
+    public Integer VerificaDesbloqueo(Integer proyecto,String id_ue);
+    public boolean Desbloqueo(Integer proyecto,String id_ue);
+    public boolean completaGuardadoOcl(Integer proyecto,String usuario,String id_ue);
     
 }
