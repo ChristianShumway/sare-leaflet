@@ -180,11 +180,11 @@ const findUE = id_ue => {
 const callServiceFindUE=(id_ue)=>{
   sendAJAX(urlServices['serviceSearch'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'p':'1',
-    'tramo': '00000000000',
-    'ce': '00', 
-    'usuario':'lidia.vazquez',
+    'tramo':dataUserFromLoginLocalStorage.tramoControl,
+    'ce': dataUserFromLoginLocalStorage.ce, 
+    'usuario':dataUserFromLoginLocalStorage.nombre,
     'id_ue': id_ue
   },
   urlServices['serviceSearch'].type, 
@@ -258,7 +258,7 @@ const fillForm = data => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogo = () => {
   sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
@@ -280,7 +280,7 @@ const fillCatalogo = () => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogoConjuntosComerciales = () => {
   sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoConjuntosComerciales'].type, 
     data => {
       if (data[0].operation) {
@@ -312,7 +312,7 @@ const acercarWithExtent = data => {
 const getCp=ce=>{
   sendAJAX(
     urlServices['serviceCP'].url, 
-    { 'cve_ent': ce, 'proyecto':1 }, 
+    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCP'].type, 
     data => {
       cpObj = data[0].datos
@@ -348,9 +348,9 @@ const handleViewCleeList = () => {
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '01000000000', 
-      'id_ue': 01,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue': dataUserFromLoginLocalStorage.ce,
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
@@ -800,7 +800,7 @@ const handlePunteo=(x,y,tc,r)=>{
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'x': x, 
     'y': y, 
     'tc': tc, 
@@ -1214,48 +1214,113 @@ const validaEdificio=()=>{
     const wrapTitle = document.getElementById(title)
     let visible = wrapTitle.dataset.visible
 
-    !inputsByWrap[key] ? inputsByWrap[key] = true : false
-    if(bandera>0){
-        break;
-    }else{
-        if (element.value == '' || element.value=='0') 
+const validaCp=()=>{
+    sendAJAX(urlServices['serviceValCP'].url, {
+        'codigo': $("#e14_A").val(),
+        'cve_ent': $("#e03").val(),
+        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    urlServices['serviceValCP'].type, function (data) 
+    {
+        if (data[0].operation) 
         {
-            bandera=0;
-        }
-        else
-        {
-            campo=name;
-            bandera=1;
-        }
-      }
-    }
-    if(bandera==1){
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
-const handleFormValidationsRural=()=>{
-    
-} 
-
-const validaCp = () => {
-  sendAJAX(urlServices['serviceValCP'].url, 
-  {
-    'codigo': $("#e14_A").val(),
-    'cve_ent': $("#e03").val(),
-    'proyecto':1
-  }, 
-  urlServices['serviceValCP'].type, 
-  data => {
-    if (data[0].operation) {
-      if (data[0].datos.result === false) {
-          
-      }
-      else {
-        modalViewPreliminar()
+            if (data[0].datos.result === false) 
+            {
+                
+            }
+            else
+            {
+                var myform = $('#frmSARE');
+                var disabled = myform.find(':input:disabled').removeAttr('disabled');
+                var d = myform.serialize();
+                d += "&tramo_control=" + dataUserFromLoginLocalStorage.tramo_control;
+                d += "&coord_x=" + xycoorsx + "&coord_y=" + xycoorsy;
+                var u = dataUserFromLoginLocalStorage.nombre;
+                var htmlDiv = "<div id='vista'> </div>";
+                const sizeScreen = screen.width <= '768' ? '90%' : '80%' 
+                
+            Swal.fire({
+              title: '<h2 style="border-bottom: 1px solid lightgray; padding-bottom:10px;">VISTA PRELIMINAR</h2>', 
+                    width: sizeScreen, 
+                    html: htmlDiv, 
+                    confirmButtonText: 'Aceptarr', 
+                    customClass: 'swal-wide', 
+                    confirmButtonColor: '#0f0f0f', 
+                    allowEscapeKey: false, 
+                    allowOutsideClick: false, 
+                    showConfirmButton: true,
+                    showCancelButton: true,
+                    showCloseButton: true, 
+                    onOpen: showViewPreliminar(d) 
+            }).then((result) => {
+              if (result.value) {
+                sendAJAX(urlServices['serviceSaveUEAlter'].url, {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,'obj': JSON.stringify(ObjectRequest),'usuario':u}, urlServices['serviceSaveUEAlter'].type, function (data) 
+                        {
+                           if (data[0].operation) 
+                           {
+                            if (data[0].datos.mensaje.type === 'false') 
+                            {
+                                swal.fire({
+                                        title: "Error",
+                                        text: data[0].datos.mensaje.messages,
+                                        showConfirmButton: true,
+                                        confirmButtonText: 'Aceptar',
+                                        confirmButtonColor: '#4d4d4d',
+                                        type: "error"
+                                    }); 
+                                    return;
+                            }
+                            else
+                            {
+                               cleanForm()
+                               MDM6('hideMarkers', 'identify');
+                               swal.fire(
+                                {
+                                            title: 'Guardado',
+                                            text: 'El punto ha sido almacenado correctamente',
+                                            type: "success",
+                                            confirmButtonColor: "#DD6B55",
+                                            allowEscapeKey: true,
+                                            allowOutsideClick: true,
+                                            html: true,
+                                            animation: true
+                                                    //timer: 2500
+                                });
+                            }
+                           }
+                           else
+                           {
+                             swal.fire
+                             ({
+                                            title: 'Error',
+                                            text: 'Error de conexion!',
+                                            type: "error",
+                                            confirmButtonColor: "#DD6B55",
+                                            allowEscapeKey: true,
+                                            allowOutsideClick: true,
+                                            html: true,
+                                            animation: true
+                                                    //timer: 2500
+                                });  
+                           }
+                          
+                        }, function (){
+                            swal.fire({
+                                title: 'Guardando',
+                                text: 'Almacenando información, por favor espere un momento',
+                                type: "info",
+                                allowEscapeKey: true,
+                                allowOutsideClick: true,
+                                html: true,
+                                animation: true
+                                        //timer: 2500
+                            });
+                        });
+                    
+                    }
+                }); 
+              }
+            }
+    },function (){
         
       }
     }
@@ -1432,7 +1497,7 @@ const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      { 'proyecto': 1, 'x': x, 'y': y},
+      { 'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 'x': x, 'y': y},
       urlServices['serviceIdentifyStreetView'].type, 
       data => {
         if (data[0].operation) {
@@ -1480,7 +1545,7 @@ const mostrarMensaje = () => {
 const callServicioIdentificar = (capas, x, y) => {
   sendAJAX(urlServices['serviceIdentifyUE'].url,
     {
-      'proyecto': 1,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion,
       'x': x,
       'y': y,
       'opciones': capas
@@ -1665,7 +1730,7 @@ const handleCancelClick = () => {
 const callServiceLiberaClave=(id_ue)=>{
     sendAJAX(urlServices['serviceLiberaClave'].url, 
     {
-        'proyecto':1,
+        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
         'id_ue': id_ue
         
     }, urlServices['serviceLiberaClave'].type, function (data) 

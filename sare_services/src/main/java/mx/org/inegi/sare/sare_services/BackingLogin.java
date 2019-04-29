@@ -57,6 +57,7 @@ public class BackingLogin {
            user.setCe("00");
            user.setTramo_control("00000000000");
            user.setCve_operativa("00000000000");
+           user.setProyecto(proyecto);
         }
         Respuesta.setUsuario(user);
         return Respuesta;
