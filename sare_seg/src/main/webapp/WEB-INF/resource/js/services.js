@@ -105,5 +105,10 @@ var urlServices = {
         url: 'desbloquea.do',
         type: 'POST',
         label: 'desbloquea'
-    }
+    },
+    serviceValidasesion: {
+        url: 'validaSesion.do',
+        type: 'POST',
+        label: 'desbloquea'
+    }    
 };

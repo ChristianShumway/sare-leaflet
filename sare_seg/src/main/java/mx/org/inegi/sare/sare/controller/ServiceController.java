@@ -8,8 +8,10 @@ package mx.org.inegi.sare.sare.controller;
 
 import com.google.gson.Gson;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
@@ -30,6 +32,7 @@ import mx.org.inegi.sare.sare_services.BackingReportes;
 import mx.org.inegi.sare.sare_services.BackingSincroniza;
 import mx.org.inegi.sare.sare_services.BackingTransformCoordtoGeo;
 import mx.org.inegi.sare.sare_services.BackingValidacionesSare;
+import mx.org.inegi.sare.sare_services.utils.ResponseLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -194,5 +197,22 @@ public class ServiceController {
     @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services desbloquea(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "usuario") String usuario) throws Exception {
         return BackingDesbloqueo.Desbloqueo(proyecto,id_ue,usuario);
+    }
+    
+    @RequestMapping(value = "/validaSesion.do", method = RequestMethod.POST, produces = javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public ResponseLocal validaSesion(HttpSession session) {
+        String respuesta = null;
+        ResponseLocal response = new ResponseLocal();
+        Map u = (Map) session.getAttribute("respuesta");
+        if (u == null) {
+            respuesta = "/";
+            
+            response.setSuccess(false);
+        } else {
+            response.setDatos(u);
+            response.setSuccess(true);
+            respuesta = "/index";
+        }
+        return response;
     }
 }

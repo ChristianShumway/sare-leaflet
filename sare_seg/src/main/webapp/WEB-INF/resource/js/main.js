@@ -1,4 +1,4 @@
-const dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
+let dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
 let actualPagina = 1
 let inicioPaginacion = 1
 let finPaginacion = screen.width <= '480' ? 5 : 7
@@ -1777,11 +1777,16 @@ const handleLogOut = () =>{
   window.location.href = './'
 }
 
-const handleSessionActive = () => {
-  if (!dataUserFromLoginLocalStorage){
-    alertToastForm('No se ha iniciado sesión')
-    setTimeout( () => window.location.href = './' , 1500 )
-  }
+const handleSessionActive = () => {            
+    sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, function (data) {
+        if (data[0].datos.success == false) {                                                
+            alertToastForm('No se ha iniciado sesión')
+            setTimeout( () => window.location.href = './' , 1500 )
+        }else{
+            dataUserFromLoginLocalStorage=data[0].datos.datos;
+        }
+    }, function () {}
+            );      
 }
 
 // ALERTA NORMAL 
@@ -2077,3 +2082,25 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
 
 
 /*FIN CLAVES BLOQUEADAS*/
+
+
+const tiempoInactividad = () => { 
+    let tiempo 
+    const resetTimer = () => { 
+        clearTimeout(tiempo) 
+        tiempo = setTimeout(logout, 3600000)
+    }     
+    window.onload = resetTimer 
+    // DOM Events 
+    document.onmousemove = resetTimer
+    document.onkeypress = resetTimer
+    document.onload = resetTimer
+    document.onmousedown = resetTimer // touchscreen presses 
+    document.ontouchstart = resetTimer 
+    document.onclick = resetTimer  // touchpad clicks 
+    document.onscroll = resetTimer // scrolling with arrow keys 
+    const logout = () => { 
+        localStorage.clear()
+         alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad')
+    }     
+}; 
