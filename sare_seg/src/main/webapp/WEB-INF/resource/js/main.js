@@ -785,13 +785,17 @@ const ratificar = request => {
   else{
       if(request=='no')
       {
+        console.log(" le dio clic en no ratificar ", 'background: #222; color: #bada55');
         handleShowAlertPickMap()
         enabledInputs()
         handleActionTargetRef()
         xycoorsx = '';
         xycoorsy = '';
-        MDM6('hideMarkers', 'identify');
-        
+        MDM6('hideMarkers', 'identify');        
+         const cancelOption = document.getElementById('item-cancel-option')
+            cancelOption.removeAttribute('disabled')
+          //cancelOption.setAttribute('disabled', 'false')
+          handleHideAlertPickMap();
       }
       
   }
