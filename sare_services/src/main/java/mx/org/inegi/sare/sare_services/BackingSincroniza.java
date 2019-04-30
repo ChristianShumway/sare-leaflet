@@ -31,15 +31,28 @@ public class BackingSincroniza {
     {
         cat_respuesta_services Respuesta=new cat_respuesta_services();
         List<cat_vw_punteo_sare> pendientes;
-        int oclOk = 0;
-        int oclNg = 0;
         try{
             pendientes=InterfaceSincroniza.getListPendientesOcl(proyecto, usuario);
             if(pendientes.size()>0)
             {
                 for(cat_vw_punteo_sare inmueble:pendientes)
                 {
-                    if(validaLocalidades(proyecto,inmueble,usuario))
+                    validaObject(inmueble,proyecto,usuario);
+                }
+            }
+            
+        }catch(Exception e){
+            Logger.getLogger(BackingSincroniza.class.getName()).log(Level.SEVERE, null, e);
+        }
+        
+        return Respuesta;
+    }
+    
+    public cat_respuesta_services validaObject(cat_vw_punteo_sare inmueble, Integer proyecto, String usuario){
+        cat_respuesta_services Respuesta=new cat_respuesta_services();
+        int oclOk = 0;
+        int oclNg = 0;
+        if(validaLocalidades(proyecto,inmueble,usuario))
                     {
                         if(validaEjes(proyecto,inmueble,usuario))
                         {
@@ -137,16 +150,12 @@ public class BackingSincroniza {
                     }else
                     {
                        Respuesta.setMensaje(new cat_mensaje("error","Error al insertar en Localidades "));  
-                    } 
-                }
-            }
-            
-        }catch(Exception e){
-            Logger.getLogger(BackingSincroniza.class.getName()).log(Level.SEVERE, null, e);
-        }
+                    }
         Respuesta.setDatos("Actualizados:"+oclOk+" Erroneos "+oclNg);
         return Respuesta;
+        
     }
+    
     protected boolean validaLocalidades(Integer proyecto,cat_vw_punteo_sare inmueble, String usuario)
     {
        boolean regresa;

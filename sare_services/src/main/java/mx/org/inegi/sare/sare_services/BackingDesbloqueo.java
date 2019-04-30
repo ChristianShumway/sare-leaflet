@@ -5,10 +5,12 @@
  */
 package mx.org.inegi.sare.sare_services;
 
+import java.util.ArrayList;
+import java.util.List;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
-import mx.org.inegi.sare.sare_db.interfaces.InterfaceSincroniza;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -24,9 +26,6 @@ public class BackingDesbloqueo extends BackingSincroniza {
     @Qualifier("DaoDesbloqueo")
     InterfaceDesbloqueo InterfaceDesbloqueo;
     
-    @Autowired
-    @Qualifier("DaoSincroniza")
-    InterfaceSincroniza InterfaceSincroniza;
     
     public cat_respuesta_services Desbloqueo(Integer proyecto, String id_ue, String usuario){
         cat_respuesta_services respuesta=new cat_respuesta_services();
@@ -58,7 +57,13 @@ public class BackingDesbloqueo extends BackingSincroniza {
                         }
                     break;
                     case 2:
-                        respuesta=super.sincronizaBDs(proyecto,id_ue);
+                        if(sincronizaRegistroBds(proyecto,usuario,id_ue)){
+                            respuesta.setMensaje(new cat_mensaje("true", "- Se sincronizó el almacenamiento del registro correctamente"));
+                        }
+                        else
+                        {
+                           respuesta.setMensaje(new cat_mensaje("false", "- Ocurrió un error al sincronizar el registro")); 
+                        }
                     break;
                     default:
                         respuesta.setMensaje(new cat_mensaje("false", "- Ocurrió un error al verificar el estatus del registro"));
@@ -69,6 +74,25 @@ public class BackingDesbloqueo extends BackingSincroniza {
             respuesta.setMensaje(new cat_mensaje("false", "- Ocurrió una Excepción "+e.getMessage()));
         }
         return respuesta;
+    }
+    
+    public boolean sincronizaRegistroBds(Integer proyecto,String usuario,String id_ue){
+        boolean regresar = false;
+        List<cat_vw_punteo_sare> pendientes;
+        try{
+            pendientes=InterfaceDesbloqueo.getRegistroPendientesOcl(proyecto,usuario,id_ue);
+            if (pendientes!=null && pendientes.size() > 0) {
+                 for (cat_vw_punteo_sare obj : pendientes) 
+                 {
+                     validaObject(obj,proyecto,usuario);
+                 }
+                 regresar=true;
+            }
+        }
+        catch(Exception e){
+            regresar=false;
+        }
+        return regresar;
     }
     
 }

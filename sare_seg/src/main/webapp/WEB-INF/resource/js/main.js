@@ -2023,10 +2023,19 @@ const CargaTablaBloqueadas=()=> {
         'tramo': '000000000', 
         'id_ue':'00'
     }, urlServices['serviceListaClavesBloqueadas'].type, function (data) {
-        if (data[0].operation && typeof data[0].datos !== 'undefined' && data[0].datos !== null) {
+        if (data[0].datos.length>0) {
             dataCleeListNewLock = data[0]
             popupCleeListBloqueadas(data[0].datos)
-        } else {
+        } else 
+        {
+            Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'No existen claves bloqueadas',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
         }
     }, function () 
     {

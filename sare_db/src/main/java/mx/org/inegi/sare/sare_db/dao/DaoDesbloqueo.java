@@ -5,11 +5,14 @@
  */
 package mx.org.inegi.sare.sare_db.dao;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -43,9 +46,81 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
     @Autowired
     @Qualifier("schemaSarePG")
     private String schemapg;
+
+    @Override
+    public List<cat_vw_punteo_sare> getRegistroPendientesOcl(Integer proyecto, String usuario, String id_ue) {
+        List <cat_vw_punteo_sare> regresar;
+        int ue=Integer.valueOf(id_ue);
+        StringBuilder sql;
+        super.proyectos=super.getProyecto(proyecto);
+        sql=getSql(super.proyectos,id_ue,Desbloqueo.consultaPendientes);
+        regresar=jdbcTemplate.query(sql.toString(),new Object[]{ue},new ResultSetExtractor<List <cat_vw_punteo_sare>>() 
+        {
+            @Override
+            public List <cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                List <cat_vw_punteo_sare> fila=new ArrayList<>();
+                cat_vw_punteo_sare registro;
+                while(rs.next())
+                {
+                   registro = new cat_vw_punteo_sare(
+                        rs.getString("cve_ce")!=null  && !"".equals(rs.getString("cve_ce")) ?rs.getString("cve_ce"):"",
+                        rs.getString("coord_x")!=null && !"".equals(rs.getString("coord_x"))?new BigDecimal(rs.getString("coord_x")):new BigDecimal(0),
+                        rs.getString("coord_y")!=null && !"".equals(rs.getString("coord_y"))?new BigDecimal(rs.getString("coord_y")):new BigDecimal(0), 
+                        rs.getString("descrubic")!=null ?rs.getString("descrubic"):"",
+                        rs.getString("cve_ent")!=null?rs.getString("cve_ent"):"",
+                        rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"",
+                        rs.getString("cve_mun")!=null?rs.getString("cve_mun"):"",
+                        rs.getString("nom_mun")!=null? rs.getString("nom_mun"):"", 
+                        rs.getString("cve_loc")!=null?rs.getString("cve_loc"):"",
+                        rs.getString("cve_loc")!=null?rs.getString("cve_loc"):"",
+                        rs.getString("cve_ageb")!=null?rs.getString("cve_ageb"):"",
+                        rs.getString("cve_mza")!=null?rs.getString("cve_mza"):"",
+                        rs.getString("e08")!=null?rs.getString("e08"):"",
+                        rs.getString("e09")!=null?rs.getString("e09"):"",
+                        rs.getString("nomvial")!=null?rs.getString("nomvial"):"",
+                        rs.getString("e10_a")!=null?rs.getString("e10_a"):"",
+                        rs.getString("e10_b")!=null?rs.getString("e10_b"):"",
+                        rs.getString("e10_c")!=null?rs.getString("e10_c"):"",
+                        rs.getString("numext")!=null && !"".equals(rs.getString("numext"))?new BigDecimal(rs.getString("numext")):new BigDecimal(0),
+                        rs.getString("numextalf")!=null?rs.getString("numextalf"):"",
+                        rs.getString("e12")!=null?rs.getString("e12"):"",
+                        rs.getString("numint")!=null && !"".equals(rs.getString("numint"))?new BigDecimal(rs.getString("numint")):new BigDecimal(0),
+                        rs.getString("numintalf")!=null?rs.getString("numintalf"):"",
+                        rs.getString("e14")!=null?rs.getString("e14"):"",
+                        rs.getString("e14_a")!=null?rs.getString("e14_a"):"",
+                        rs.getString("e19")!=null?rs.getString("e19"):"",
+                        rs.getString("e20")!=null?rs.getString("e20"):"", 
+                        rs.getString("id_ue")!=null && !"".equals(rs.getString("id_ue"))?new BigDecimal(rs.getString("id_ue")):new BigDecimal(0),
+                        rs.getString("origen")!=null && !"".equals(rs.getString("origen")) ?new BigDecimal(rs.getString("origen")): new BigDecimal(0), 
+                        rs.getString("tipo_e10")!=null && !"".equals(rs.getString("tipo_e10"))?rs.getString("tipo_e10"):"",
+                        rs.getString("tipo_e10_a")!=null && !"".equals(rs.getString("tipo_e10_a"))?rs.getString("tipo_e10_a"):"",
+                        rs.getString("tipo_e10_b")!=null && !"".equals(rs.getString("tipo_e10_b"))?rs.getString("tipo_e10_b"):"", 
+                        rs.getString("tipo_e10_c")!=null && !"".equals(rs.getString("tipo_e10_c"))?rs.getString("tipo_e10_c"): "", 
+                        rs.getString("tipo_e14")!=null && !"".equals(rs.getString("tipo_e14"))?rs.getString("tipo_e14"):"", 
+                        rs.getString("tipo_e19")!=null?rs.getString("tipo_e19"):"",
+                        rs.getString("tramo_control")!=null?rs.getString("tramo_control"):"",
+                        rs.getString("punteo")!=null? rs.getString("punteo"):"",
+                        rs.getString("cvevial")!=null?rs.getString("cvevial"):"",
+                        rs.getString("e12p")!=null?rs.getString("e12p"):"",
+                        rs.getString("cvegeo")!=null?rs.getString("cvegeo"):"",
+                        rs.getString("mod_cat")!=null?rs.getString("mod_cat"):"",
+                        rs.getString("cveft")!=null?rs.getString("cveft"):"",
+                        rs.getString("cvegeo2016")!=null?rs.getString("cvegeo2016"):"",
+                        rs.getString("e10_e")!=null?rs.getString("e10_e"):"",
+                        rs.getString("e23")!=null?rs.getString("e23"):"",
+                        rs.getString("cveft")!=null && !"".equals(rs.getString("cveft"))?new BigDecimal(rs.getString("cveft")):new BigDecimal(0),
+                        rs.getString("id_deftramo")!=null && !"".equals(rs.getString("id_deftramo"))?new BigDecimal(rs.getString("id_deftramo")):new BigDecimal(0));
+                   fila.add(registro);
+                }
+                return fila;
+            }
+        });
+        return regresar;
+    }
     
      public enum Desbloqueo{
-        Desbloqueo,VerificaDesbloqueo,completaGuardado, existeUe, updateUE, insertUE
+        Desbloqueo,VerificaDesbloqueo,completaGuardado, existeUe, updateUE, insertUE, consultaPendientes
     }
 
     @Override
@@ -221,6 +296,11 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                     break;
                     case completaGuardado:
                         sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST='01' where id_ue=?");
+                    break;
+                    case consultaPendientes:
+                        sql.append("SELECT id_ue, tramo_control, cvegeo, cve_ce, cve_ent, nom_ent, cve_mun, nom_mun, cve_loc, nom_loc, cve_ageb, cve_mza, cveft, e08, e09, tipo_e10, substr(nomvial,1,110) nomvial, case when numext ='' then null else numext::numeric end numext, numextalf, e12, e12p, numint, ");
+                        sql.append("numintalf, tipo_e14, e14, e14_a, tipo_e10_a, e10_a, tipo_e10_b, e10_b, tipo_e10_c, e10_c, e10_e, descrubic, coord_x::varchar, coord_y::varchar, e19, tipo_e19, punteo, mod_cat, origen, cvegeo2016, oracle, ");
+                        sql.append("e20, id_inmueble, id_deftramo, cvevial, e23 FROM ").append(schemapg).append(".td_ue_suc where id_ue=?");
                     break;
                         
                 }
