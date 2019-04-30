@@ -54,7 +54,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,Desbloqueo.Desbloqueo);
-        regresar=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<Boolean>() 
+        regresar=jdbcTemplateocl.query(sql.toString(), new Object[]{id_ue},new ResultSetExtractor<Boolean>() 
         {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 

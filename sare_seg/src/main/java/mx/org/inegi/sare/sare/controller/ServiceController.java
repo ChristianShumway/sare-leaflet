@@ -115,7 +115,7 @@ public class ServiceController {
         return BackingCatalogosSare.getCatalogoAsentamientosHumanos(proyecto);
     }
 
-    @RequestMapping(value = "getListadoUnidadesEconomicas.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getListadoUnidadesEconomicas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_get_claves> getListadoUnidadesEconomicas(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         return BackingGetClaves.getListadoUnidadesEconomicas(proyecto, id_ue, tramo);
     }
