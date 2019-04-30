@@ -40,7 +40,7 @@ var urlServices = {
     getListadoUnidadesEconomicas: {  
         url: 'getListadoUnidadesEconomicas.do',  
         label: 'getListadoUnidadesEconomicas.do',  
-        type: 'GET'  
+        type: 'POST'  
     },   
     serviceCP:{
         url: 'getCP.do',

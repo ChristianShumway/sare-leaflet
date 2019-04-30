@@ -359,7 +359,21 @@ const handleViewCleeList = () => {
       popupCleeList(data[0].datos)
       
     }, 
-    () => {}
+    (
+            
+    ) => {
+    swal ({
+      title: 'Buscando información!',
+      text: 'Por favor espere un momento',
+      timer: 2000,
+      onOpen: () => swal.showLoading()
+    })
+    .then(
+      () => { },
+       dismiss => {
+      }
+    )
+    }
   )
 }
 
@@ -1374,8 +1388,15 @@ const HandleWhatDoYouWantToDo = (coor) => {
       
       break;
     case 'puntear':
-        identificar(coor);
-        handleActionButtons('enabled')
+        let level = MDM6('getZoomLevel')
+        if(level>=13)
+        {
+            identificar(coor);
+            handleActionButtons('enabled')
+        }
+        else{
+          MDM6('hideMarkers', 'identify')  
+        }
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
@@ -1998,7 +2019,20 @@ const CargaTablaBloqueadas=()=> {
             popupCleeListBloqueadas(data[0].datos)
         } else {
         }
-    }, function () {
+    }, function () 
+    {
+         swal 
+         ({
+            title: 'Buscando información!',
+            text: 'Por favor espere un momento',
+            timer: 2000,
+            onOpen: () => swal.showLoading()
+        })
+            .then(
+              () => { },
+               dismiss => {
+              }
+            )
     });
 }
 
