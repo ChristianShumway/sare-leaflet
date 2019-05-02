@@ -41,12 +41,6 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     @Autowired    
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
-
-    
-
-    
-    
-
     
     public enum MetodosGuardar 
     {
@@ -159,13 +153,23 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa)
     {
         StringBuilder sql=new StringBuilder();
+        String esquemaPos,esquemaOcl;
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+                esquemaPos=getEsquemaPostgres(proyecto);
+                esquemaOcl=getEsquemaOracle(proyecto);
                 switch(metodo)
                 {
                     case getValidaUe:
-                        sql.append("SELECT ").append(schemapg).append(".valida_ue_sare('")
+                        sql.append("SELECT ").append(esquemaPos).append(".valida_ue_sare('")
                                 .append(inmueble.getId_UE()).append("','")
                                 .append(inmueble.gettramo_control()).append("','")
                                 .append(inmueble.getPunteo()).append("','")
@@ -186,10 +190,10 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE11()).append("') resultado");
                         break;
                     case getClaveProvisional:
-                        sql.append("SELECT ").append(schemapg).append(".calcula_cveprov(").append(inmueble.gettramo_control()).append(",").append(capa).append(" ) clave");
+                        sql.append("SELECT ").append(esquemaPos).append(".calcula_cveprov(").append(inmueble.gettramo_control()).append(",").append(capa).append(" ) clave");
                         break;
                     case getGuardaUe:
-                        sql.append("SELECT ").append(schemapg).append(".registra_ue_sare('").append(inmueble.getId_UE()).append("','")
+                        sql.append("SELECT ").append(esquemaPos).append(".registra_ue_sare('").append(inmueble.getId_UE()).append("','")
                                 .append(inmueble.getTramo_control()).append("','").append(inmueble.getCvegeo().toUpperCase()).append("','")
                                 .append(inmueble.getCE().toUpperCase()).append("','").append(inmueble.getE03().toUpperCase()).append("','")
                                 .append(inmueble.getE03N().toUpperCase()).append("','").append(inmueble.getE04().toUpperCase()).append("','")
@@ -234,11 +238,11 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE23()).append("') resultado");
                         break;
                     case getE23A:
-                        sql.append("SELECT E23A FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE()); 
+                        sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE()); 
                         break;
                     case getidDeftramo:
                         sql.append("SELECT id_deftramo");
-                        sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE());
+                        sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE());
                         break;
                         
                 }

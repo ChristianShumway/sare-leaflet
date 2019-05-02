@@ -377,24 +377,32 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
      private StringBuilder getSql(cat_vw_punteo_sare cat_vw_punteo_sare,Integer params,String tabla,String rural[],String campo,ProyectosEnum proyecto, String ce, String id_ue, MetodosBusqueda metodo)
      {
         StringBuilder sql = new StringBuilder();
-        esquemaPg=proyecto.getEsquema();
+        String esquemaPos,esquemaOcl;
+        esquemaPos=getEsquemaPostgres(proyecto);
+        esquemaOcl=getEsquemaOracle(proyecto);
             switch(proyecto)
             {
                 case Establecimientos_GrandesY_Empresas_EGE:
-                    
+                case Construccion:
+                case Convenios:
+                case Muestra_Rural:
+                case Operativo_Masivo:
+                case Organismos_Operadores_De_Agua:
+                case Pesca_Mineria:
+                case Transportes:
                     switch(metodo){
                         case BUSQUEDAOCL:
-                            sql=filtrarSqlEge(ce,id_ue);
+                            sql=filtrarSqlEge(ce,esquemaOcl,id_ue);
                             break;
                         case GETCLAVESPG:
-                             sql.append("SELECT distinct id_ue FROM ").append(schemapgEge).append(".td_ue_suc ");
+                             sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
                             break;
                         case GETDATOSINMUEBLES:
                              sql.append("SELECT id_ue,e03,e03n,e04,e04n,e05,e05n,e06,e07,e08,e09,tipo_e10,e10,e10_cvevial,e10_cveseg,e11,e11_a,tipo_e14,e14,tipo_e10_a,e10_a,tipo_e10_b")
                              .append(",e10_b,tipo_e10_c,e10_c,descrubic, coord_x coorx, coord_y coory,cod_resultado,tipo_reg,e12,e12p,e19,tipo_e19,e20,e13,cve_unica_duplicada clave_unica_duplicada, ")
                              .append("xmin(buffer(the_geom_merc,50))||','||ymin(buffer(the_geom_merc,50))||','||Xmax(buffer(the_geom_merc,50))||','||Ymax(buffer(the_geom_merc,50)) extent, ")
                              .append(" e10a_cvevial,e10a_cveseg,e10b_cvevial,e10b_cveseg,e10c_cvevial,e10c_cveseg,tipo_administracion,codigo_carretera,tramo_camino,margen,cadenamiento")
-                             .append(" FROM ").append(schemapgEge).append(".inmuebles where cve_unica=? limit 1");
+                             .append(" FROM ").append(esquemaPos).append(".inmuebles where cve_unica=? limit 1");
                              break;
                         case GETEXTENTCVEGEO:
                             sql=GetSqlExtent(proyecto,metodo,params,tabla,rural,cat_vw_punteo_sare);
@@ -403,7 +411,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             sql=GetSqlExtent(proyecto,metodo,params,tabla,rural,cat_vw_punteo_sare);
                             break;
                         case GETNOMBREBUSQUEDA:
-                            sql.append("select descripcion from ").append(schemapgEge).append(".").append(tabla).append(" where tipo_e10=?");
+                            sql.append("select descripcion from ").append(esquemaPos).append(".").append(tabla).append(" where tipo_e10=?");
                             break;
                         case GETNOMBREBUSQUEDAOCL:
                             sql.append("select ").append(campo).append(" from ").append(schemamdm).append(".").append(tabla).append(" where cve_ent= '").append(cat_vw_punteo_sare.getE03()).append("'");
@@ -417,9 +425,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             }
                             break;
                         case LIBERACLAVEUNICAORACLE:
-                            sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST='10' where id_ue=? and sare_st<>'01'");                            break;
+                            sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='10' where id_ue=? and sare_st<>'01'");                            break;
                         case GETVALCOORGEO:
-                            sql.append("select ").append(schemapgEge).append(".val_coord_geo(?,?) valida");
+                            sql.append("select ").append(esquemaPos).append(".val_coord_geo(?,?) valida");
                             break;
                     }
                     break;
@@ -428,7 +436,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return sql;
     }
      
-      private StringBuilder filtrarSqlEge(String ce, String id_ue)
+      private StringBuilder filtrarSqlEge(String ce,String esquemaOcl, String id_ue)
       {
         StringBuilder sql = new StringBuilder();
         
@@ -439,11 +447,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 
             if(ce.equals("00"))
             {
-                sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue);
+                sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue);
             }
             else
             {
-                sql.append(" FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue); 
+                sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue); 
             }
         return sql;
       }
@@ -457,7 +465,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          Boolean isRural = false;
          switch(proyecto)
          {
-             case Establecimientos_GrandesY_Empresas_EGE:
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
                  switch(metodo){
                      case GETEXTENTCVEGEO2:
                  
@@ -607,62 +622,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                          
                  }
                  break;
-             case Construccion:
-                 break;
-             case Convenios:
-                 break;
-             case Muestra_Rural:
-                 break;
-             case Operativo_Masivo:
-                 break;
-             case Organismos_Operadores_De_Agua:
-                 break;
-             case Pesca_Mineria:
-                 break;
-             case Transportes:
-                 break; 
          }
          return sql;
       }
-      
-      public ProyectosEnum getProyecto(Integer proyecto)
-      {
-          ProyectosEnum ProyectosEnume;
-          switch(proyecto)
-          {
-              case 1:
-                  ProyectosEnume=ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
-                  break;
-              case 2:
-                  ProyectosEnume=ProyectosEnum.Construccion;
-                  break;
-              case 3:
-                  ProyectosEnume=ProyectosEnum.Convenios;
-                  break;
-              case 4:   
-                  ProyectosEnume=ProyectosEnum.Muestra_Rural;
-                  break;
-              case 5:
-                  ProyectosEnume=ProyectosEnum.Operativo_Masivo;
-                  break;
-              case 6:
-                  ProyectosEnume=ProyectosEnum.Organismos_Operadores_De_Agua;
-                  break;
-              case 7:
-                  ProyectosEnume=ProyectosEnum.Pesca_Mineria;
-                  break;
-              case 8:
-                  ProyectosEnume=ProyectosEnum.Transportes;
-                  break;
-              default:
-                  ProyectosEnume=ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
-                  break;
-              
-          }
-          return ProyectosEnume;
-      }
-      
-      
-
    
 }

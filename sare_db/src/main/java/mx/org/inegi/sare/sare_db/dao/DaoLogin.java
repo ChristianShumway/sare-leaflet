@@ -5,18 +5,12 @@
  */
 package mx.org.inegi.sare.sare_db.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Objects;
-import mx.org.inegi.sare.Enums.TipoAreaEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_usuarios;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
-import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 /**

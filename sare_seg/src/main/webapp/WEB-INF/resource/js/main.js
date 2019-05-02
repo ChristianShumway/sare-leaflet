@@ -1490,10 +1490,15 @@ const showViewPreliminar = d => {
       var dpv = d.split("&")
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
+        var Type = document.getElementById(idobj[0]).type;
         var a = decodeURIComponent(idobj[1])
         a = a.replace(/\+/g, ' ')
-        ObjectRequest[idobj[0]] = a
-        $("#" + idobj[0] + "_pv").text(a)
+        if(Type=='select-one')
+        {
+            a=document.getElementById(idobj[0]).value
+        }
+            ObjectRequest[idobj[0]] = a
+            $("#" + idobj[0] + "_pv").text(a)
       })
                 
       ObjectRequest['Cvegeo2016'] = cve_geo2016
@@ -1564,24 +1569,59 @@ const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 // Función al seleccionar opciones identificar, puntear  y vista calle
 const HandleWhatDoYouWantToDo = (coor) => {
   let request = $('input:radio[name=accion]:checked').val();
+  let level = MDM6('getZoomLevel');
   switch (request) {
     case 'identificar':
-      identificaUE(coor.lon, coor.lat);
+      if(level>=13)
+      {
+        identificaUE(coor.lon, coor.lat);
+      }
+      else{
+          MDM6('hideMarkers', 'identify') 
+         Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'Debe acercarse mas sobre el mapa para identificar una unidad economica',
+                    showConfirmButton: false,
+                    timer: 2000
+            }) 
+      }
       
       break;
     case 'puntear':
-        let level = MDM6('getZoomLevel')
         if(level>=13)
         {
             identificar(coor);
             handleActionButtons('enabled')
         }
         else{
-          MDM6('hideMarkers', 'identify')  
+          MDM6('hideMarkers', 'identify') 
+          Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'Debe seleccionar una unidad economica a puntear',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
         }
       break;
     case 'v_calle':
-      StreetView(coor.lon, coor.lat);
+      if(level>=13)
+      {
+        StreetView(coor.lon, coor.lat);
+      }else{
+          MDM6('hideMarkers', 'identify') 
+          Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'Debe acercarse mas sobre el mapa para usar la vista de calle',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
+      }
       break;
 
   }

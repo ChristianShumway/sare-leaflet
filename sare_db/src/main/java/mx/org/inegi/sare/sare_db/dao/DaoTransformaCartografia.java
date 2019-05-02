@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("DaoTransformaCartografia")
 @Profile("dev")
-public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas {
+public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas {
 
     @Autowired
     @Qualifier("schemaSarePG")
@@ -37,11 +37,12 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
     private JdbcTemplate jdbcTemplate;
     
      cat_coordenadas listaCP; 
-
+     ProyectosEnum proyectos;
     @Override
     public cat_coordenadas TransformaCartografia(Integer proyecto,String tipo, String x, String y) {
         StringBuilder sql;
-        sql=getSql(proyecto,tipo);
+        proyectos=getProyecto(proyecto);
+        sql=getSql(proyectos,tipo);
         String point = "POINT(" + x + " " + y + ")";
        listaCP= jdbcTemplate.query(sql.toString(),new Object[]{point,point}, new ResultSetExtractor<cat_coordenadas>() 
        {
@@ -62,12 +63,19 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
     }
     
     
-    private StringBuilder getSql(Integer proyecto,String tipo)
+    private StringBuilder getSql(ProyectosEnum proyecto,String tipo)
     {
         StringBuilder sql = new StringBuilder();
-            if(Objects.equals(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE.getCódigo(), proyecto))
-            {
-                if (TipoCartografia.Geografica.getCodigo().equals(tipo)) 
+            switch(proyecto){
+                case Establecimientos_GrandesY_Empresas_EGE:
+                case Construccion:
+                case Convenios:
+                case Muestra_Rural:
+                case Operativo_Masivo:
+                case Organismos_Operadores_De_Agua:
+                case Pesca_Mineria:
+                case Transportes:
+                    if (TipoCartografia.Geografica.getCodigo().equals(tipo)) 
                 {
                     sql.append("select x(astext(st_transform(ST_PointFromText(?, 4326),900913))), y(astext(st_transform(ST_PointFromText(?, 4326),900913)))");
                 } 
@@ -76,52 +84,110 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                     sql.append("select x(astext(st_transform(ST_PointFromText(?, 900913),4326))), y(astext(st_transform(ST_PointFromText(?, 900913),4326)))");
                 }
             }
-            else
-            {
-                if(Objects.equals(ProyectosEnum.Pesca_Mineria.getCódigo(), proyecto))
-                {
-                    
-                }
-                else
-                {
-                    if(Objects.equals(ProyectosEnum.Transportes.getCódigo(), proyecto))
-                    {
-                    }
-                    else
-                    {
-                       if(Objects.equals(ProyectosEnum.Construccion.getCódigo(), proyecto)) 
-                       {
-                       }
-                       else
-                       {
-                          if(Objects.equals(ProyectosEnum.Operativo_Masivo.getCódigo(), proyecto))
-                          {
-                              
-                          }
-                          else
-                          {
-                              if(Objects.equals(ProyectosEnum.Muestra_Rural.getCódigo(), proyecto))  
-                              {
-                              }
-                              else
-                              {
-                                if(Objects.equals(ProyectosEnum.Convenios.getCódigo(), proyecto))
-                                {
-                                    
-                                } 
-                                else
-                                {
-                                    if(Objects.equals(ProyectosEnum.Organismos_Operadores_De_Agua.getCódigo(), proyecto))
-                                    {
-                                    }
-                                } 
-                              }
-                          }
-                       }
-                    }
-                }
-            }
         return sql;
     }
+    
+    public ProyectosEnum getProyecto(Integer proyecto)
+      {
+          ProyectosEnum ProyectosEnume;
+          switch(proyecto)
+          {
+              case 1:
+                  ProyectosEnume=ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
+                  break;
+              case 2:
+                  ProyectosEnume=ProyectosEnum.Construccion;
+                  break;
+              case 3:
+                  ProyectosEnume=ProyectosEnum.Convenios;
+                  break;
+              case 4:   
+                  ProyectosEnume=ProyectosEnum.Muestra_Rural;
+                  break;
+              case 5:
+                  ProyectosEnume=ProyectosEnum.Operativo_Masivo;
+                  break;
+              case 6:
+                  ProyectosEnume=ProyectosEnum.Organismos_Operadores_De_Agua;
+                  break;
+              case 7:
+                  ProyectosEnume=ProyectosEnum.Pesca_Mineria;
+                  break;
+              case 8:
+                  ProyectosEnume=ProyectosEnum.Transportes;
+                  break;
+              default:
+                  ProyectosEnume=ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
+                  break;
+              
+          }
+          return ProyectosEnume;
+      }
+    
+    
+    public String getEsquemaPostgres(ProyectosEnum proyecto)
+      {
+          String esquema="";
+          switch(proyecto){
+              case Establecimientos_GrandesY_Empresas_EGE:
+                  esquema="sare_seg2018_act";
+              break;
+              case Construccion:
+                  esquema="";
+              break;
+            case Convenios:
+                 esquema="";
+              break;
+            case Muestra_Rural:
+                 esquema="";
+              break;
+            case Operativo_Masivo:
+                 esquema="";
+              break;
+            case Organismos_Operadores_De_Agua:
+                 esquema="";
+              break;
+            case Pesca_Mineria:
+                 esquema="";
+              break;
+            case Transportes:
+                 esquema="";
+              break;
+          }
+          return esquema;
+      }
+      
+       public String getEsquemaOracle(ProyectosEnum proyecto)
+      {
+          String esquema="";
+          switch(proyecto)
+          {
+              case Establecimientos_GrandesY_Empresas_EGE:
+                  esquema="CE2019_SEG";
+              break;
+            case Construccion:
+                esquema="";
+              break;
+            case Convenios:
+                esquema="";
+              break;
+            case Muestra_Rural:
+                esquema="";
+              break;
+            case Operativo_Masivo:
+                esquema="";
+              break;
+            case Organismos_Operadores_De_Agua:
+                esquema="";
+              break;
+            case Pesca_Mineria:
+                esquema="";
+              break;
+            case Transportes:
+                esquema="";
+              break;
+          }
+        return esquema;
+      }
 
 }
