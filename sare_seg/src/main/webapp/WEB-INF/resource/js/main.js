@@ -17,6 +17,7 @@ let titulo_impresion='SARE'
 let bandera_ratificar=false
 
 let punteo,mod_cat,cve_geo,cve_geo2016,cveft,e10_cve_vial;
+let catalogoCatVial = []
 
 var ObjectRequest = {};
 
@@ -547,11 +548,6 @@ const handleSearchCleeList = () => {
 
 // Función ratificar
 const ratificar = request => {
-  const viewSearchContainer = document.getElementById('arrow-search')
-  const tituloBusqueda = document.getElementById('titulo-busqueda')
-  viewSearchContainer.setAttribute('onclick', 'handleVisibleSearch()')
-  tituloBusqueda.setAttribute('onclick', 'handleVisibleSearch()')
-  handleVisibleSearch()
   handleVisibleRatifica()
   if (request == 'si') {
     enabledInputs()
@@ -574,6 +570,13 @@ const ratificar = request => {
       }
       
   }
+}
+
+const handleActiveVisibleSearch = () => {
+  const viewSearchContainer = document.getElementById('arrow-search')
+  const tituloBusqueda = document.getElementById('titulo-busqueda')
+  viewSearchContainer.setAttribute('onclick', 'handleVisibleSearch()')
+  tituloBusqueda.setAttribute('onclick', 'handleVisibleSearch()')
 }
 
 //Funcion que lleva a cabo el punteo del establecimient
@@ -601,10 +604,13 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-        
+    //console.log(data[0].datos.datos)
+    const {catVial} = data[0].datos.datos
+    catalogoCatVial = catVial
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         actualizaForm(data[0].datos.datos)
+        handleTipoPunteo()
       }
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
@@ -646,6 +652,175 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   })
 }
 
+const handleTipoPunteo = () => {
+  //alert('aqui')
+  //console.log(catalogo)
+  const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
+  const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
+  const wrapNombreVialidadUno = document.getElementById('wrap-nombre-vialidad-uno')
+  const wrapTipoVialidadDos = document.getElementById('wrap-tipo-vialidad-dos')
+  const wrapNombreVialidadDos = document.getElementById('wrap-nombre-vialidad-dos')
+  const tipoE10n = document.getElementById('tipo_e10n')
+  const tipoE10an = document.getElementById('tipo_e10_an') //input
+  const e10A = document.getElementById('e10_A') // select
+  const tipoE10bn = document.getElementById('tipo_e10_bn') //input
+  const e10B = document.getElementById('e10_B') // select
+
+  if(punteo === 'R'){
+    //wrapTipoVialidad.removeChild(tipoE10n)
+    tipoE10n.style.display = 'none'
+    tipoE10n.removeAttribute('id')
+    tipoE10an.style.display = 'none'
+    tipoE10an.removeAttribute('id')
+    e10A.style.display = 'none'
+    e10A.removeAttribute('id')
+    tipoE10bn.style.display = 'none'
+    tipoE10bn.removeAttribute('id')
+    e10B.style.display = 'none'
+    e10B.removeAttribute('id')
+
+
+    const selectField = document.createElement('select')
+    selectField.setAttribute('id','tipo_e10n')
+    selectField.classList.add('browser-default')
+    
+    const selectFieldTipoE10an = document.createElement('select')
+    selectFieldTipoE10an.setAttribute('id', 'tipo_e10_an')
+    selectFieldTipoE10an.classList.add('browser-default')
+
+    const inputFieldE10a = document.createElement('input')
+    inputFieldE10a.setAttribute('id', 'e10_A')
+    inputFieldE10a.setAttribute('placeholder', 'Nombre de la vialidad 1')
+    inputFieldE10a.setAttribute('name', 'e10_A')
+    inputFieldE10a.setAttribute('type', 'text')
+
+    const selectFieldTipoE10bn = document.createElement('select')
+    selectFieldTipoE10bn.setAttribute('id', 'tipo_e10_bn')
+    selectFieldTipoE10bn.classList.add('browser-default')
+
+    const inputFieldE10b = document.createElement('input')
+    inputFieldE10b.setAttribute('id', 'e10_B')
+    inputFieldE10b.setAttribute('placeholder', 'Nombre de la vialidad 2')
+    inputFieldE10b.setAttribute('name', 'e10_B')
+    inputFieldE10b.setAttribute('type', 'text')
+
+    catalogoCatVial.map( item =>{
+      let opt = document.createElement('option')
+      opt.appendChild( document.createTextNode(item.tipo_e10) )
+      opt.value = item.tipo_e10n
+      //console.log(item)
+      selectField.appendChild(opt)
+    })
+
+    catalogoCatVial.map( item =>{
+      let opt = document.createElement('option')
+      opt.appendChild( document.createTextNode(item.tipo_e10) )
+      opt.value = item.tipo_e10n
+      //console.log(item)
+      selectFieldTipoE10an.appendChild(opt)
+    })
+
+    catalogoCatVial.map( item =>{
+      let opt = document.createElement('option')
+      opt.appendChild( document.createTextNode(item.tipo_e10) )
+      opt.value = item.tipo_e10n
+      //console.log(item)
+      selectFieldTipoE10bn.appendChild(opt)
+    })
+
+    
+    wrapTipoVialidad.appendChild(selectField)
+    wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
+    wrapNombreVialidadUno.appendChild(inputFieldE10a)
+    wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
+    wrapNombreVialidadDos.appendChild(inputFieldE10b)
+
+  } else if (punteo === 'U'){
+    const childrensTipoVialidad = wrapTipoVialidad.children
+    const childrensTipoVialidadUno = wrapTipoVialidadUno.children
+    const childrensNombreVialidadUno = wrapNombreVialidadUno.children
+    const childrensTipoVialidadDos = wrapTipoVialidadDos.children
+    const childrensNombreVialidadDos = wrapNombreVialidadDos.children
+
+
+    for(let chld = 0; chld< childrensTipoVialidad.length; chld++){
+      let child = childrensTipoVialidad[chld]
+      console.log(child)
+      let childrenType = childrensTipoVialidad[chld].nodeName
+      if(childrenType == 'SELECT'){
+        wrapTipoVialidad.removeChild(child)
+      }
+      if(childrenType == 'INPUT'){
+        child.style.display = 'initial'
+        child.setAttribute('id','tipo_e10n')
+        child.disabled = true
+      }
+    }
+
+    //tipo vialidad 1
+    for(let chld = 0; chld< childrensTipoVialidadUno.length; chld++){
+      let child = childrensTipoVialidadUno[chld]
+      console.log(child)
+      let childrenType = childrensTipoVialidadUno[chld].nodeName
+      if(childrenType == 'SELECT'){
+        wrapTipoVialidadUno.removeChild(child)
+      }
+      if(childrenType == 'INPUT'){
+        child.style.display = 'initial'
+        child.setAttribute('id','tipo_e10_an')
+        child.disabled = true
+      }
+    }
+
+    //nombre vialidad 1
+    for(let chld = 0; chld< childrensNombreVialidadUno.length; chld++){
+      let child = childrensNombreVialidadUno[chld]
+      console.log(child)
+      let childrenType = childrensNombreVialidadUno[chld].nodeName
+      if(childrenType == 'INPUT'){
+        wrapNombreVialidadUno.removeChild(child)
+      }
+      if(childrenType == 'SELECT'){
+        child.style.display = 'initial'
+        child.setAttribute('id','e10_A')
+      }
+    }
+
+    //tipo vialidad 2
+    for(let chld = 0; chld< childrensTipoVialidadDos.length; chld++){
+      let child = childrensTipoVialidadDos[chld]
+      console.log(child)
+      let childrenType = childrensTipoVialidadDos[chld].nodeName
+      if(childrenType == 'SELECT'){
+        wrapTipoVialidadDos.removeChild(child)
+      }
+      if(childrenType == 'INPUT'){
+        child.style.display = 'initial'
+        child.setAttribute('id','tipo_e10_bn')
+        child.setAttribute('disabled','true')
+      }
+    }
+
+    //nombre vialidad 2
+    for(let chld = 0; chld< childrensNombreVialidadDos.length; chld++){
+      let child = childrensNombreVialidadDos[chld]
+      console.log(child)
+      let childrenType = childrensNombreVialidadDos[chld].nodeName
+      if(childrenType == 'INPUT'){
+        wrapNombreVialidadDos.removeChild(child)
+      }
+      if(childrenType == 'SELECT'){
+        child.style.display = 'initial'
+        child.setAttribute('id','e10_B')
+      }
+    }
+    
+  }
+
+  console.log(wrapTipoVialidad.children)   
+
+}
+
 // función sweetaler errores punteo
 const showAlertPunteo = (title, text) =>{
   swal.fire ({
@@ -675,7 +850,7 @@ const actualizaForm=data=>{
         //si traigo entrevialidades
         let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
         idEleToInput.forEach(function (o, i) {
-            $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
+            //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
         });
         var idEleToSelect = ['e10_A', 'e10_B', 'e10_C'];
         idEleToSelect.forEach(function (o, i) {
@@ -737,23 +912,26 @@ const actualizaForm=data=>{
         var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>';
         calles = [];
         objCalles = [];
-        arrData.forEach(function (o, i) 
-        {
-          objCalles.push(o);
-          calles.push(o.e10_X_cvevial);
-          //calles.push(o.e10_X_cvevial + '|' + o.e10_X_cveseg);
-          html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
-        });
-          $('#e10_A').html(html);
-          $('#e10_B').html(html);
-          if (arrData.length > 2) 
+        if(arrData){
+
+          arrData.forEach(function (o, i) 
           {
-            $('#e10_C').html(html);
-            $('#e10_C').attr('disabled', false);
-          } else 
-          {
-            $('#e10_C').attr('disabled', true);
-          }
+            objCalles.push(o);
+            calles.push(o.e10_X_cvevial);
+            //calles.push(o.e10_X_cvevial + '|' + o.e10_X_cveseg);
+            html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+          });
+            $('#e10_A').html(html);
+            $('#e10_B').html(html);
+            if (arrData.length > 2) 
+            {
+              $('#e10_C').html(html);
+              $('#e10_C').attr('disabled', false);
+            } else 
+            {
+              $('#e10_C').attr('disabled', true);
+            }
+        }
       }
       else
       {
@@ -1373,7 +1551,10 @@ const buildDetalle = ficha => {
 const handleCancelClick = () => {
   let id_ue=document.getElementById('id_UE').value
   disabledInputs()
+  punteo = 'U'
+  handleTipoPunteo()
   handleActionButtons('disabled')
+  handleActiveVisibleSearch()
   if(id_ue!=''){
       //llamar servicio que libera la clave y limpia el form
       callServiceLiberaClave(id_ue)

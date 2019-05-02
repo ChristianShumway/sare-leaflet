@@ -336,7 +336,7 @@
                 <div class="input-field">
                   <input id="tipo_e10" name="tipo_e10" type="text" hidden >
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-tipo-vialidad">
                   <input placeholder="Tipo de Vialidad" id="tipo_e10n" name="tipo_e10n" type="text" disabled >
                   <label for="tipo_e10n">Tipo de Vialidad</label>
                 </div>
@@ -418,7 +418,7 @@
                 <div class="input-field">
                   <input id="tipo_e10_a" name="tipo_e10_a" type="text" hidden >
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-tipo-vialidad-uno">
                   <input placeholder="Tipo de Vialidad 1" id="tipo_e10_an" name="tipo_e10_an" type="text" disabled >
                   <label for="tipo_e10_an">Tipo de Vialidad No.1</label>
                 </div>
@@ -426,7 +426,7 @@
                   <input id="e10a_cvevial" name="e10a_cvevial" type="text" hidden >
                   <label for="e10a_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-nombre-vialidad-uno">
                   <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
                   <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
@@ -434,7 +434,7 @@
                 <div class="input-field">
                   <input id="tipo_e10_b" name="tipo_e10_b" type="text" hidden >
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-tipo-vialidad-dos">
                   <input placeholder="Tipo de Vialidad 2" id="tipo_e10_bn" name="tipo_e10_bn" type="text" disabled >
                   <label for="tipo_e10_bn">Tipo de Vialidad No.2</label>
                 </div>
@@ -442,7 +442,7 @@
                   <input id="e10b_cvevial" name="e10b_cvevial" type="text" hidden >
                   <label for="e10b_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-nombre-vialidad-dos">
                   <select class="browser-default" id="e10_B" name="e10_B">
                   </select>
                   <label id="labele10_B" for="e10_B" class="active">Nombre de la Vialidad No.2</label>
