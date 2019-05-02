@@ -33,7 +33,7 @@ public class BackingGuardar extends BackingSincroniza {
         cat_vw_punteo_sare inmueble = inicializa(object);
 
         if (inmueble != null) {
-            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
+            if (inmueble.getID_UE() == null /*|| inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")*/) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {

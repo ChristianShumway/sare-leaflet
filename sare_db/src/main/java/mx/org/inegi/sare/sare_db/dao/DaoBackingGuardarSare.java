@@ -170,24 +170,24 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 {
                     case getValidaUe:
                         sql.append("SELECT ").append(esquemaPos).append(".valida_ue_sare('")
-                                .append(inmueble.getId_UE()).append("','")
-                                .append(inmueble.gettramo_control()).append("','")
-                                .append(inmueble.getPunteo()).append("','")
-                                .append(inmueble.getMod_cat()).append("','")
-                                .append(inmueble.getE14_A()).append("','")
-                                .append(inmueble.getE03()).append("','")
-                                .append(inmueble.getE05()).append("','")
-                                .append(inmueble.getE07()).append("','")
-                                .append(inmueble.getE11_a()).append("','")
-                                .append(inmueble.getTipo_E14()).append("','")
-                                .append(inmueble.getE12()).append("','")
-                                .append(inmueble.getE12p()).append("','")
-                                .append(inmueble.getE13()).append("','")
-                                .append(inmueble.getE13_a()).append("','")
-                                .append(inmueble.getTipo_e19()).append("','")
-                                .append(inmueble.getE19()).append("','")
-                                .append(inmueble.getE20()).append("','")
-                                .append(inmueble.getE11()).append("') resultado");
+                                .append(inmueble.getId_UE()==null?"":inmueble.getId_UE()).append("','")
+                                .append(inmueble.gettramo_control()==null?"":inmueble.gettramo_control()).append("','")
+                                .append(inmueble.getPunteo()==null?"":inmueble.getPunteo()).append("','")
+                                .append(inmueble.getMod_cat()==null?Integer.valueOf(null):Integer.valueOf(inmueble.getMod_cat())).append("','")
+                                .append(inmueble.getE14_A()==null?"":inmueble.getE14_A()).append("','")
+                                .append(inmueble.getE03()==null?"":inmueble.getE03()).append("','")
+                                .append(inmueble.getE05()==null?"":inmueble.getE05()).append("','")
+                                .append(inmueble.getE07()==null?"":inmueble.getE07()).append("','")
+                                .append(inmueble.getE11_a()==null?"":inmueble.getE11_a()).append("','")
+                                .append(inmueble.getTipo_E14()==null?"":inmueble.getTipo_E14()).append("','")
+                                .append(inmueble.getE12()==null?"":inmueble.getTipo_E14()).append("','")
+                                .append(inmueble.getE12p()==null?"":inmueble.getE12p()).append("','")
+                                .append(inmueble.getE13()==null?"":inmueble.getE13()).append("','")
+                                .append(inmueble.getE13_a()==null?"":inmueble.getE13_a()).append("','")
+                                .append(inmueble.getTipo_e19()==null?"":inmueble.getTipo_e19()).append("','")
+                                .append(inmueble.getE19()==null?"":inmueble.getE19()).append("','")
+                                .append(inmueble.getE20()==null?"":inmueble.getE20()).append("','")
+                                .append(inmueble.getE11()==null?"":inmueble.getE11()).append("') resultado");
                         break;
                     case getClaveProvisional:
                         sql.append("SELECT ").append(esquemaPos).append(".calcula_cveprov(").append(inmueble.gettramo_control()).append(",").append(capa).append(" ) clave");

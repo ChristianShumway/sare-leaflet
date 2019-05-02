@@ -285,8 +285,12 @@ const fillCatalogoConjuntosComerciales = () => {
     data => {
       if (data[0].operation) {
         const arrAsent = data[0].datos
-        const opcSelected =document.getElementById('tipo_E19')            
-        
+        const opcSelected =document.getElementById('tipo_E19') 
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccion"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
           opt.appendChild( document.createTextNode(o.descripcion) )
@@ -1348,9 +1352,10 @@ const validaEdificio=()=>{
     if(bandera>0){
         break;
     }else{
-        if (element.value == '' || element.value=='0') 
-    {
+        if (element.value == '' || element.value=='0' || element.value=='Seleccion') 
+        {
             bandera=0;
+            element.style.borderColor = '#eeeeee'
             }
             else
             {
@@ -1433,7 +1438,7 @@ const showViewPreliminar = d => {
         }
             ObjectRequest[idobj[0]] = a
             $("#" + idobj[0] + "_pv").text(a)
-      })
+        })
                 
       ObjectRequest['Cvegeo2016'] = cve_geo2016
       ObjectRequest['Cvegeo'] = cve_geo
