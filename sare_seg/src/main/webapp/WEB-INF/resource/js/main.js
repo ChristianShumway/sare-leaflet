@@ -232,10 +232,9 @@ const showDataInterfaz = data => {
 //valida coordenadas xy en caso de venir vacias ya no hará nada
 const validateCoord = data => {
   if (typeof data[0].datos.datos[0].coord_X === 'undefined' || typeof data[0].datos.datos[0].coord_Y === 'undefined') {
-      //ratificar('no')
+    //ratificar('no')
   }
-  else
-  {
+  else {
     //si trae coordenadas xy mostrará la chincheta sobre el mapa
     xycoorsx = data[0].datos.datos[0].coord_X
     xycoorsy = data[0].datos.datos[0].coord_Y
@@ -292,8 +291,6 @@ const fillCatalogoConjuntosComerciales = () => {
           let opt = document.createElement('option')
           opt.appendChild( document.createTextNode(o.descripcion) )
           opt.value = o.tipo_e19  
-           console.log(" el valor de O es ");
-          console.log(opcSelected.value );
           o.tipo_e19 === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
         })
@@ -343,7 +340,6 @@ const showModalMsgError = data => {
   }
 }
 
-
 // Función ver lista claves
 const handleViewCleeList = () => {
   sendAJAX(
@@ -355,25 +351,20 @@ const handleViewCleeList = () => {
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
-
       dataCleeListNew = data[0]
       popupCleeList(data[0].datos)
-      
     }, 
-    (
-            
-    ) => {
-    swal ({
-      title: 'Buscando información!',
-      text: 'Por favor espere un momento',
-      timer: 2000,
-      onOpen: () => swal.showLoading()
-    })
-    .then(
-      () => { },
-       dismiss => {
-      }
-    )
+    () => {
+      swal ({
+        title: 'Buscando información!',
+        text: 'Por favor espere un momento',
+        timer: 2000,
+        onOpen: () => swal.showLoading()
+      })
+      .then(
+        () => { },
+        dismiss => {}
+      )
     }
   )
 }
@@ -592,12 +583,7 @@ const handlePaginationActive = (page, totalPag) => {
   } else if (cleeListType == 'busqueda'){
     popupCleeList(dataResultSearchClee.datos)
   }
-  
-  console.log(`pagina actual ${actualPagina}`)
-  console.log(inicioPaginacion)
-  console.log(finPaginacion)
-  console.log(inicioClavesVista)
-  console.log(finClavesVista)
+
 }
 
 
@@ -611,14 +597,13 @@ const handlePaginationActiveLock = (page, totalPagLock) => {
   }
 
   if (page == finPaginacion) {
-      if(screen.width <= '480'){
-        inicioPaginacionLock = inicioPaginacionLock + 3
-        finPaginacionLock = finPaginacionLock + 3
-      } else {
-        inicioPaginacionLock = inicioPaginacionLock + 5
-        finPaginacionLock = finPaginacionLock + 5
-      }
-
+    if(screen.width <= '480'){
+      inicioPaginacionLock = inicioPaginacionLock + 3
+      finPaginacionLock = finPaginacionLock + 3
+    } else {
+      inicioPaginacionLock = inicioPaginacionLock + 5
+      finPaginacionLock = finPaginacionLock + 5
+    }
   } else if( page == inicioPaginacionLock) {
     if (page !== 1){
       if(screen.width <= '480'){
@@ -645,21 +630,13 @@ const handlePaginationActiveLock = (page, totalPagLock) => {
       : inicioPaginacionLock = finPaginacionLock - (totalPagLock <= 5 ? totalPagLock - 1 : 5)
   }
 
-
   actualPaginaLock = page
   if(cleeListType == 'normal'){
     popupCleeListBloqueadas(dataCleeListNewLock.datos)
   } else if (cleeListType == 'busqueda'){
     popupCleeListBloqueadas(dataResultSearchCleeLock.datos)
   }
-  
-  console.log(`pagina actual ${actualPaginaLock}`)
-  console.log(inicioPaginacionLock)
-  console.log(finPaginacionLock)
-  console.log(inicioClavesVistaLock)
-  console.log(finClavesVistaLock)
 }
-
 
 const handleSearchCleeEnter = e =>  {
   const key = window.event ? e.which : e.keyCode
@@ -779,24 +756,22 @@ const ratificar = request => {
     bandera_ratificar=true
   }
   else{
-      if(request=='no')
-      {
-        console.log(" le dio clic en no ratificar ", 'background: #222; color: #bada55');
-        handleShowAlertPickMap()
-        enabledInputs()
-        handleActionTargetRef()
-        xycoorsx = '';
-        xycoorsy = '';
-        MDM6('hideMarkers', 'identify');        
-         const cancelOption = document.getElementById('item-cancel-option')
-            cancelOption.removeAttribute('disabled')
-          //cancelOption.setAttribute('disabled', 'false')
-          handleHideAlertPickMap();
-      }
-      
+    if(request=='no') {
+      console.log(" le dio clic en no ratificar ", 'background: #222; color: #bada55');
+      handleShowAlertPickMap()
+      enabledInputs()
+      handleActionTargetRef()
+      xycoorsx = ''
+      xycoorsy = ''
+      MDM6('hideMarkers', 'identify')      
+      const cancelOption = document.getElementById('item-cancel-option')
+      cancelOption.removeAttribute('disabled')
+      handleHideAlertPickMap()
+    }
   }
 }
 
+//función que activa nuevamente funciones para abrir contenedor de busqueda
 const handleActiveVisibleSearch = () => {
   const viewSearchContainer = document.getElementById('arrow-search')
   const tituloBusqueda = document.getElementById('titulo-busqueda')
@@ -805,11 +780,10 @@ const handleActiveVisibleSearch = () => {
 }
 
 //Funcion que lleva a cabo el punteo del establecimient
-
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    let id_ue=document.getElementById('id_UE');
+    let id_ue=document.getElementById('id_UE')
     let ce='00'
     let tr='00000000'
     let u='cuenta.usuario'
@@ -878,8 +852,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 const handleTipoPunteo = () => {
-  //alert('aqui')
-  //console.log(catalogo)
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
   const wrapNombreVialidadUno = document.getElementById('wrap-nombre-vialidad-uno')
@@ -892,7 +864,6 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
 
   if(punteo === 'R'){
-    //wrapTipoVialidad.removeChild(tipoE10n)
     tipoE10n.style.display = 'none'
     tipoE10n.removeAttribute('id')
     tipoE10an.style.display = 'none'
@@ -903,7 +874,6 @@ const handleTipoPunteo = () => {
     tipoE10bn.removeAttribute('id')
     e10B.style.display = 'none'
     e10B.removeAttribute('id')
-
 
     const selectField = document.createElement('select')
     selectField.setAttribute('id','tipo_e10n')
@@ -929,31 +899,11 @@ const handleTipoPunteo = () => {
     inputFieldE10b.setAttribute('name', 'e10_B')
     inputFieldE10b.setAttribute('type', 'text')
 
-    catalogoCatVial.map( item =>{
-      let opt = document.createElement('option')
-      opt.appendChild( document.createTextNode(item.tipo_e10) )
-      opt.value = item.tipo_e10n
-      //console.log(item)
-      selectField.appendChild(opt)
-    })
-
-    catalogoCatVial.map( item =>{
-      let opt = document.createElement('option')
-      opt.appendChild( document.createTextNode(item.tipo_e10) )
-      opt.value = item.tipo_e10n
-      //console.log(item)
-      selectFieldTipoE10an.appendChild(opt)
-    })
-
-    catalogoCatVial.map( item =>{
-      let opt = document.createElement('option')
-      opt.appendChild( document.createTextNode(item.tipo_e10) )
-      opt.value = item.tipo_e10n
-      //console.log(item)
-      selectFieldTipoE10bn.appendChild(opt)
-    })
-
-    
+    //función donde se agrega options a los selects con el catálogo de tipo de vialidades
+    handleFillTipoDeVialidades(selectField)
+    handleFillTipoDeVialidades(selectFieldTipoE10an)
+    handleFillTipoDeVialidades(selectFieldTipoE10bn)
+ 
     wrapTipoVialidad.appendChild(selectField)
     wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
     wrapNombreVialidadUno.appendChild(inputFieldE10a)
@@ -1041,9 +991,17 @@ const handleTipoPunteo = () => {
     }
     
   }
-
   console.log(wrapTipoVialidad.children)   
+}
 
+//función llenado de catálogo con opciones de tipo de vialidad cuando es rural
+const handleFillTipoDeVialidades = selectId => {
+  catalogoCatVial.map( item =>{
+    let opt = document.createElement('option')
+    opt.appendChild( document.createTextNode(item.tipo_e10) )
+    opt.value = item.tipo_e10n
+    selectId.appendChild(opt)
+  })
 }
 
 // función sweetaler errores punteo
@@ -1059,180 +1017,156 @@ const showAlertPunteo = (title, text) =>{
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
-
-let infodenue;
-const actualizaForm=data=>{
-    punteo=data.punteo;
-    mod_cat=data.mod_cat;
-    cve_geo=data.cvegeo;
-    cve_geo2016=data.cvegeo2016;
-    cveft=data.cveft;
-    e10_cve_vial=data.e10_cvevial;
-    //inicializa entrevialidades
-    if(typeof data.e10_X!=='undefined'){
-        infodenue = true;
-        let node,newnode,oldnew;
-        //si traigo entrevialidades
-        let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
-        idEleToInput.forEach(function (o, i) {
-            //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
-        });
-        var idEleToSelect = ['e10_A', 'e10_B', 'e10_C'];
-        idEleToSelect.forEach(function (o, i) {
-            var html = '<option value="Seleccione">Seleccione</option>';
-            $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>');
-            $('#' + o).html(html);
-        });
-    }
-    else
-    {
-      infodenue = false;
-      var idTipo_e10_xn = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
-      var e10x = ['e10', 'e10_A', 'e10_B', 'e10_C'];
-      idTipo_e10_xn.forEach(function (o, i) 
-      {
-        $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="asignaTipoVial(this)"><option value="Seleccione">Seleccione</option></select>');
-      });
-      e10x.forEach(function (o, i) 
-      {
-          $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" >');
-      });
-    }
-    var arrValid = ['e03', 'e04', 'e05', 'e06'];
-    arrValid.push('e07');
-    var success = true;
-    arrValid.forEach(function (o, i) 
-    {
-        if (data[o] !== '' || typeof data[o] !== '') 
-        {
-            success = success & true;
-        } else 
-        {
-            success = success & false;
-        }
+let infodenue
+const actualizaForm = data => {
+  punteo = data.punteo
+  mod_cat = data.mod_cat
+  cve_geo = data.cvegeo
+  cve_geo2016 = data.cvegeo2016
+  cveft = data.cveft
+  e10_cve_vial = data.e10_cvevial
+    
+  //inicializa entrevialidades
+  if(typeof data.e10_X!=='undefined'){
+    infodenue = true
+    let node,newnode,oldnew;
+    //si traigo entrevialidades
+    let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
+    idEleToInput.forEach( function (o, i) {
+        //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
     });
-    if(!success)
-    {
-      swal.fire({
-        title: 'La información geoestadística esta incompleta.',
-        text: ' Favor de realizar una vez mas el punteo.',
-        showConfirmButton: true,
-        confirmButtonColor: "#5562eb",
-        allowEscapeKey: true,
-        allowOutsideClick: true,
-        html: true,
-        animation: true
-      });
-    }
-      xycoorsx = data.coord_x;
-      xycoorsy = data.coord_y;
-      MDM6('hideMarkers', 'identify');
-      MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}});
-      isChange = true;
-    for (var entry in data) 
-    {
-      if (entry == 'e10_X') 
-      {
-        var arrData = data[entry];
-        var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>';
-        calles = [];
-        objCalles = [];
-        if(arrData){
+    var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+    idEleToSelect.forEach( function (o, i) {
+      var html = '<option value="Seleccione">Seleccione</option>'
+      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
+      $('#' + o).html(html)
+    });
+  }
+  else {
+    infodenue = false
+    var idTipo_e10_xn = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
+    var e10x = ['e10', 'e10_A', 'e10_B', 'e10_C']
+    idTipo_e10_xn.forEach(function (o, i) {
+      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="asignaTipoVial(this)"><option value="Seleccione">Seleccione</option></select>');
+    })
+    e10x.forEach( function (o, i) {
+        $('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" >')
+    });
+  }
 
-          arrData.forEach(function (o, i) 
-          {
-            objCalles.push(o);
-            calles.push(o.e10_X_cvevial);
-            //calles.push(o.e10_X_cvevial + '|' + o.e10_X_cveseg);
-            html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+  var arrValid = ['e03', 'e04', 'e05', 'e06']
+  arrValid.push('e07')
+  var success = true
+  arrValid.forEach(function (o, i) {
+    if (data[o] !== '' || typeof data[o] !== '') {
+      success = success & true
+    } else {
+      success = success & false
+    }
+  });
+
+  if(!success) {
+    swal.fire({
+      title: 'La información geoestadística esta incompleta.',
+      text: ' Favor de realizar una vez mas el punteo.',
+      showConfirmButton: true,
+      confirmButtonColor: "#5562eb",
+      allowEscapeKey: true,
+      allowOutsideClick: true,
+      html: true,
+      animation: true
+    });
+  }
+  xycoorsx = data.coord_x
+  xycoorsy = data.coord_y
+  MDM6('hideMarkers', 'identify')
+  MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}})
+  isChange = true
+    
+  for (var entry in data) {
+    if (entry == 'e10_X') {
+      var arrData = data[entry]
+      var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>'
+      calles = []
+      objCalles = []
+      if (arrData) {
+        arrData.forEach(function (o, i) {
+          objCalles.push(o)
+          calles.push(o.e10_X_cvevial)
+          html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+        });
+        $('#e10_A').html(html)
+        $('#e10_B').html(html)
+        if (arrData.length > 2) {
+          $('#e10_C').html(html)
+          $('#e10_C').attr('disabled', false)
+        } else {
+          $('#e10_C').attr('disabled', true)
+        }
+      }
+    }
+    else {
+      if (entry == 'catVial') {
+        var arrData = data[entry]
+        var html = ''
+        if(arrData!=null) {
+          arrData.forEach(function (o, i) {
+            html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10n + '">' + o.tipo_e10n + '</option>'
           });
-            $('#e10_A').html(html);
-            $('#e10_B').html(html);
-            if (arrData.length > 2) 
-            {
-              $('#e10_C').html(html);
-              $('#e10_C').attr('disabled', false);
-            } else 
-            {
-              $('#e10_C').attr('disabled', true);
-            }
+          var idElemAppend = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
+          idElemAppend.forEach(function (o, i) {
+            $('#' + o).append(html)
+          });
         }
       }
-      else
-      {
-        if (entry == 'catVial') 
-        {
-          var arrData = data[entry];
-          var html = '';
-          if(arrData!=null)
-          {
-                arrData.forEach(function (o, i) 
-                {
-                  html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10n + '">' + o.tipo_e10n + '</option>';
-                });
-
-                var idElemAppend = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn'];
-                idElemAppend.forEach(function (o, i) 
-                {
-                  $('#' + o).append(html);
-                });
+      else {
+        if (entry === 'e05') {
+          if (data[entry] === '') {
+            $("#e05n").attr('disabled', false).removeAttr('readonly')
+            $(".msj-punteo").html("Capture la localidad").show()
           }
+          $('#' + entry).val(data[entry])
         }
-        else
-        {
-          if (entry === 'e05') 
-          {
-            if (data[entry] === '') 
-            {
-              $("#e05n").attr('disabled', false).removeAttr('readonly');
-              $(".msj-punteo").html("Capture la localidad").show();
-            }
-            $('#' + entry).val(data[entry]);
-          }
-          else
-          {
-            $('#' + entry).val(data[entry]);
-          }
+        else {
+          $('#' + entry).val(data[entry])
         }
       }
     }
+  }
      
 }
 
 //Asigna Tipo_Vial
-
 var asignaTipoVial = function (e) {
-    var optionSelected = $("option:selected", e);
-    var tipo_e10 = $(optionSelected).attr('data-tipo');
-    if (e.id === 'tipo_e10n') 
-    {
-        //limpia campos de pestaña Datos Vialidad
-        $("#tipo_administracion").prop('disabled', true).val(null);
-        $("#derecho_transito").prop('disabled', true).val(null);
-        $("#codigo_carretera").prop('disabled', true).val(null);
-        $("#tramo_camino").prop('disabled', true).val(null);
-        $("#cadenamiento").prop('disabled', true).val(null);
-        $("#margen").prop('disabled', true).val(null);
-        //tabVialidad();
-        $('#tipo_e10').val(tipo_e10);
-        if (tipo_e10 === '22')
-            $("#e10").val('Ninguno');
+  var optionSelected = $("option:selected", e)
+  var tipo_e10 = $(optionSelected).attr('data-tipo')
+  if (e.id === 'tipo_e10n') {
+    //limpia campos de pestaña Datos Vialidad
+    $("#tipo_administracion").prop('disabled', true).val(null)
+    $("#derecho_transito").prop('disabled', true).val(null)
+    $("#codigo_carretera").prop('disabled', true).val(null)
+    $("#tramo_camino").prop('disabled', true).val(null)
+    $("#cadenamiento").prop('disabled', true).val(null)
+    $("#margen").prop('disabled', true).val(null)
+    $('#tipo_e10').val(tipo_e10)
+      
+    if (tipo_e10 === '22')
+      $("#e10").val('Ninguno')
 
-    } else if (e.id === 'tipo_e10_an') {
-        $('#tipo_e10_a').val(tipo_e10);
-        if (tipo_e10 === '22')
-            $("#e10_a").val('Ninguno');
-    } else if (e.id === 'tipo_e10_bn') {
-        $('#tipo_e10_b').val(tipo_e10);
-        if (tipo_e10 === '22')
-            $("#e10_b").val('Ninguno');
-    } else if (e.id === 'tipo_e10_cn') {
-        $('#tipo_e10_c').val(tipo_e10);
-        if (tipo_e10 === '22')
-            $("#e10_c").val('Ninguno');
-    }
-
-};
+  } else if (e.id === 'tipo_e10_an') {
+    $('#tipo_e10_a').val(tipo_e10)
+    if (tipo_e10 === '22')
+      $("#e10_a").val('Ninguno')
+  } else if (e.id === 'tipo_e10_bn') {
+    $('#tipo_e10_b').val(tipo_e10)
+    if (tipo_e10 === '22')
+      $("#e10_b").val('Ninguno')
+  } else if (e.id === 'tipo_e10_cn') {
+    $('#tipo_e10_c').val(tipo_e10)
+    if (tipo_e10 === '22')
+      $("#e10_c").val('Ninguno')
+  }
+}
 
 //Funcion elimina duplicados
 
@@ -1538,6 +1472,7 @@ const handleShowResult = result => {
           cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
+          handleActiveVisibleSearch()
         }
       }
       
