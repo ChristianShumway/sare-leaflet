@@ -40,7 +40,7 @@ var urlServices = {
     getListadoUnidadesEconomicas: {  
         url: 'getListadoUnidadesEconomicas.do',  
         label: 'getListadoUnidadesEconomicas.do',  
-        type: 'GET'  
+        type: 'POST'  
     },   
     serviceCP:{
         url: 'getCP.do',
@@ -95,7 +95,20 @@ var urlServices = {
         url: 'getCatConjuntosComerciales.do',
         type: 'POST',
         label: 'catConjuntosComerciales'
-    }
-    
-    
+    },
+    serviceListaClavesBloqueadas: {
+        url: 'getListadoUnidadesEconomicasBloqueadas.do',
+        type: 'POST',
+        label: 'ListadoUnidadesEconomicasBloqueadas'
+    },
+    serviceDesbloqueoClavesBloqueadas: {
+        url: 'desbloquea.do',
+        type: 'POST',
+        label: 'desbloquea'
+    },
+    serviceValidasesion: {
+        url: 'validaSesion.do',
+        type: 'POST',
+        label: 'desbloquea'
+    }    
 };

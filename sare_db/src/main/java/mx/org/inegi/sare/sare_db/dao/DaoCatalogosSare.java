@@ -39,12 +39,16 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
     private List<cat_asentamientos_humanos> resultado=new ArrayList<>();
     private List<cat_conjunto_comercial> resultadoCC=new ArrayList<>();
     
+    public enum catalogos{
+        AsentamientosHumanos, ConjuntoComercial
+    }
+    
     @Override
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception{
         resultado=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
-        sql=getSql(super.proyectos);
+        sql=getSql(super.proyectos,catalogos.AsentamientosHumanos);
 
         resultado=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<List<cat_asentamientos_humanos>>() 
         {
@@ -70,7 +74,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
         resultadoCC=new ArrayList<>();
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
-        sql=getSqlConjuntocomercial(super.proyectos);
+        sql=getSql(super.proyectos,catalogos.ConjuntoComercial);
 
         resultadoCC=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<List<cat_conjunto_comercial>>() 
         {
@@ -91,12 +95,20 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
         
     }
 
-    private StringBuilder getSql(ProyectosEnum proyecto){
+    private StringBuilder getSql(ProyectosEnum proyecto, catalogos catalogo){
         StringBuilder sql = new StringBuilder();
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
-                sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(schemapg).append(".cat_asentamientos_humanos order by descripcion)");
+                switch(catalogo)
+                {
+                    case AsentamientosHumanos:
+                        sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(schemapg).append(".cat_asentamientos_humanos order by descripcion)");
+                    break;
+                    case ConjuntoComercial:
+                       sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(schemapg).append(".cat_tipo_conjunto_comercial");
+                    break;
+                }
                 break;
             case Construccion:
                 break;
@@ -116,30 +128,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
         return sql;
     }
     
-    private StringBuilder getSqlConjuntocomercial(ProyectosEnum proyecto){
-        StringBuilder sql = new StringBuilder();
-        switch(proyecto)
-        {
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(schemapg).append(".cat_tipo_conjunto_comercial");
-                break;
-            case Construccion:
-                break;
-            case Convenios:
-                break;
-            case Muestra_Rural:
-                break;
-            case Operativo_Masivo:
-                break;
-            case Organismos_Operadores_De_Agua:
-                break;
-            case Pesca_Mineria:
-                break;
-            case Transportes:
-                break;
-        }
-        return sql;
-    }
+    
     
     
     

@@ -10,7 +10,8 @@ let dataUserObj = {
   nombre: '',
   tipoSare: '',
   tramoControl: '',
-  usuario: ''
+  usuario: '',
+  proyectoSesion:''
 }
 let loading = 'false'
 
@@ -92,7 +93,7 @@ const handleClickValidaUsuario = () => {
         loading = 'false'
         handleVisibleLoading()
       } else if (type == 'Exito') {
-        const {acceso, ce, cve_operativa, nombre, tramo_control, usuario} = data[0].datos.usuario
+        const {acceso, ce, cve_operativa, nombre, tramo_control, usuario,proyecto} = data[0].datos.usuario
         dataUserObj = {
           acceso,
           ce,
@@ -100,10 +101,11 @@ const handleClickValidaUsuario = () => {
           nombre,
           tipoSare: cualSare.value,
           tramoControl: tramo_control,
-          usuario
+          usuario,
+          proyectoSesion:proyecto
         }
         loading = 'false'
-        handleVisibleLoading()
+        handleVisibleLoading()        
         localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
         window.location.href =  './index.html'
       }

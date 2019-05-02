@@ -8,19 +8,21 @@ package mx.org.inegi.sare.sare.controller;
 
 import com.google.gson.Gson;
 import java.util.List;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
-import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
+import mx.org.inegi.sare.sare_services.BackingDesbloqueo;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
 import mx.org.inegi.sare.sare_services.BackingListUEbyXY;
@@ -30,6 +32,7 @@ import mx.org.inegi.sare.sare_services.BackingReportes;
 import mx.org.inegi.sare.sare_services.BackingSincroniza;
 import mx.org.inegi.sare.sare_services.BackingTransformCoordtoGeo;
 import mx.org.inegi.sare.sare_services.BackingValidacionesSare;
+import mx.org.inegi.sare.sare_services.utils.ResponseLocal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -92,6 +95,10 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingTransformCoordtoGeo")
     private BackingTransformCoordtoGeo BackingTransformCoordtoGeo;
+    
+    @Autowired
+    @Qualifier("BackingDesbloqueo")
+    private BackingDesbloqueo BackingDesbloqueo;
 
     @RequestMapping(value = "getCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
@@ -108,12 +115,12 @@ public class ServiceController {
         return BackingCatalogosSare.getCatalogoAsentamientosHumanos(proyecto);
     }
 
-    @RequestMapping(value = "getListadoUnidadesEconomicas.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getListadoUnidadesEconomicas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_get_claves> getListadoUnidadesEconomicas(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         return BackingGetClaves.getListadoUnidadesEconomicas(proyecto, id_ue, tramo);
     }
 
-    @RequestMapping(value = "getListadoUnidadesEconomicasBloqueadas.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "getListadoUnidadesEconomicasBloqueadas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         return BackingGetClaves.getListadoUnidadesEconomicasBloqueadas(proyecto, id_ue, tramo);
     }
@@ -185,5 +192,27 @@ public class ServiceController {
     @RequestMapping(value = "getCatConjuntosComerciales.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_conjunto_comercial> getCatConjuntosComerciales(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingCatalogosSare.getCatalogoConjuntosComerciales(proyecto);
+    }
+    
+    @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services desbloquea(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "usuario") String usuario) throws Exception {
+        return BackingDesbloqueo.Desbloqueo(proyecto,id_ue,usuario);
+    }
+    
+    @RequestMapping(value = "/validaSesion.do", method = RequestMethod.POST, produces = javax.ws.rs.core.MediaType.APPLICATION_JSON)
+    public ResponseLocal validaSesion(HttpSession session) {
+        String respuesta = null;
+        ResponseLocal response = new ResponseLocal();
+        Map u = (Map) session.getAttribute("respuesta");
+        if (u == null) {
+            respuesta = "/";
+            
+            response.setSuccess(false);
+        } else {
+            response.setDatos(u);
+            response.setSuccess(true);
+            respuesta = "/index";
+        }
+        return response;
     }
 }

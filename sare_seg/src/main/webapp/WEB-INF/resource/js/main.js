@@ -1,16 +1,23 @@
-const dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
+let dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
 let actualPagina = 1
 let inicioPaginacion = 1
 let finPaginacion = screen.width <= '480' ? 5 : 7
 let inicioClavesVista = 0
 let finClavesVista = 9
+let actualPaginaLock = 1
+let inicioPaginacionLock = 1
+let finPaginacionLock = screen.width <= '480' ? 5 : 7
+let inicioClavesVistaLock = 0
+let finClavesVistaLock = 9
 let dataCleeListNew = {}
+let dataCleeListNewLock = {}
 let xycoorsx
 let xycoorsy
 screen.width <= '480'
 
 let layersSARE = ['c100', 'c101', 'wdenue'];
 let dataResultSearchClee = {}
+let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
 
@@ -18,6 +25,10 @@ let bandera_ratificar=false
 
 let punteo,mod_cat,cve_geo,cve_geo2016,cveft,e10_cve_vial;
 let catalogoCatVial = []
+
+let arrayClavesBloqueadas = "";
+let arrayClavesBloqueadasTodas = "";
+let banderaDesbloquear = false;
 
 var ObjectRequest = {};
 
@@ -170,11 +181,11 @@ const findUE = id_ue => {
 const callServiceFindUE=(id_ue)=>{
   sendAJAX(urlServices['serviceSearch'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'p':'1',
-    'tramo': '00000000000',
-    'ce': '00', 
-    'usuario':'lidia.vazquez',
+    'tramo':dataUserFromLoginLocalStorage.tramoControl,
+    'ce': dataUserFromLoginLocalStorage.ce, 
+    'usuario':dataUserFromLoginLocalStorage.nombre,
     'id_ue': id_ue
   },
   urlServices['serviceSearch'].type, 
@@ -248,7 +259,7 @@ const fillForm = data => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogo = () => {
   sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
@@ -270,7 +281,7 @@ const fillCatalogo = () => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogoConjuntosComerciales = () => {
   sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
-    {'proyecto':1}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCatalogoConjuntosComerciales'].type, 
     data => {
       if (data[0].operation) {
@@ -302,7 +313,7 @@ const acercarWithExtent = data => {
 const getCp=ce=>{
   sendAJAX(
     urlServices['serviceCP'].url, 
-    { 'cve_ent': ce, 'proyecto':1 }, 
+    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
     urlServices['serviceCP'].type, 
     data => {
       cpObj = data[0].datos
@@ -338,9 +349,9 @@ const handleViewCleeList = () => {
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '01000000000', 
-      'id_ue': 01,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue': dataUserFromLoginLocalStorage.ce,
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
@@ -349,7 +360,21 @@ const handleViewCleeList = () => {
       popupCleeList(data[0].datos)
       
     }, 
-    () => {}
+    (
+            
+    ) => {
+    swal ({
+      title: 'Buscando información!',
+      text: 'Por favor espere un momento',
+      timer: 2000,
+      onOpen: () => swal.showLoading()
+    })
+    .then(
+      () => { },
+       dismiss => {
+      }
+    )
+    }
   )
 }
 
@@ -364,6 +389,29 @@ const popupCleeList = data => {
   Swal.fire({
     title: '<strong style="width:100%">CLAVES DISPONIBLES</strong>',
     html: cleeList(data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista),
+    showCloseButton: true,
+    showConfirmButton: false,
+    showCancelButton: false,
+    focusConfirm: false,
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    onClose: () => {
+      cleeListType = 'normal'
+    }
+  })
+}
+
+const popupCleeListBloqueadas = data => {
+  console.log(data)
+  const notFoundClee = document.getElementById('wrap-list-not-found-lock')
+  if (data.length == 0){
+    notFoundClee.classList.remove('wrap-inactive')
+    return
+  }
+
+  Swal.fire({
+    title: '<strong style="width:100%">CLAVES DISPONIBLES</strong>',
+    html: cleeListLock(data, actualPaginaLock, inicioPaginacionLock, finPaginacionLock, inicioClavesVistaLock, finClavesVistaLock),
     showCloseButton: true,
     showConfirmButton: false,
     showCancelButton: false,
@@ -433,6 +481,66 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   return tabla
 }
 
+const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacionLock, inicioClavesVistaLock, finClavesVistaLock) => {
+  let tabla = ''
+  const clavesPorVista = 10
+  const totalClaves = data.length
+  const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
+  console.log(data)
+  let posicionFinal = ''
+  finClavesVistaLock > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVistaLock
+
+  tabla = `
+    <div id='container-search-cleelist-lock' class='container-search-cleelist'>
+      <span class='text-search-cleelist'>Filtrar:</span>
+      <div class="wrap-input-search-cleelist">
+        <input type='text' id='search-cleelist-lock' name='search-cleelist-lock'  onkeypress="handleSearchCleeEnterLock(event)" />
+      </div>
+    </div>
+
+    <div class='wrap-list-Lock items not-found wrap-inactive' id="wrap-list-not-found">
+      <div class='item-lists'><span></span>NO SE ENCONTRARON REFERENCIAS</div>
+    </div>
+    
+    <div id='container-cleelist-lock' class='container-cleelist-Lock row'>
+      <div class='wrap-list-Lock'>
+        <div class='title-column'>Clee_est</div>
+        <div class='title-column'>Usuario</div>
+        <div class='title-column'>Tiempo bloqueado</div>
+      </div>`
+
+      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+        let {idue, c154,time_LOCK} = data[num]
+        tabla += `<div class='wrap-list-Lock items'>
+          <div class='item-list-Lock clave'><span onclick='Desbloquear(${idue})'>${idue}</span></div>
+          <div class='item-list-Lock'><span>${c154}</span></div>
+          <div class='item-list-Lock'><span>${time_LOCK}</span></div>
+        </div>`
+      }
+
+      tabla += `
+        <ul class="pagination" id="pagination-clee-lock">
+          <li onclick='handlePaginationActiveLock(${actualPaginaLock}-1)' id="pagination-back-lock" class="waves-effect">
+            <a><i class="material-icons">chevron_left</i></a>
+          </li>`
+          actualPaginaLock == 1 ? setTimeout( () => document.getElementById('pagination-back-lock').classList.add('disabled'), 300 ) : false
+          actualPaginaLock == totalPaginaciones ? setTimeout( () => document.getElementById('pagination-next-lock').classList.add('disabled'), 300 ) : false
+          for(let pag = inicioPaginacionLock; pag<=finPaginacionLock; pag++){
+            tabla+= `<li onclick='handlePaginationActiveLock(${pag}, ${totalPaginaciones})' class='waves-effect' id='pag-${pag}'><a>${pag}</a></li>`
+            
+            if(pag == actualPaginaLock){
+              setTimeout( () => document.getElementById(`pag-${pag}`).classList.add('active'), 300 )
+            }
+          }
+          tabla += `<li onclick='handlePaginationActiveLock(${actualPaginaLock}+1)' id="pagination-next-lock" class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
+        </ul>`
+      
+    tabla +=`</div>`
+
+  return tabla
+}
+
+
 const handlePaginationActive = (page, totalPag) => {
   if (page > actualPagina || page < actualPagina){
     inicioClavesVista = (page -1) * 10
@@ -493,6 +601,66 @@ const handlePaginationActive = (page, totalPag) => {
 }
 
 
+const handlePaginationActiveLock = (page, totalPagLock) => {
+  if (page > actualPaginaLock || page < actualPaginaLock){
+    inicioClavesVista = (page -1) * 10
+    finClavesVista = inicioClavesVista + 9
+  } else if(page == actualPaginaLock) {
+    inicioClavesVista = inicioClavesVista
+    finClavesVista = finClavesVista
+  }
+
+  if (page == finPaginacion) {
+      if(screen.width <= '480'){
+        inicioPaginacionLock = inicioPaginacionLock + 3
+        finPaginacionLock = finPaginacionLock + 3
+      } else {
+        inicioPaginacionLock = inicioPaginacionLock + 5
+        finPaginacionLock = finPaginacionLock + 5
+      }
+
+  } else if( page == inicioPaginacionLock) {
+    if (page !== 1){
+      if(screen.width <= '480'){
+        inicioPaginacionLock = inicioPaginacionLock - 3
+        finPaginacionLock = finPaginacionLock - 3
+      } else {
+        inicioPaginacionLock = inicioPaginacionLock - 5
+        finPaginacionLock = finPaginacionLock - 5
+      }
+    }
+  }
+  
+  if( inicioPaginacionLock < 1 ){
+    inicioPaginacionLock = 1
+    screen.width <= '480' 
+      ? finPaginacionLock = inicioPaginacionLock +  (totalPagLock <= 4 ? totalPagLock - 1 : 4)
+      : finPaginacionLock = inicioPaginacionLock +  (totalPagLock <= 6 ? totalPagLock - 1 : 6)
+  }
+
+  if( finPaginacionLock > totalPagLock ){
+    finPaginacionLock = totalPagLock
+    screen.width <= '480' 
+      ? inicioPaginacionLock = finPaginacionLock - (totalPagLock <= 3 ? totalPagLock - 1 : 3)
+      : inicioPaginacionLock = finPaginacionLock - (totalPagLock <= 5 ? totalPagLock - 1 : 5)
+  }
+
+
+  actualPaginaLock = page
+  if(cleeListType == 'normal'){
+    popupCleeListBloqueadas(dataCleeListNewLock.datos)
+  } else if (cleeListType == 'busqueda'){
+    popupCleeListBloqueadas(dataResultSearchCleeLock.datos)
+  }
+  
+  console.log(`pagina actual ${actualPaginaLock}`)
+  console.log(inicioPaginacionLock)
+  console.log(finPaginacionLock)
+  console.log(inicioClavesVistaLock)
+  console.log(finClavesVistaLock)
+}
+
+
 const handleSearchCleeEnter = e =>  {
   const key = window.event ? e.which : e.keyCode
   key < 48 || key > 57 ? e.preventDefault() : false
@@ -501,8 +669,16 @@ const handleSearchCleeEnter = e =>  {
   tecla == 13 ? handleSearchCleeList(e) : false
 }
 
+const handleSearchCleeEnterLock = e =>  {
+  const key = window.event ? e.which : e.keyCode
+  key < 48 || key > 57 ? e.preventDefault() : false
+
+  tecla = (document.all) ? e.keyCode : e.which;
+  tecla == 13 ? handleSearchCleeListLock(e) : false
+}
+
 const handleSearchCleeList = () => {
-  const inputValue = document.getElementById('search-cleelist')
+  const inputValue = document.getElementById('search-cleelist-lock')
   const arrayCleeFind = []
   const data = dataCleeListNew.datos
   
@@ -546,6 +722,51 @@ const handleSearchCleeList = () => {
 
 }
 
+const handleSearchCleeListLock = () => {
+  const inputValue = document.getElementById('search-cleelist-lock')
+  const arrayCleeFind = []
+  const data = dataCleeListNewLock.datos
+  
+  if (inputValue.value == ''){
+    actualPaginaLock = 1
+    inicioPaginacionLock = 1
+    finPaginacionLock = screen.width <= '480' ? 5 : 7
+    inicioClavesVistaLock = 0
+    finClavesVistaLock = 9
+    cleeListType = 'normal'
+    CargaTablaBloqueadas()
+  } else {
+
+    // encontar similitudes referente al valor de la busqueda y agregarlos a un nuevo objeto
+    data.map (item => {
+      if(item.idue.indexOf(inputValue.value) != -1){
+        arrayCleeFind.push(item)
+      }
+    })
+
+    // filtramos solo los que no son repetidos
+    let result = arrayCleeFind.filter((valorActual, indiceActual, arreglo) => {
+      return arreglo.findIndex(valorDelArreglo => JSON.stringify(valorDelArreglo) === JSON.stringify(valorActual)) === indiceActual
+    })
+
+    const totalPaginaciones = Math.ceil(result.length/10)
+    const numPaginaciones = screen.width <= '480' ? 5 : 7
+    const paginacionesAvanzar = totalPaginaciones >= numPaginaciones ? numPaginaciones : totalPaginaciones
+
+    actualPaginaLock = 1
+    inicioPaginacionLock = 1
+    finPaginacionLock = paginacionesAvanzar
+    inicioClavesVista = 0
+    result.length > 10 ? finClavesVista = 9 : finClavesVista = result.length - 1
+  
+    cleeListType = 'busqueda'
+    dataResultSearchCleeLock.datos = result
+    popupCleeListBloqueadas(dataResultSearchCleeLock.datos)
+  
+  }
+
+}
+
 // Función ratificar
 const ratificar = request => {
   handleVisibleRatifica()
@@ -560,13 +781,17 @@ const ratificar = request => {
   else{
       if(request=='no')
       {
+        console.log(" le dio clic en no ratificar ", 'background: #222; color: #bada55');
         handleShowAlertPickMap()
         enabledInputs()
         handleActionTargetRef()
         xycoorsx = '';
         xycoorsy = '';
-        MDM6('hideMarkers', 'identify');
-        
+        MDM6('hideMarkers', 'identify');        
+         const cancelOption = document.getElementById('item-cancel-option')
+            cancelOption.removeAttribute('disabled')
+          //cancelOption.setAttribute('disabled', 'false')
+          handleHideAlertPickMap();
       }
       
   }
@@ -596,7 +821,7 @@ const handlePunteo=(x,y,tc,r)=>{
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
-    'proyecto':1,
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
     'x': x, 
     'y': y, 
     'tc': tc, 
@@ -1078,15 +1303,11 @@ const addLiberados=()=> {
     });
 }
 
-// Función validación de formulario campos vacios
-const handleFormValidations = () => {
-  const totalInputs = objForm.length
-  let inputsInfo = 0
-  //$('.button-collapse').sideNav('hide')
-if(punteo=='U' && mod_cat=='1')
-{
-  for (let input = 0; input < objForm.length; input++) {
-    const { id, name, title, key } = objForm[input]
+const validations=(totalInputs,object,campo)=>{
+   let inputsInfo = 0 
+   let msgInputEmpty;
+    for (let input = 0; input < totalInputs; input++) {
+    const { id, name, title, key } = object[input]
     const element = document.getElementById(id)
     const wrapTitle = document.getElementById(title)
     let visible = wrapTitle.dataset.visible
@@ -1100,7 +1321,15 @@ if(punteo=='U' && mod_cat=='1')
       visible == 'hide' ? handleVisibleForm(key) : false
       inputsEmpty = true
       containerInputsVisible = false
-      const msgInputEmpty = `Favor de completar la información del campo ${name}`
+      if(campo!=undefined)
+      {
+           msgInputEmpty = `si no existe ${name} no debe existir ${campo}`
+      }
+      else
+      {
+          msgInputEmpty = `Favor de completar la información del campo ${name}` 
+      }
+      
       alertToastForm(msgInputEmpty)
       inputsByWrap[key] = false
       setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
@@ -1133,15 +1362,80 @@ if(punteo=='U' && mod_cat=='1')
 
   inputsInfo == totalInputs && validaCp()
 }
+
+// Función validación de formulario campos vacios
+const handleFormValidations = () => {
+  let totalInputs;
+  
+  //$('.button-collapse').sideNav('hide')
+if(punteo=='U' && mod_cat=='1')
+{
+    totalInputs = objForm.length
+    validations(totalInputs,objForm);
+}
 else
 {
     if(punteo=='R' && mod_cat=='1')
     {
+        validaCp()
+    }
+    else{
+    if(punteo=='R' && mod_cat=='2')
+    {
+        
+        if(validaEdificio()){
+            totalInputs = objFormCentrocomercial.length
+            validations(totalInputs,objFormCentrocomercial,campo); 
+            validations(totalInputs,objFormRural);
+        }
+        else{
+            totalInputs = objFormRural.length
+            validations(totalInputs,objFormRural);
+        }
+        
+        
+    }
         
     }
 }
 
 }
+var campo;
+const validaEdificio=()=>{
+    let bandera=0;
+    for (let input = 0; input < objFormCentrocomercial.length; input++) 
+    {
+    const { id, name, title, key } = objFormCentrocomercial[input]
+    const element = document.getElementById(id)
+    const wrapTitle = document.getElementById(title)
+    let visible = wrapTitle.dataset.visible
+
+    !inputsByWrap[key] ? inputsByWrap[key] = true : false
+    if(bandera>0){
+        break;
+    }else{
+        if (element.value == '' || element.value=='0') 
+    {
+            bandera=0;
+            }
+            else
+            {
+            campo=name;
+            bandera=1;
+                            }
+                            }
+                           }
+    if(bandera==1){
+        return true;
+                           }
+    else{
+        return false;
+    }
+}
+                          
+const handleFormValidationsRural=()=>{
+                    
+                    }
 
 const validaCp = () => {
   sendAJAX(urlServices['serviceValCP'].url, 
@@ -1155,7 +1449,7 @@ const validaCp = () => {
     if (data[0].operation) {
       if (data[0].datos.result === false) {
           
-      }
+              }
       else {
         modalViewPreliminar()
         
@@ -1276,8 +1570,15 @@ const HandleWhatDoYouWantToDo = (coor) => {
       
       break;
     case 'puntear':
-        identificar(coor);
-        handleActionButtons('enabled')
+        let level = MDM6('getZoomLevel')
+        if(level>=13)
+        {
+            identificar(coor);
+            handleActionButtons('enabled')
+        }
+        else{
+          MDM6('hideMarkers', 'identify')  
+        }
       break;
     case 'v_calle':
       StreetView(coor.lon, coor.lat);
@@ -1334,7 +1635,7 @@ const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      { 'proyecto': 1, 'x': x, 'y': y},
+      { 'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 'x': x, 'y': y},
       urlServices['serviceIdentifyStreetView'].type, 
       data => {
         if (data[0].operation) {
@@ -1382,7 +1683,7 @@ const mostrarMensaje = () => {
 const callServicioIdentificar = (capas, x, y) => {
   sendAJAX(urlServices['serviceIdentifyUE'].url,
     {
-      'proyecto': 1,
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion,
       'x': x,
       'y': y,
       'opciones': capas
@@ -1570,7 +1871,7 @@ const handleCancelClick = () => {
 const callServiceLiberaClave=(id_ue)=>{
     sendAJAX(urlServices['serviceLiberaClave'].url, 
     {
-        'proyecto':1,
+        'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
         'id_ue': id_ue
         
     }, urlServices['serviceLiberaClave'].type, function (data) 
@@ -1682,11 +1983,16 @@ const handleLogOut = () =>{
   window.location.href = './'
 }
 
-const handleSessionActive = () => {
-  if (!dataUserFromLoginLocalStorage){
-    alertToastForm('No se ha iniciado sesión')
-    setTimeout( () => window.location.href = './' , 1500 )
-  }
+const handleSessionActive = () => {            
+    sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, function (data) {
+        if (data[0].datos.success == false) {                                                
+            alertToastForm('No se ha iniciado sesión')
+            setTimeout( () => window.location.href = './' , 1500 )
+        }else{
+            dataUserFromLoginLocalStorage=data[0].datos.datos;
+        }
+    }, function () {}
+            );      
 }
 
 // ALERTA NORMAL 
@@ -1867,3 +2173,162 @@ function setClassPrint() {
     }
 }
 /* FIN OPCIONES DEL MENU INFERIOR DERECHO IMPRESION Y REPORTES*/
+
+/*CLAVES BLOQUEADAS*/
+
+const Desbloquear = function (id_ue) {
+    
+    Actiondesbloquear(id_ue);
+
+};
+
+const GetClavesBloqueadas=()=> {
+    loadTemplate('ClavesBloqueadas', "resources/templates/ClavesBloqueadas.html?frm=" + Math.random(), function (html) {
+        $('#tabUE tbody').html(html);
+        CargaTablaBloqueadas('#tableClavesBloqueadas');
+        // CargaTablaBloqueadas();
+    });
+}
+
+const CargaTablaBloqueadas=()=> {
+    arrayClavesBloqueadasTodas="";
+    //let tabla = obj;
+    //var u = usrObj.nombre;
+    //var c = usrObj.ce;
+    let oTable;
+    let tr;
+    //return;
+    sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
+    {
+        'proyecto': 1, 
+        'tramo': '000000000', 
+        'id_ue':'00'
+    }, urlServices['serviceListaClavesBloqueadas'].type, function (data) {
+        if (data[0].datos.length>0) {
+            dataCleeListNewLock = data[0]
+            popupCleeListBloqueadas(data[0].datos)
+        } else 
+        {
+            Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'No existen claves bloqueadas',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
+        }
+    }, function () 
+    {
+         swal 
+         ({
+            title: 'Buscando información!',
+            text: 'Por favor espere un momento',
+            timer: 2000,
+            onOpen: () => swal.showLoading()
+        })
+            .then(
+              () => { },
+               dismiss => {
+              }
+            )
+    });
+}
+
+const addClavesDesbloquear =(id_ue, check)=> {
+
+
+    if (id_ue !== null) {
+        if (check) {
+            arrayClavesBloqueadas = arrayClavesBloqueadas + id_ue + ",";
+        }
+    } else {
+        alert("error en la clave seleccionada");
+    }
+
+}
+
+var ActionSeleccionarTodos = function () {
+    var accion = $('input:checkbox[name=inputTodos]:checked').val();
+    var oTable = $('#tableClavesBloqueadas').dataTable();
+    if (accion) {
+        oTable.$("input[type='checkbox']").prop('checked', true);
+        banderaDesbloquear = true;
+    } else {
+        oTable.$("input[type='checkbox']").prop('checked', false);
+        banderaDesbloquear = false;
+    }
+
+};
+
+var Actiondesbloquear = function (id_ue) {
+    
+    //return;
+    swal.fire({
+        title: 'se desbloqueara la claves? ' + id_ue,
+        text: "",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Correcto, Desbloquear!',
+        cancelButtonText: 'Cancelar'
+    }).then(result => handleShowResultDesbloqueo(result,id_ue))
+}
+
+const handleShowResultDesbloqueo = (result,id_ue) => {
+  const user = dataUserFromLoginLocalStorage.nombre
+  if (result.value) {
+    sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
+    {
+      'proyecto':1,
+      'id_ue': id_ue,
+      'usuario':user
+    }, 
+    urlServices['serviceDesbloqueoClavesBloqueadas'].type, 
+    data => {
+      if (data[0].operation) {
+        if (data[0].datos.mensaje.type === 'false') {
+          handleShowSaveAlert('error', 'Error', data[0].datos.mensaje.messages, false)
+          return;
+        }
+        else {
+          cleanForm()
+          MDM6('hideMarkers', 'identify')
+          handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
+        }
+      }
+      
+      else {
+        handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
+      }
+    }, () => handleShowSaveAlert('info', 'Desbloqueando', 'Desbloqueando clave, por favor espere un momento', true)
+    )
+        
+  } //close if result.value
+}
+
+
+/*FIN CLAVES BLOQUEADAS*/
+
+
+const tiempoInactividad = () => { 
+    let tiempo 
+    const resetTimer = () => { 
+        clearTimeout(tiempo) 
+        tiempo = setTimeout(logout, 3600000)
+    }     
+    window.onload = resetTimer 
+    // DOM Events 
+    document.onmousemove = resetTimer
+    document.onkeypress = resetTimer
+    document.onload = resetTimer
+    document.onmousedown = resetTimer // touchscreen presses 
+    document.ontouchstart = resetTimer 
+    document.onclick = resetTimer  // touchpad clicks 
+    document.onscroll = resetTimer // scrolling with arrow keys 
+    const logout = () => { 
+        localStorage.clear()
+         alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad')
+    }     
+}; 
