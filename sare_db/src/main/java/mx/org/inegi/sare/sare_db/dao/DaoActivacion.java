@@ -7,7 +7,6 @@ package mx.org.inegi.sare.sare_db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_bitacora_activacion_id_unidad_economica;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceActivacion;
@@ -113,22 +112,32 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
     public StringBuilder getSql(ProyectosEnum proyectos, MetodosActivacion metodo)
     {
         StringBuilder sql=new StringBuilder();
+        String esquemaPos,esquemaOcl;
         switch(proyectos)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+                esquemaPos=getEsquemaPostgres(proyectos);
+                esquemaOcl=getEsquemaOracle(proyectos);
                 switch(metodo)
                 {
                     case ActivaClaveUnicaInmuebles:
-                      sql.append("update ").append(schemaocl).append(".TR_INMUEBLES  set baja=1 where ID_UE=?");
+                      sql.append("update ").append(esquemaOcl).append(".TR_INMUEBLES  set baja=1 where ID_UE=?");
                       break;
                     case ActivaClaveUnicaUESUC:
-                      sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST='10' where ID_UE=?");
+                      sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='10' where ID_UE=?");
                       break;
                     case ActivaClaveUnicaUECOMPLEMENTO:
-                      sql.append("UPDATE ").append(schemaocl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=NULL, SARE_ST_TIME=NULL where ID_UE=?");
+                      sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=NULL, SARE_ST_TIME=NULL where ID_UE=?");
                       break;
                     case ActivaClaveUnicaUEPG:
-                      sql.append("select ").append(schemapg).append(".activa_cve_unica(?,?,?) activa");
+                      sql.append("select ").append(esquemaPos).append(".activa_cve_unica(?,?,?) activa");
                       break;
                 }
             break;

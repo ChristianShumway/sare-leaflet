@@ -160,11 +160,21 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
     
     private StringBuilder getSql(ProyectosEnum proyecto,String x, String y, String tipo, MetodosUEbyXY MetodosUEbyXY){
         StringBuilder sql=new StringBuilder();
+        String esquemaPos,esquemaOcl;
         String buffer = "5";
         String point = "POINT(" + x + " " + y + ")";
         String e23 = tipo.equals("M") ? "'M','U'" : "'S'";
         switch(proyecto){
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+                esquemaPos=getEsquemaPostgres(proyecto);
+                esquemaOcl=getEsquemaOracle(proyecto);
                 switch(MetodosUEbyXY){
                     case getInfoUEDenue:
                        sql.append("SELECT d_llave_r,case when nom_est is null then '' else nom_est end nom_est, case when raz_soc is null then '' else raz_soc end raz_soc,desc_scian,cve_ent,cve_mun,cve_loc,cve_ageb,manzana,tipovial,nomvial,numextnum,numextalf,numintnum,numintalf,tipoasen,nomasen,cor_indust FROM denue2017.denue WHERE ST_intersects(st_buffer(geomfromtext('").append(point).append("',900913),").append(buffer).append("),the_geom)"); 
@@ -172,13 +182,13 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
                     case getInfoUE:
                         sql.append("select id_ue, case when e08 is null then '' else e08 end e08, case when e09 is null then '' else e09 end e09,'' desc_scian,cve_ent,cve_mun,cve_loc,cve_ageb,cve_mza,tipo_e10,nomvial,numext,numextalf,numint,numintalf,descripcion,e14,e19 from(");
                         sql.append("SELECT id_ue, e08, e09,'' desc_scian,cve_ent,cve_mun,cve_loc,cve_ageb,cve_mza,tipo_e10,nomvial,numext,numextalf,numint,numintalf,descripcion,e14,e19 ");
-                        sql.append("FROM ").append(schemapg).append(".td_inmuebles a left join  ").append(schemapg).append(".cat_asentamientos_humanos b on a.tipo_e14=b.tipo_e14 WHERE (baja=0 or baja is null) and ST_intersects(st_buffer(geomfromtext('").append(point).append("',900913),").append(buffer).append("),the_geom_merc) and e23 in(").append(e23).append(") ) inmuebles ");
+                        sql.append("FROM ").append(esquemaPos).append(".td_inmuebles a left join  ").append(esquemaPos).append(".cat_asentamientos_humanos b on a.tipo_e14=b.tipo_e14 WHERE (baja=0 or baja is null) and ST_intersects(st_buffer(geomfromtext('").append(point).append("',900913),").append(buffer).append("),the_geom_merc) and e23 in(").append(e23).append(") ) inmuebles ");
                         break;
                     case getInfoVialidad:
                         sql.append("SELECT tipovial,nomvial,ST_Distance(the_geom,geomfromtext('").append(point).append("',900913)) distancia FROM ").append(schemamdm).append(".e WHERE ST_intersects(st_buffer(geomfromtext('").append(point).append("',900913),").append(buffer).append("),the_geom) order by distancia limit 1");
                         break;
                     case getActividadUE:
-                        sql.append("select d_descripcion from ").append(schemaocl).append(".TR_UE_SUC a inner join TC_SCIAN b on a.e17=b.e17 where id_ue=?");
+                        sql.append("select d_descripcion from ").append(esquemaOcl).append(".TR_UE_SUC a inner join TC_SCIAN b on a.e17=b.e17 where id_ue=?");
                         break;
                 }
                 

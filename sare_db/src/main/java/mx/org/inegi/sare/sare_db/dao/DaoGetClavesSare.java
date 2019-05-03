@@ -48,8 +48,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
    {
         resultado1=new ArrayList<>();
         StringBuilder sql;
-        super.proyectos=super.getProyecto(proyecto);
-        sql=getSql(super.proyectos,id_ue,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
+        proyectos=getProyecto(proyecto);
+        sql=getSql(proyectos,id_ue,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
         resultado1=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
         {
             @Override
@@ -74,8 +74,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
    {
         resultado1=new ArrayList<>();
         StringBuilder sql;
-        super.proyectos=super.getProyecto(proyecto);
-        sql=getSql(super.proyectos,ce,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo());
+        proyectos=getProyecto(proyecto);
+        sql=getSql(proyectos,ce,tramo,UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo());
         resultado1=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_get_claves>>() 
         {
             @Override
@@ -97,40 +97,36 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
     private StringBuilder getSql(ProyectosEnum proyecto, String ce, String tramo, String ue){
         StringBuilder sql = new StringBuilder();
+        String esquemaPos,esquemaOcl;
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
-                sql=getFiltroSql(ce, tramo,ue); 
-                break;
             case Construccion:
-                break;
             case Convenios:
-                break;
             case Muestra_Rural:
-                break;
             case Operativo_Masivo:
-                break;
             case Organismos_Operadores_De_Agua:
-                break;
             case Pesca_Mineria:
-                break;
             case Transportes:
-                break;
+                esquemaPos=getEsquemaPostgres(proyecto);
+                esquemaOcl=getEsquemaOracle(proyecto);
+                sql=getFiltroSql(ce,esquemaPos,esquemaOcl, tramo,ue); 
+            break;
         }    
         return sql;
     }
     
-    private StringBuilder getFiltroSql(String ce, String tramo, String ue){
+    private StringBuilder getFiltroSql(String ce,String esquemaPg,String esquemaOcl, String tramo, String ue){
         StringBuilder sql = new StringBuilder();
        if(UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo().equals(ue))
        {
                 if (ce.equals("00")) 
                 {
-                   sql.append("SELECT id_ue,c154 FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where sare_st='10' ");
+                   sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
                 } 
                 else 
                 {
-                   sql.append("SELECT id_ue,c154 FROM ").append(schemaocl).append(".VW_PUNTEO_SARE where sare_st='10' ");
+                   sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
                    sql.append(" and cestatal=").append(ce).append("and tramo_control=").append(tramo).append("order by 1");
                 }
 
@@ -146,8 +142,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
                     + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
                     + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                    + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(schemaocl).append(".vw_punteo_sare ue inner join ").
-                    append(schemaocl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
+                    + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue inner join ").
+                    append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
                 } else 
                 {
                     sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || 'dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
@@ -156,8 +152,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
                     + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
                     + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                    + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(schemaocl).append(".vw_punteo_sare ue inner join ").
-                    append(schemaocl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ue.ce=").append(ce).append(" and ue.sare_st='20' and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
+                    + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue inner join ").
+                    append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ue.ce=").append(ce).append(" and ue.sare_st='20' and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
                        
                 }
                        
