@@ -333,9 +333,19 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     {
         StringBuilder sql = new StringBuilder();
         String point = "POINT(" + x + " " + y + ")";
+        String esquemaPos,esquemaOcl;
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+            esquemaPos=getEsquemaPostgres(proyecto);
+            esquemaOcl=getEsquemaOracle(proyecto);
                 switch(metodo)
             {
                 case TIPOAREA:
@@ -383,10 +393,10 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemamdm).append(".fm").append(ce).append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cve_ft<>?  group by 1,2");
                 break;
                 case GET_TIPO_VIAL:
-                    sql.append("SELECT tipo_e10 FROM ").append(schemapg).append(".cat_tipovialidad WHERE lower(descripcion) = ?");
+                    sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ?");
                 break;
                 case GET_CAT_TIPO_VIAL:
-                    sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(schemapg).append(".cat_tipovialidad order by descripcion");
+                    sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(esquemaPos).append(".cat_tipovialidad order by descripcion");
                     break;
                 case GETPUNTEORURAL:
                     sql.append("select r.cve_ent,nom_ent,r.cve_mun,nom_mun,cve_loc,nom_loc,cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,r.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from( ");
@@ -419,20 +429,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 break;
             }
                 break;
-            case Construccion:
-                break;
-            case Convenios:
-                break;
-            case Muestra_Rural:
-                break;
-            case Operativo_Masivo:
-                break;
-            case Organismos_Operadores_De_Agua:
-                break;
-            case Pesca_Mineria:
-                break;
-            case Transportes:
-                break;
+            
                     
             
         }

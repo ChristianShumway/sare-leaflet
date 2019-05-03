@@ -97,33 +97,30 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
 
     private StringBuilder getSql(ProyectosEnum proyecto, catalogos catalogo){
         StringBuilder sql = new StringBuilder();
+        String esquemaPos,esquemaOcl;
         switch(proyecto)
         {
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+                esquemaPos=getEsquemaPostgres(proyecto);
+                esquemaOcl=getEsquemaOracle(proyecto);
                 switch(catalogo)
                 {
                     case AsentamientosHumanos:
-                        sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(schemapg).append(".cat_asentamientos_humanos order by descripcion)");
+                        sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(esquemaPos).append(".cat_asentamientos_humanos order by descripcion)");
                     break;
                     case ConjuntoComercial:
-                       sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(schemapg).append(".cat_tipo_conjunto_comercial");
+                       sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(esquemaPos).append(".cat_tipo_conjunto_comercial");
                     break;
                 }
                 break;
-            case Construccion:
-                break;
-            case Convenios:
-                break;
-            case Muestra_Rural:
-                break;
-            case Operativo_Masivo:
-                break;
-            case Organismos_Operadores_De_Agua:
-                break;
-            case Pesca_Mineria:
-                break;
-            case Transportes:
-                break;
+            
         }
         return sql;
     }

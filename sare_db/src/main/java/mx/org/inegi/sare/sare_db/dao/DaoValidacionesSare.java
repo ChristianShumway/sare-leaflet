@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("DaoValidacionesSare")
 @Profile("jdbc")
-public class DaoValidacionesSare implements InterfaceValidacionesSare {
+public class DaoValidacionesSare extends DaoTransformaCartografia implements InterfaceValidacionesSare {
 
     
     @Autowired
@@ -52,8 +52,9 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     public List<cat_codigo_postal> getCP(String cve_ent, Integer proyecto) throws Exception 
     {
         listaCP=new ArrayList<>();
+        proyectos=getProyecto(proyecto);
         StringBuilder sql;
-        sql=getSql(proyecto,MetodosValida.getCP);
+        sql=getSql(proyectos,MetodosValida.getCP);
        listaCP= jdbcTemplate.query(sql.toString(),new Object[]{cve_ent}, new ResultSetExtractor<List<cat_codigo_postal>>() 
        {
             @Override
@@ -76,9 +77,10 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
     
     @Override
     public String isValidCpMsj(String CP, String entidad, Integer proyecto) throws Exception {
+        proyectos=getProyecto(proyecto);
         String valida;
         StringBuilder sql;
-        sql=getSql(proyecto,MetodosValida.validaCP);
+        sql=getSql(proyectos,MetodosValida.validaCP);
        valida= jdbcTemplate.query(sql.toString(),new Object[]{CP,entidad}, new ResultSetExtractor<String>() 
        {
             @Override
@@ -98,65 +100,31 @@ public class DaoValidacionesSare implements InterfaceValidacionesSare {
        return valida;
     }
     
-    private StringBuilder getSql(Integer proyecto, MetodosValida valida)
+    private StringBuilder getSql(ProyectosEnum proyecto, MetodosValida valida)
     {
         StringBuilder sql = new StringBuilder();
-            if(Objects.equals(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE.getCódigo(), proyecto))
+        String esquemaPos,esquemaOcl;
+        switch(proyecto)
             {
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+            esquemaPos=getEsquemaPostgres(proyecto);
+            esquemaOcl=getEsquemaOracle(proyecto);
                 switch(valida){
                     case getCP:
-                        sql.append("SELECT cve_ent,nom_ent,cp_inicial,cp_final FROM ").append(schema).append(".cat_codigo_postal where cve_ent=?");
+                        sql.append("SELECT cve_ent,nom_ent,cp_inicial,cp_final FROM ").append(esquemaPos).append(".cat_codigo_postal where cve_ent=?");
                     break;
                     case validaCP:
-                        sql.append("SELECT ").append(schema).append(".valida_cp_txt(?,?) ");
+                        sql.append("SELECT ").append(esquemaPos).append(".valida_cp_txt(?,?) ");
                     break;
                 }
                 
-            }
-            else
-            {
-                if(Objects.equals(ProyectosEnum.Pesca_Mineria.getCódigo(), proyecto))
-                {
-                    
-                }
-                else
-                {
-                    if(Objects.equals(ProyectosEnum.Transportes.getCódigo(), proyecto))
-                    {
-                    }
-                    else
-                    {
-                       if(Objects.equals(ProyectosEnum.Construccion.getCódigo(), proyecto)) 
-                       {
-                       }
-                       else
-                       {
-                          if(Objects.equals(ProyectosEnum.Operativo_Masivo.getCódigo(), proyecto))
-                          {
-                              
-                          }
-                          else
-                          {
-                              if(Objects.equals(ProyectosEnum.Muestra_Rural.getCódigo(), proyecto))  
-                              {
-                              }
-                              else
-                              {
-                                if(Objects.equals(ProyectosEnum.Convenios.getCódigo(), proyecto))
-                                {
-                                    
-                                } 
-                                else
-                                {
-                                    if(Objects.equals(ProyectosEnum.Organismos_Operadores_De_Agua.getCódigo(), proyecto))
-                                    {
-                                    }
-                                } 
-                              }
-                          }
-                       }
-                    }
-                }
             }
         return sql;
     }

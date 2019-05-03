@@ -46,6 +46,10 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
     @Autowired
     @Qualifier("schemaSarePG")
     private String schemapg;
+    
+     public enum Desbloqueo{
+        Desbloqueo,VerificaDesbloqueo,completaGuardado, existeUe, updateUE, insertUE, consultaPendientes
+    }
 
     @Override
     public List<cat_vw_punteo_sare> getRegistroPendientesOcl(Integer proyecto, String usuario, String id_ue) {
@@ -119,9 +123,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         return regresar;
     }
     
-     public enum Desbloqueo{
-        Desbloqueo,VerificaDesbloqueo,completaGuardado, existeUe, updateUE, insertUE, consultaPendientes
-    }
+    
 
     @Override
     public boolean Desbloqueo(Integer proyecto, String id_ue) {
@@ -276,31 +278,41 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
     
     public StringBuilder getSql(ProyectosEnum proyectos, String id_ue, Desbloqueo desbloqueo){
         StringBuilder sql=new StringBuilder();
+        String esquemaPos,esquemaOcl;
         switch(proyectos){
             case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Operativo_Masivo:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+                esquemaPos=getEsquemaPostgres(proyectos);
+                esquemaOcl=getEsquemaOracle(proyectos);
                 switch(desbloqueo){
                     case VerificaDesbloqueo:
-                        sql.append("SELECT ").append(schemapg).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");
+                        sql.append("SELECT ").append(esquemaPos).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");
                     break;
                     case Desbloqueo:
-                        sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST=10 WHERE id_ue=?");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST=10 WHERE id_ue=?");
                     break;
                     case existeUe:
-                        sql.append("SELECT count(distinct id_ue) from ").append(schemaocl).append(".TR_UE_COMPLEMENTO where id_ue=?");
+                        sql.append("SELECT count(distinct id_ue) from ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO where id_ue=?");
                     break;
                     case updateUE:
-                        sql.append("UPDATE ").append(schemaocl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=systimestamp where ID_UE=?");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=systimestamp where ID_UE=?");
                     break;
                     case insertUE:
-                        sql.append("INSERT INTO ").append(schemaocl).append(".TR_UE_COMPLEMENTO (SARE_ST_USR,ID_UE, SARE_ST_TIME) values (?,?,systimestamp)");
+                        sql.append("INSERT INTO ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO (SARE_ST_USR,ID_UE, SARE_ST_TIME) values (?,?,systimestamp)");
                     break;
                     case completaGuardado:
-                        sql.append("UPDATE ").append(schemaocl).append(".TR_UE_SUC set SARE_ST='01' where id_ue=?");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='01' where id_ue=?");
                     break;
                     case consultaPendientes:
                         sql.append("SELECT id_ue, tramo_control, cvegeo, cve_ce, cve_ent, nom_ent, cve_mun, nom_mun, cve_loc, nom_loc, cve_ageb, cve_mza, cveft, e08, e09, tipo_e10, substr(nomvial,1,110) nomvial, case when numext ='' then null else numext::numeric end numext, numextalf, e12, e12p, numint, ");
                         sql.append("numintalf, tipo_e14, e14, e14_a, tipo_e10_a, e10_a, tipo_e10_b, e10_b, tipo_e10_c, e10_c, e10_e, descrubic, coord_x::varchar, coord_y::varchar, e19, tipo_e19, punteo, mod_cat, origen, cvegeo2016, oracle, ");
-                        sql.append("e20, id_inmueble, id_deftramo, cvevial, e23 FROM ").append(schemapg).append(".td_ue_suc where id_ue=?");
+                        sql.append("e20, id_inmueble, id_deftramo, cvevial, e23 FROM ").append(esquemaPos).append(".td_ue_suc where id_ue=?");
                     break;
                         
                 }
