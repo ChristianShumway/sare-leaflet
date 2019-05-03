@@ -1,14 +1,102 @@
+<%@page import="java.io.FileInputStream"%>
+<%@page import="java.io.File"%>
+<%@page import="java.io.InputStreamReader"%>
+<%@page import="java.net.URL"%>
+<%@page import="java.io.FileReader"%>
+<%@page import="java.io.BufferedReader"%>
+<%@page import="java.security.MessageDigest"%>
+
+<%  
+    String rutaMain          =request.getServletContext().getRealPath("/WEB-INF/resource/js/main.js");
+    String rutaService       =request.getServletContext().getRealPath("/WEB-INF/resource/js/services.js");
+    String rutaAppCss        =request.getServletContext().getRealPath("/WEB-INF/resources/css/app.css");
+    String rutaActionDom     =request.getServletContext().getRealPath("/WEB-INF/resources/js/actionsDom.js");
+    String rutaObjFormulario =request.getServletContext().getRealPath("/WEB-INF/resources/js/objFormulario.js");
+    
+    
+    String archivo=getArchivo(rutaMain);    
+    String version_main = getMD5(archivo);
+    
+    
+    archivo=getArchivo(rutaService);    
+    String version_services=getMD5(archivo);
+    
+    archivo=getArchivo(rutaAppCss);    
+    String version_appCss=getMD5(archivo);
+    
+    archivo=getArchivo(rutaActionDom);    
+    String version_actionDom=getMD5(archivo);
+    
+    archivo=getArchivo(rutaObjFormulario);    
+    String version_objFormulario=getMD5(archivo);
+        
+
+%>
+
+<%!
+    public String getArchivo(String rurta) {
+        BufferedReader br = null;
+        String everything="nada";
+        try {
+            br = new BufferedReader(new FileReader(rurta));
+            StringBuilder sb2 = new StringBuilder();
+            String line2 = br.readLine();
+
+            while (line2 != null) {
+                sb2.append(line2);
+                sb2.append(System.lineSeparator());
+                line2 = br.readLine();
+            }
+            everything = sb2.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return everything;
+    }
+%>
+
+<%!
+    public String getMD5(String rurta)throws Exception {
+        String regreso="nada";
+  String plainText = rurta;
+    MessageDigest mdAlgorithm = MessageDigest.getInstance("MD5");
+    mdAlgorithm.update(plainText.getBytes());
+
+    byte[] digest = mdAlgorithm.digest();
+    StringBuffer hexString = new StringBuffer();
+
+    for (int i = 0; i < digest.length; i++) {
+        plainText = Integer.toHexString(0xFF & digest[i]);
+
+        if (plainText.length() < 2) {
+            plainText = "0" + plainText;
+        }
+
+        hexString.append(plainText);
+    }
+
+        return  hexString.toString();
+    }
+%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="resources/css/app.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/app.css?version=<%=version_appCss%>" rel="stylesheet" type="text/css"/>
     <link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>
     <link href="resources/css/animate.css" rel="stylesheet" type="text/css"/>
     <title>SARE 2019</title>
      <!-- Compiled and minified CSS -->
-     <script src='resources/js/services.js'></script>
+     <script src='resources/js/services.js?version=<%=version_services%>'></script>
      <link rel="stylesheet" href="resources/css/materialize.css">
      <link href="resources/css/material-icons.css" rel="stylesheet">
      <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700" rel="stylesheet">
@@ -24,15 +112,15 @@
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
     
-    <script src="resources/js/main.js" type="text/javascript"></script>
+    <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
     
     <!-- Compiled and minified JavaScript -->
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
     <script src='resources/js/jquery-2.1.1.min.js'></script>
-    <script src='resources/js/actionsDom.js'></script>
+    <script src='resources/js/actionsDom.js?version=<%=version_actionDom%>'></script>
     <script src="resources/config/config.js" type="text/javascript"></script>
-    <script src='resources/js/objFormulario.js'></script>
+    <script src='resources/js/objFormulario.js?version=<%=version_objFormulario%>'></script>
      <!-- FONT AWSOME -->
         <link href="resources/css/fontawesome.css" rel="stylesheet" type="text/css"/>
         
