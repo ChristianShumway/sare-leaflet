@@ -655,7 +655,7 @@ const handleSearchCleeEnterLock = e =>  {
 }
 
 const handleSearchCleeList = () => {
-  const inputValue = document.getElementById('search-cleelist-lock')
+  const inputValue = document.getElementById('search-cleelist')
   const arrayCleeFind = []
   const data = dataCleeListNew.datos
   
@@ -857,11 +857,15 @@ const handleTipoPunteo = () => {
   const wrapNombreVialidadUno = document.getElementById('wrap-nombre-vialidad-uno')
   const wrapTipoVialidadDos = document.getElementById('wrap-tipo-vialidad-dos')
   const wrapNombreVialidadDos = document.getElementById('wrap-nombre-vialidad-dos')
-  const tipoE10n = document.getElementById('tipo_e10n')
+  const wrapTipoVialidadPosterior = document.getElementById('wrap-tipo-vialidad-posterior')
+  const wrapNombreVialidadPosterior = document.getElementById('wrap-nombre-vialidad-posterior')
+  const tipoE10n = document.getElementById('tipo_e10n') //input
   const tipoE10an = document.getElementById('tipo_e10_an') //input
   const e10A = document.getElementById('e10_A') // select
   const tipoE10bn = document.getElementById('tipo_e10_bn') //input
   const e10B = document.getElementById('e10_B') // select
+  const tipoE10cn = document.getElementById('tipo_e10_cn') //input
+  const e10C = document.getElementById('e10_C') // select
 
   if(punteo === 'R'){
     tipoE10n.style.display = 'none'
@@ -874,124 +878,71 @@ const handleTipoPunteo = () => {
     tipoE10bn.removeAttribute('id')
     e10B.style.display = 'none'
     e10B.removeAttribute('id')
+    tipoE10cn.style.display = 'none'
+    tipoE10cn.removeAttribute('id')
+    e10C.style.display = 'none'
+    e10C.removeAttribute('id')
 
     const selectField = document.createElement('select')
-    selectField.setAttribute('id','tipo_e10n')
-    selectField.classList.add('browser-default')
-    
+    handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
     const selectFieldTipoE10an = document.createElement('select')
-    selectFieldTipoE10an.setAttribute('id', 'tipo_e10_an')
-    selectFieldTipoE10an.classList.add('browser-default')
-
+    handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
     const inputFieldE10a = document.createElement('input')
-    inputFieldE10a.setAttribute('id', 'e10_A')
-    inputFieldE10a.setAttribute('placeholder', 'Nombre de la vialidad 1')
-    inputFieldE10a.setAttribute('name', 'e10_A')
-    inputFieldE10a.setAttribute('type', 'text')
-
+    handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
     const selectFieldTipoE10bn = document.createElement('select')
-    selectFieldTipoE10bn.setAttribute('id', 'tipo_e10_bn')
-    selectFieldTipoE10bn.classList.add('browser-default')
-
+    handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
     const inputFieldE10b = document.createElement('input')
-    inputFieldE10b.setAttribute('id', 'e10_B')
-    inputFieldE10b.setAttribute('placeholder', 'Nombre de la vialidad 2')
-    inputFieldE10b.setAttribute('name', 'e10_B')
-    inputFieldE10b.setAttribute('type', 'text')
+    handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
+    const selectFieldTipoE10cn = document.createElement('select')
+    handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
+    const inputFieldE10c = document.createElement('input')
+    handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
 
     //función donde se agrega options a los selects con el catálogo de tipo de vialidades
     handleFillTipoDeVialidades(selectField)
     handleFillTipoDeVialidades(selectFieldTipoE10an)
     handleFillTipoDeVialidades(selectFieldTipoE10bn)
+    handleFillTipoDeVialidades(selectFieldTipoE10cn)
  
     wrapTipoVialidad.appendChild(selectField)
     wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
     wrapNombreVialidadUno.appendChild(inputFieldE10a)
     wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
     wrapNombreVialidadDos.appendChild(inputFieldE10b)
+    wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
+    wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
 
   } else if (punteo === 'U'){
-    const childrensTipoVialidad = wrapTipoVialidad.children
-    const childrensTipoVialidadUno = wrapTipoVialidadUno.children
-    const childrensNombreVialidadUno = wrapNombreVialidadUno.children
-    const childrensTipoVialidadDos = wrapTipoVialidadDos.children
-    const childrensNombreVialidadDos = wrapNombreVialidadDos.children
-
-
-    for(let chld = 0; chld< childrensTipoVialidad.length; chld++){
-      let child = childrensTipoVialidad[chld]
-      console.log(child)
-      let childrenType = childrensTipoVialidad[chld].nodeName
-      if(childrenType == 'SELECT'){
-        wrapTipoVialidad.removeChild(child)
-      }
-      if(childrenType == 'INPUT'){
-        child.style.display = 'initial'
-        child.setAttribute('id','tipo_e10n')
-        child.disabled = true
-      }
-    }
-
+    //tipo vialidad domicilio
+    handleReturnTipoNombreVialidad(wrapTipoVialidad.children, wrapTipoVialidad, 'tipo_e10n', 'tipo')
     //tipo vialidad 1
-    for(let chld = 0; chld< childrensTipoVialidadUno.length; chld++){
-      let child = childrensTipoVialidadUno[chld]
-      console.log(child)
-      let childrenType = childrensTipoVialidadUno[chld].nodeName
-      if(childrenType == 'SELECT'){
-        wrapTipoVialidadUno.removeChild(child)
-      }
-      if(childrenType == 'INPUT'){
-        child.style.display = 'initial'
-        child.setAttribute('id','tipo_e10_an')
-        child.disabled = true
-      }
-    }
-
+    handleReturnTipoNombreVialidad(wrapTipoVialidadUno.children, wrapTipoVialidadUno, 'tipo_e10_an', 'tipo') 
     //nombre vialidad 1
-    for(let chld = 0; chld< childrensNombreVialidadUno.length; chld++){
-      let child = childrensNombreVialidadUno[chld]
-      console.log(child)
-      let childrenType = childrensNombreVialidadUno[chld].nodeName
-      if(childrenType == 'INPUT'){
-        wrapNombreVialidadUno.removeChild(child)
-      }
-      if(childrenType == 'SELECT'){
-        child.style.display = 'initial'
-        child.setAttribute('id','e10_A')
-      }
-    }
-
+    handleReturnTipoNombreVialidad(wrapNombreVialidadUno.children, wrapNombreVialidadUno, 'e10_A', 'nombre')
     //tipo vialidad 2
-    for(let chld = 0; chld< childrensTipoVialidadDos.length; chld++){
-      let child = childrensTipoVialidadDos[chld]
-      console.log(child)
-      let childrenType = childrensTipoVialidadDos[chld].nodeName
-      if(childrenType == 'SELECT'){
-        wrapTipoVialidadDos.removeChild(child)
-      }
-      if(childrenType == 'INPUT'){
-        child.style.display = 'initial'
-        child.setAttribute('id','tipo_e10_bn')
-        child.setAttribute('disabled','true')
-      }
-    }
-
+    handleReturnTipoNombreVialidad(wrapTipoVialidadDos.children, wrapTipoVialidadDos, 'tipo_e10_bn', 'tipo')
     //nombre vialidad 2
-    for(let chld = 0; chld< childrensNombreVialidadDos.length; chld++){
-      let child = childrensNombreVialidadDos[chld]
-      console.log(child)
-      let childrenType = childrensNombreVialidadDos[chld].nodeName
-      if(childrenType == 'INPUT'){
-        wrapNombreVialidadDos.removeChild(child)
-      }
-      if(childrenType == 'SELECT'){
-        child.style.display = 'initial'
-        child.setAttribute('id','e10_B')
-      }
-    }
-    
+    handleReturnTipoNombreVialidad(wrapNombreVialidadDos.children, wrapNombreVialidadDos, 'e10_B', 'nombre')
+    //tipo vialidad posterior
+    handleReturnTipoNombreVialidad(wrapTipoVialidadPosterior.children, wrapTipoVialidadPosterior, 'tipo_e10_cn', 'tipo')
+    //nombre vialidad 2
+    handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
   }
   console.log(wrapTipoVialidad.children)   
+}
+
+//Función crear Input o Select según si es rural
+const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
+  if (type === 'select'){
+    constName.setAttribute('id', idField)
+    constName.classList.add('browser-default')
+  }
+  else if (type === 'input'){
+    constName.setAttribute('id', idField)
+    constName.setAttribute('placeholder', ph)
+    constName.setAttribute('name', idField)
+    constName.setAttribute('type', 'text')
+  }
 }
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
@@ -1002,6 +953,35 @@ const handleFillTipoDeVialidades = selectId => {
     opt.value = item.tipo_e10n
     selectId.appendChild(opt)
   })
+}
+
+//Función regresa tipo campos  de tipo y nombre vialidad
+const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
+  for(let chld = 0; chld< childrens.length; chld++){
+    let child = childrens[chld]
+    console.log(child)
+    let childrenType = childrens[chld].nodeName
+
+    if (field == 'tipo'){
+      if(childrenType == 'SELECT'){
+        wrap.removeChild(child)
+      }
+      if(childrenType == 'INPUT'){
+        child.style.display = 'initial'
+        child.setAttribute('id',idChildren)
+        child.setAttribute('disabled','true')
+      }
+    }
+    else if (field == 'nombre') {
+      if(childrenType == 'INPUT'){
+        wrap.removeChild(child)
+      }
+      if(childrenType == 'SELECT'){
+        child.style.display = 'initial'
+        child.setAttribute('id',idChildren)
+      }
+    }
+  }
 }
 
 // función sweetaler errores punteo

@@ -473,7 +473,7 @@
                 <div class="input-field">
                   <input  id="tipo_e10_c" name="tipo_e10_c" type="text" hidden >
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-tipo-vialidad-posterior">
                   <input placeholder="Tipo de Vialidad Posterior" id="tipo_e10_cn" name="tipo_e10_cn" type="text" disabled >
                   <label for="tipo_e10_cn">Tipo de Vialidad Posterior</label>
                 </div>
@@ -481,7 +481,7 @@
                   <input id="e10c_cvevial" name="e10c_cvevial" type="text" hidden >
                   <label for="e10c_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
-                <div class="input-field">
+                <div class="input-field" id="wrap-nombre-vialidad-posterior">
                   <select class="browser-default" id="e10_C" name="e10_C">
                   </select>
                   <label id="labele10_C" for="e10_C" class="active">Nombre de la Vialidad</label>
