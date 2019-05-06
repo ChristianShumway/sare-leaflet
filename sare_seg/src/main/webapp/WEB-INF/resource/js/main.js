@@ -214,10 +214,7 @@ const callServiceFindUE=(id_ue)=>{
       onOpen:  () => swal.showLoading() 
     })
     .then( () => { },
-      dismiss => {
-        if (dismiss === 'timer') {
-        }
-      }
+        MDM6('updateSize')
     )
   })
 }
@@ -231,15 +228,16 @@ const showDataInterfaz = data => {
 
 //valida coordenadas xy en caso de venir vacias ya no hará nada
 const validateCoord = data => {
-  if (typeof data[0].datos.datos[0].coord_X === 'undefined' || typeof data[0].datos.datos[0].coord_Y === 'undefined') {
-    //ratificar('no')
+  if (data[0].datos.datos[0].coord_X == null || data[0].datos.datos[0].coord_Y == null) {
+    ratificar('no')
   }
   else {
     //si trae coordenadas xy mostrará la chincheta sobre el mapa
     xycoorsx = data[0].datos.datos[0].coord_X
     xycoorsy = data[0].datos.datos[0].coord_Y
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}})    
-  }
+    handleActionTargetRef()
+ }
   fillForm(data)
 }
 
@@ -251,7 +249,6 @@ const fillForm = data => {
       : $("#" + i).val(e);
   })
   fillCatalogo()
-  handleActionTargetRef()
   fillCatalogoConjuntosComerciales()
 }
 
@@ -770,7 +767,7 @@ const ratificar = request => {
       MDM6('hideMarkers', 'identify')      
       const cancelOption = document.getElementById('item-cancel-option')
       cancelOption.removeAttribute('disabled')
-      handleHideAlertPickMap()
+      //handleHideAlertPickMap()
     }
   }
 }
@@ -1394,9 +1391,15 @@ const showViewPreliminar = d => {
     () => {
       d = d.replace(/Seleccione/g, '')
       var dpv = d.split("&")
+      var Type;
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
-        var Type = document.getElementById(idobj[0]).type;
+        if(i<46){
+            Type = document.getElementById(idobj[0]).type;
+        }else{
+            Type='text';
+        }
+        
         var a = decodeURIComponent(idobj[1])
         a = a.replace(/\+/g, ' ')
         if(Type=='select-one')
@@ -1495,21 +1498,24 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
-      if(level >= 13) {
-        identificar(coor);
-        handleActionButtons('enabled')
-      }
-      else {
-        MDM6('hideMarkers', 'identify') 
-        Swal.fire ({
-          position: 'bottom-end',
-          type: 'warning',
-          title: 'Debe seleccionar una unidad economica a puntear',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
-      break
+        let clee_est=document.getElementById('id_UE').value;
+        if(clee_est!='' || clee_est==null)    
+        {
+            identificar(coor);
+            handleActionButtons('enabled')
+        }
+        else{
+          MDM6('hideMarkers', 'identify') 
+          Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'Debe seleccionar una unidad economica a puntear',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
+        }
+      break;
     case 'v_calle':
       if(level>=13) {
         StreetView(coor.lon, coor.lat)

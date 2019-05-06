@@ -88,6 +88,7 @@ public class BackingBusquedaSare {
                             if (catBusquedaOracle.get(0).getEstatus_punteo() == null) 
                             {
                                 busqueda.put("e", "b5");
+                                Regresar.setDatos(busqueda);
                             } 
                             else 
                             {
@@ -95,6 +96,7 @@ public class BackingBusquedaSare {
                                 {
                                     case 2:
                                         busqueda.put("e", "b4");
+                                        Regresar.setDatos(busqueda);
                                         break;
                                     case 4:
                                         for (cat_vw_punteo_sare element : catBusquedaOracle) 
@@ -274,6 +276,8 @@ public class BackingBusquedaSare {
 
             } catch (Exception e) {
                  Logger.getLogger(BackingBusquedaSare.class.getName()).log(Level.SEVERE, null, e);
+                 busqueda.put("e", "b2");
+                 Regresar.setDatos(busqueda); 
             }
         }
         else

@@ -138,7 +138,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         rs.getString("e23_a")!=null?rs.getString("e23_a"):"", 
                         rs.getString("id_ue")!=null?new BigDecimal(rs.getString("id_ue")):new BigDecimal(0),
                         rs.getString("origen")!=null?new BigDecimal(rs.getString("origen")): new BigDecimal(0), 
-                        rs.getString("estatus_punteo")!=null?rs.getString("estatus_punteo"):"",
+                        rs.getString("estatus_punteo")!=null?Integer.valueOf(rs.getString("estatus_punteo")):null,
                         rs.getString("tipo_e10")!=null?rs.getString("tipo_e10"):"",
                         rs.getString("tipo_e10_a")!=null?rs.getString("tipo_e10_a"):"",
                         rs.getString("tipo_e10_b")!=null?rs.getString("tipo_e10_b"):"", 
@@ -242,7 +242,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
          sql = getSql(cat_vw_punteo_sare,params,tabla,rural,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO2);
-        regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() 
+        regresa=jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<String>() 
         {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -348,7 +348,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
          sql = getSql(cat_vw_punteo_sare,null,"",null,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO);
-        
+         
         regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() 
         {
             @Override
@@ -476,8 +476,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                  switch(metodo){
                      case GETEXTENTCVEGEO2:
                  
-                            if(String.valueOf(cat_vw_punteo_sare.getCOORD_X())!=null && !String.valueOf(cat_vw_punteo_sare.getCOORD_X()).isEmpty() 
-                                    && (String.valueOf(cat_vw_punteo_sare.getCOORD_Y())!=null && !String.valueOf(cat_vw_punteo_sare.getCOORD_Y()).isEmpty()))
+                            if(!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_X())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_X()).isEmpty() 
+                                    && (!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_Y())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_Y()).isEmpty()))
                             {
                                 sql.append("select xmin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
                                 sql.append("||ymin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
@@ -487,7 +487,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             else
                             {
                                 sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent");
-                                sql.append(" from ").append(schemamdm).append(".").append(tabla).append(" where cve_ent=?");
+                                sql.append(" from ").append(schemamdm).append(".").append(tabla).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("'");
                                 if(params==5)
                                 {
                                     if((!cat_vw_punteo_sare.getE04().isEmpty() && (!cat_vw_punteo_sare.getE05().isEmpty()) 
@@ -501,7 +501,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                         {
                                           cvegeo=String.valueOf(1);  
                                         }
-                                        sql.append(" and cvegeo=").append(cvegeo);
+                                        sql.append(" and cvegeo='").append(cvegeo).append("'");
                                     }
                                     else
                                     {
@@ -520,7 +520,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                         } else {
                                             cvegeo= cat_vw_punteo_sare.getE03();
                                         }
-                                    sql.append(" and cvegeo=").append(cvegeo);
+                                    sql.append(" and cvegeo='").append(cvegeo).append("'");
                                 }
                                 if(params==4)
                                 {

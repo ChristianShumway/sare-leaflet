@@ -128,7 +128,7 @@ public class ServiceController {
     @RequestMapping(value = "getbusqueda.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services getbusqueda(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "p") String p, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "ce") String ce, @RequestParam(value = "usuario") String usuario, @RequestParam(value = "id_ue") String id_ue) throws Exception {
         int t = Integer.MIN_VALUE;
-        Boolean consulta = true;
+        Boolean consulta = false;
         if (p != null) {
             t = Integer.parseInt(p);
         }

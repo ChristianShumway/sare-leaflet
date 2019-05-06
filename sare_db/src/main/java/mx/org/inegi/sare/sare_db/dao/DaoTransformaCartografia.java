@@ -7,7 +7,6 @@ package mx.org.inegi.sare.sare_db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.Enums.TipoCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
