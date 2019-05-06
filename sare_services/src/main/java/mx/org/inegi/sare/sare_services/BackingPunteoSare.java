@@ -126,7 +126,7 @@ public class BackingPunteoSare
                                      ubicacion_punteo.setCatVial(catVial);
                                      if(InterfacePunteoSare.isFrentesProximos(proyecto,ent,coordMercator.getX(),coordMercator.getY()))
                                      {
-                                         Respuesta=new cat_respuesta_services("confirmar",new cat_mensaje("","Existen Frentes proximos donde se podria ubicar la unidad económica, ¿Confirma que es correcta la ubicación seleccionada?"));
+                                         Respuesta=new cat_respuesta_services("",new cat_mensaje("confirmar","Existen Frentes proximos donde se podria ubicar la unidad económica, ¿Confirma que es correcta la ubicación seleccionada?"));
                                      }
                                  }
                                  ubicacion_punteo.setPunteo(ta);

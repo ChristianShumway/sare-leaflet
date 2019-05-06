@@ -817,7 +817,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-            showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+            showAlertPunteoConfirma('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
@@ -1009,7 +1009,7 @@ const showAlertPunteoConfirma = (title, text) =>{
     showConfirmButton: true,
     showCancelButton: true,
     customClass: 'swal-wide',
-  }).then ( alert('hecho') ) 
+  }).then ( ) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
