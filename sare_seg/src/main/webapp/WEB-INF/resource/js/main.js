@@ -360,9 +360,10 @@ const handleViewCleeList = () => {
     }, 
     () => {
       swal ({
-        title: 'Buscando información!',
+        title: '<span style="width:100%;">Buscando información!</span>',
         text: 'Por favor espere un momento',
         timer: 2000,
+        //html: true,
         onOpen: () => swal.showLoading()
       })
       .then(
@@ -841,7 +842,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         
   }, () => {
     swal ({
-      title: 'Buscando información de punteo!',
+      title: '<span style="width:100%;">Buscando información de punteo!</span>',
       text: 'Por favor espere un momento',
       timer: 2000,
       onOpen: () => swal.showLoading()
@@ -1939,127 +1940,126 @@ const opcionMenu = opcion => {
 } 
 
 async function OpenReportes (size, action) {
-    const {value: reporte} = await Swal.fire({
-      title: action == 'vista' ? 'Reportes' : 'Descarga de Reportes',
-      input: 'select',
-      inputOptions: {
-        '1': 'Reporte de Avance de Registros Punteados',    
-        '2': 'Reporte de Establecimientos Pendientes de Punteo',    
-      },
-      inputPlaceholder: 'Selecciona un Reporte',
-      showCancelButton: true,
-      confirmButtonText:'Generar',
-      cancelButtonText:'Cancelar',
-      inputValidator: (value) => {
-        return new Promise((resolve) => {
-          if (value === '1' || value === '2'|| value === '3') {
-            resolve()
-          } else {
-            resolve('Selecciona el reporte a visualizar')
-          }
-        })
-      }
-    })  
+  const {value: reporte} = await Swal.fire({
+    title: action == 'vista' ? '<span style="width:100%;">Reportes</span>' : 'Descarga de Reportes',
+    input: 'select',
+    inputOptions: {
+      '1': 'Reporte de Avance de Registros Punteados',    
+      '2': 'Reporte de Establecimientos Pendientes de Punteo',    
+    },
+    inputPlaceholder: 'Selecciona un Reporte',
+    showCancelButton: true,
+    confirmButtonText:'Generar',
+    cancelButtonText:'Cancelar',
+    inputValidator: (value) => {
+      return new Promise((resolve) => {
+        if (value === '1' || value === '2'|| value === '3') {
+          resolve()
+        } else {
+          resolve('Selecciona el reporte a visualizar')
+        }
+      })
+    }
+  })  
  
-    if (reporte) {
-        let src = urlServices['serviceReporte'].url + '?proyecto=1&tipo=PDF&reporte=' + reporte +'&ce=00&ran=' + Math.random(); 
-        let leyenda = ''
-        let srcExcel = urlServices['serviceReporte'].url + '?proyecto=1&tipo=EXCEL&reporte=' + reporte +'&ce=00&ran=' + Math.random(); 
-       
-        if(reporte === '1'){
-            leyenda = 'Descargaste reporte de manzanas'
-        } else if (reporte === '2'){
-            leyenda = 'Descargaste reporte de localidades'
-        }
-
-        if (action == 'vista'){
-            if (size == 'desktop'){
-                Swal.fire({
-                    title: '<strong>Reporte</strong>',
-                    width: '100%', 
-                    html: `<iframe class='iframe-reporte' src=${src}></iframe>`,
-                    showCloseButton: true,
-                    showCancelButton: false,
-                    showConfirmButton: false,
-                    focusConfirm: false,
-                })
-            } else  if (size == 'movil'){
-                window.open(src, 'fullscreen=yes')
-            } 
-        } else if (action == 'descarga'){
-            window.location.href = srcExcel    
-        }
-    }  
+  if (reporte) {
+    let src = urlServices['serviceReporte'].url + '?proyecto=1&tipo=PDF&reporte=' + reporte +'&ce=00&ran=' + Math.random() 
+    let leyenda = ''
+    let srcExcel = urlServices['serviceReporte'].url + '?proyecto=1&tipo=EXCEL&reporte=' + reporte +'&ce=00&ran=' + Math.random() 
+    
+    if(reporte === '1'){
+        leyenda = 'Descargaste reporte de manzanas'
+    } else if (reporte === '2'){
+        leyenda = 'Descargaste reporte de localidades'
     }
 
-var imprimir=function(){
-    $('#window_bottom').hide();
-    var data = $('#map').html();
-    $('#window_bottom').show();
-    var isMobile = false; 
-   
-    var ventana = window.open('', '', 'height=1000,width=1024');
-    ventana.document.open();
-    ventana.document.write('<html><head ><title>'+titulo_impresion+'</title>');
-    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
-    ventana.document.write('<script src="resources/js/main.js"></script>');    
-    if (navigator.userAgent.indexOf("Chrome") !== -1) 
-    {
-        ventana.document.write('<style type="text/css"  media="print"> ');
-        ventana.document.write('@page{size:portrait;}html { width:29.4cm;height:30.62cm;}');
-        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}');
-        ventana.document.write('.divMapa{page-break-after : always;} ');
-        ventana.document.write('.olControlMousePosition{display:none;} ');
-        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
-        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} ');
-        ventana.document.write('</style>');
-    } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
-        ventana.document.write('<style type="text/css"  media="print"> @page{size:portrait;}html { width:28.4cm;height:29.90cm;}');
-        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.08cm;margin-left:-1.0cm;} ');
-        ventana.document.write('.divMapa{page-break-after : always;}');
-        ventana.document.write('.olControlMousePosition{display:none;} ');
-        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
-        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
-    } else if (navigator.userAgent.indexOf('Trident') !== -1) {
-        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
+    if (action == 'vista'){
+      if (size == 'desktop'){
+        Swal.fire({
+          title: '<strong>Reporte</strong>',
+          width: '100%', 
+          html: `<iframe class='iframe-reporte' src=${src}></iframe>`,
+          showCloseButton: true,
+          showCancelButton: false,
+          showConfirmButton: false,
+          focusConfirm: false,
+        })
+      } else  if (size == 'movil'){
+        window.open(src, 'fullscreen=yes')
+      } 
+    } else if (action == 'descarga'){
+      window.location.href = srcExcel    
     }
-    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
-    ventana.document.write('<link rel="stylesheet" href="resources/css/materialize_1.0.0.css">');
-    ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
-    ventana.document.write('</head>');
-    ventana.document.write('<body>');
-    ventana.document.write('<div class="" id="mapa" >');
-    ventana.document.write(data);
-    ventana.document.write('</div>');
-    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">');
-    ventana.document.write('<div class="modal-content">');
-    ventana.document.write('<div> Cargando</div>');
-    ventana.document.write('<div class="preloader-wrapper big active">');
-    ventana.document.write('<div class="spinner-layer spinner-blue-only">');
-    ventana.document.write('<div class="circle-clipper left">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('<div class="gap-patch">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('<div class="circle-clipper right">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');         
-    ventana.document.write('</div>');   
-    ventana.document.write('</div>');
-    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},2000); window.onafterprint = function(e){');   
-    ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); }, 1000);     ');       
-    ventana.document.write('};</script>');    
-    ventana.document.write('</body>');
-    ventana.document.write('</html>');
-    ventana.document.close();       
-    setTimeout(function () {       
-      ventana.print();          
-    }, 2500);    
+  }  
 }
 
+var imprimir = function() {
+  $('#window_bottom').hide();
+  var data = $('#map').html();
+  $('#window_bottom').show();
+  var isMobile = false; 
+  
+  var ventana = window.open('', '', 'height=1000,width=1024');
+  ventana.document.open();
+  ventana.document.write('<html><head ><title>'+titulo_impresion+'</title>');
+  ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
+  ventana.document.write('<script src="resources/js/main.js"></script>');    
+  if (navigator.userAgent.indexOf("Chrome") !== -1) 
+  {
+    ventana.document.write('<style type="text/css"  media="print"> ');
+    ventana.document.write('@page{size:portrait;}html { width:29.4cm;height:30.62cm;}');
+    ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}');
+    ventana.document.write('.divMapa{page-break-after : always;} ');
+    ventana.document.write('.olControlMousePosition{display:none;} ');
+    ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
+    ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} ');
+    ventana.document.write('</style>');
+  } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+    ventana.document.write('<style type="text/css"  media="print"> @page{size:portrait;}html { width:28.4cm;height:29.90cm;}');
+    ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.08cm;margin-left:-1.0cm;} ');
+    ventana.document.write('.divMapa{page-break-after : always;}');
+    ventana.document.write('.olControlMousePosition{display:none;} ');
+    ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
+    ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
+  } else if (navigator.userAgent.indexOf('Trident') !== -1) {
+    ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
+  }
+  ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
+  ventana.document.write('<link rel="stylesheet" href="resources/css/materialize_1.0.0.css">');
+  ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
+  ventana.document.write('</head>');
+  ventana.document.write('<body>');
+  ventana.document.write('<div class="" id="mapa" >');
+  ventana.document.write(data);
+  ventana.document.write('</div>');
+  ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">');
+  ventana.document.write('<div class="modal-content">');
+  ventana.document.write('<div> Cargando</div>');
+  ventana.document.write('<div class="preloader-wrapper big active">');
+  ventana.document.write('<div class="spinner-layer spinner-blue-only">');
+  ventana.document.write('<div class="circle-clipper left">');
+  ventana.document.write('<div class="circle"></div>');
+  ventana.document.write('</div>');
+  ventana.document.write('<div class="gap-patch">');
+  ventana.document.write('<div class="circle"></div>');
+  ventana.document.write('</div>');
+  ventana.document.write('<div class="circle-clipper right">');
+  ventana.document.write('<div class="circle"></div>');
+  ventana.document.write('</div>');
+  ventana.document.write('</div>');
+  ventana.document.write('</div>');         
+  ventana.document.write('</div>');   
+  ventana.document.write('</div>');
+  ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},2000); window.onafterprint = function(e){');   
+  ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); }, 1000);     ');       
+  ventana.document.write('};</script>');    
+  ventana.document.write('</body>');
+  ventana.document.write('</html>');
+  ventana.document.close();       
+  setTimeout(function () {       
+    ventana.print();          
+  }, 2500);    
+}
 
 const  modal2 = () => {         
   $('.modal').modal()
@@ -2130,7 +2130,7 @@ const CargaTablaBloqueadas=()=> {
       }
     },  () => {
       swal ({
-        title: 'Buscando información!',
+        title: '<span style="width:100%;">Buscando información!</span>',
         text: 'Por favor espere un momento',
         timer: 2000,
         onOpen: () => swal.showLoading()
