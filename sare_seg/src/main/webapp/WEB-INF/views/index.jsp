@@ -600,10 +600,10 @@
                   <label for="E12">E12 Edificio</label>
                 </div>
                 <div class="input-field">
-                  <select class="browser-default" id="tipo_E19" name="tipo_e19">
+                  <select class="browser-default" id="tipo_E19" name="tipo_E19">
                     <option value="" disabled selected>Seleccione...</option>
                   </select>
-                  <label for="tipo_e19" class="active">Tipo de Corredor o Centro Comercial</label>
+                  <label for="tipo_E19" class="active">Tipo de Corredor o Centro Comercial</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E19 Nombre" id="e19" name="e19" type="text" disabled >

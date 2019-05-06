@@ -149,26 +149,32 @@ public class BackingGuardar extends BackingSincroniza {
         boolean regresar = false;
         if (Integer.valueOf(inmueble.getMod_cat()) == 2) {
             inmueble.setCveft(String.valueOf(1));
-            if ((inmueble.getE05() == null || (inmueble.getE05().isEmpty())) && (inmueble.getPunteo().equals("R"))) {
+            if ((inmueble.getE05() == null || inmueble.getE05().equals("") || (inmueble.getE05().isEmpty())) && (inmueble.getPunteo().equals("R"))) {
                 inmueble.setE05(InterfaceGuardar.getClaveProvisional(proyecto, inmueble, "l"));
                 inmueble.setE07("800");
+                object.setE05(inmueble.getE05());
+                object.setE07(inmueble.getE07());
                 regresar = true;
-            } else if (inmueble.getE07() == null || inmueble.getE07().isEmpty()) {
+            } else if (inmueble.getE07() == null || inmueble.getE07().equals("") || inmueble.getE07().isEmpty()) {
                 inmueble.setE07(InterfaceGuardar.getClaveProvisional(proyecto, inmueble, "m"));
+                object.setE07(inmueble.getE07());
                 regresar = true;
             }
         } else {
-            if (inmueble.getE07() == null || inmueble.getE07().isEmpty()) {
+            if (inmueble.getE07() == null || inmueble.getE07().equals("") || inmueble.getE07().isEmpty()) {
                 inmueble.setE07(InterfaceGuardar.getClaveProvisional(proyecto, inmueble, "m"));
+                object.setE07(inmueble.getE07());
                 regresar = true;
             }
+            
+            
+            regresar=true;
+        }
             inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
             inmueble.setId_deftramo(new BigDecimal(InterfaceGuardar.getidDeftramo(proyecto, inmueble)));
             object.setE23(inmueble.getE23());
             object.setId_deftramo(inmueble.getId_deftramo());
             
-            regresar=true;
-        }
         return regresar;
     }
 
