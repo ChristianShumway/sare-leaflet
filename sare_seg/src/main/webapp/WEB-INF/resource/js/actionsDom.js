@@ -203,3 +203,14 @@ const handleCleanForms=()=>
     $("#e10_B").empty().attr("disabled", true);
     $("#e10_C").empty().attr("disabled", true);
 }
+
+
+const KeyPressCtrlB = e => {
+  const evtobj = window.event ? event : e
+  const arrowSearch = document.getElementById('arrow-search')
+  if (arrowSearch.onclick){
+    if (evtobj.keyCode == 66 && evtobj.ctrlKey) handleVisibleSearch()
+  }
+}
+
+document.onkeydown = KeyPressCtrlB
