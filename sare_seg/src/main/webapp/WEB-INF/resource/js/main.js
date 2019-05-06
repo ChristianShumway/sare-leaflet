@@ -767,7 +767,7 @@ const ratificar = request => {
       MDM6('hideMarkers', 'identify')      
       const cancelOption = document.getElementById('item-cancel-option')
       cancelOption.removeAttribute('disabled')
-      //handleHideAlertPickMap()
+      
     }
   }
 }
@@ -1845,6 +1845,10 @@ const cleanForm = () => {
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
   handleVisibleSearch() 
+  //oculta mensaje 
+  handleHideAlertPickMap()
+  
+  
 }
 
 // Función habilitar inputs formulario
