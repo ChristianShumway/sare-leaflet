@@ -969,6 +969,27 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
 .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
   top: 2.1em !important;
 }
+
+.swal2-popup.swal2-toast .swal2-icon{
+  height: 2em !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
+  left: .3125em !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=right] {
+  right: .3125em !important;
+}
+
+.swal2-popup.swal2-toast .swal2-icon.swal2-error [class^=swal2-x-mark-line] {
+  top: .875em !important;
+}
+
+.swal2-popup .swal2-select {
+  font-size: inherit !important;
+  color: #545454 !important;
+}
 /*  end estilos alert toast pisados */
 
 .btn-reportes-movil{ 
