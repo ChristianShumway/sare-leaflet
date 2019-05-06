@@ -71,7 +71,7 @@ public class BackingPunteoSare
                      {
                          if(InterfacePunteoSare.isPuntoinMza(proyecto, coordMercator.getX(), coordMercator.getY()))
                          {
-                            Respuesta=new cat_respuesta_services("error",new cat_mensaje("","La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior")); 
+                            Respuesta=new cat_respuesta_services("error",new cat_mensaje("false","La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior")); 
                          }
                          else
                          {
@@ -126,7 +126,7 @@ public class BackingPunteoSare
                                      ubicacion_punteo.setCatVial(catVial);
                                      if(InterfacePunteoSare.isFrentesProximos(proyecto,ent,coordMercator.getX(),coordMercator.getY()))
                                      {
-                                         Respuesta=new cat_respuesta_services("info",new cat_mensaje("","Existen Frentes proximos donde se podria ubicar la unidad económica, ¿Confirma que es correcta la ubicación seleccionada?"));
+                                         Respuesta=new cat_respuesta_services("confirmar",new cat_mensaje("","Existen Frentes proximos donde se podria ubicar la unidad económica, ¿Confirma que es correcta la ubicación seleccionada?"));
                                      }
                                  }
                                  ubicacion_punteo.setPunteo(ta);

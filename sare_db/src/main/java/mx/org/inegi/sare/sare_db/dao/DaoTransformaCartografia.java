@@ -141,7 +141,7 @@ public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas
                  esquema="";
               break;
             case Operativo_Masivo:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Organismos_Operadores_De_Agua:
                  esquema="";
@@ -174,7 +174,7 @@ public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas
                 esquema="";
               break;
             case Operativo_Masivo:
-                esquema="";
+                esquema="CE2019_SEG";
               break;
             case Organismos_Operadores_De_Agua:
                 esquema="";

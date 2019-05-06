@@ -61,11 +61,52 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
     @Override
     public List<cat_InfoInmueblesDTO> getInfoUEDenue(Integer proyecto, String x, String y) {
         
-        final List<cat_InfoInmueblesDTO> regresa=new ArrayList<cat_InfoInmueblesDTO>();;
+        List<cat_InfoInmueblesDTO> regresa=new ArrayList<cat_InfoInmueblesDTO>();;
         StringBuilder sql;
         proyectos=getProyecto(proyecto);
         sql = getSql(proyectos,x,y,"",MetodosUEbyXY.getInfoUEDenue);
+        switch(proyectos){
+            case Operativo_Masivo:
+                regresa=execSqlInfoUEDenuePg(sql);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              regresa=execSqlInfoUEDenueMdm(sql); 
+            break;
+                
+        }
+        return regresa;
+    }
+    
+    private List<cat_InfoInmueblesDTO> execSqlInfoUEDenueMdm(StringBuilder sql){
+        final List<cat_InfoInmueblesDTO> regresa=new ArrayList<cat_InfoInmueblesDTO>();;
         jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<ArrayList<String>>() 
+        {
+            @Override
+            public ArrayList<String> extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                ArrayList<String> fila = null;
+                cat_InfoInmueblesDTO row = null;
+                while (rs.next()) 
+                {
+                    row = new cat_InfoInmueblesDTO(rs.getString(1), rs.getString(2).replaceAll("'", "&#39;"), rs.getString(3).replaceAll("'", "&#39;"), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9),
+                        rs.getString(10), rs.getString(11), rs.getString(12), rs.getString(13), rs.getString(14), rs.getString(15), rs.getString(16), rs.getString(17), rs.getString(18));
+                    regresa.add(row);
+                }
+                return fila;
+            }
+        });
+        return regresa;
+    }
+    
+    private List<cat_InfoInmueblesDTO> execSqlInfoUEDenuePg(StringBuilder sql){
+        final List<cat_InfoInmueblesDTO> regresa=new ArrayList<cat_InfoInmueblesDTO>();;
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<ArrayList<String>>() 
         {
             @Override
             public ArrayList<String> extractData(ResultSet rs) throws SQLException, DataAccessException 
