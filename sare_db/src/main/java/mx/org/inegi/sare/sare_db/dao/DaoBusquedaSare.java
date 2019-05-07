@@ -464,14 +464,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             sql=filtrarSqlEge(ce,esquemaOcl,id_ue);
                             break;
                         case GETCLAVESPG:
-                             sql.append("SELECT distinct cve_unica FROM ").append(esquemaPos).append(".td_ue_suc ");
+                             sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
                             break;
                         case GETDATOSINMUEBLES:
                              sql.append("SELECT cve_unica,e03,e03n,e04,e04n,e05,e05n,e06,e07,e08,e09,tipo_e10,e10,e10_cvevial,e10_cveseg,e11,e11_a,tipo_e14,e14,tipo_e10_a,e10_a,tipo_e10_b")
                              .append(",e10_b,tipo_e10_c,e10_c,descrubic, coord_x coorx, coord_y coory,cod_resultado,tipo_reg,e12,e12p,e19,tipo_e19,e20,e13,cve_unica_duplicada clave_unica_duplicada, ")
                              .append("xmin(buffer(the_geom_merc,50))||','||ymin(buffer(the_geom_merc,50))||','||Xmax(buffer(the_geom_merc,50))||','||Ymax(buffer(the_geom_merc,50)) extent, ")
                              .append(" e10a_cvevial,e10a_cveseg,e10b_cvevial,e10b_cveseg,e10c_cvevial,e10c_cveseg,tipo_administracion,codigo_carretera,tramo_camino,margen,cadenamiento")
-                             .append(" FROM ").append(esquemaPos).append(".inmuebles where cve_unica=? limit 1");
+                             .append(" FROM ").append(esquemaPos).append(".inmuebles where id_ue=? limit 1");
                              break;
                         case GETEXTENTCVEGEO:
                             sql=GetSqlExtent(proyecto,metodo,params,tabla,rural,cat_vw_punteo_sare);

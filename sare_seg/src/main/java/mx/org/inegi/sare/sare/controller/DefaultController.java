@@ -23,12 +23,14 @@ public class DefaultController {
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
             @RequestParam(value = "nombre", defaultValue = "") String nombre,
+            @RequestParam(value = "ce", defaultValue = "") String ce,
             @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
             @RequestParam(value = "proyecto", defaultValue = "") Integer proyecto,
             HttpServletRequest request) {
         if (acceso != null && !acceso.equals("")
                 && clave_operativa != null && !clave_operativa.equals("")
                 && nombre != null && !nombre.equals("")
+                && ce!=null && !ce.equals("")
                 && tramo_control != null && !tramo_control.equals("")
                 && proyecto != null ) {
            HttpSession session = request.getSession(true);
@@ -37,7 +39,7 @@ public class DefaultController {
             data.put("clave_operativa",clave_operativa);
             data.put("tramoControl",tramo_control);
             data.put("proyectoSesion",proyecto);
-            data.put("ce","00");
+            data.put("ce",ce);
             data.put("nombre", nombre);
             session.setAttribute("respuesta", data);
             return "index";

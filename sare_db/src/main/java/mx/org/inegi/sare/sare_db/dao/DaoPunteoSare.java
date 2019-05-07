@@ -679,7 +679,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("SELECT cve_ent FROM ").append(schemapg).append(".td_entidad WHERE st_intersects(the_geom_merc,ST_GeomFromText(?,900913)) ");
                 break;
                 case GETPUNTEO:
-                    sql.append("select u.cve_ent,ent.nomgeo nom_ent,u.cve_mun,mun.nomgeo nom_mun,u.cve_loc,case when l.nomgeo is null then u.nom_loc else l.nomgeo end nom_loc,l.cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,u.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from(  ");
+                    sql.append("select u.cve_ent,ent.nomgeo nom_ent,u.cve_mun,mun.nomgeo nom_mun,u.cve_loc,case when l.nomgeo is null then u.nom_loc else l.nomgeo end nom_loc,u.cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,u.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from(  ");
                     sql.append("(SELECT cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),  ");
                     sql.append("Y(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),cve_mza,cveft cveft, nomvial,tipovial, cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza  cvegeo,cvevial cvevial,'U' punteo,1 mod_cat,'' cvegeo2016 ");
                     sql.append("FROM ").append(schemapg).append(".td_frentes_").append(ce).append(" a where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and   ");

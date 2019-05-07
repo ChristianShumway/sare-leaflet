@@ -373,7 +373,15 @@ const handleViewCleeList = () => {
 const popupCleeList = data => {
   const notFoundClee = document.getElementById('wrap-list-not-found')
   if (data.length == 0){
-    notFoundClee.classList.remove('wrap-inactive')
+    //notFoundClee.classList.remove('wrap-inactive')
+      Swal.fire
+            ({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: 'No se encontraron claves disponibles para la coordinación estatal',
+                    showConfirmButton: false,
+                    timer: 2000
+            })
     return
   }
 

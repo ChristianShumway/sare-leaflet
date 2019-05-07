@@ -841,7 +841,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     sql.append("select ").append(esquemaOcl).append(".SEC_TR_INMUEBLES.nextval secuencia from dual");
                     break;
                 case ActualizaBitRegIdUE:
-                    sql.append("update ").append(esquemaPos).append(".td_bitacora_registro_cve_unica set td_inm_ocl=true where id_ue='").append(inmueble.getID_UE()).append("' and id in (select max(id) from ").append(schemapg).append(".td_bitacora_registro_cve_unica where id_ue='").append(inmueble.getID_UE()).append("')");
+                    sql.append("update ").append(esquemaPos).append(".td_bitacora_registro_cve_unica set td_inm_ocl=true where id_ue='").append(inmueble.getID_UE()).append("' and id in (select max(id) from ").append(esquemaPos).append(".td_bitacora_registro_cve_unica where id_ue='").append(inmueble.getID_UE()).append("')");
                     break;
                 case ActualizaIdUE:
                     sql.append("update ").append(esquemaPos).append(".td_ue_suc set id_inmueble=").append(inmueble.getId_inmueble()).append(" where id_ue='").append(inmueble.getID_UE()).append("'");
