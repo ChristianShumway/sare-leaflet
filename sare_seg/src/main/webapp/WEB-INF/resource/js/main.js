@@ -800,17 +800,19 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    const {catVial} = data[0].datos.datos
-    catalogoCatVial = catVial
+    //console.log(data[0].datos.datos)
+    
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        const {catVial} = data[0].datos.datos
+        catalogoCatVial = catVial
         actualizaForm(data[0].datos.datos)
         handleTipoPunteo()
       }
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-            showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+            showAlertPunteoConfirma('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
@@ -990,6 +992,19 @@ const showAlertPunteo = (title, text) =>{
     showConfirmButton: false,
     customClass: 'swal-wide',
   }) 
+}
+
+// función sweetaler confirma punteo
+const showAlertPunteoConfirma = (title, text) =>{
+  swal.fire ({
+    title,
+    text,
+    type: 'error',
+    showCloseButton: true,
+    showConfirmButton: true,
+    showCancelButton: true,
+    customClass: 'swal-wide',
+  }).then ( ) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
@@ -1389,7 +1404,7 @@ const showViewPreliminar = d => {
       var Type;
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
-        if(i<46){
+        if(idobj[0]!='tramo_control' && idobj[0]!='coord_x' && idobj[0]!='coord_y'){
             Type = document.getElementById(idobj[0]).type;
         }else{
             Type='text';
