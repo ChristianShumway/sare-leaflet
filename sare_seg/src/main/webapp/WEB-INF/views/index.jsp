@@ -249,7 +249,7 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title" id="option-sucursal">Sucursales</p>
+                <p class="option-title option-active" id="option-sucursal">Sucursales</p>
                 <div class="switch">
                   <label>
                     Inactivo
@@ -261,11 +261,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title" id="option-denue">DENUE</p>
+                <p class="option-title option-active" id="option-denue">DENUE</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
+                    <input type="checkbox"  checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -600,10 +600,10 @@
                   <label for="E12">E12 Edificio</label>
                 </div>
                 <div class="input-field">
-                  <select class="browser-default" id="tipo_E19" name="tipo_e19">
+                  <select class="browser-default" id="tipo_E19" name="tipo_E19">
                     <option value="" disabled selected>Seleccione...</option>
                   </select>
-                  <label for="tipo_e19" class="active">Tipo de Corredor o Centro Comercial</label>
+                  <label for="tipo_E19" class="active">Tipo de Corredor o Centro Comercial</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E19 Nombre" id="e19" name="e19" type="text" disabled >
@@ -631,7 +631,7 @@
       <!-- END CONTAINER FORM -->
 
       <!-- CONTAINER OPTIONS BUTTONS -->
-      <div class="fixed-action-btn click-to-toggle btn-float-map active">
+      <div class="fixed-action-btn click-to-toggle btn-float-map ">
         <a class="btn-floating btn-large btn-options-menu tooltipped animated bounceInUp slower delay-1s" data-position="bottom" data-tooltip="Menu">
           <i class="large material-icons">menu</i>
         </a>
@@ -703,12 +703,13 @@
         $(".button-collapse").sideNav(
           {
             edge: 'left',
-            draggable: true
+            draggable: true,
+            closeOnClick: true,
           }
         );
 
         $('.tooltipped').tooltip({delay: 20});
-        $('.dropdown-button').dropdown('open');
+        $('.dropdown-button').dropdown();
         $('select').material_select();
       })
     </script> 

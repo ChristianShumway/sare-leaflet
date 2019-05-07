@@ -76,6 +76,28 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.TIPOAREA);
+        switch(proyectos){
+            case Operativo_Masivo:
+                resultado=execSqlTipoAreaPg(sql);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              resultado=execSqlTipoAreaMdm(sql); 
+            break;
+             
+        }
+        
+
+        return resultado;
+    }
+    
+    private String execSqlTipoAreaMdm(StringBuilder sql){
+        resultado="";
         jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<String>() 
         {
             @Override
@@ -97,17 +119,64 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return fila;
             }
         });
-
         return resultado;
+    }
+    private String execSqlTipoAreaPg(StringBuilder sql){
+        resultado="";
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() 
+        {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                String fila = null;
+                while (rs.next()) 
+                {
+                    fila = rs.getString("tipoarea");
+                }
+                if (Objects.equals(TipoAreaEnum.URBANA.getArea(), fila)) 
+                {
+                    resultado = TipoAreaEnum.URBANA.getArea();
+                } 
+                else 
+                {
+                    resultado = TipoAreaEnum.RURAL.getArea();
+                }
+                return fila;
+            }
+        });
+        return resultado;
+        
     }
     
      @Override
     public boolean isPuntoinMza(Integer proyecto,String x, String y) {
-        isMza=false;
+        
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.ISMANZANA);
         String point = "POINT(" + x + " " + y + ")";
+        
+        switch(proyectos){
+            case Operativo_Masivo:
+                isMza=execSqlisPuntoinMzaPg(sql,point);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              isMza=execSqlisPuntoinMzaMdm(sql,point); 
+            break;
+                
+        }
+
+        return isMza;
+    }
+    
+    private boolean execSqlisPuntoinMzaMdm(StringBuilder sql, String point){
+        isMza=false;
         isMza=jdbcTemplatemdm.query(sql.toString(),new Object[]{point,point}, new ResultSetExtractor<Boolean>() 
         {
             @Override
@@ -121,7 +190,24 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return fila;
             }
         });
-
+        return isMza;
+    }
+    
+    private boolean execSqlisPuntoinMzaPg(StringBuilder sql, String point){
+        isMza=false;
+        isMza=jdbcTemplate.query(sql.toString(),new Object[]{point,point}, new ResultSetExtractor<Boolean>() 
+        {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                boolean fila = false;
+                while (rs.next()) 
+                {
+                    fila = rs.getBoolean("contenido");
+                }
+                return fila;
+            }
+        });
         return isMza;
     }
     
@@ -132,6 +218,27 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
        super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, "",x, y,Metodo.GETENTIDAD);
         String point = "POINT(" + x + " " + y + ")";
+        switch(proyectos){
+            case Operativo_Masivo:
+                entidad=execSqlEntidadPg(sql,point);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              entidad=execSqlEntidadMgm(sql,point); 
+            break;
+                
+        }
+
+        return entidad;
+    }
+    
+    private String execSqlEntidadMgm(StringBuilder sql, String point){
+        entidad=null;
         entidad=jdbcTemplatemdm.query(sql.toString(),new Object[]{point}, new ResultSetExtractor<String>() 
         {
             @Override
@@ -145,9 +252,28 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return fila;
             }
         });
-
         return entidad;
     }
+    
+     private String execSqlEntidadPg(StringBuilder sql, String point){
+        entidad=null;
+        entidad=jdbcTemplate.query(sql.toString(),new Object[]{point}, new ResultSetExtractor<String>() 
+        {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                String fila = null;
+                while (rs.next()) 
+                {
+                    fila = rs.getString("cve_ent");
+                }
+                return fila;
+            }
+        });
+        return entidad;
+    }
+    
+    
      @Override
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto,String ce, String x, String y) 
     {
@@ -155,6 +281,27 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,ce, x, y,Metodo.GETPUNTEO);
+        switch(proyectos){
+            case Operativo_Masivo:
+                ubicacion_punteo=execSqlInfoPunteoUrbanoPg(sql);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              ubicacion_punteo=execSqlInfoPunteoUrbanoMdm(sql); 
+            break;
+                
+        }
+
+        return ubicacion_punteo;
+    }
+    
+    private cat_ubicacion_punteo execSqlInfoPunteoUrbanoMdm(StringBuilder sql){
+        ubicacion_punteo=new cat_ubicacion_punteo();
         ubicacion_punteo=jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() 
         {
             @Override
@@ -186,7 +333,42 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return ubicacion_punteo;
             }
         });
-
+        return ubicacion_punteo;
+    }
+    
+     private cat_ubicacion_punteo execSqlInfoPunteoUrbanoPg(StringBuilder sql){
+        ubicacion_punteo=new cat_ubicacion_punteo();
+        ubicacion_punteo=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() 
+        {
+            @Override
+            public cat_ubicacion_punteo extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                while (rs.next()) 
+                {
+                    ubicacion_punteo=new cat_ubicacion_punteo();
+                    ubicacion_punteo.setE03(rs.getString("cve_ent")!=null?rs.getString("cve_ent"):"");
+                    ubicacion_punteo.setE03n(rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"");
+                    ubicacion_punteo.setE04(rs.getString("cve_mun")!=null?rs.getString("cve_mun"):"");
+                    ubicacion_punteo.setE04n(rs.getString("nom_mun")!=null?rs.getString("nom_mun"):"");
+                    ubicacion_punteo.setE05(rs.getString("cve_loc")!=null?rs.getString("cve_loc"):"");
+                    ubicacion_punteo.setE05n(rs.getString("nom_loc")!=null?rs.getString("nom_loc"):"");
+                    ubicacion_punteo.setE06(rs.getString("cve_ageb")!=null?rs.getString("cve_ageb"):"");
+                    ubicacion_punteo.setE07(rs.getString("cve_mza")!=null?rs.getString("cve_mza"):"");
+                    ubicacion_punteo.setCveft(rs.getString("cveft")!=null?rs.getString("cveft"):"");
+                    ubicacion_punteo.setTipo_e10n(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
+                    ubicacion_punteo.setE10_cvevial(rs.getString("cvevial")!=null?rs.getString("cvevial"):"");
+                    ubicacion_punteo.setE10(rs.getString("nomvial")!=null?rs.getString("nomvial"):"");
+                    ubicacion_punteo.setCoord_x(rs.getString("x")!=null?rs.getString("x"):"");
+                    ubicacion_punteo.setCoord_y(rs.getString("y")!=null?rs.getString("y"):"");
+                    ubicacion_punteo.setPunteo(rs.getString("punteo")!=null?rs.getString("punteo"):"");
+                    ubicacion_punteo.setMod_cat(rs.getInt("mod_cat"));
+                    ubicacion_punteo.setCvegeo(rs.getString("cvegeo")!=null?rs.getString("cvegeo"):"");
+                    ubicacion_punteo.setCvegeo2016(rs.getString("cvegeo2016")!=null?rs.getString("cvegeo2016"):"");
+                }
+                
+                return ubicacion_punteo;
+            }
+        });
         return ubicacion_punteo;
     }
     
@@ -197,7 +379,28 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos, ent,x, y,Metodo.VALPUNTEO);
-        cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<List<cat_vial>>() 
+         switch(proyectos){
+            case Operativo_Masivo:
+                cat_vial=execSqlValidaInfoPunteoUrbanoPg(sql,ent,cve_geo,cve_ft);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              cat_vial=execSqlValidaInfoPunteoUrbanoMdm(sql,ent,cve_geo,cve_ft); 
+            break;
+                
+        }
+
+        return cat_vial;
+    }
+    
+    private List<cat_vial> execSqlValidaInfoPunteoUrbanoMdm(StringBuilder sql, String ent, String cve_geo, String cve_ft){
+       cat_vial=new ArrayList<>(); 
+       cat_vial=jdbcTemplatemdm.query(sql.toString(),new Object[]{ent,cve_geo, cve_ft}, new ResultSetExtractor<List<cat_vial>>() 
         {
             @Override
             public List<cat_vial> extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -212,9 +415,31 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return lista;
             }
         });
-
-        return cat_vial;
+       return cat_vial;
     }
+    
+    private List<cat_vial> execSqlValidaInfoPunteoUrbanoPg(StringBuilder sql, String ent, String cve_geo, String cve_ft){
+      int cve=Integer.valueOf(cve_ft);
+       cat_vial=new ArrayList<>(); 
+       cat_vial=jdbcTemplate.query(sql.toString(),new Object[]{ent,cve_geo, cve}, new ResultSetExtractor<List<cat_vial>>() 
+        {
+            @Override
+            public List<cat_vial> extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                cat_vial fila = null;
+                List<cat_vial> lista=new ArrayList<>();
+                while (rs.next()) 
+                {
+                    fila = new cat_vial(null, rs.getString("tipovial"), rs.getString("nomvial"), rs.getString("cvevial"), rs.getString("cveseg"));
+                    lista.add(fila);
+                }
+                return lista;
+            }
+        });
+       return cat_vial;
+    }
+    
+    
     @Override
     public String getTipoVial(Integer proyecto, String tipoE10Xn) {
        tipo_vial=null;
@@ -269,6 +494,27 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,"", x, y,Metodo.GETPUNTEORURAL);
+        switch(proyectos){
+            case Operativo_Masivo:
+                ubicacion_punteo=execInfoPunteoRuralPg(sql);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              ubicacion_punteo=execInfoPunteoRuralMdm(sql); 
+            break;
+                
+        }
+
+        return ubicacion_punteo;
+    }
+    
+    private cat_ubicacion_punteo execInfoPunteoRuralMdm(StringBuilder sql){
+        ubicacion_punteo=new cat_ubicacion_punteo();
         ubicacion_punteo=jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() 
         {
             @Override
@@ -300,7 +546,42 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return fila;
             }
         });
-
+        return ubicacion_punteo;
+    }
+    
+    private cat_ubicacion_punteo execInfoPunteoRuralPg(StringBuilder sql){
+        ubicacion_punteo=new cat_ubicacion_punteo();
+        ubicacion_punteo=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() 
+        {
+            @Override
+            public cat_ubicacion_punteo extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                cat_ubicacion_punteo fila = new cat_ubicacion_punteo();
+                while (rs.next()) 
+                {
+                    fila.setE03(rs.getString("cve_ent"));
+                    fila.setE03n(rs.getString("nom_ent"));
+                    fila.setE04(rs.getString("cve_mun"));
+                    fila.setE04n(rs.getString("nom_mun"));
+                    fila.setE05(rs.getString("cve_loc"));
+                    fila.setE05n(rs.getString("nom_loc"));
+                    fila.setE06(rs.getString("cve_ageb"));
+                    fila.setE07(rs.getString("cve_mza"));
+                    fila.setCveft(rs.getString("cveft"));
+                    fila.setTipo_e10n(rs.getString("tipovial"));
+                    fila.setE10_cvevial(rs.getString("cvevial"));
+                    fila.setE10(rs.getString("nomvial"));
+                    fila.setCoord_x(rs.getString("x"));
+                    fila.setCoord_y(rs.getString("y"));
+                    fila.setPunteo(rs.getString("punteo"));
+                    fila.setMod_cat(rs.getInt("mod_cat"));
+                    fila.setCvegeo(rs.getString("cvegeo"));
+                    fila.setCvegeo2016(rs.getString("cvegeo2016"));
+                }   
+                
+                return fila;
+            }
+        });
         return ubicacion_punteo;
     }
 
@@ -311,7 +592,28 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql = getSql(super.proyectos,ent,x,y,Metodo.FRENTES_PROXIMOS);
-        jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<Boolean>() 
+        switch(proyectos){
+            case Operativo_Masivo:
+                regresar=execSqlisFrentesProximosPg(sql);
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+            case Construccion:
+            case Convenios:
+            case Muestra_Rural:
+            case Organismos_Operadores_De_Agua:
+            case Pesca_Mineria:
+            case Transportes:
+              regresar=execSqlisFrentesProximosMdm(sql); 
+            break;
+                
+        }
+        
+        return regresar;
+    }
+    
+    private boolean execSqlisFrentesProximosMdm(StringBuilder sql){
+       boolean regresar = false; 
+       regresar=jdbcTemplatemdm.query(sql.toString(), new ResultSetExtractor<Boolean>() 
         {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
@@ -325,8 +627,25 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 return fila;
             }
         });
-        
-        return regresar;
+       return regresar;
+    }
+    private boolean execSqlisFrentesProximosPg(StringBuilder sql){
+       boolean regresar = false; 
+       regresar=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() 
+        {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                Boolean fila = false;
+                while (rs.next()) 
+                {
+                    fila = rs.getBoolean("frentes");
+
+                }
+                return fila;
+            }
+        });
+       return regresar;
     }
 
     private StringBuilder getSql(ProyectosEnum proyecto, String ce, String x, String y, Metodo metodo) 
@@ -334,18 +653,94 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql = new StringBuilder();
         String point = "POINT(" + x + " " + y + ")";
         String esquemaPos,esquemaOcl;
+        esquemaPos=getEsquemaPostgres(proyecto);
+        esquemaOcl=getEsquemaOracle(proyecto);
         switch(proyecto)
         {
+            
+            case Operativo_Masivo:
+                switch(metodo)
+            {
+                case TIPOAREA:
+                    sql = new StringBuilder();
+                    sql.append("select tipoarea from(");
+                    sql.append("select 'U' tipoarea from ").append(schemapg).append(".td_ageb where st_contains(the_geom_merc,geomfromtext('").append(point).append("',900913))");
+                    sql.append(" union all ");
+                    sql.append("select 'R' tipoarea from ").append(schemapg).append(".td_ageb_rural where st_contains(the_geom_merc,geomfromtext('").append(point).append("',900913)))");
+                    sql.append("ageb limit 1");
+                break;
+                case ISMANZANA:
+                    sql.append("select case when resultado<>0 or resultado is null then false else true end contenido from(");
+                    sql.append("select sum(case when contenida=false then 1 else 0 end) resultado from (");
+                    sql.append("select *,ST_ContainsProperly(the_geom_merc,buffer(geomfromtext(?,900913),1)) contenida from (");
+                    sql.append("select gid,tipomza,the_geom_merc from ").append(schemapg).append(".td_manzanas where st_intersects(the_geom_merc,buffer(geomfromtext(?,900913),1)))a)b)c");
+                break;
+                case GETENTIDAD:
+                    sql.append("SELECT cve_ent FROM ").append(schemapg).append(".td_entidad WHERE st_intersects(the_geom_merc,ST_GeomFromText(?,900913)) ");
+                break;
+                case GETPUNTEO:
+                    sql.append("select u.cve_ent,ent.nomgeo nom_ent,u.cve_mun,mun.nomgeo nom_mun,u.cve_loc,case when l.nomgeo is null then u.nom_loc else l.nomgeo end nom_loc,l.cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,u.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from(  ");
+                    sql.append("(SELECT cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),  ");
+                    sql.append("Y(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),cve_mza,cveft cveft, nomvial,tipovial, cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza  cvegeo,cvevial cvevial,'U' punteo,1 mod_cat,'' cvegeo2016 ");
+                    sql.append("FROM ").append(schemapg).append(".td_frentes_").append(ce).append(" a where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and   ");
+                    sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),1)))  ");
+                    sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                    sql.append("union all ");
+                    sql.append("(select cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                    sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),'' cve_mza,'1' cveft,null nomvial, null tipovial, ");
+                    sql.append("cve_ent||cve_mun||cve_loc||cve_ageb cvegeo, '99999' cvevial,'U' punteo,2 mod_cat,'' cvegeo2016 from ").append(schemapg).append(".td_ageb where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913)) and   ");
+                    sql.append("contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))  ");
+                    sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1)) u  ");
+                    sql.append("INNER JOIN ").append(schemapg).append(".td_entidad ent ON u.cve_ent=ent.cvegeo  INNER JOIN ").append(schemapg).append(".td_municipios mun ON u.cve_ent=mun.cve_ent and u.cve_mun=mun.cve_mun  ");
+                    sql.append("left JOIN ").append(schemapg).append(".td_localidades l ON u.cve_ent=l.cve_ent and u.cve_mun=l.cve_mun and u.cve_loc=l.cve_loc order by mod_cat limit 1");
+                break;
+                case VALPUNTEO:
+                    sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemapg).append(".td_frentes_").append(ce).append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cveft<>?  group by 1,2");
+                break;
+                case GET_TIPO_VIAL:
+                    sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ?");
+                break;
+                case GET_CAT_TIPO_VIAL:
+                    sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(esquemaPos).append(".cat_tipovialidad order by descripcion");
+                    break;
+                case GETPUNTEORURAL:
+                    sql.append("select r.cve_ent,nom_ent,r.cve_mun,nom_mun,cve_loc,nom_loc,cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,r.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from( ");
+                    sql.append("(select * from  ");
+                    sql.append("((SELECT m.cve_ent,m.cve_mun,m.cve_loc,nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                    sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 ");
+                    sql.append("FROM denue2014.manzanas_rurales m inner join (select cve_ent,cve_mun,cve_loc,nom_loc from denue2014.lpr) l on m.cve_ent||m.cve_mun||m.cve_loc=l.cve_ent||l.cve_mun||l.cve_loc  ");
+                    sql.append("where st_intersects(the_geom,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50)))  ");
+                    sql.append("ORDER BY the_geom <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                    sql.append("union all ");
+                    sql.append("(SELECT cve_ent,cve_mun,cve_loc,nom_loc,cve_ageb,X(the_geom),Y(the_geom),'' cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 ");
+                    sql.append("FROM denue2014.lpr where st_intersects(the_geom,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50))) ");
+                    sql.append("ORDER BY the_geom <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                    sql.append(") rc limit 1) ");
+                    sql.append("union all ");
+                    sql.append("(SELECT cve_ent,cve_mun,cve_loc,nomgeo nom_loc,replace(cve_ageb,'-','') cve_ageb,X(the_geom),Y(the_geom),'' cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,2 mod_cat, cve_ent||cve_mun||cve_loc||replace(cve_ageb,'-','') cvegeo2016 ");
+                    sql.append("FROM mgm_cgura_junio2016.lpr where st_intersects(the_geom,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50))) ");
+                    sql.append("ORDER BY the_geom <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                    sql.append("union all ");
+                    sql.append("(select cve_ent,cve_mun,'' cve_loc,'' nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                    sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),'' cve_mza,'1' cveft,null nomvial, null tipovial, ");
+                    sql.append("cve_ent||cve_mun||cve_ageb cvegeo, '99999' cvevial,'R' punteo,2 mod_cat,'' cvegeo2016 from denue2014.ar where contains(the_geom, ST_GeomFromText('").append(point).append("',900913)) and   ");
+                    sql.append("contains(the_geom, ST_GeomFromText('").append(point).append("',900913))  ");
+                    sql.append("ORDER BY the_geom <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) )r ");
+                    sql.append("INNER JOIN denue2014.ent ent ON r.cve_ent=ent.cvegeo  INNER JOIN denue2014.mun mun ON r.cve_ent=mun.cve_ent and r.cve_mun=mun.cve_mun  order by mod_cat limit 1");
+                break;
+                case FRENTES_PROXIMOS:
+                    sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapg).append(".td_frentes_").append(ce).append(" where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
+                    sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),20)))");
+                }
+                break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
-            case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
-            esquemaPos=getEsquemaPostgres(proyecto);
-            esquemaOcl=getEsquemaOracle(proyecto);
+            
                 switch(metodo)
             {
                 case TIPOAREA:

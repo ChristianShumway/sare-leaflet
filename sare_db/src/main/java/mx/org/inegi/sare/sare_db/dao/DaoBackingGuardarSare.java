@@ -190,7 +190,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE11()==null?"":inmueble.getE11()).append("') resultado");
                         break;
                     case getClaveProvisional:
-                        sql.append("SELECT ").append(esquemaPos).append(".calcula_cveprov(").append(inmueble.gettramo_control()).append(",").append(capa).append(" ) clave");
+                        sql.append("SELECT ").append(esquemaPos).append(".calcula_cveprov('").append(inmueble.gettramo_control()).append("','").append(capa).append("') clave");
                         break;
                     case getGuardaUe:
                         sql.append("SELECT ").append(esquemaPos).append(".registra_ue_sare('").append(inmueble.getId_UE()).append("','")

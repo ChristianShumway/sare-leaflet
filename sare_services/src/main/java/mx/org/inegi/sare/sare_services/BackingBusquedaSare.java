@@ -45,14 +45,38 @@ public class BackingBusquedaSare {
         List<cat_vw_punteo_sare> catBusquedaPG = new ArrayList<>();
         Map<String, String> busqueda = new HashMap<>();
         String extent = null;
-        String[] tabla = {"ent", "mun", "l", "a", "m", "cat_tipovialidad"};//producción
-        String[] tabla_rural = {"lpr", "ar"};//producción
-        String[] nombre = {"nom_ent", "nom_mun", "nomloc"};
         boolean regPg = false;
         boolean fsearch;
         ArrayList<String> listCUPG;
         int params;
-
+        String[] tabla=new String[6];
+        String[] tabla_rural=new String[2];
+        String[] nombre=new String[3];
+        if(proyecto==5){
+            tabla[0] = "td_entidad";
+            tabla[1]="td_municipios";
+            tabla[2]="td_localidades";
+            tabla[3]="td_ageb";
+            tabla[4]="td_manzanas";
+            tabla[5]="cat_tipovialidad";
+            tabla_rural[0]="lpr";
+            tabla_rural[1]="ar";
+            nombre[0] = "nomgeo";
+            nombre[1]="nomgeo";
+            nombre[2]="nomgeo";
+        }else{
+            tabla[0]= "ent";
+            tabla[1]="mun";
+            tabla[2]="l";
+            tabla[3]="a";
+            tabla[4]="m";
+            tabla[5]="cat_tipovialidad" ;
+            tabla_rural[0]="lpr";
+            tabla_rural[1]="ar";
+            nombre[0] = "nom_ent";
+            nombre[1]="nom_mun";
+            nombre[2]="nomloc";
+        }
         Double cX;
         Double cY;
         cat_coordenadas coord_merc;
@@ -88,6 +112,7 @@ public class BackingBusquedaSare {
                             if (catBusquedaOracle.get(0).getEstatus_punteo() == null) 
                             {
                                 busqueda.put("e", "b5");
+                                Regresar.setDatos(busqueda);
                             } 
                             else 
                             {
@@ -95,6 +120,7 @@ public class BackingBusquedaSare {
                                 {
                                     case 2:
                                         busqueda.put("e", "b4");
+                                        Regresar.setDatos(busqueda);
                                         break;
                                     case 4:
                                         for (cat_vw_punteo_sare element : catBusquedaOracle) 
@@ -274,6 +300,8 @@ public class BackingBusquedaSare {
 
             } catch (Exception e) {
                  Logger.getLogger(BackingBusquedaSare.class.getName()).log(Level.SEVERE, null, e);
+                 busqueda.put("e", "b2");
+                 Regresar.setDatos(busqueda); 
             }
         }
         else

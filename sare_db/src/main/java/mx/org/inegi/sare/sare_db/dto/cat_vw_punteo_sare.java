@@ -252,7 +252,7 @@ public class cat_vw_punteo_sare {
     public cat_vw_punteo_sare(String CESTATAL, BigDecimal COORD_X, BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E04, 
             String E05, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11, 
             String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, 
-            String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, String SARE_ST, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, 
+            String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, Integer estatus_punteo, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, 
             String TIPO_E10_C, String TIPO_E14, String TIPO_E19) {
         this.CESTATAL = CESTATAL;
         this.COORD_X = COORD_X;
@@ -284,7 +284,7 @@ public class cat_vw_punteo_sare {
         this.E23A = E23A;
         this.ID_UE = ID_UE;
         this.ORIGEN = ORIGEN;
-        this.SARE_ST = SARE_ST;
+        this.estatus_punteo = estatus_punteo;
         this.TIPO_E10 = TIPO_E10;
         this.TIPO_E10_A = TIPO_E10_A;
         this.TIPO_E10_B = TIPO_E10_B;

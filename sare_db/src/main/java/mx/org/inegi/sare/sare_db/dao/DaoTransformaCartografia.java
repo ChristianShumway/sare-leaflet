@@ -7,7 +7,6 @@ package mx.org.inegi.sare.sare_db.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.Enums.TipoCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
@@ -142,7 +141,7 @@ public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas
                  esquema="";
               break;
             case Operativo_Masivo:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Organismos_Operadores_De_Agua:
                  esquema="";
@@ -175,7 +174,7 @@ public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas
                 esquema="";
               break;
             case Operativo_Masivo:
-                esquema="";
+                esquema="CE2019_SEG";
               break;
             case Organismos_Operadores_De_Agua:
                 esquema="";
