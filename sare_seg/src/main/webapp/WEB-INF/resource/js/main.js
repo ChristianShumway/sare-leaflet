@@ -195,6 +195,7 @@ const callServiceFindUE=(id_ue)=>{
       showModalMsgError(data)
       //realiza acercamiento en el mapa
       acercarWithExtent(data)
+      
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
     } else {
@@ -214,7 +215,6 @@ const callServiceFindUE=(id_ue)=>{
       onOpen:  () => swal.showLoading() 
     })
     .then( () => { },
-        MDM6('updateSize')
     )
   })
 }
@@ -304,7 +304,6 @@ const fillCatalogoConjuntosComerciales = () => {
 const acercarWithExtent = data => {
   let res = data[0].datos.datos[0].extent.split(",") 
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
-  
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -995,7 +994,7 @@ const showAlertPunteo = (title, text) =>{
 }
 
 // función sweetaler confirma punteo
-const showAlertPunteoConfirma = (title, text) =>{
+const showAlertPunteoConfirma = (data,title, text) =>{
   swal.fire ({
     title,
     text,
@@ -1004,7 +1003,7 @@ const showAlertPunteoConfirma = (title, text) =>{
     showConfirmButton: true,
     showCancelButton: true,
     customClass: 'swal-wide',
-  }).then ( ) 
+  }).then (  ) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
@@ -1356,7 +1355,7 @@ const validaCp = () => {
   {
     'codigo': $("#e14_A").val(),
     'cve_ent': $("#e03").val(),
-    'proyecto':1
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion
   }, 
   urlServices['serviceValCP'].type, 
   data => {
@@ -1442,7 +1441,7 @@ const handleShowResult = result => {
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'obj': JSON.stringify(ObjectRequest),
       'usuario':user
     }, 
@@ -2131,9 +2130,9 @@ const CargaTablaBloqueadas=()=> {
   
   sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '000000000', 
-      'id_ue':'00'
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue':dataUserFromLoginLocalStorage.ce
     }, urlServices['serviceListaClavesBloqueadas'].type, 
      data => {
       if (data[0].datos.length>0) {
@@ -2203,7 +2202,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
   if (result.value) {
     sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'id_ue': id_ue,
       'usuario':user
     }, 
