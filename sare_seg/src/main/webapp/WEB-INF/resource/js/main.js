@@ -195,6 +195,7 @@ const callServiceFindUE=(id_ue)=>{
       showModalMsgError(data)
       //realiza acercamiento en el mapa
       acercarWithExtent(data)
+      
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
     } else {
@@ -214,7 +215,6 @@ const callServiceFindUE=(id_ue)=>{
       onOpen:  () => swal.showLoading() 
     })
     .then( () => { },
-        MDM6('updateSize')
     )
   })
 }
@@ -302,9 +302,8 @@ const fillCatalogoConjuntosComerciales = () => {
 
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = data => {
-  let res = data[0].datos.datos[0].extent.split(",")
+  let res = data[0].datos.datos[0].extent.split(",") 
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
-  MDM6('updateSize')
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -1371,7 +1370,7 @@ const validaCp = () => {
   {
     'codigo': $("#e14_A").val(),
     'cve_ent': $("#e03").val(),
-    'proyecto':1
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion
   }, 
   urlServices['serviceValCP'].type, 
   data => {
@@ -1457,7 +1456,7 @@ const handleShowResult = result => {
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'obj': JSON.stringify(ObjectRequest),
       'usuario':user
     }, 
@@ -1502,9 +1501,10 @@ const handleShowSaveAlert = (type, title, text, animation) => {
 const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 
 // Función al seleccionar opciones identificar, puntear  y vista calle
-const HandleWhatDoYouWantToDo = (coor) => {
-  let request = $('input:radio[name=accion]:checked').val()
-  let level = MDM6('getZoomLevel')
+const HandleWhatDoYouWantToDo = (coor) => {  
+  let request = $('input:radio[name=accion]:checked').val();
+  let level = MDM6('getZoomLevel');
+  MDM6('updateSize');
   switch (request) {
     case 'identificar':
       if(level>=13)
@@ -2145,9 +2145,9 @@ const CargaTablaBloqueadas=()=> {
   
   sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '000000000', 
-      'id_ue':'00'
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue':dataUserFromLoginLocalStorage.ce
     }, urlServices['serviceListaClavesBloqueadas'].type, 
      data => {
       if (data[0].datos.length>0) {
@@ -2217,7 +2217,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
   if (result.value) {
     sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'id_ue': id_ue,
       'usuario':user
     }, 

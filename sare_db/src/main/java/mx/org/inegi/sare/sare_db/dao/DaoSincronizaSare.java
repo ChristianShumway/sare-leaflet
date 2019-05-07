@@ -763,6 +763,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 case InsertaTcManzanas:
                     sql.append("insert into ").append(esquemaOcl).append(".TC_MANZANAS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA) values (").append(inmueble.getE03()).append(",").
                             append(inmueble.getE04()).append(",").append(inmueble.getE05()).append(",").append(String.valueOf(inmueble.getPunteo()).equals("R")?"0000":inmueble.getE06()).append(",").append(inmueble.getE07()).append(")");
+                    break;
                 case ValidateTrManzanas:
                     sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(esquemaOcl).append(".TR_MANZANAS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND CVE_MZA='").append(inmueble.getE07()).append("'");/* AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");*/
                     break;
