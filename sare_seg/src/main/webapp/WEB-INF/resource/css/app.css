@@ -58,9 +58,13 @@ nav{
 }
 
 nav .brand-logo {
-  margin: 0 20px;
+  margin: 10px 20px;
   font-family: 'lato', sans-serif;
   font-weight: 600;
+}
+
+nav .brand-logo img{
+  width: 110px;
 }
 
 nav ul a {
@@ -1345,6 +1349,14 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
 @media screen and (max-width:480px){
   nav .nav-wrapper {
     padding: 0 15px;
+  }
+
+  nav .brand-logo {
+    margin: 8px 20px;
+  }
+  
+  nav .brand-logo img{
+    width: 100px;
   }
 
   /* CONTAINER SEARCH */

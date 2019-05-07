@@ -137,7 +137,7 @@
         <div class="navbar-fixed"> 
           <nav>
             <div class="nav-wrapper">
-              <a href="#" class="brand-logo">SARE</a>
+              <a href="#" class="brand-logo"><img src="resources/images/logos/logo-sare-azul.png"></a>
               <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons tooltipped" data-position="right" data-tooltip="Menu de Opciones" >menu</i></a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a id="ancla-map" onclick='handleModuleScroll(event)' href="#container-map">Mapa</a></li>
