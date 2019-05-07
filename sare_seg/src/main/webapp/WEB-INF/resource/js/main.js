@@ -305,9 +305,9 @@ const fillCatalogoConjuntosComerciales = () => {
 
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = data => {
-  let res = data[0].datos.datos[0].extent.split(",")
+  let res = data[0].datos.datos[0].extent.split(",") 
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
-  MDM6('updateSize')
+  
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -1487,9 +1487,10 @@ const handleShowSaveAlert = (type, title, text, animation) => {
 const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 
 // Función al seleccionar opciones identificar, puntear  y vista calle
-const HandleWhatDoYouWantToDo = (coor) => {
+const HandleWhatDoYouWantToDo = (coor) => {  
   let request = $('input:radio[name=accion]:checked').val();
   let level = MDM6('getZoomLevel');
+  MDM6('updateSize');
   switch (request) {
     case 'identificar':
       if(level>=13)
