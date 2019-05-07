@@ -208,11 +208,12 @@ const handleCleanForms=()=>
 const handlePressCtrKeyAndKeyCode = e => {
   const evtobj = window.event ? event : e
   const arrowSearch = document.getElementById('arrow-search')
+  const containerSearch = document.getElementById('container-search')
   if (arrowSearch.onclick){
     if (evtobj.keyCode == 66 && evtobj.ctrlKey) handleVisibleSearch()
     if (evtobj.keyCode == 76 && evtobj.ctrlKey && evtobj.altKey) {
-      handleVisibleSearch()
       handleViewCleeList()
+      if (containerSearch.dataset.visible == 'hide') handleVisibleSearch()
     }
   }
 
