@@ -211,6 +211,14 @@ const KeyPressCtrlB = e => {
   if (arrowSearch.onclick){
     if (evtobj.keyCode == 66 && evtobj.ctrlKey) handleVisibleSearch()
   }
+
+  if(evtobj.keyCode == 82 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('referencia')
+  if(evtobj.keyCode == 85 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('ubicacion-geografica')
+  if(evtobj.keyCode == 68 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('domicilio')
+  if(evtobj.keyCode == 65 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('asentamiento')
+  if(evtobj.keyCode == 86 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('entre-vialidades')
+  if(evtobj.keyCode == 67 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('calle-posterior')
+  if(evtobj.keyCode == 69 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('edificio')
 }
 
 document.onkeydown = KeyPressCtrlB

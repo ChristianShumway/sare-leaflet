@@ -372,7 +372,6 @@ const handleViewCleeList = () => {
 }
 
 const popupCleeList = data => {
-  console.log(data)
   const notFoundClee = document.getElementById('wrap-list-not-found')
   if (data.length == 0){
     notFoundClee.classList.remove('wrap-inactive')
@@ -395,7 +394,6 @@ const popupCleeList = data => {
 }
 
 const popupCleeListBloqueadas = data => {
-  console.log(data)
   const notFoundClee = document.getElementById('wrap-list-not-found-lock')
   if (data.length == 0){
     notFoundClee.classList.remove('wrap-inactive')
@@ -422,7 +420,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   const clavesPorVista = 10
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
-  console.log(data)
   let posicionFinal = ''
   finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
 
@@ -479,7 +476,6 @@ const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacio
   const clavesPorVista = 10
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
-  console.log(data)
   let posicionFinal = ''
   finClavesVistaLock > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVistaLock
 
@@ -759,7 +755,6 @@ const ratificar = request => {
   }
   else{
     if(request=='no') {
-      console.log(" le dio clic en no ratificar ", 'background: #222; color: #bada55');
       handleShowAlertPickMap()
       enabledInputs()
       handleActionTargetRef()
@@ -805,7 +800,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    //console.log(data[0].datos.datos)
     const {catVial} = data[0].datos.datos
     catalogoCatVial = catVial
     if (data[0].operation) {
@@ -930,7 +924,7 @@ const handleTipoPunteo = () => {
     //nombre vialidad 2
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
   }
-  console.log(wrapTipoVialidad.children)   
+  //console.log(wrapTipoVialidad.children)   
 }
 
 //Función crear Input o Select según si es rural
@@ -961,7 +955,7 @@ const handleFillTipoDeVialidades = selectId => {
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
   for(let chld = 0; chld< childrens.length; chld++){
     let child = childrens[chld]
-    console.log(child)
+    //console.log(child)
     let childrenType = childrens[chld].nodeName
 
     if (field == 'tipo'){
