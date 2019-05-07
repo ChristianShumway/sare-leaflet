@@ -205,11 +205,15 @@ const handleCleanForms=()=>
 }
 
 
-const KeyPressCtrlB = e => {
+const handlePressCtrKeyAndKeyCode = e => {
   const evtobj = window.event ? event : e
   const arrowSearch = document.getElementById('arrow-search')
   if (arrowSearch.onclick){
     if (evtobj.keyCode == 66 && evtobj.ctrlKey) handleVisibleSearch()
+    if (evtobj.keyCode == 76 && evtobj.ctrlKey && evtobj.altKey) {
+      handleVisibleSearch()
+      handleViewCleeList()
+    }
   }
 
   if(evtobj.keyCode == 82 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('referencia')
@@ -221,4 +225,4 @@ const KeyPressCtrlB = e => {
   if(evtobj.keyCode == 69 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('edificio')
 }
 
-document.onkeydown = KeyPressCtrlB
+document.onkeydown = handlePressCtrKeyAndKeyCode

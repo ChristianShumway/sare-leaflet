@@ -800,7 +800,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    //console.log(data[0].datos.datos)
+    console.log(data[0].datos.datos)
     
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
@@ -812,7 +812,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-            showAlertPunteoConfirma('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+            showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
@@ -995,16 +995,31 @@ const showAlertPunteo = (title, text) =>{
 }
 
 // función sweetaler confirma punteo
-const showAlertPunteoConfirma = (title, text) =>{
+const showAlertPunteoConfirma = (data, title, text) =>{
   swal.fire ({
     title,
     text,
-    type: 'error',
-    showCloseButton: true,
+    //type: 'error',
+    showCloseButton: false,
     showConfirmButton: true,
+    confirmButtonColor: '#5562eb',
+    confirmButtonText: 'Confirmar',
     showCancelButton: true,
+    cancelButtonColor: '#424242',
+    cancelButtonText: 'Cancelar',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
     customClass: 'swal-wide',
-  }).then ( ) 
+  }).then ( result => {
+    console.log(result)
+    if (result.value){
+      actualizaForm(data)
+      handleTipoPunteo()
+      console.log('click aceptar')
+    } else if (result.dismiss == 'cancel'){
+      ratificar('no')
+    }
+  }) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
