@@ -619,6 +619,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
          sql=getSql(proyectos,inmueble,coordenadas,Metodossincroniza.Insert_Tr_Inmuebles);
         if(jdbcTemplateocl.update(sql.toString())>0)
         {
+          inmueble.setId_inmueble(secuencia);
           regresa=true; 
         }
         return regresa;
