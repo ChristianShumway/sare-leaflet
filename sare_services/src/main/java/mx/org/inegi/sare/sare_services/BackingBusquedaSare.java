@@ -92,8 +92,11 @@ public class BackingBusquedaSare {
                 catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tramo, ce, usuario, id_ue);
                 if (catBusquedaOracle.size() > 0) 
                 {
-                    if(InterfaceBusquedaSare.ocupaCveunicaOCL(proyecto, id_ue)){
-                        InterfaceDesbloqueo.RegistraUEComplemento(proyecto, usuario, id_ue);
+                    if(!ce.equals("00"))
+                    {
+                        if(InterfaceBusquedaSare.ocupaCveunicaOCL(proyecto, id_ue)){
+                            InterfaceDesbloqueo.RegistraUEComplemento(proyecto, usuario, id_ue);
+                        }
                     }
                     listCUPG = InterfaceBusquedaSare.getClavesUnicasPG(proyecto);
                     if (listCUPG != null) 

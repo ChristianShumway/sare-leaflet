@@ -181,7 +181,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                 boolean fila=false;
                 while(rs.next())
                 {
-                   fila=rs.getInt(1)>1;
+                   fila=rs.getInt(1)>0;
                 }
                 return fila;
             }
