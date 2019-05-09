@@ -11,26 +11,20 @@ let inicioClavesVistaLock = 0
 let finClavesVistaLock = 9
 let dataCleeListNew = {}
 let dataCleeListNewLock = {}
-let xycoorsx
-let xycoorsy
-screen.width <= '480'
-
-let layersSARE = ['c100', 'c101', 'wdenue'];
+let xycoorsx, xycoorsy, punteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
+screen.width <= '480' 
+let layersSARE = ['c100', 'c101', 'wdenue']
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
 
 let bandera_ratificar=false
-
-let punteo,mod_cat,cve_geo,cve_geo2016,cveft,e10_cve_vial;
 let catalogoCatVial = []
-
-let arrayClavesBloqueadas = "";
-let arrayClavesBloqueadasTodas = "";
-let banderaDesbloquear = false;
-
-var ObjectRequest = {};
+let arrayClavesBloqueadas = ""
+let arrayClavesBloqueadasTodas = ""
+let banderaDesbloquear = false
+var ObjectRequest = {}
 
 
 const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
@@ -756,23 +750,24 @@ const ratificar = request => {
     enabledInputs()
     handleActionTargetRef()
     handleActionButtons('enabled')
-    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r');
+    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
+    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
-  else{
-    if(request=='no') {
-      handleShowAlertPickMap()
-      enabledInputs()
-      handleActionTargetRef()
-      xycoorsx = ''
-      xycoorsy = ''
-      MDM6('hideMarkers', 'identify')      
-      const cancelOption = document.getElementById('item-cancel-option')
-      cancelOption.removeAttribute('disabled')
-      
-    }
-  }
+  else if(request=='no') {
+    funcionesNoRatificado()
+  } 
+}
+
+const funcionesNoRatificado = () => {
+  handleShowAlertPickMap()
+  enabledInputs()
+  handleActionTargetRef()
+  xycoorsx = ''
+  xycoorsy = ''
+  MDM6('hideMarkers', 'identify')      
+  const cancelOption = document.getElementById('item-cancel-option')
+  cancelOption.removeAttribute('disabled')
 }
 
 //función que activa nuevamente funciones para abrir contenedor de busqueda
@@ -808,11 +803,11 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
     console.log(data[0].datos.datos)
+    const {catVial} = data[0].datos.datos
+    catalogoCatVial = catVial
     
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
-        const {catVial} = data[0].datos.datos
-        catalogoCatVial = catVial
         actualizaForm(data[0].datos.datos)
         handleTipoPunteo()
       }
@@ -855,7 +850,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         
   })
 }
-
+let fieldExists = false
 const handleTipoPunteo = () => {
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
@@ -871,53 +866,58 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
+  //alert(punteo)
+  //alert(confirmacionPunteo)
 
-  if(punteo === 'R'){
-    tipoE10n.style.display = 'none'
-    tipoE10n.removeAttribute('id')
-    tipoE10an.style.display = 'none'
-    tipoE10an.removeAttribute('id')
-    e10A.style.display = 'none'
-    e10A.removeAttribute('id')
-    tipoE10bn.style.display = 'none'
-    tipoE10bn.removeAttribute('id')
-    e10B.style.display = 'none'
-    e10B.removeAttribute('id')
-    tipoE10cn.style.display = 'none'
-    tipoE10cn.removeAttribute('id')
-    e10C.style.display = 'none'
-    e10C.removeAttribute('id')
+  if(punteo === 'R' || ( punteo === 'U' && confirmacionPunteo )){
+    if(fieldExists === false){
+      tipoE10n.style.display = 'none'
+      tipoE10n.removeAttribute('id')
+      tipoE10an.style.display = 'none'
+      tipoE10an.removeAttribute('id')
+      e10A.style.display = 'none'
+      e10A.removeAttribute('id')
+      tipoE10bn.style.display = 'none'
+      tipoE10bn.removeAttribute('id')
+      e10B.style.display = 'none'
+      e10B.removeAttribute('id')
+      tipoE10cn.style.display = 'none'
+      tipoE10cn.removeAttribute('id')
+      e10C.style.display = 'none'
+      e10C.removeAttribute('id')
+  
+      const selectField = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
+      const selectFieldTipoE10an = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
+      const inputFieldE10a = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
+      const selectFieldTipoE10bn = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
+      const inputFieldE10b = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
+      const selectFieldTipoE10cn = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
+      const inputFieldE10c = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
+  
+      //función donde se agrega options a los selects con el catálogo de tipo de vialidades
+      handleFillTipoDeVialidades(selectField)
+      handleFillTipoDeVialidades(selectFieldTipoE10an)
+      handleFillTipoDeVialidades(selectFieldTipoE10bn)
+      handleFillTipoDeVialidades(selectFieldTipoE10cn)
+   
+      wrapTipoVialidad.appendChild(selectField)
+      wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
+      wrapNombreVialidadUno.appendChild(inputFieldE10a)
+      wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
+      wrapNombreVialidadDos.appendChild(inputFieldE10b)
+      wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
+      wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
+      fieldExists = true
+    }
 
-    const selectField = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
-    const selectFieldTipoE10an = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
-    const inputFieldE10a = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
-    const selectFieldTipoE10bn = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
-    const inputFieldE10b = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
-    const selectFieldTipoE10cn = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
-    const inputFieldE10c = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
-
-    //función donde se agrega options a los selects con el catálogo de tipo de vialidades
-    handleFillTipoDeVialidades(selectField)
-    handleFillTipoDeVialidades(selectFieldTipoE10an)
-    handleFillTipoDeVialidades(selectFieldTipoE10bn)
-    handleFillTipoDeVialidades(selectFieldTipoE10cn)
- 
-    wrapTipoVialidad.appendChild(selectField)
-    wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
-    wrapNombreVialidadUno.appendChild(inputFieldE10a)
-    wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
-    wrapNombreVialidadDos.appendChild(inputFieldE10b)
-    wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
-    wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
-
-  } else if (punteo === 'U'){
+  } else if (punteo === 'U' && !confirmacionPunteo){
     //tipo vialidad domicilio
     handleReturnTipoNombreVialidad(wrapTipoVialidad.children, wrapTipoVialidad, 'tipo_e10n', 'tipo')
     //tipo vialidad 1
@@ -932,6 +932,8 @@ const handleTipoPunteo = () => {
     handleReturnTipoNombreVialidad(wrapTipoVialidadPosterior.children, wrapTipoVialidadPosterior, 'tipo_e10_cn', 'tipo')
     //nombre vialidad 2
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
+
+    fieldExists = false
   }
   //console.log(wrapTipoVialidad.children)   
 }
@@ -1021,10 +1023,13 @@ const showAlertPunteoConfirma = (data, title, text) =>{
     console.log(result)
     if (result.value){
       actualizaForm(data)
+      confirmacionPunteo = true
       handleTipoPunteo()
       console.log('click aceptar')
     } else if (result.dismiss == 'cancel'){
-      ratificar('no')
+      confirmacionPunteo = false
+      handleTipoPunteo()
+      funcionesNoRatificado()
     }
   }) 
 }
@@ -1048,12 +1053,12 @@ const actualizaForm = data => {
     idEleToInput.forEach( function (o, i) {
         //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
     });
-    var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
-    idEleToSelect.forEach( function (o, i) {
-      var html = '<option value="Seleccione">Seleccione</option>'
-      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
-      $('#' + o).html(html)
-    });
+    // var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+    // idEleToSelect.forEach( function (o, i) {
+    //   var html = '<option value="Seleccione">Seleccione</option>'
+    //   $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
+    //   $('#' + o).html(html)
+    // });
   }
   else {
     infodenue = false
@@ -1828,6 +1833,7 @@ const handleCancelClick = () => {
   let id_ue=document.getElementById('id_UE').value
   disabledInputs()
   punteo = 'U'
+  confirmacionPunteo = false
   handleTipoPunteo()
   handleActionButtons('disabled')
   handleActiveVisibleSearch()
