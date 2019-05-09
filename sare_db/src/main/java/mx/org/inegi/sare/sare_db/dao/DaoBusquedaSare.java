@@ -14,6 +14,7 @@ import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -30,6 +31,7 @@ import org.springframework.stereotype.Repository;
 @Profile("jdbc")
 public class DaoBusquedaSare extends DaoTransformaCartografia implements InterfaceBusquedaSare {
 
+    
     @Autowired    
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
@@ -61,7 +63,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     
      public enum MetodosBusqueda 
     {
-        BUSQUEDAOCL,GETCLAVESPG, GETDATOSINMUEBLES,GETEXTENTCVEGEO,GETEXTENTCVEGEO2,GETNOMBREBUSQUEDA,GETNOMBREBUSQUEDAOCL,LIBERACLAVEUNICAORACLE,GETVALCOORGEO
+        BUSQUEDAOCL,GETCLAVESPG, GETDATOSINMUEBLES,GETEXTENTCVEGEO,GETEXTENTCVEGEO2,GETNOMBREBUSQUEDA,GETNOMBREBUSQUEDAOCL,
+        LIBERACLAVEUNICAORACLE,GETVALCOORGEO, OCUPACVEUNICA,ACTUALIZACOMPLEMENTO
     }
     public class MetodosBusquedaClass
     {
@@ -147,12 +150,28 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         rs.getString("tipo_e19")!=null?rs.getString("tipo_e19"):"");
                     resultado.add(fila);
                 }
+                
                 return resultado;
             }
         });
-        
        return resultado; 
     }
+    
+    @Override
+    public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue){
+        boolean regresa=false;
+        StringBuilder sql;
+        proyectos=getProyecto(proyecto);
+        sql = getSql(null,0,"",null,"",proyectos,"", "",MetodosBusqueda.OCUPACVEUNICA);
+        if(jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue})>0)
+        {
+           regresa=true;
+        }
+        return regresa;
+        
+    }
+    
+    
     
      @Override
     public ArrayList<String> getClavesUnicasPG(Integer proyecto) {
@@ -498,6 +517,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         case GETVALCOORGEO:
                             sql.append("select ").append(esquemaPos).append(".val_coord_geo(?,?) valida");
                             break;
+                        case OCUPACVEUNICA:
+                            sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='20' where id_ue=? and sare_st<>'01'");
+                            break;
                     }
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
@@ -546,6 +568,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         case GETVALCOORGEO:
                             sql.append("select ").append(esquemaPos).append(".val_coord_geo(?,?) valida");
                             break;
+                        case OCUPACVEUNICA:
+                            sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='20' where id_ue=? and sare_st<>'01'");
+                            break;
                     }
                     break;
               
@@ -561,15 +586,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         sql.append("lpad(to_char(tipo_e10_b),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c),2,'0') tipo_e10_c, e10_c, coord_x as coorx, to_char(coord_y) as coory, descrubic, sare_st estatus_punteo, e12, ");
         sql.append("e19, tipo_e19, e20, e13, TRIM(e13a) as e13_a,e14_a, to_char(origen) origen, cestatal, e23a e23_a,"); //modificar e23a por e23 es solo para pruebas, e13_a por e13a, e12_p por e12, e11_a por e11
         sql.append("e17, e17||' - '||e17_desc as codigo_scian,c154");
-                
-            if(ce.equals("00"))
-            {
-                sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue);
-            }
-            else
-            {
-                sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(id_ue); 
-            }
+        sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' and id_ue = ").append(id_ue);
+        if (!(ce == null)) 
+        {
+                if (!ce.equals("00") && !ce.equals("99")) 
+                {
+                    sql.append("and cestatal = ").append(ce);
+                }
+        }
         return sql;
       }
       

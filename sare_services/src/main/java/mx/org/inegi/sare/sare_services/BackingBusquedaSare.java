@@ -17,6 +17,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,6 +33,10 @@ public class BackingBusquedaSare {
     @Autowired
     @Qualifier("DaoBusqueda")
     InterfaceBusquedaSare InterfaceBusquedaSare;
+    
+     @Autowired
+    @Qualifier("DaoDesbloqueo")
+    InterfaceDesbloqueo InterfaceDesbloqueo;
 
     @Autowired
     @Qualifier("DaoTransformaCartografia")
@@ -87,6 +92,12 @@ public class BackingBusquedaSare {
                 catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tramo, ce, usuario, id_ue);
                 if (catBusquedaOracle.size() > 0) 
                 {
+                    if(!ce.equals("00"))
+                    {
+                        if(InterfaceBusquedaSare.ocupaCveunicaOCL(proyecto, id_ue)){
+                            InterfaceDesbloqueo.RegistraUEComplemento(proyecto, usuario, id_ue);
+                        }
+                    }
                     listCUPG = InterfaceBusquedaSare.getClavesUnicasPG(proyecto);
                     if (listCUPG != null) 
                     {

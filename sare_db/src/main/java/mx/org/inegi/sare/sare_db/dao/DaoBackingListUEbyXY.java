@@ -67,8 +67,8 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
         sql = getSql(proyectos,x,y,"",MetodosUEbyXY.getInfoUEDenue);
         switch(proyectos){
             case Operativo_Masivo:
-                regresa=execSqlInfoUEDenuePg(sql);
-                break;
+//                regresa=execSqlInfoUEDenuePg(sql);
+//                break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
@@ -181,7 +181,7 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
         StringBuilder sql;
 
         sql = getSql(null,"","","",MetodosUEbyXY.getActividadUE);
-        regresa=jdbcTemplatemdm.query(sql.toString(),new Object[]{cve_unica}, new ResultSetExtractor<String>() 
+        regresa=jdbcTemplate.query(sql.toString(),new Object[]{cve_unica}, new ResultSetExtractor<String>() 
         {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException 
