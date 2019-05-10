@@ -529,7 +529,7 @@
                   <label for="e10a_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field" id="wrap-nombre-vialidad-uno">
-                    <select class="browser-default" id="e10_A" onchange="eliminaDuplicados(this)" name="e10_A">
+                    <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
                   <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
                 </div>
@@ -545,7 +545,7 @@
                   <label for="e10b_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field" id="wrap-nombre-vialidad-dos">
-                  <select class="browser-default" id="e10_B" onchange="eliminaDuplicados(this)" name="e10_B">
+                  <select class="browser-default" id="e10_B" name="e10_B">
                   </select>
                   <label id="labele10_B" for="e10_B" class="active">Nombre de la Vialidad No.2</label>
                 </div>
@@ -578,7 +578,7 @@
                   <label for="e10c_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field" id="wrap-nombre-vialidad-posterior">
-                  <select class="browser-default" id="e10_C" onchange="eliminaDuplicados(this)" name="e10_C">
+                  <select class="browser-default" id="e10_C" name="e10_C">
                   </select>
                   <label id="labele10_C" for="e10_C" class="active">Nombre de la Vialidad</label>
                 </div>

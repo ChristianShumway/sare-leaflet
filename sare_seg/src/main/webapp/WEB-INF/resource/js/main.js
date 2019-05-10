@@ -18,13 +18,14 @@ let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
-
+let fieldExists = false //bandera para momento de puntear saber si ya se hizo cambio de inputs por selects y al reves 
 let bandera_ratificar=false
 let catalogoCatVial = []
 let arrayClavesBloqueadas = ""
 let arrayClavesBloqueadasTodas = ""
 let banderaDesbloquear = false
 var ObjectRequest = {}
+const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
 
 const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
@@ -813,7 +814,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
+        agregaFuncionEliminarDuplicadosSelects()
         handleTipoPunteo()
       }
       else {
@@ -855,7 +858,23 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         
   })
 }
-let fieldExists = false
+
+const agregaFuncionEliminarDuplicadosSelects = () => {
+  idEleToSelect.map( id => {
+    const idElement = document.getElementById(id)
+    idElement.setAttribute('onchange', 'eliminaDuplicados(this)')
+    idElement.removeAttribute('disabled')
+  })
+}
+
+const eliminaFuncionEliminiarDuplicadosSelects = () => {
+  idEleToSelect.map( id => {
+    const idElement = document.getElementById(id)
+    idElement.removeAttribute('onchange')
+    idElement.removeAttribute('disabled')
+  })
+}
+
 const handleTipoPunteo = () => {
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
@@ -981,7 +1000,7 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
       if(childrenType == 'INPUT'){
         child.style.display = 'initial'
         child.setAttribute('id',idChildren)
-        child.setAttribute('disabled','true')
+        //child.setAttribute('disabled','true')
       }
     }
     else if (field == 'nombre') {
@@ -1053,17 +1072,18 @@ const actualizaForm = data => {
   if(typeof data.e10_X!=='undefined'){
     infodenue = true
     let node,newnode,oldnew;
+    alert(fieldExists)
     //si traigo entrevialidades
     let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
     idEleToInput.forEach( function (o, i) {
         //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
     });
-    var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
-    idEleToSelect.forEach( function (o, i) {
-      var html = '<option value="Seleccione">Seleccione</option>'
-      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
-      $('#' + o).html(html)
-    });
+    // var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+    // idEleToSelect.forEach( function (o, i) {
+    //   var html = '<option value="Seleccione">Seleccione</option>'
+    //   $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
+    //   $('#' + o).html(html)
+    // });
   }
   else {
     infodenue = false
@@ -1842,6 +1862,7 @@ const handleCancelClick = () => {
   handleTipoPunteo()
   handleActionButtons('disabled')
   handleActiveVisibleSearch()
+  eliminaFuncionEliminiarDuplicadosSelects()
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
