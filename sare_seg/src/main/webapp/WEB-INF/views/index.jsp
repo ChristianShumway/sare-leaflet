@@ -147,14 +147,22 @@
           </nav>
           <!-- MENU MOVIL -->
           <ul id="slide-out" class="sidenav">
-            <li><div class="user-view">
-              <div class="background">
-                <img src="resources/images/fondos/censos.jpg">
+            <li>
+              <div class="wrap-container-logo-sare-movil">
+                <img src="resources/images/logos/logo-sare-bw.png" alt="sare">
               </div>
-              <a href="#user" class="img-user"><img class="circle" src="resources/images/iconos/boy.png"></a>
-              <a href="#name"><span class="white-text name">Bievenido(a) al:</span></a>
-              <a href="#email"><span class="white-text email">SARE</span></a>
-            </div></li>
+            </li>
+            <li>
+              <div class="user-view">
+                <div class="background">
+                  <img src="resources/images/fondos/censos.jpg">
+                </div>
+                <a href="#user" class="img-user"><img class="circle" src="resources/images/iconos/boy.png"></a>
+                <!-- <a href="#name"><span class="white-text name">Bievenido(a) al:</span></a>
+                <a href="#email"><span class="white-text email">SARE</span></a> -->
+              </div>
+            </li>
+            
             <li><a class="waves-effect" onclick='handleModuleScroll(event)' id="ancla-map-movil" href="#container-map"><i class="material-icons">map</i>Mapa</a></li>
             <li><a class="waves-effect" onclick='handleModuleScroll(event)' id="ancla-form-movil" href="#container-form"><i class="material-icons">storage</i>Formulario</a></li>
             <li><div class="divider"></div></li>
@@ -583,6 +591,7 @@
                   <a onclick="handleActionTarget('edificio')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
+              
             </div>
             <!-- OPCIÓN CALLE POSTERIOR -->
 

@@ -136,6 +136,8 @@ const eventoMoveZoom = () => {
 const buscarUE = () => {
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
+    claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
+    claveBusqueda.addEventListener('animationend', () => claveBusqueda.classList.remove('animated', 'shake', 'wrap-input-empty') )
     Swal.fire({
       position: 'bottom-end',
       type: 'warning',
@@ -320,7 +322,9 @@ const showModalMsgError = data => {
 
   if (typeof dataE !== 'undefined') {
     arrayErrores.map( error => dataE === error.value ? mensaje = error.mensaje : false )
-  
+    const claveBusqueda = document.getElementById('clave-busqueda')
+    claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
+    claveBusqueda.addEventListener('animationend', () => claveBusqueda.classList.remove('animated', 'shake', 'wrap-input-empty') )
     Swal.fire
       ({
         position: 'bottom-end',
@@ -367,15 +371,16 @@ const handleViewCleeList = () => {
 const popupCleeList = data => {
   const notFoundClee = document.getElementById('wrap-list-not-found')
   if (data.length == 0){
-    //notFoundClee.classList.remove('wrap-inactive')
-      Swal.fire
-            ({
-                    position: 'bottom-end',
-                    type: 'warning',
-                    title: 'No se encontraron claves disponibles para la coordinación estatal',
-                    showConfirmButton: false,
-                    timer: 2000
-            })
+    notFoundClee.classList.remove('wrap-inactive')
+    notFoundClee.classList.add('animated', 'shake')
+      // Swal.fire
+      //       ({
+      //               position: 'bottom-end',
+      //               type: 'warning',
+      //               title: 'No se encontraron claves disponibles para la coordinación estatal',
+      //               showConfirmButton: false,
+      //               timer: 2000
+      //       })
     return
   }
 
@@ -433,7 +438,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     </div>
 
     <div class='wrap-list items not-found wrap-inactive' id="wrap-list-not-found">
-      <div class='item-lists'><span></span>NO SE ENCONTRARON REFERENCIAS</div>
+      <div class='item-lists'><span>No se encontraron claves disponibles para la Coordinación Estatal</span></div>
     </div>
     
     <div id='container-cleelist' class='container-cleelist row'>
@@ -1053,12 +1058,12 @@ const actualizaForm = data => {
     idEleToInput.forEach( function (o, i) {
         //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
     });
-    // var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
-    // idEleToSelect.forEach( function (o, i) {
-    //   var html = '<option value="Seleccione">Seleccione</option>'
-    //   $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
-    //   $('#' + o).html(html)
-    // });
+    var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+    idEleToSelect.forEach( function (o, i) {
+      var html = '<option value="Seleccione">Seleccione</option>'
+      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
+      $('#' + o).html(html)
+    });
   }
   else {
     infodenue = false
@@ -1282,7 +1287,7 @@ const validations=(totalInputs,object,campo)=>{
           msgInputEmpty = `Favor de completar la información del campo ${name}` 
       }
       
-      alertToastForm(msgInputEmpty)
+      alertToastForm(msgInputEmpty, 'error')
       inputsByWrap[key] = false
       setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
 
@@ -1837,6 +1842,7 @@ const handleCancelClick = () => {
   handleTipoPunteo()
   handleActionButtons('disabled')
   handleActiveVisibleSearch()
+  alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
 }
@@ -1930,7 +1936,7 @@ const handleSearchCleeValidation = e => {
 
 
 // alertas formulario
-const alertToastForm = title => {
+const alertToastForm = (title, type) => {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-start',
@@ -1939,7 +1945,7 @@ const alertToastForm = title => {
   });
 
   Toast.fire({
-    type: 'error',
+    type,
     title
   })
 }
@@ -1952,7 +1958,7 @@ const handleLogOut = () =>{
 const handleSessionActive = () => {            
   sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
     if (data[0].datos.success == false) {                                                
-      alertToastForm('No se ha iniciado sesión')
+      alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
@@ -2276,6 +2282,6 @@ const tiempoInactividad = () => {
   document.onscroll = resetTimer // scrolling with arrow keys 
   const logout = () => { 
     localStorage.clear()
-    alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad')
+    alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad', 'error')
   }     
 }
