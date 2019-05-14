@@ -808,7 +808,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    console.log(data[0].datos.datos)
     const {catVial} = data[0].datos.datos
     catalogoCatVial = catVial
     
@@ -890,8 +889,6 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
-  //alert(punteo)
-  //alert(confirmacionPunteo)
 
   if(punteo === 'R' || ( punteo === 'U' && confirmacionPunteo )){
     if(fieldExists === false){
@@ -958,8 +955,7 @@ const handleTipoPunteo = () => {
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
 
     fieldExists = false
-  }
-  //console.log(wrapTipoVialidad.children)   
+  }   
 }
 
 //Función crear Input o Select según si es rural
@@ -990,7 +986,6 @@ const handleFillTipoDeVialidades = selectId => {
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
   for(let chld = 0; chld< childrens.length; chld++){
     let child = childrens[chld]
-    //console.log(child)
     let childrenType = childrens[chld].nodeName
 
     if (field == 'tipo'){
@@ -1044,12 +1039,10 @@ const showAlertPunteoConfirma = (data, title, text) =>{
     allowOutsideClick: false,
     customClass: 'swal-wide',
   }).then ( result => {
-    console.log(result)
     if (result.value){
       actualizaForm(data)
       confirmacionPunteo = true
       handleTipoPunteo()
-      console.log('click aceptar')
     } else if (result.dismiss == 'cancel'){
       confirmacionPunteo = false
       handleTipoPunteo()
@@ -1072,7 +1065,6 @@ const actualizaForm = data => {
   if(typeof data.e10_X!=='undefined'){
     infodenue = true
     let node,newnode,oldnew;
-    alert(fieldExists)
     //si traigo entrevialidades
     let idEleToInput = ['tipo_e10n', 'e10', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
     idEleToInput.forEach( function (o, i) {
@@ -2223,7 +2215,6 @@ const addClavesDesbloquear = (id_ue, check) => {
       arrayClavesBloqueadas = arrayClavesBloqueadas + id_ue + ","
     }
   } else {
-    alert("error en la clave seleccionada")
   }
 }
 
