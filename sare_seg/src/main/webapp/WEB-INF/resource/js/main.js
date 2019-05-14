@@ -1855,6 +1855,7 @@ const handleCancelClick = () => {
   handleActionButtons('disabled')
   handleActiveVisibleSearch()
   eliminaFuncionEliminiarDuplicadosSelects()
+  bandera_ratificar=false
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
