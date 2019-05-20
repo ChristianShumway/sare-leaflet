@@ -169,13 +169,14 @@ const findUE = id_ue => {
     callServiceFindUE(id_ue)
     //handleShowRaticaHideSearch()
     //habilita boton cancelar
-    const cancelOption = document.getElementById('item-cancel-option')
-    cancelOption.removeAttribute('disabled')
+    
+    
   }
 }
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
+  const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
@@ -192,7 +193,7 @@ const callServiceFindUE=(id_ue)=>{
       showModalMsgError(data)
       //realiza acercamiento en el mapa
       acercarWithExtent(data)
-      
+      cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
     } else {
