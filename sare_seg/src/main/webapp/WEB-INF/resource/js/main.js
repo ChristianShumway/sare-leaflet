@@ -506,7 +506,7 @@ const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacio
         <div class='title-column'>Tiempo bloqueado</div>
       </div>`
 
-      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+      for(let num = inicioClavesVistaLock; num <= posicionFinal ; num ++){
         let {idue, c154,time_LOCK} = data[num]
         tabla += `<div class='wrap-list-Lock items'>
           <div class='item-list-Lock clave'><span onclick='Desbloquear(${idue})'>${idue}</span></div>
@@ -2263,7 +2263,6 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
           return;
         }
         else {
-          cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
         }
