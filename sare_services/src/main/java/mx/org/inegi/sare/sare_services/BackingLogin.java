@@ -12,6 +12,7 @@ import com.google.gson.JsonSyntaxException;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -45,21 +46,31 @@ public class BackingLogin {
     
     public cat_respuesta_services login(Integer proyecto, String usuario, String password,HttpServletRequest request, HttpServletResponse response) throws IOException
     {
+        String ip=InetAddress.getLocalHost().getHostAddress();
+        HttpSession session = request.getSession(true);
         cat_respuesta_services Respuesta;
         cat_usuarios user=new cat_usuarios();
-        String ip="";
         Respuesta=getAuthValidWeb(usuario,password,ip);
         if(Respuesta.getMensaje().getType().equals("Exito"))
         {
            user.setUsuario(usuario);
-           user.setNombre("cuenta.usuario");
-           user.setAcceso("Administrador");
-           user.setCe("00");
-           user.setTramo_control("00000000000");
-           user.setCve_operativa("00000000000");
            user.setProyecto(proyecto);
+           user=consultaUsuario(user);
+           {
+               if(!user.getCe().equals(""))
+               {
+                   user.setUsuario(usuario);
+                   user.setProyecto(proyecto);
+                   user.setIp(ip);
+                    if(registraAccesoPG(user))
+                    {
+                         session.setAttribute("respuesta", user);
+                         Respuesta.setUsuario(user);
+                    }
+               }
+           }
         }
-        Respuesta.setUsuario(user);
+        
         return Respuesta;
     } 
     
@@ -168,6 +179,12 @@ public class BackingLogin {
     private boolean registraAccesoPG(cat_usuarios usuario){
         boolean Respuesta;
         Respuesta=InterfaceLogin.registraAccesoPG(usuario);
+        return Respuesta;
+    }
+    
+    private cat_usuarios consultaUsuario(cat_usuarios usuario){
+        cat_usuarios Respuesta;
+        Respuesta=InterfaceLogin.consultaUsuario(usuario);
         return Respuesta;
     }
     
