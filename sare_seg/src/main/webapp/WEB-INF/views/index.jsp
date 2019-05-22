@@ -107,7 +107,7 @@
     <script src="resources/js/sendAjax.js" type="text/javascript"></script><script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/map.js" type="text/javascript"></script>
     <!-- cargamos archivos de configuración del mapa-->
-     <script src="resources/config/dataSource.js" type="text/javascript"></script>
+    <script src="resources/config/dataSource.js" type="text/javascript"></script>
     <script src="resources/config/map.js" type="text/javascript"></script>
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
@@ -738,7 +738,8 @@
 
 <!--    <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>-->
 <!-- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>  trasplante de api-->
- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx" type="text/javascript"></script> <!-- trasplante de api-->
+ <!--<script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script> <!-- trasplante de api-->
+ <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
 
 
 </html>

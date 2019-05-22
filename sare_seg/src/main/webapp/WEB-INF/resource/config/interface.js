@@ -5,6 +5,7 @@ var controlConfig = {
         startupTotorial: false,
         layersBar: false,
         autoOpenThemeBar: false,
+        mainTools:false, 
         toolBar: true, //barra de descarga compartir, imprimir y ayuda
         tool_gps: true //boton GPS en control de vista
     },
