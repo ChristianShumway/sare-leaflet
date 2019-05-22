@@ -137,7 +137,7 @@
         <div class="navbar-fixed"> 
           <nav>
             <div class="nav-wrapper">
-              <a href="#" class="brand-logo">SARE</a>
+              <a href="#" class="brand-logo"><img src="resources/images/logos/logo-sare-azul.png"></a>
               <a href="#" data-activates="slide-out" class="button-collapse hide-on-large-only"><i class="material-icons tooltipped" data-position="right" data-tooltip="Menu de Opciones" >menu</i></a>
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a id="ancla-map" onclick='handleModuleScroll(event)' href="#container-map">Mapa</a></li>
@@ -147,14 +147,22 @@
           </nav>
           <!-- MENU MOVIL -->
           <ul id="slide-out" class="sidenav">
-            <li><div class="user-view">
-              <div class="background">
-                <img src="resources/images/fondos/censos.jpg">
+            <li>
+              <div class="wrap-container-logo-sare-movil">
+                <img src="resources/images/logos/logo-sare-bw.png" alt="sare">
               </div>
-              <a href="#user" class="img-user"><img class="circle" src="resources/images/iconos/boy.png"></a>
-              <a href="#name"><span class="white-text name">Bievenido(a) al:</span></a>
-              <a href="#email"><span class="white-text email">SARE</span></a>
-            </div></li>
+            </li>
+            <li>
+              <div class="user-view">
+                <div class="background">
+                  <img src="resources/images/fondos/censos.jpg">
+                </div>
+                <a href="#user" class="img-user"><img class="circle" src="resources/images/iconos/boy.png"></a>
+                <!-- <a href="#name"><span class="white-text name">Bievenido(a) al:</span></a>
+                <a href="#email"><span class="white-text email">SARE</span></a> -->
+              </div>
+            </li>
+            
             <li><a class="waves-effect" onclick='handleModuleScroll(event)' id="ancla-map-movil" href="#container-map"><i class="material-icons">map</i>Mapa</a></li>
             <li><a class="waves-effect" onclick='handleModuleScroll(event)' id="ancla-form-movil" href="#container-form"><i class="material-icons">storage</i>Formulario</a></li>
             <li><div class="divider"></div></li>
@@ -521,7 +529,7 @@
                   <label for="e10a_cvevial" hidden="">**Hasta el punteo</label>
                 </div>
                 <div class="input-field" id="wrap-nombre-vialidad-uno">
-                  <select class="browser-default" id="e10_A" name="e10_A">
+                    <select class="browser-default" id="e10_A" name="e10_A">
                   </select>
                   <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
                 </div>
@@ -583,6 +591,7 @@
                   <a onclick="handleActionTarget('edificio')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
+              
             </div>
             <!-- OPCIÓN CALLE POSTERIOR -->
 
@@ -641,7 +650,7 @@
           <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
           <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 
           <li onclick="CargaTablaBloqueadas()"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Claves Bloqueadas"><i class="material-icons">lock</i></a></li> 
-          <!--<li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>-->
+          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>
         </ul>
       </div>
       <!-- END CONTAINER OPTIONS BUTTONS -->

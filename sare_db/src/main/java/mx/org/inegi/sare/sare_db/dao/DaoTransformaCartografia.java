@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("DaoTransformaCartografia")
 @Profile("dev")
-public class DaoTransformaCartografia  implements InterfaceTransformaCoordenadas {
+public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas {
 
     @Autowired
     @Qualifier("schemaSarePG")

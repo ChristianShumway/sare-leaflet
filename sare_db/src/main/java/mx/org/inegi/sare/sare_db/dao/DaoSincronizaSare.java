@@ -619,6 +619,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
          sql=getSql(proyectos,inmueble,coordenadas,Metodossincroniza.Insert_Tr_Inmuebles);
         if(jdbcTemplateocl.update(sql.toString())>0)
         {
+          inmueble.setId_inmueble(secuencia);
           regresa=true; 
         }
         return regresa;
@@ -761,8 +762,9 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(esquemaOcl).append(".TC_MANZANAS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND CVE_MZA='").append(inmueble.getE07()).append("'");
                     break;
                 case InsertaTcManzanas:
-                    sql.append("insert into ").append(esquemaOcl).append(".TC_MANZANAS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA) values (").append(inmueble.getE03()).append(",").
-                            append(inmueble.getE04()).append(",").append(inmueble.getE05()).append(",").append(String.valueOf(inmueble.getPunteo()).equals("R")?"0000":inmueble.getE06()).append(",").append(inmueble.getE07()).append(")");
+                    sql.append("insert into ").append(esquemaOcl).append(".TC_MANZANAS (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA) values ('").append(inmueble.getE03()).append("','").
+                            append(inmueble.getE04()).append("','").append(inmueble.getE05()).append("','").append(String.valueOf(inmueble.getPunteo()).equals("R")?"'0000'":inmueble.getE06()).append("','").append(inmueble.getE07()).append("')");
+                    break;
                 case ValidateTrManzanas:
                     sql.append("SELECT CASE WHEN COUNT(*)>0 THEN 1 ELSE 0 END ENCONTRADO FROM ").append(esquemaOcl).append(".TR_MANZANAS WHERE CVE_ENT='").append(inmueble.getE03()).append("' AND CVE_MUN='").append(inmueble.getE04()).append("' AND CVE_LOC= '").append(inmueble.getE05()).append("' AND CVE_AGEB='").append(inmueble.getE06()).append("' AND CVE_MZA='").append(inmueble.getE07()).append("'");/* AND ID_DEFTRAMO='").append(inmueble.getId_deftramo()).append("'");*/
                     break;
@@ -790,7 +792,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     sql.append("select ").append(esquemaOcl).append(".SEC_TR_FRENTES.nextval secuencia from dual");
                     break;
                 case InsertaTcFrentes:
-                    sql.append("insert into ").append(esquemaOcl).append(".TC_FRENTES (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA,CVEFT) values ('").append(inmueble.getE03()).append("','").append(inmueble.getE04()).append("','").append(inmueble.getE05()).append("','").append(inmueble.getE06()).append("','").append(inmueble.getE07()).append("','").append(inmueble.getTIPO_E10()).append("')");
+                    sql.append("insert into ").append(esquemaOcl).append(".TC_FRENTES (CVE_ENT,CVE_MUN,CVE_LOC,CVE_AGEB,CVE_MZA,CVEFT) values ('").append(inmueble.getE03()).append("','").append(inmueble.getE04()).append("','").append(inmueble.getE05()).append("','").append(inmueble.getE06()).append("','").append(inmueble.getE07()).append("','").append(inmueble.getCveft()).append("')");
                     break;
                 case UpdateTrUESUC:
                     sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC SET E03='").append(inmueble.getE03()).append("',E04='").append(inmueble.getE04()).append("',E05='").append(inmueble.getE05()).append("',E06='")
@@ -840,7 +842,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     sql.append("select ").append(esquemaOcl).append(".SEC_TR_INMUEBLES.nextval secuencia from dual");
                     break;
                 case ActualizaBitRegIdUE:
-                    sql.append("update ").append(esquemaPos).append(".td_bitacora_registro_cve_unica set td_inm_ocl=true where id_ue='").append(inmueble.getID_UE()).append("' and id in (select max(id) from ").append(schemapg).append(".td_bitacora_registro_cve_unica where id_ue='").append(inmueble.getID_UE()).append("')");
+                    sql.append("update ").append(esquemaPos).append(".td_bitacora_registro_cve_unica set td_inm_ocl=true where id_ue='").append(inmueble.getID_UE()).append("' and id in (select max(id) from ").append(esquemaPos).append(".td_bitacora_registro_cve_unica where id_ue='").append(inmueble.getID_UE()).append("')");
                     break;
                 case ActualizaIdUE:
                     sql.append("update ").append(esquemaPos).append(".td_ue_suc set id_inmueble=").append(inmueble.getId_inmueble()).append(" where id_ue='").append(inmueble.getID_UE()).append("'");

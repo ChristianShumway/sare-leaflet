@@ -54,12 +54,6 @@ const objForm = [
     title:'title-ubicacion-geografica',
   },
   {
-    id:'e05N',
-    key: 'ubicacion-geografica',
-    name:'e05N',
-    title:'title-ubicacion-geografica',
-  },
-  {
     id:'e05',
     key: 'ubicacion-geografica',
     name:'e05',

@@ -7,6 +7,7 @@ package mx.org.inegi.sare.sare_db.interfaces;
 
 import java.util.ArrayList;
 import java.util.List;
+import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 
 /**
@@ -32,4 +33,6 @@ public interface InterfaceBusquedaSare {
     public boolean liberaCveunicaOCL(Integer proyecto,String cve_unica);
     
     public boolean getValCoorGeo(Integer proyecto, String x, String y);
+    
+    public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue);
 }

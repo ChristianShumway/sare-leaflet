@@ -11,26 +11,21 @@ let inicioClavesVistaLock = 0
 let finClavesVistaLock = 9
 let dataCleeListNew = {}
 let dataCleeListNewLock = {}
-let xycoorsx
-let xycoorsy
-screen.width <= '480'
-
-let layersSARE = ['c100', 'c101', 'wdenue'];
+let xycoorsx, xycoorsy, punteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
+screen.width <= '480' 
+let layersSARE = ['c100', 'c101', 'wdenue']
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
 let titulo_impresion='SARE' 
-
+let fieldExists = false //bandera para momento de puntear saber si ya se hizo cambio de inputs por selects y al reves 
 let bandera_ratificar=false
-
-let punteo,mod_cat,cve_geo,cve_geo2016,cveft,e10_cve_vial;
 let catalogoCatVial = []
-
-let arrayClavesBloqueadas = "";
-let arrayClavesBloqueadasTodas = "";
-let banderaDesbloquear = false;
-
-var ObjectRequest = {};
+let arrayClavesBloqueadas = ""
+let arrayClavesBloqueadasTodas = ""
+let banderaDesbloquear = false
+var ObjectRequest = {}
+const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
 
 const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
@@ -142,6 +137,8 @@ const eventoMoveZoom = () => {
 const buscarUE = () => {
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
+    claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
+    claveBusqueda.addEventListener('animationend', () => claveBusqueda.classList.remove('animated', 'shake', 'wrap-input-empty') )
     Swal.fire({
       position: 'bottom-end',
       type: 'warning',
@@ -172,13 +169,14 @@ const findUE = id_ue => {
     callServiceFindUE(id_ue)
     //handleShowRaticaHideSearch()
     //habilita boton cancelar
-    const cancelOption = document.getElementById('item-cancel-option')
-    cancelOption.removeAttribute('disabled')
+    
+    
   }
 }
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
+  const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
@@ -195,6 +193,7 @@ const callServiceFindUE=(id_ue)=>{
       showModalMsgError(data)
       //realiza acercamiento en el mapa
       acercarWithExtent(data)
+      cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
     } else {
@@ -214,7 +213,6 @@ const callServiceFindUE=(id_ue)=>{
       onOpen:  () => swal.showLoading() 
     })
     .then( () => { },
-        MDM6('updateSize')
     )
   })
 }
@@ -304,7 +302,6 @@ const fillCatalogoConjuntosComerciales = () => {
 const acercarWithExtent = data => {
   let res = data[0].datos.datos[0].extent.split(",") 
   MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
-  
 }
 
 //Función que llama el servicio para obtener el código postal
@@ -327,7 +324,9 @@ const showModalMsgError = data => {
 
   if (typeof dataE !== 'undefined') {
     arrayErrores.map( error => dataE === error.value ? mensaje = error.mensaje : false )
-  
+    const claveBusqueda = document.getElementById('clave-busqueda')
+    claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
+    claveBusqueda.addEventListener('animationend', () => claveBusqueda.classList.remove('animated', 'shake', 'wrap-input-empty') )
     Swal.fire
       ({
         position: 'bottom-end',
@@ -375,6 +374,15 @@ const popupCleeList = data => {
   const notFoundClee = document.getElementById('wrap-list-not-found')
   if (data.length == 0){
     notFoundClee.classList.remove('wrap-inactive')
+    notFoundClee.classList.add('animated', 'shake')
+      // Swal.fire
+      //       ({
+      //               position: 'bottom-end',
+      //               type: 'warning',
+      //               title: 'No se encontraron claves disponibles para la coordinación estatal',
+      //               showConfirmButton: false,
+      //               timer: 2000
+      //       })
     return
   }
 
@@ -432,7 +440,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     </div>
 
     <div class='wrap-list items not-found wrap-inactive' id="wrap-list-not-found">
-      <div class='item-lists'><span></span>NO SE ENCONTRARON REFERENCIAS</div>
+      <div class='item-lists'><span>No se encontraron claves disponibles para la Coordinación Estatal</span></div>
     </div>
     
     <div id='container-cleelist' class='container-cleelist row'>
@@ -498,7 +506,7 @@ const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacio
         <div class='title-column'>Tiempo bloqueado</div>
       </div>`
 
-      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+      for(let num = inicioClavesVistaLock; num <= posicionFinal ; num ++){
         let {idue, c154,time_LOCK} = data[num]
         tabla += `<div class='wrap-list-Lock items'>
           <div class='item-list-Lock clave'><span onclick='Desbloquear(${idue})'>${idue}</span></div>
@@ -749,23 +757,24 @@ const ratificar = request => {
     enabledInputs()
     handleActionTargetRef()
     handleActionButtons('enabled')
-    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r');
+    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
+    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
-  else{
-    if(request=='no') {
-      handleShowAlertPickMap()
-      enabledInputs()
-      handleActionTargetRef()
-      xycoorsx = ''
-      xycoorsy = ''
-      MDM6('hideMarkers', 'identify')      
-      const cancelOption = document.getElementById('item-cancel-option')
-      cancelOption.removeAttribute('disabled')
-      
-    }
-  }
+  else if(request=='no') {
+    funcionesNoRatificado()
+  } 
+}
+
+const funcionesNoRatificado = () => {
+  handleShowAlertPickMap()
+  enabledInputs()
+  handleActionTargetRef()
+  xycoorsx = ''
+  xycoorsy = ''
+  MDM6('hideMarkers', 'identify')      
+  const cancelOption = document.getElementById('item-cancel-option')
+  cancelOption.removeAttribute('disabled')
 }
 
 //función que activa nuevamente funciones para abrir contenedor de busqueda
@@ -800,19 +809,20 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'ce': ce, 
     'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    //console.log(data[0].datos.datos)
+    const {catVial} = data[0].datos.datos
+    catalogoCatVial = catVial
     
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
-        const {catVial} = data[0].datos.datos
-        catalogoCatVial = catVial
+        confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
+        agregaFuncionEliminarDuplicadosSelects()
         handleTipoPunteo()
       }
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-            showAlertPunteoConfirma('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+            showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
@@ -849,6 +859,22 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   })
 }
 
+const agregaFuncionEliminarDuplicadosSelects = () => {
+  idEleToSelect.map( id => {
+    const idElement = document.getElementById(id)
+    idElement.setAttribute('onchange', 'eliminaDuplicados(this)')
+    idElement.removeAttribute('disabled')
+  })
+}
+
+const eliminaFuncionEliminiarDuplicadosSelects = () => {
+  idEleToSelect.map( id => {
+    const idElement = document.getElementById(id)
+    idElement.removeAttribute('onchange')
+    idElement.removeAttribute('disabled')
+  })
+}
+
 const handleTipoPunteo = () => {
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
@@ -865,52 +891,55 @@ const handleTipoPunteo = () => {
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
 
-  if(punteo === 'R'){
-    tipoE10n.style.display = 'none'
-    tipoE10n.removeAttribute('id')
-    tipoE10an.style.display = 'none'
-    tipoE10an.removeAttribute('id')
-    e10A.style.display = 'none'
-    e10A.removeAttribute('id')
-    tipoE10bn.style.display = 'none'
-    tipoE10bn.removeAttribute('id')
-    e10B.style.display = 'none'
-    e10B.removeAttribute('id')
-    tipoE10cn.style.display = 'none'
-    tipoE10cn.removeAttribute('id')
-    e10C.style.display = 'none'
-    e10C.removeAttribute('id')
+  if(punteo === 'R' || ( punteo === 'U' && confirmacionPunteo )){
+    if(fieldExists === false){
+      tipoE10n.style.display = 'none'
+      tipoE10n.removeAttribute('id')
+      tipoE10an.style.display = 'none'
+      tipoE10an.removeAttribute('id')
+      e10A.style.display = 'none'
+      e10A.removeAttribute('id')
+      tipoE10bn.style.display = 'none'
+      tipoE10bn.removeAttribute('id')
+      e10B.style.display = 'none'
+      e10B.removeAttribute('id')
+      tipoE10cn.style.display = 'none'
+      tipoE10cn.removeAttribute('id')
+      e10C.style.display = 'none'
+      e10C.removeAttribute('id')
+  
+      const selectField = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
+      const selectFieldTipoE10an = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
+      const inputFieldE10a = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
+      const selectFieldTipoE10bn = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
+      const inputFieldE10b = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
+      const selectFieldTipoE10cn = document.createElement('select')
+      handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
+      const inputFieldE10c = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
+  
+      //función donde se agrega options a los selects con el catálogo de tipo de vialidades
+      handleFillTipoDeVialidades(selectField)
+      handleFillTipoDeVialidades(selectFieldTipoE10an)
+      handleFillTipoDeVialidades(selectFieldTipoE10bn)
+      handleFillTipoDeVialidades(selectFieldTipoE10cn)
+   
+      wrapTipoVialidad.appendChild(selectField)
+      wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
+      wrapNombreVialidadUno.appendChild(inputFieldE10a)
+      wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
+      wrapNombreVialidadDos.appendChild(inputFieldE10b)
+      wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
+      wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
+      fieldExists = true
+    }
 
-    const selectField = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
-    const selectFieldTipoE10an = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
-    const inputFieldE10a = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
-    const selectFieldTipoE10bn = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
-    const inputFieldE10b = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
-    const selectFieldTipoE10cn = document.createElement('select')
-    handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
-    const inputFieldE10c = document.createElement('input')
-    handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
-
-    //función donde se agrega options a los selects con el catálogo de tipo de vialidades
-    handleFillTipoDeVialidades(selectField)
-    handleFillTipoDeVialidades(selectFieldTipoE10an)
-    handleFillTipoDeVialidades(selectFieldTipoE10bn)
-    handleFillTipoDeVialidades(selectFieldTipoE10cn)
- 
-    wrapTipoVialidad.appendChild(selectField)
-    wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
-    wrapNombreVialidadUno.appendChild(inputFieldE10a)
-    wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
-    wrapNombreVialidadDos.appendChild(inputFieldE10b)
-    wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
-    wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
-
-  } else if (punteo === 'U'){
+  } else if (punteo === 'U' && !confirmacionPunteo){
     //tipo vialidad domicilio
     handleReturnTipoNombreVialidad(wrapTipoVialidad.children, wrapTipoVialidad, 'tipo_e10n', 'tipo')
     //tipo vialidad 1
@@ -925,8 +954,9 @@ const handleTipoPunteo = () => {
     handleReturnTipoNombreVialidad(wrapTipoVialidadPosterior.children, wrapTipoVialidadPosterior, 'tipo_e10_cn', 'tipo')
     //nombre vialidad 2
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
-  }
-  //console.log(wrapTipoVialidad.children)   
+
+    fieldExists = false
+  }   
 }
 
 //Función crear Input o Select según si es rural
@@ -957,7 +987,6 @@ const handleFillTipoDeVialidades = selectId => {
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
   for(let chld = 0; chld< childrens.length; chld++){
     let child = childrens[chld]
-    //console.log(child)
     let childrenType = childrens[chld].nodeName
 
     if (field == 'tipo'){
@@ -967,7 +996,7 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
       if(childrenType == 'INPUT'){
         child.style.display = 'initial'
         child.setAttribute('id',idChildren)
-        child.setAttribute('disabled','true')
+        //child.setAttribute('disabled','true')
       }
     }
     else if (field == 'nombre') {
@@ -995,16 +1024,32 @@ const showAlertPunteo = (title, text) =>{
 }
 
 // función sweetaler confirma punteo
-const showAlertPunteoConfirma = (title, text) =>{
+const showAlertPunteoConfirma = (data, title, text) =>{
   swal.fire ({
     title,
     text,
-    type: 'error',
-    showCloseButton: true,
+    //type: 'error',
+    showCloseButton: false,
     showConfirmButton: true,
+    confirmButtonColor: '#5562eb',
+    confirmButtonText: 'Confirmar',
     showCancelButton: true,
+    cancelButtonColor: '#424242',
+    cancelButtonText: 'Cancelar',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
     customClass: 'swal-wide',
-  }).then ( ) 
+  }).then ( result => {
+    if (result.value){
+      actualizaForm(data)
+      confirmacionPunteo = true
+      handleTipoPunteo()
+    } else if (result.dismiss == 'cancel'){
+      confirmacionPunteo = false
+      handleTipoPunteo()
+      funcionesNoRatificado()
+    }
+  }) 
 }
 
 //Funcion que actualiza el formulario al hacer el punteo
@@ -1026,12 +1071,12 @@ const actualizaForm = data => {
     idEleToInput.forEach( function (o, i) {
         //$('#' + o).replaceWith('<input id="' + o + '" name="' + o + '" type="text" disabled>');
     });
-    var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
-    idEleToSelect.forEach( function (o, i) {
-      var html = '<option value="Seleccione">Seleccione</option>'
-      $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
-      $('#' + o).html(html)
-    });
+    // var idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+    // idEleToSelect.forEach( function (o, i) {
+    //   var html = '<option value="Seleccione">Seleccione</option>'
+    //   $('#' + o).replaceWith('<select id="' + o + '" name="' + o + '" class="browser-default" onchange="eliminaDuplicados(this)"></select>')
+    //   $('#' + o).html(html)
+    // });
   }
   else {
     infodenue = false
@@ -1255,7 +1300,7 @@ const validations=(totalInputs,object,campo)=>{
           msgInputEmpty = `Favor de completar la información del campo ${name}` 
       }
       
-      alertToastForm(msgInputEmpty)
+      alertToastForm(msgInputEmpty, 'error')
       inputsByWrap[key] = false
       setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
 
@@ -1356,7 +1401,7 @@ const validaCp = () => {
   {
     'codigo': $("#e14_A").val(),
     'cve_ent': $("#e03").val(),
-    'proyecto':1
+    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion
   }, 
   urlServices['serviceValCP'].type, 
   data => {
@@ -1442,7 +1487,7 @@ const handleShowResult = result => {
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'obj': JSON.stringify(ObjectRequest),
       'usuario':user
     }, 
@@ -1806,9 +1851,13 @@ const handleCancelClick = () => {
   let id_ue=document.getElementById('id_UE').value
   disabledInputs()
   punteo = 'U'
+  confirmacionPunteo = false
   handleTipoPunteo()
   handleActionButtons('disabled')
   handleActiveVisibleSearch()
+  eliminaFuncionEliminiarDuplicadosSelects()
+  bandera_ratificar=false
+  alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
 }
@@ -1902,7 +1951,7 @@ const handleSearchCleeValidation = e => {
 
 
 // alertas formulario
-const alertToastForm = title => {
+const alertToastForm = (title, type) => {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-start',
@@ -1911,7 +1960,7 @@ const alertToastForm = title => {
   });
 
   Toast.fire({
-    type: 'error',
+    type,
     title
   })
 }
@@ -1924,7 +1973,7 @@ const handleLogOut = () =>{
 const handleSessionActive = () => {            
   sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
     if (data[0].datos.success == false) {                                                
-      alertToastForm('No se ha iniciado sesión')
+      alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
@@ -2131,9 +2180,9 @@ const CargaTablaBloqueadas=()=> {
   
   sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
     {
-      'proyecto': 1, 
-      'tramo': '000000000', 
-      'id_ue':'00'
+      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
+      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'id_ue':dataUserFromLoginLocalStorage.ce
     }, urlServices['serviceListaClavesBloqueadas'].type, 
      data => {
       if (data[0].datos.length>0) {
@@ -2168,7 +2217,6 @@ const addClavesDesbloquear = (id_ue, check) => {
       arrayClavesBloqueadas = arrayClavesBloqueadas + id_ue + ","
     }
   } else {
-    alert("error en la clave seleccionada")
   }
 }
 
@@ -2203,7 +2251,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
   if (result.value) {
     sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
     {
-      'proyecto':1,
+      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'id_ue': id_ue,
       'usuario':user
     }, 
@@ -2215,7 +2263,6 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
           return;
         }
         else {
-          cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
         }
@@ -2248,6 +2295,6 @@ const tiempoInactividad = () => {
   document.onscroll = resetTimer // scrolling with arrow keys 
   const logout = () => { 
     localStorage.clear()
-    alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad')
+    alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad', 'error')
   }     
 }

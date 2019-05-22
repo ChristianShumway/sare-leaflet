@@ -127,23 +127,14 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
 
     @Override
     public boolean Desbloqueo(Integer proyecto, String id_ue) {
-        boolean regresar;
+        boolean regresar=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,Desbloqueo.Desbloqueo);
-        regresar=jdbcTemplateocl.query(sql.toString(), new Object[]{id_ue},new ResultSetExtractor<Boolean>() 
+        if(jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue})>0) 
         {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-                boolean fila=false;
-                while(rs.next())
-                {
-                   fila=rs.getInt(1)>1;
-                }
-                return fila;
-            }
-        });
+            regresar=true;
+        }
         return regresar;
     }
 
@@ -152,13 +143,25 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         boolean regresar=false;
         if(existeUe(proyecto, id_ue)){
             if(CompletaSaveUE(proyecto,id_ue)){
-                regresar=UpdateUE(proyecto,id_ue);
+                regresar=UpdateUE(proyecto,usuario,id_ue);
             }
         }
         else{
             if(CompletaSaveUE(proyecto,id_ue)){
                 regresar=InsertUe(proyecto,usuario, id_ue);
             } 
+        }
+        return regresar;
+    }
+    
+    @Override
+    public boolean RegistraUEComplemento(Integer proyecto,String usuario, String id_ue) {
+        boolean regresar=false;
+        if(existeUe(proyecto, id_ue)){
+                regresar=UpdateUE(proyecto,usuario,id_ue);
+        }
+        else{
+                regresar=InsertUe(proyecto,usuario, id_ue);
         }
         return regresar;
     }
@@ -178,7 +181,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                 boolean fila=false;
                 while(rs.next())
                 {
-                   fila=rs.getInt(1)>1;
+                   fila=rs.getInt(1)>0;
                 }
                 return fila;
             }
@@ -186,68 +189,42 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         return regresar;
     }
     
-    private boolean UpdateUE(Integer proyecto, String id_ue){
-        boolean regresar;
+    private boolean UpdateUE(Integer proyecto, String usuario,String id_ue){
+        boolean regresar=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,Desbloqueo.updateUE);
-        regresar=jdbcTemplateocl.query(sql.toString(),new Object[]{id_ue},new ResultSetExtractor<Boolean>() 
+        if(jdbcTemplateocl.update(sql.toString(),new Object[]{usuario,id_ue})>0)
         {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-                boolean fila=false;
-                while(rs.next())
-                {
-                   fila=rs.getInt(1)>1;
-                }
-                return fila;
-            }
-        });
+            regresar=true;
+        }
         return regresar;
         
     }
     
     private boolean InsertUe(Integer proyecto,String usuario, String id_ue){
-        boolean regresar;
+        boolean regresar=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,Desbloqueo.insertUE);
-        regresar=jdbcTemplateocl.query(sql.toString(),new Object[]{id_ue,usuario},new ResultSetExtractor<Boolean>() 
+        int clave=Integer.valueOf(id_ue);
+        if(jdbcTemplateocl.update(sql.toString(),new Object[]{usuario,clave})>0) 
         {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-                boolean fila=false;
-                while(rs.next())
-                {
-                   fila=rs.getInt(1)>1;
-                }
-                return fila;
-            }
-        });
+            regresar=true;
+        }
         return regresar;
         
     }
     
     private boolean CompletaSaveUE(Integer proyecto, String id_ue){
-        boolean regresar;
+        boolean regresar=false;
         StringBuilder sql;
         super.proyectos=super.getProyecto(proyecto);
         sql=getSql(super.proyectos,id_ue,Desbloqueo.completaGuardado);
-        regresar=jdbcTemplateocl.query(sql.toString(),new Object[]{id_ue},new ResultSetExtractor<Boolean>() 
+        if(jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue})>0)
         {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-                boolean fila=false;
-                while(rs.next())
-                {
-                   fila=rs.getInt(1)>1;
-                }
-                return fila;
-            }
-        });
+            regresar=true;
+        }
         return regresar;
         
     }

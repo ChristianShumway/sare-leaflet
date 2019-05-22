@@ -71,7 +71,7 @@ const handleClickValidaUsuario = () => {
   sendAJAX(
     urlServices['serviceLogin'].url, 
     {
-      'proyecto': 1, 
+      'proyecto': cualSare.value, 
       'usuario': user.value, 
       'password': password.value,
     }, 

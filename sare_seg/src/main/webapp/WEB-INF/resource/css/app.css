@@ -30,9 +30,11 @@ body{
   align-items: center;
   transition: .5s;
 }
-.swal2-icon.swal2-info{
+
+/* .swal2-icon.swal2-info{
     left: 2rem;
-}
+} */
+
 .swal2-popup .swal2-header{
     flex-direction: row !important;
 }
@@ -58,9 +60,13 @@ nav{
 }
 
 nav .brand-logo {
-  margin: 0 20px;
+  margin: 10px 20px;
   font-family: 'lato', sans-serif;
   font-weight: 600;
+}
+
+nav .brand-logo img{
+  width: 110px;
 }
 
 nav ul a {
@@ -264,10 +270,13 @@ nav ul a {
   grid-template-columns: 100%;
   color: white;
   font-weight: bold;
-  padding: 20px 0;
+  padding: 10px;
   margin-bottom: 10px;
   margin-top: -15px;
-  background: #ff8a65;
+  background: #c62828;
+  border-radius: 5px;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, .6);
+  font-family: 'lato';
 }
 
 .container-cleelist-Lock .wrap-list-Lock{
@@ -327,6 +336,12 @@ nav ul a {
   border-bottom: .5px solid #2d384a !important;
   -webkit-box-shadow: 0 .5px 0 0 #2d384a !important;
   box-shadow: 0 .5px 0 0 #2d384a !important;
+}
+
+.wrap-input-empty{
+  border: 1px solid #b71c1c !important;
+  background: #ff8a80 !important;
+  color: white;
 }
 
 .pagination{
@@ -893,7 +908,7 @@ textarea.materialize-textarea:focus:not([readonly]) {
 }
 
 .next-wrap img, .previous-wrap img{
-  opacity: .5;
+  opacity: .8;
   transition: .5s;
   width: 30px;
 }
@@ -1085,7 +1100,6 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
     width: 100%
   }
 
-
   .img-user{
     display: flex;
     justify-content: center;
@@ -1097,6 +1111,16 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
 
   .sidenav .user-view{
     text-align: center;
+    height: 155px;
+  }
+
+  .wrap-container-logo-sare-movil{
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  .wrap-container-logo-sare-movil img{
+    width:60%;
   }
 
   .sidenav .user-view .name {
@@ -1345,6 +1369,14 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
 @media screen and (max-width:480px){
   nav .nav-wrapper {
     padding: 0 15px;
+  }
+
+  nav .brand-logo {
+    margin: 8px 20px;
+  }
+  
+  nav .brand-logo img{
+    width: 100px;
   }
 
   /* CONTAINER SEARCH */
