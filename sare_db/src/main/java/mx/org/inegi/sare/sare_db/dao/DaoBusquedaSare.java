@@ -14,7 +14,6 @@ import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
-import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -56,7 +55,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
     
-    private String campo_geo = "the_geom";
 
     public String esquemaPg;
 
@@ -609,16 +607,26 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          String cvegeo = "";
          String t = "";
          Boolean isRural = false;
+         String esquema=null;
+         String campo_geo=null;
          switch(proyecto)
          {
+            
+            case Operativo_Masivo:
+                esquema="sare_mas2019_carto";
+                campo_geo="the_geom_merc";
+                break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
-            case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
+                esquema=schemamdm;
+                campo_geo="the_geom";
+                break;
+         } 
                  switch(metodo){
                      case GETEXTENTCVEGEO2:
                  
@@ -632,49 +640,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             }
                             else
                             {
-                                sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent");
-                                sql.append(" from ").append(schemamdm).append(".").append(tabla).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("'");
-                                if(params==5)
-                                {
-                                    if((!cat_vw_punteo_sare.getE04().isEmpty() && (!cat_vw_punteo_sare.getE05().isEmpty()) 
-                                            && (!cat_vw_punteo_sare.getE06().isEmpty()) && (!cat_vw_punteo_sare.getE07().isEmpty())))
-                                    {
-                                        if ((!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty()) && (!cat_vw_punteo_sare.getE06().isEmpty()) && (!cat_vw_punteo_sare.getE07().isEmpty())) 
-                                        {
-                                            cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05().concat(cat_vw_punteo_sare.getE06().concat(cat_vw_punteo_sare.getE07()))));
-                                        }
-                                        else
-                                        {
-                                          cvegeo=String.valueOf(1);  
-                                        }
-                                        sql.append(" and cvegeo='").append(cvegeo).append("'");
-                                    }
-                                    else
-                                    {
-                                        sql.append(" and 1=1");
-                                    }
-
-                                }
-                                else
-                                {
-                                    if ((params == 4) && (!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty()) && (!cat_vw_punteo_sare.getE06().isEmpty())) {
-                                        cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05().concat(cat_vw_punteo_sare.getE06())));
-                                        } else if ((params == 3) && (!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty())) {
-                                           cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05()));
-                                        } else if ((params == 2) && (!cat_vw_punteo_sare.getE04().isEmpty())) {
-                                            cvegeo= cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04());
-                                        } else {
-                                            cvegeo= cat_vw_punteo_sare.getE03();
-                                        }
-                                    sql.append(" and cvegeo='").append(cvegeo).append("'");
-                                }
-                                if(params==4)
-                                {
-                                    sql.append("union all select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-                                    sql.append("from ").append(schemamdm).append(".").append(rural[0]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("union all ");
-                                    sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-                                    sql.append("from ").append(schemamdm).append(".").append(rural[1]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("limit 1");
-                                }
+                               sql=sqlwhendonthavecords(esquema,cat_vw_punteo_sare,tabla,rural,params,campo_geo);
                             }
                          break;
                      case GETEXTENTCVEGEO:
@@ -753,13 +719,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     }
                                 }
                                  sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent");
-                                 sql.append(" from ").append(schemamdm).append(".").append(t).append(" where cve_ent= ").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo = ").append(cvegeo);
+                                 sql.append(" from ").append(esquema).append(".").append(t).append(" where cve_ent= ").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo = ").append(cvegeo);
                                  if(isRural)
                                  {
                                     sql.append("union all select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-                                    sql.append("from ").append(schemamdm).append(".").append(rural[0]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo=").append(cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05()))).append("union all ");
+                                    sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo=").append(cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05()))).append("union all ");
                                     sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-                                    sql.append("from ").append(schemamdm).append(".").append(rural[1]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo= ").append(cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE06()))).append(" limit 1"); 
+                                    sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append(" and cvegeo= ").append(cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE06()))).append(" limit 1"); 
                                  }
                                 
                             } 
@@ -767,9 +733,55 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                          break;
                          
                  }
-                 break;
-         }
          return sql;
+      }
+      private StringBuilder sqlwhendonthavecords(String esquema,cat_vw_punteo_sare cat_vw_punteo_sare,String tabla,String rural[], Integer params,String campo_geo){
+          StringBuilder sql=new StringBuilder();
+          String cvegeo = "";
+                sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent");
+                                sql.append(" from ").append(esquema).append(".").append(tabla).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("'");
+                                if(params==5)
+                                {
+                                    if((!cat_vw_punteo_sare.getE04().isEmpty() && (!cat_vw_punteo_sare.getE05().isEmpty()) 
+                                            && (!cat_vw_punteo_sare.getE06().isEmpty()) && (!cat_vw_punteo_sare.getE07().isEmpty())))
+                                    {
+                                        if ((!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty()) && (!cat_vw_punteo_sare.getE06().isEmpty()) && (!cat_vw_punteo_sare.getE07().isEmpty())) 
+                                        {
+                                            cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05().concat(cat_vw_punteo_sare.getE06().concat(cat_vw_punteo_sare.getE07()))));
+                                        }
+                                        else
+                                        {
+                                          cvegeo=String.valueOf(1);  
+                                        }
+                                        sql.append(" and cvegeo='").append(cvegeo).append("'");
+                                    }
+                                    else
+                                    {
+                                        sql.append(" and 1=1");
+                                    }
+
+                                }
+                                else
+                                {
+                                    if ((params == 4) && (!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty()) && (!cat_vw_punteo_sare.getE06().isEmpty())) {
+                                        cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05().concat(cat_vw_punteo_sare.getE06())));
+                                        } else if ((params == 3) && (!cat_vw_punteo_sare.getE04().isEmpty()) && (!cat_vw_punteo_sare.getE05().isEmpty())) {
+                                           cvegeo=cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05()));
+                                        } else if ((params == 2) && (!cat_vw_punteo_sare.getE04().isEmpty())) {
+                                            cvegeo= cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04());
+                                        } else {
+                                            cvegeo= cat_vw_punteo_sare.getE03();
+                                        }
+                                    sql.append(" and cvegeo='").append(cvegeo).append("'");
+                                }
+                                if(params==4)
+                                {
+                                    sql.append("union all select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
+                                    sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("union all ");
+                                    sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
+                                    sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("limit 1");
+                                }
+          return sql;
       }
    
 }
