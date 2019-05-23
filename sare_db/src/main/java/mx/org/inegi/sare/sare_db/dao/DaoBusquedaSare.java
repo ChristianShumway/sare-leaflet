@@ -96,12 +96,12 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     Integer breakCve = 5;
     
     @Override
-    public List<cat_vw_punteo_sare> busqueda(Integer proyecto, String tramo, String ce, String usuario, String id_ue) 
+    public List<cat_vw_punteo_sare> busqueda(Integer proyecto, String tramo, String ce, String usuario,int origen, String id_ue) 
     {
         resultado=new ArrayList<>();
         StringBuilder sql;
         proyectos=getProyecto(proyecto);
-        sql=getSql(null,0,"",null,"",proyectos,ce,id_ue,MetodosBusqueda.BUSQUEDAOCL);
+        sql=getSql(null,0,"",null,"",proyectos,ce,id_ue,origen,MetodosBusqueda.BUSQUEDAOCL);
         resultado=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<List<cat_vw_punteo_sare>>() 
         {
             @Override
@@ -162,7 +162,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         boolean regresa=false;
         StringBuilder sql;
         proyectos=getProyecto(proyecto);
-        sql = getSql(null,0,"",null,"",proyectos,"", "",MetodosBusqueda.OCUPACVEUNICA);
+        sql = getSql(null,0,"",null,"",proyectos,"", "",0,MetodosBusqueda.OCUPACVEUNICA);
         if(jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue})>0)
         {
            regresa=true;
@@ -178,7 +178,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          final ArrayList<String> regresa = new ArrayList<>();
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-        sql = getSql(null,0,"",null,"",proyectos,"", "",MetodosBusqueda.GETCLAVESPG);
+        sql = getSql(null,0,"",null,"",proyectos,"", "",0,MetodosBusqueda.GETCLAVESPG);
         jdbcTemplate.query(sql.toString(), new ResultSetExtractor<ArrayList<String>>() 
         {
             @Override
@@ -201,7 +201,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         final List<cat_vw_punteo_sare> regresa = new ArrayList<>();
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-        sql = getSql(null,0,"",null,"",proyectos,"", id_ue,MetodosBusqueda.GETDATOSINMUEBLES);
+        sql = getSql(null,0,"",null,"",proyectos,"", id_ue,0,MetodosBusqueda.GETDATOSINMUEBLES);
         jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() 
         {
             @Override
@@ -260,7 +260,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
        String regresa = null;
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(cat_vw_punteo_sare,params,tabla,rural,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO2);
+         sql = getSql(cat_vw_punteo_sare,params,tabla,rural,"",proyectos,"", "",0,MetodosBusqueda.GETEXTENTCVEGEO2);
         switch(proyectos){
             case Operativo_Masivo:
                 regresa=execSqlExtentBusquedaCvegeo2Pg(sql);
@@ -319,7 +319,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          String regresa="";
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(null,null,tabla,null,"",proyectos,"", "",MetodosBusqueda.GETNOMBREBUSQUEDA);
+         sql = getSql(null,null,tabla,null,"",proyectos,"", "",0,MetodosBusqueda.GETNOMBREBUSQUEDA);
         
         regresa=jdbcTemplate.query(sql.toString(),new Object[]{tipo}, new ResultSetExtractor<String>() 
         {
@@ -342,7 +342,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
        String regresa="";
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(cat_vw_punteo_sare,params,tabla,null,campo,proyectos,"", "",MetodosBusqueda.GETNOMBREBUSQUEDAOCL);
+         sql = getSql(cat_vw_punteo_sare,params,tabla,null,campo,proyectos,"", "",0,MetodosBusqueda.GETNOMBREBUSQUEDAOCL);
         
         switch(proyectos){
             case Operativo_Masivo:
@@ -403,7 +403,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         boolean regresa=false;
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(null,null,"",null,"",proyectos,"", "",MetodosBusqueda.LIBERACLAVEUNICAORACLE);
+         sql = getSql(null,null,"",null,"",proyectos,"", "",0,MetodosBusqueda.LIBERACLAVEUNICAORACLE);
         
         if(jdbcTemplateocl.update(sql.toString(),new Object[]{cve_unica})>0)
         {
@@ -418,7 +418,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         boolean regresa=false;
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(null,null,"",null,"",proyectos,"", "",MetodosBusqueda.GETVALCOORGEO);
+         sql = getSql(null,null,"",null,"",proyectos,"", "",0,MetodosBusqueda.GETVALCOORGEO);
         
         regresa=jdbcTemplate.query(sql.toString(),new Object[]{x,y}, new ResultSetExtractor<Boolean>() 
         {
@@ -441,7 +441,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         String regresa="";
          StringBuilder sql;
          proyectos=getProyecto(proyecto);
-         sql = getSql(cat_vw_punteo_sare,null,"",null,"",proyectos,"", "",MetodosBusqueda.GETEXTENTCVEGEO);
+         sql = getSql(cat_vw_punteo_sare,null,"",null,"",proyectos,"", "",0,MetodosBusqueda.GETEXTENTCVEGEO);
          
         regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() 
         {
@@ -468,7 +468,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
     
-     private StringBuilder getSql(cat_vw_punteo_sare cat_vw_punteo_sare,Integer params,String tabla,String rural[],String campo,ProyectosEnum proyecto, String ce, String id_ue, MetodosBusqueda metodo)
+     private StringBuilder getSql(cat_vw_punteo_sare cat_vw_punteo_sare,Integer params,String tabla,String rural[],String campo,ProyectosEnum proyecto, String ce, String id_ue,int origen, MetodosBusqueda metodo)
      {
         StringBuilder sql = new StringBuilder();
         String esquemaPos,esquemaOcl;
@@ -480,7 +480,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 case Operativo_Masivo:
                     switch(metodo){
                         case BUSQUEDAOCL:
-                            sql=filtrarSqlEge(ce,esquemaOcl,id_ue);
+                            sql=filtrarSqlEge(ce,esquemaOcl,id_ue,origen);
                             break;
                         case GETCLAVESPG:
                              sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
@@ -531,7 +531,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 case Transportes:
                     switch(metodo){
                         case BUSQUEDAOCL:
-                            sql=filtrarSqlEge(ce,esquemaOcl,id_ue);
+                            sql=filtrarSqlEge(ce,esquemaOcl,id_ue,origen);
                             break;
                         case GETCLAVESPG:
                              sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
@@ -578,15 +578,20 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return sql;
     }
      
-      private StringBuilder filtrarSqlEge(String ce,String esquemaOcl, String id_ue)
+      private StringBuilder filtrarSqlEge(String ce,String esquemaOcl, String id_ue, int origen)
       {
         StringBuilder sql = new StringBuilder();
-        
         sql.append("SELECT to_char(id_ue) as id_ue, e03, e04, e05, e06, e07, e08, e09, lpad(to_char(tipo_e10),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, lpad(to_char(tipo_e14),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a),2,'0') tipo_e10_a, e10_a, ");
         sql.append("lpad(to_char(tipo_e10_b),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c),2,'0') tipo_e10_c, e10_c, coord_x as coorx, to_char(coord_y) as coory, descrubic, sare_st estatus_punteo, e12, ");
         sql.append("e19, tipo_e19, e20, e13, TRIM(e13a) as e13_a,e14_a, to_char(origen) origen, cestatal, e23a e23_a,"); //modificar e23a por e23 es solo para pruebas, e13_a por e13a, e12_p por e12, e11_a por e11
         sql.append("e17, e17||' - '||e17_desc as codigo_scian,c154");
-        sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' and id_ue = ").append(id_ue);
+        sql.append(" FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE");
+        if(origen==1){
+            sql.append(" where sare_st='10' and id_ue = ").append(id_ue);
+        }
+        else{
+           sql.append(" where id_ue = ").append(id_ue); 
+        }
         if (!(ce == null)) 
         {
                 if (!ce.equals("00") && !ce.equals("99")) 

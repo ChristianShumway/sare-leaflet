@@ -136,8 +136,8 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x, @RequestParam(value = "y") String y, @RequestParam(value = "tc") String tc, @RequestParam(value = "r") String r, @RequestParam(value = "ce") String ce, @RequestParam(value = "tr") String tr) throws Exception {
-        return BackingPunteo.getDatabyCoords(proyecto, x, y, tc, r, ce, tr);
+    public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x, @RequestParam(value = "y") String y, @RequestParam(value = "tc") String tc, @RequestParam(value = "r") String r, @RequestParam(value = "ce") String ce, @RequestParam(value = "id_ue") String id_ue) throws Exception {
+        return BackingPunteo.getDatabyCoords(proyecto, x, y, tc, r, ce, id_ue);
     }
 
     @RequestMapping(value = "liberacve.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)

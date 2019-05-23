@@ -14,6 +14,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ import org.springframework.stereotype.Service;
  * @author LIDIA.VAZQUEZ
  */
 @Service("BackingPunteo")
-public class BackingPunteoSare 
+public class BackingPunteoSare extends BackingBusquedaSare
 {
     
     @Autowired
@@ -44,7 +45,7 @@ public class BackingPunteoSare
         return TipoArea;
     }
     
-    public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, String r, String ce, String tr){
+    public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, String r, String ce, String id_ue){
         Respuesta=new cat_respuesta_services();
         cat_coordenadas coordMercator;
         cat_ubicacion_punteo ubicacion_punteo = null;
@@ -60,9 +61,11 @@ public class BackingPunteoSare
         {
             coordMercator = new cat_coordenadas(x, y);
         }
-        if(true)
+        List<cat_vw_punteo_sare> catBusquedaOracle=InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2,id_ue);
+        if(catBusquedaOracle.size()>0)
         {
-            if(true)
+            Boolean isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
+            if(isCE)
             {
                  String ta = InterfacePunteoSare.getTipoArea(proyecto,coordMercator.getX(), coordMercator.getY());
                  if(ta!=null)

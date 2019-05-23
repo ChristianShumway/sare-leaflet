@@ -789,10 +789,10 @@ const handleActiveVisibleSearch = () => {
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    let id_ue=document.getElementById('id_UE')
-    let ce='00'
-    let tr='00000000'
-    let u='cuenta.usuario'
+    let id_ue=document.getElementById('id_UE').value
+    let ce=dataUserFromLoginLocalStorage.ce
+    let tr=dataUserFromLoginLocalStorage.tramo_control
+    let u=dataUserFromLoginLocalStorage.nombre
     callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
 }
 
@@ -807,13 +807,14 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'tc': tc, 
     'r': r, 
     'ce': ce, 
-    'tr': tr
+    'id_ue': id_ue
   }, urlServices['serviceIdentify'].type,  data => {
-    const {catVial} = data[0].datos.datos
-    catalogoCatVial = catVial
+    
     
     if (data[0].operation) {
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        const {catVial} = data[0].datos.datos
+        catalogoCatVial = catVial
         confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
         agregaFuncionEliminarDuplicadosSelects()
@@ -827,6 +828,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           else {
             if (data[0].datos.mensaje.type === 'error') {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+              MDM6('hideMarkers', 'identify')
+              xycoorsx = ''
+              xycoorsy = '' 
             }
             else {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
@@ -1592,7 +1596,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
 const identificar = coor => {
   MDM6('hideMarkers', 'identify')
   let level = MDM6('getZoomLevel')
-  const id_ue = document.getElementById('id_UE')
+  const id_ue = document.getElementById('id_UE').value
   let visible = document.getElementById('container-ratifica').dataset.visible
      
   if(id_ue != '')

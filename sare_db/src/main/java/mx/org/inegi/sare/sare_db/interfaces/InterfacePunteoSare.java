@@ -32,4 +32,6 @@ public interface InterfacePunteoSare {
     public cat_ubicacion_punteo getInfoPunteoRural(Integer proyecto, String x, String y);
    
     public boolean isFrentesProximos(Integer proyecto,String ent, String x, String y);
+    
+    public boolean isCECorrect(String x, String y, String ent, Integer proyecto);
 }

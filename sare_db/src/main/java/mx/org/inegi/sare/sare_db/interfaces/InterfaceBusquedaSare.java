@@ -16,7 +16,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
  */
 public interface InterfaceBusquedaSare {
     
-    public List<cat_vw_punteo_sare> busqueda(Integer proyecto,String tramo, String ce, String usuario, String id_ue);
+    public List<cat_vw_punteo_sare> busqueda(Integer proyecto,String tramo, String ce, String usuario, int origen,String id_ue);
     
     public ArrayList<String> getClavesUnicasPG(Integer proyecto);
     

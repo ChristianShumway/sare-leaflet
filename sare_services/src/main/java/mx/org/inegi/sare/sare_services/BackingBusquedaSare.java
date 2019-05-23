@@ -89,7 +89,7 @@ public class BackingBusquedaSare {
         {
             try 
             {
-                catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tramo, ce, usuario, id_ue);
+                catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tramo, ce, usuario,1, id_ue);
                 if (catBusquedaOracle.size() > 0) 
                 {
                     if(!ce.equals("00"))
