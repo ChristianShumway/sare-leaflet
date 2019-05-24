@@ -1,0 +1,13 @@
+@media print {
+  html { width:29.9cm;height:21.8cm;}
+  body{margin-bottom: -1.30cm;margin-top: 0cm;margin-right: 1.5cm; margin-left:1.0cm;}
+    .olControlMousePosition{
+        display:none;
+    } 
+    #OpenLayers_Control_ScaleLine_4
+    {
+        display:none;
+    }
+    
+    
+}

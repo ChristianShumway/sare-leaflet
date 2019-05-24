@@ -25,7 +25,6 @@ let arrayClavesBloqueadas = ""
 let arrayClavesBloqueadasTodas = ""
 let banderaDesbloquear = false
 let bandera=false
-
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
@@ -791,18 +790,18 @@ const handleActiveVisibleSearch = () => {
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    let id_ue=document.getElementById('id_UE').value
-    let ce=dataUserFromLoginLocalStorage.ce
-    let tr=dataUserFromLoginLocalStorage.tramo_control
-    let u=dataUserFromLoginLocalStorage.nombre
+    let id_ue=document.getElementById('id_UE')
+    let ce='00'
+    let tr='00000000'
+    let u='cuenta.usuario'
     callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
 }
 
 //Función que llama al servicio para el punteo de unidades economicas
 
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
-     bandera=true;
-  //showalertpunteoloading();
+  bandera=true;
+  showalertpunteoloading();
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
@@ -811,16 +810,15 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'tc': tc, 
     'r': r, 
     'ce': ce, 
-    'id_ue': id_ue
+    'tr': tr
   }, urlServices['serviceIdentify'].type,  data => {
-    
-    
+      
     if (data[0].operation) {
         bandera=false;
-       // showalertpunteoloading();
-      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
+        showalertpunteoloading();
         const {catVial} = data[0].datos.datos
         catalogoCatVial = catVial
+      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
         agregaFuncionEliminarDuplicadosSelects()
@@ -834,9 +832,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           else {
             if (data[0].datos.mensaje.type === 'error') {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-              MDM6('hideMarkers', 'identify')
-              xycoorsx = ''
-              xycoorsy = '' 
             }
             else {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
@@ -854,18 +849,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     }     
         
   }, () => {
-    swal ({
-      title: '<span style="width:100%;">Buscando información de punteo!</span>',
-      text: 'Por favor espere un momento',
-      timer: 4000,
-      onOpen: () => swal.showLoading()
-    })
-    .then(
-      () => { },
-       dismiss => {
-           
-      }
-    )
         
   })
 }
@@ -1619,7 +1602,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
 const identificar = coor => {
   MDM6('hideMarkers', 'identify')
   let level = MDM6('getZoomLevel')
-  const id_ue = document.getElementById('id_UE').value
+  const id_ue = document.getElementById('id_UE')
   let visible = document.getElementById('container-ratifica').dataset.visible
      
   if(id_ue != '')

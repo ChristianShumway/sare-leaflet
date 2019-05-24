@@ -3,3 +3,11 @@
 /sare_seg_services/target/
 /sare_db/target/
 /sare_services/target/
+/sare_db/bin/target/
+/sare_services/bin/target/
+/sare_seg/bin/target/
+\.project
+
+*.class
+
+*.xml

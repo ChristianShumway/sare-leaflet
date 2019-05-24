@@ -613,7 +613,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
          {
             
             case Operativo_Masivo:
-                esquema="sare_mas2019_carto";
+                esquema=schemapgEge;
                 campo_geo="the_geom_merc";
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
