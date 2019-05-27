@@ -436,7 +436,7 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-domicilio">
                 <div class="input-field">
-                  <input id="tipo_e10" name="tipo_e10" type="text" hidden >
+                  <input id="tipo_e10" name="tipo_e10" type="text"  >
                 </div>
                 <div class="input-field" id="wrap-tipo-vialidad">
                   <input placeholder="Tipo de Vialidad" id="tipo_e10n" name="tipo_e10n" type="text" disabled >

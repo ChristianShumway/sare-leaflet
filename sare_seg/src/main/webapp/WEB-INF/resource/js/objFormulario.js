@@ -91,6 +91,15 @@ const objForm = [
   },
 ]
 
+const objForm2=[
+    {
+        id:'e05',
+        key: 'ubicacion-geografica',
+        name:'e05',
+        title:'title-ubicacion-geografica',
+    },
+]
+
 const objFormRural=[
    {
     id:'descrubic',

@@ -817,10 +817,10 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
         bandera=false;
-       // showalertpunteoloading();
-      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         const {catVial} = data[0].datos.datos
         catalogoCatVial = catVial
+       // showalertpunteoloading();
+      if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
         agregaFuncionEliminarDuplicadosSelects()
@@ -829,6 +829,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
+              
             showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
@@ -990,6 +991,7 @@ const handleTipoPunteo = () => {
 const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
   if (type === 'select'){
     constName.setAttribute('id', idField)
+    //constName.setAttribute('onchange', 'asignaValorId()')
     constName.classList.add('browser-default')
   }
   else if (type === 'input'){
@@ -1002,6 +1004,7 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId => {
+    selectId.setAttribute('onchange', 'asignaValorId()')
   catalogoCatVial.map( item =>{
     let opt = document.createElement('option')
     opt.appendChild( document.createTextNode(item.tipo_e10) )
@@ -1036,6 +1039,12 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
       }
     }
   }
+}
+
+const asignaValorId = () => {
+    let campoTipoE10n;
+    campoTipoE10n = document.getElementById('tipo_e10n').value
+    alert(campotipoE10n)
 }
 
 // función sweetaler errores punteo
@@ -1368,7 +1377,17 @@ const handleFormValidations = () => {
   if(punteo=='U' && mod_cat=='1') {
     totalInputs = objForm.length
     validations(totalInputs,objForm)
-  }
+  }else{
+    if(punteo=='U' && mod_cat=='2') {
+      if (validaEdificio()) {
+          totalInputs = objFormCentrocomercial.length
+          validations(totalInputs,objFormCentrocomercial,campo)
+          validations(totalInputs,objForm2)
+      }else{
+          totalInputs = objForm2.length
+          validations(totalInputs,objForm2)
+      }
+    }
   else {
     if(punteo=='R' && mod_cat=='1') {
       validaCp()
@@ -1391,6 +1410,7 @@ const handleFormValidations = () => {
       }
     }
   }
+ }
 }
 
 var campo

@@ -158,12 +158,16 @@ public class BackingGuardar extends BackingSincroniza {
             } else if (inmueble.getE07() == null || inmueble.getE07().equals("") || inmueble.getE07().isEmpty()) {
                 inmueble.setE07(InterfaceGuardar.getClaveProvisional(proyecto, inmueble, "m"));
                 object.setE07(inmueble.getE07());
+                object.setCvegeo(object.getE03().concat(object.getE04()).concat(object.getE05()).concat(object.getE06()).concat(object.getE07()));
+                inmueble.setCvegeo(object.getE03().concat(object.getE04()).concat(object.getE05()).concat(object.getE06()).concat(object.getE07()));
                 regresar = true;
             }
         } else {
             if (inmueble.getE07() == null || inmueble.getE07().equals("") || inmueble.getE07().isEmpty()) {
                 inmueble.setE07(InterfaceGuardar.getClaveProvisional(proyecto, inmueble, "m"));
                 object.setE07(inmueble.getE07());
+                object.setCvegeo(object.getE03().concat(object.getE04()).concat(object.getE05()).concat(object.getE06()).concat(object.getE07()));
+                inmueble.setCvegeo(object.getE03().concat(object.getE04()).concat(object.getE05()).concat(object.getE06()).concat(object.getE07()));
                 regresar = true;
             }
             
