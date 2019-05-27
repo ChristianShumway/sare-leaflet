@@ -311,18 +311,23 @@
             <div class="items-radio">  
 
               <div class="radio-option">
-                <input id="identificar" value="identificar" name="accion" type="radio"/>
+                <input id="identificar" value="identificar" name="accion" type="radio" onchange="radioSelect('identificar')"/>
                 <label for="identificar">Identificar</label>
               </div>
 
               <div class="radio-option">
-                  <input  id="puntear" checked="true" value="puntear" name="accion" type="radio"/>
+                  <input  id="puntear" checked="true" value="puntear" name="accion" type="radio" onchange="radioSelect('puntear')"/>
                 <label for="puntear">Puntear</label>
               </div>
 
               <div class="radio-option">
-                <input id="v-calle" value="v_calle" name="accion" type="radio"/>
+                <input id="v-calle" value="v_calle" name="accion" type="radio" onchange="radioSelect('calle')"/>
                 <label for="v-calle">Vista Calle</label>
+              </div>
+
+              <div class="radio-option">
+                <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
+                <label for="puntear-alta">Puntear Alta</label>
               </div>
 
             </div> 

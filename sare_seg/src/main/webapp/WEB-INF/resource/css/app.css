@@ -2,7 +2,7 @@ body{
   overflow: auto !important;
 }
 #mapa {
-  height:540px;
+  height:584px;
   width: 100%;
   position: relative;
   margin-top: 0px;
@@ -506,7 +506,7 @@ nav ul a {
 /* options */
 .wrap-options{
   background: #424242;
-  height: 540px;
+  height: 584px;
   overflow: hidden;
   overflow-y: auto;
 }

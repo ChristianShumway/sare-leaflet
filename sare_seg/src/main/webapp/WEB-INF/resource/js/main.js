@@ -1597,24 +1597,23 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
-        let clee_est=document.getElementById('id_UE').value;
-        if(clee_est!='' || clee_est==null)    
-        {
-            identificar(coor);
-            handleActionButtons('enabled')
-        }
-        else{
-          MDM6('hideMarkers', 'identify') 
-          Swal.fire
-            ({
-                    position: 'bottom-end',
-                    type: 'warning',
-                    title: 'Debe seleccionar una unidad economica a puntear',
-                    showConfirmButton: false,
-                    timer: 2000
-            })
-        }
-      break;
+      let clee_est=document.getElementById('id_UE').value;
+      if(clee_est!='' || clee_est==null)    
+      {
+        identificar(coor);
+        handleActionButtons('enabled')
+      }
+      else{
+        MDM6('hideMarkers', 'identify') 
+        Swal.fire ({
+          position: 'bottom-end',
+          type: 'warning',
+          title: 'Debe seleccionar una unidad economica a puntear',
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+      break
     case 'v_calle':
       if(level>=13) {
         StreetView(coor.lon, coor.lat)
@@ -1628,8 +1627,54 @@ const HandleWhatDoYouWantToDo = (coor) => {
           timer: 2000
         })
       }
+    case 'puntear_alta':
+      alert('puntea alta')
       break
   }
+}
+
+const radioSelect = option => {
+  switch (option) {
+    case 'identificar':
+      alertToastForm('Identificar Activado', 'info')
+      HandleActionsSaveNewPoint('no alta')
+      break
+    case 'puntear':
+      alertToastForm('Puntear Activado', 'info')
+      HandleActionsSaveNewPoint('no alta')
+      break
+    case 'calle':
+      alertToastForm('Vista Calle Activado', 'info')
+      HandleActionsSaveNewPoint('no alta')
+      break
+    case 'alta':
+      alertToastForm('Puntear Alta Activado', 'info')
+      HandleActionsSaveNewPoint('alta')
+      break
+    default:
+      break
+  }
+}
+
+const HandleActionsSaveNewPoint = option =>{
+  const containerSearch = document.getElementById('container-search')
+  const tituloBusqueda = document.getElementById('titulo-busqueda')
+  const arrowSearch = document.getElementById('arrow-search')
+  let statusContainer = containerSearch.dataset.visible
+
+  if(option === 'alta') {
+    tituloBusqueda.removeAttribute('onclick')
+    arrowSearch.removeAttribute('onclick')
+    if(statusContainer === 'show') {
+      handleVisibleSearch()
+    }
+  } else if (option === 'no alta') {
+    if(!tituloBusqueda.getAttribute('onclick') && !arrowSearch.getAttribute('onclick')) {
+      tituloBusqueda.setAttribute('onclick', 'handleVisibleSearch()')
+      arrowSearch.setAttribute('onclick', 'handleVisibleSearch()')
+    }
+  }
+
 }
 
 const identificar = coor => {
