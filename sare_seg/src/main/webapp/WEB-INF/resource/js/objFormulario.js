@@ -97,6 +97,12 @@ const objFormRural=[
     key: 'calle-posterior',
     name:'Descripción de la ubicación del establecimiento',
     title:'title-calle-posterior'
+  },
+  {
+    id:'e11',
+    key: 'domicilio',
+    name:'número exterior',
+    title:'title-domicilio'
   },   
 ]
 const objFormCentrocomercial=[

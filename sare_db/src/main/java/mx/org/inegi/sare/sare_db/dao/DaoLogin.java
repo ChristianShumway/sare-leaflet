@@ -65,6 +65,7 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
                     usuario.setCve_operativa(rs.getString("cveoper"));
                     usuario.setCe(rs.getString("ce"));
                     usuario.setTramo_control(rs.getString("tramo_control"));
+                    usuario.setNombre(rs.getString("nombre"));
                     regresa=true;
                 }
                 return usuario;

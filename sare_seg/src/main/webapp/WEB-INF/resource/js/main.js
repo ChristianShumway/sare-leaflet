@@ -1363,6 +1363,7 @@ const validations=(totalInputs,object,campo)=>{
 // Función validación de formulario campos vacios
 const handleFormValidations = () => {
   let totalInputs
+  let numero_ext=document.getElementById('e11').value;
   
   if(punteo=='U' && mod_cat=='1') {
     totalInputs = objForm.length
@@ -1375,11 +1376,15 @@ const handleFormValidations = () => {
     else {
       if(punteo=='R' && mod_cat=='2') {
         if (validaEdificio()) {
+            
           totalInputs = objFormCentrocomercial.length
           validations(totalInputs,objFormCentrocomercial,campo)
           validations(totalInputs,objFormRural)
         }
         else {
+            if(numero_ext<=0){
+                document.getElementById('e11').value="";
+            }
           totalInputs = objFormRural.length
           validations(totalInputs,objFormRural)
         }  

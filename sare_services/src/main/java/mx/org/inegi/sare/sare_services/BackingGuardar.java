@@ -42,7 +42,7 @@ public class BackingGuardar extends BackingSincroniza {
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble,object, proyecto)) {
                             if (InterfaceGuardar.getGuardaUe(proyecto, object)) {
-                                if (GuardarUeOCl(inmueble, proyecto, usuario)) {
+                                if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
                                             if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
@@ -58,7 +58,7 @@ public class BackingGuardar extends BackingSincroniza {
                                     }
                                 } else {
                                     Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                }
+                                //}
                             } else {
                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                             }

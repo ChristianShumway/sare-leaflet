@@ -68,6 +68,9 @@ public class BackingLogin {
                          Respuesta.setUsuario(user);
                     }
                }
+               else{
+                   Respuesta.setMensaje(new cat_mensaje("false", "No cuenta con permiso para acceder al sistema"));
+               }
            }
         }
         
