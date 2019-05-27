@@ -1536,7 +1536,18 @@ const handleShowResult = result => {
       else {
         handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
       }
-    }, () => handleShowSaveAlert('info', 'Guardando', 'Almacenando información, por favor espere un momento', true)
+    }, () => swal({
+        title: 'Identificación de Unidades Económicas!',
+        text: 'Por favor espere un momento',
+        timer: 2000,
+        onOpen: () => swal.showLoading() 
+      }).then(
+        () => { },
+        (dismiss) => {
+          if (dismiss === 'timer') {
+          }
+        }
+      ) //handleShowSaveAlert('info', 'Guardando', 'Almacenando información, por favor espere un momento', true)
     )
         
   } //close if result.value
