@@ -58,7 +58,7 @@ public class BackingGuardar extends BackingSincroniza {
                                     }
                                 } else {
                                     Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                //}
+                                }
                             } else {
                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                             }
