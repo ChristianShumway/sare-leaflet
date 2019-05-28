@@ -817,8 +817,11 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
         bandera=false;
-        const {catVial} = data[0].datos.datos
-        catalogoCatVial = catVial
+        if(typeof data[0].datos.mensaje.messages === 'undefined')
+        {
+            const {catVial} = data[0].datos.datos
+            catalogoCatVial = catVial
+        }
        // showalertpunteoloading();
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         confirmacionPunteo = false
@@ -1004,11 +1007,11 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId => {
-  //selectId.setAttribute('onchange', 'asignaValorId()')
+    //selectId.setAttribute('onchange', 'asignaValorId()')
   catalogoCatVial.map( item =>{
     let opt = document.createElement('option')
-    opt.appendChild( document.createTextNode(item.tipo_e10) )
-    opt.value = item.tipo_e10n
+    opt.appendChild( document.createTextNode(item.tipo_e10n) )
+    opt.value = item.tipo_e10
     selectId.appendChild(opt)
   })
 }
@@ -1664,7 +1667,16 @@ const HandleWhatDoYouWantToDo = (coor) => {
         })
       }
     case 'puntear_alta':
-      alert('puntea alta')
+      if (level<=13) {
+          showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
+          MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+        } else {
+          //Lo deja puntear y agrega el punto
+          MDM6('hideMarkers', 'identify')
+          MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
+          handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+          handleHideAlertPickMap()
+        }
       break
   }
 }
@@ -2095,16 +2107,16 @@ const handleLogOut = () =>{
 }
 
 const handleSessionActive = () => {            
-  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
-    if (data[0].datos.success == false) {                                                
-      alertToastForm('No se ha iniciado sesión', 'error')
-      setTimeout( () => window.location.href = './' , 1500 )
-    } else {
-      dataUserFromLoginLocalStorage=data[0].datos.datos
-    }
-  }, 
-    () => {}
-  )      
+//  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
+//    if (data[0].datos.success == false) {                                                
+//      alertToastForm('No se ha iniciado sesión', 'error')
+//      setTimeout( () => window.location.href = './' , 1500 )
+//    } else {
+//      dataUserFromLoginLocalStorage=data[0].datos.datos
+//    }
+//  }, 
+//    () => {}
+//  )      
 }
 
 // ALERTA NORMAL 

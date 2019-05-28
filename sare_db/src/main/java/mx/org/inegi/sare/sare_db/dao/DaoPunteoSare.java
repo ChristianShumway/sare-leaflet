@@ -334,15 +334,15 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 {
                     ubicacion_punteo=new cat_ubicacion_punteo();
                     ubicacion_punteo.setE03(rs.getString("cve_ent")!=null?rs.getString("cve_ent"):"");
-                    ubicacion_punteo.setE03n(rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"");
+                    ubicacion_punteo.sete03N(rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"");
                     ubicacion_punteo.setE04(rs.getString("cve_mun")!=null?rs.getString("cve_mun"):"");
-                    ubicacion_punteo.setE04n(rs.getString("nom_mun")!=null?rs.getString("nom_mun"):"");
+                    ubicacion_punteo.sete04N(rs.getString("nom_mun")!=null?rs.getString("nom_mun"):"");
                     ubicacion_punteo.setE05(rs.getString("cve_loc")!=null?rs.getString("cve_loc"):"");
-                    ubicacion_punteo.setE05n(rs.getString("nom_loc")!=null?rs.getString("nom_loc"):"");
+                    ubicacion_punteo.sete05N(rs.getString("nom_loc")!=null?rs.getString("nom_loc"):"");
                     ubicacion_punteo.setE06(rs.getString("cve_ageb")!=null?rs.getString("cve_ageb"):"");
                     ubicacion_punteo.setE07(rs.getString("cve_mza")!=null?rs.getString("cve_mza"):"");
                     ubicacion_punteo.setCveft(rs.getString("cveft")!=null?rs.getString("cveft"):"");
-                    ubicacion_punteo.setTipo_e10n(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
+                    ubicacion_punteo.settipo_e10n(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
                     ubicacion_punteo.setE10_cvevial(rs.getString("cvevial")!=null?rs.getString("cvevial"):"");
                     ubicacion_punteo.setE10(rs.getString("nomvial")!=null?rs.getString("nomvial"):"");
                     ubicacion_punteo.setCoord_x(rs.getString("x")!=null?rs.getString("x"):"");
@@ -370,15 +370,15 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 {
                     ubicacion_punteo=new cat_ubicacion_punteo();
                     ubicacion_punteo.setE03(rs.getString("cve_ent")!=null?rs.getString("cve_ent"):"");
-                    ubicacion_punteo.setE03n(rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"");
+                    ubicacion_punteo.sete03N(rs.getString("nom_ent")!=null?rs.getString("nom_ent"):"");
                     ubicacion_punteo.setE04(rs.getString("cve_mun")!=null?rs.getString("cve_mun"):"");
-                    ubicacion_punteo.setE04n(rs.getString("nom_mun")!=null?rs.getString("nom_mun"):"");
+                    ubicacion_punteo.sete04N(rs.getString("nom_mun")!=null?rs.getString("nom_mun"):"");
                     ubicacion_punteo.setE05(rs.getString("cve_loc")!=null?rs.getString("cve_loc"):"");
-                    ubicacion_punteo.setE05n(rs.getString("nom_loc")!=null?rs.getString("nom_loc"):"");
+                    ubicacion_punteo.sete05N(rs.getString("nom_loc")!=null?rs.getString("nom_loc"):"");
                     ubicacion_punteo.setE06(rs.getString("cve_ageb")!=null?rs.getString("cve_ageb"):"");
                     ubicacion_punteo.setE07(rs.getString("cve_mza")!=null?rs.getString("cve_mza"):"");
                     ubicacion_punteo.setCveft(rs.getString("cveft")!=null?rs.getString("cveft"):"");
-                    ubicacion_punteo.setTipo_e10n(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
+                    ubicacion_punteo.setTIPO_E10(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
                     ubicacion_punteo.setE10_cvevial(rs.getString("cvevial")!=null?rs.getString("cvevial"):"");
                     ubicacion_punteo.setE10(rs.getString("nomvial")!=null?rs.getString("nomvial"):"");
                     ubicacion_punteo.setCoord_x(rs.getString("x")!=null?rs.getString("x"):"");
@@ -501,7 +501,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 List<cat_vial> vial= new ArrayList<>();
                 while (rs.next()) 
                 {
-                    fila = new cat_vial(rs.getString("tipo_e10n"), rs.getString("tipo_e10"));
+                    fila = new cat_vial(rs.getString("tipo_e10"), rs.getString("tipo_e10n"));
                     vial.add(fila);
                 }
                 return vial;
@@ -547,15 +547,15 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 while (rs.next()) 
                 {
                     fila.setE03(rs.getString("cve_ent"));
-                    fila.setE03n(rs.getString("nom_ent"));
+                    fila.sete03N(rs.getString("nom_ent"));
                     fila.setE04(rs.getString("cve_mun"));
-                    fila.setE04n(rs.getString("nom_mun"));
+                    fila.sete04N(rs.getString("nom_mun"));
                     fila.setE05(rs.getString("cve_loc"));
-                    fila.setE05n(rs.getString("nom_loc"));
+                    fila.sete05N(rs.getString("nom_loc"));
                     fila.setE06(rs.getString("cve_ageb"));
                     fila.setE07(rs.getString("cve_mza"));
                     fila.setCveft(rs.getString("cveft"));
-                    fila.setTipo_e10n(rs.getString("tipovial"));
+                    fila.settipo_e10n(rs.getString("tipovial"));
                     fila.setE10_cvevial(rs.getString("cvevial"));
                     fila.setE10(rs.getString("nomvial"));
                     fila.setCoord_x(rs.getString("x"));
@@ -583,15 +583,15 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 while (rs.next()) 
                 {
                     fila.setE03(rs.getString("cve_ent"));
-                    fila.setE03n(rs.getString("nom_ent"));
+                    fila.sete03N(rs.getString("nom_ent"));
                     fila.setE04(rs.getString("cve_mun"));
-                    fila.setE04n(rs.getString("nom_mun"));
+                    fila.sete04N(rs.getString("nom_mun"));
                     fila.setE05(rs.getString("cve_loc"));
-                    fila.setE05n(rs.getString("nom_loc"));
+                    fila.sete05N(rs.getString("nom_loc"));
                     fila.setE06(rs.getString("cve_ageb"));
                     fila.setE07(rs.getString("cve_mza"));
                     fila.setCveft(rs.getString("cveft"));
-                    fila.setTipo_e10n(rs.getString("tipovial"));
+                    fila.settipo_e10n(rs.getString("tipovial"));
                     fila.setE10_cvevial(rs.getString("cvevial"));
                     fila.setE10(rs.getString("nomvial"));
                     fila.setCoord_x(rs.getString("x"));
@@ -705,7 +705,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("select u.cve_ent,ent.nomgeo nom_ent,u.cve_mun,mun.nomgeo nom_mun,u.cve_loc,case when l.nomgeo is null then u.nom_loc else l.nomgeo end nom_loc,u.cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,u.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from(  ");
                     sql.append("(SELECT cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),  ");
                     sql.append("Y(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),cve_mza,cveft cveft, nomvial,tipovial, cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza  cvegeo,cvevial cvevial,'U' punteo,1 mod_cat,'' cvegeo2016 ");
-                    sql.append("FROM ").append(schemapg).append(".vw_frentesmgn2019").append(" a where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and   ");
+                    sql.append("FROM ").append(schemapg).append(".td_frentes_").append(ce).append(" a where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and   ");
                     sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),1)))  ");
                     sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
                     sql.append("union all ");
@@ -718,7 +718,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("left JOIN ").append(schemapg).append(".td_localidades l ON u.cve_ent=l.cve_ent and u.cve_mun=l.cve_mun and u.cve_loc=l.cve_loc order by mod_cat limit 1");
                 break;
                 case VALPUNTEO:
-                    sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cveft<>?  group by 1,2");
+                    sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemapg).append(".td_frentes_").append(ce).append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cveft<>?  group by 1,2");
                 break;
                 case GET_TIPO_VIAL:
                     sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ?");
@@ -753,7 +753,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     sql.append("INNER JOIN sare_mas2019_carto.td_entidad ent ON r.cve_ent=ent.cvegeo  INNER JOIN sare_mas2019_carto.td_municipios mun ON r.cve_ent=mun.cve_ent and r.cve_mun=mun.cve_mun  order by mod_cat limit 1");
                 break;
                 case FRENTES_PROXIMOS:
-                    sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
+                    sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapg).append(".td_frentes_").append(ce).append(" where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
                     sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),20)))");
                 }
                 break;

@@ -64,9 +64,15 @@ public class BackingPunteoSare extends BackingBusquedaSare
         }
         if(!id_ue.equals("")){
             List<cat_vw_punteo_sare> catBusquedaOracle=InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2,id_ue);
+        
             if(catBusquedaOracle.size()>0)
-        {
-             isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
+            {
+                 isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
+            }
+                else
+                {
+                     Respuesta=new cat_respuesta_services("error",new cat_mensaje("error", "La UE no tiene una Coordinación Estatal asginada"));
+                }
         }
             if(isCE)
             {
@@ -121,9 +127,9 @@ public class BackingPunteoSare extends BackingBusquedaSare
                                  if(ubicacion_punteo.getE10_X()!=null && ubicacion_punteo.getE10_X().size()>0)
                                  {
                                     ubicacion_punteo.setE10_X(getVialidades(proyecto,ubicacion_punteo.getE10_X()));
-                                    if(ubicacion_punteo.getTipo_e10n()!=null && !ubicacion_punteo.getTipo_e10n().equals(""))
+                                    if(ubicacion_punteo.gettipo_e10n()!=null && !ubicacion_punteo.gettipo_e10n().equals(""))
                                     {
-                                        ubicacion_punteo.setTipo_e10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.getTipo_e10n().toLowerCase()));
+                                        ubicacion_punteo.setTIPO_E10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.gettipo_e10n().toLowerCase()));
                                     }
                                  }
                                  if(ubicacion_punteo.getMod_cat()==2)
@@ -160,11 +166,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
             {
                 Respuesta=new cat_respuesta_services("error",new cat_mensaje("error", "La ubicación del punto esta fuera de la Coordinación Estatal asginada"));
             }
-        }
-        else
-        {
-             Respuesta=new cat_respuesta_services("error",new cat_mensaje("error", "La UE no tiene una Coordinación Estatal asginada"));
-        }
+         
         return Respuesta;
     }
     
