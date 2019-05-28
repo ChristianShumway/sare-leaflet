@@ -817,7 +817,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
         bandera=false;
-        if(typeof data[0].datos.mensaje.messages === 'undefined')
+        if(typeof data[0].datos.datos !== null)
         {
             const {catVial} = data[0].datos.datos
             catalogoCatVial = catVial
