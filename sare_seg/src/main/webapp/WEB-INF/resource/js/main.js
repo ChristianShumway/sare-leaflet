@@ -991,7 +991,7 @@ const handleTipoPunteo = () => {
 const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
   if (type === 'select'){
     constName.setAttribute('id', idField)
-    //constName.setAttribute('onchange', 'asignaValorId()')
+    constName.setAttribute('onchange', `asignaValorId(${idField})`)
     constName.classList.add('browser-default')
   }
   else if (type === 'input'){
@@ -1004,7 +1004,7 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId => {
-    selectId.setAttribute('onchange', 'asignaValorId()')
+  //selectId.setAttribute('onchange', 'asignaValorId()')
   catalogoCatVial.map( item =>{
     let opt = document.createElement('option')
     opt.appendChild( document.createTextNode(item.tipo_e10) )
@@ -1041,10 +1041,26 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
   }
 }
 
-const asignaValorId = () => {
-    let campoTipoE10n;
-    campoTipoE10n = document.getElementById('tipo_e10n').value
-    alert(campotipoE10n)
+const asignaValorId = item => {
+    const campoTipoE10n = document.getElementById('tipo_e10n')
+    const campoTipoE10an = document.getElementById('tipo_e10_an')
+    const campoTipoE10bn = document.getElementById('tipo_e10_bn')
+    const campoTipoE10cn = document.getElementById('tipo_e10_cn')
+    // hiddens
+    const campoTipoE10 = document.getElementById('tipo_e10')
+    const campoTipoE10a = document.getElementById('tipo_e10_a')
+    const campoTipoE10b = document.getElementById('tipo_e10_b')
+    const campoTipoE10c = document.getElementById('tipo_e10_c')
+
+    if(item[1].id === 'tipo_e10n'){
+      campoTipoE10.value = campoTipoE10n.value
+    } else if (item[1].id === 'tipo_e10_an'){
+      campoTipoE10a.value = campoTipoE10an.value
+    } else if (item[1].id === 'tipo_e10_bn'){
+      campoTipoE10b.value = campoTipoE10bn.value
+    } else if (item[1].id === 'tipo_e10_cn'){
+      campoTipoE10c.value = campoTipoE10cn.value
+    }
 }
 
 // función sweetaler errores punteo
