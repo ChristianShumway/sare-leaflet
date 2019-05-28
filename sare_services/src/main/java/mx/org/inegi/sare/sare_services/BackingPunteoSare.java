@@ -52,6 +52,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
         List<cat_vial> cat_vial = null;
         cat_vial vial=null;
         Boolean isCE=true;
+        Boolean isAlta=true;
         if(TipoCartografia.Geografica.getCodigo().equals(tc))
         {
             Double cX = Double.parseDouble(x.replace(",", "."));
@@ -64,7 +65,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
         }
         if(!id_ue.equals("")){
             List<cat_vw_punteo_sare> catBusquedaOracle=InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2,id_ue);
-        
+            isAlta=false;
             if(catBusquedaOracle.size()>0)
             {
                  isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
@@ -132,7 +133,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
                                         ubicacion_punteo.setTIPO_E10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.gettipo_e10n().toLowerCase()));
                                     }
                                  }
-                                 if(ubicacion_punteo.getMod_cat()==2)
+                                 if(ubicacion_punteo.getMod_cat()==2 || isAlta)
                                  {
                                      List<cat_vial> catVial=InterfacePunteoSare.getCatTipoVial(proyecto); 
                                      ubicacion_punteo.setCatVial(catVial);

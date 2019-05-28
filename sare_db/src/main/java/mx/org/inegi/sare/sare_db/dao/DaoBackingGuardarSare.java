@@ -61,6 +61,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 while(rs.next())
                 {
                     regresar = rs.getInt("resultado");
+                    
                 }
                 return regresar;
             }
@@ -102,6 +103,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 while(rs.next())
                 {
                     fila = rs.getInt("resultado");
+                    
                 }
                 regresar=fila>0;
                 return regresar;
@@ -120,7 +122,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
-                String regresar = null;
+                String regresar = "";
                 while(rs.next())
                 {
                     regresar = rs.getString("E23A");
@@ -140,7 +142,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-                Integer regresar = null;
+                Integer regresar = 0;
                 while(rs.next())
                 {
                     regresar = rs.getInt("id_deftramo");
@@ -196,46 +198,46 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("SELECT ").append(esquemaPos).append(".registra_ue_sare('").append(inmueble.getId_UE()).append("','")
                                 .append(inmueble.getTramo_control()).append("','").append(inmueble.getCvegeo().toUpperCase()).append("','")
                                 .append(inmueble.getCE().toUpperCase()).append("','").append(inmueble.getE03().toUpperCase()).append("','")
-                                .append(inmueble.getE03N().toUpperCase()).append("','").append(inmueble.getE04().toUpperCase()).append("','")
-                                .append(inmueble.getE04N().toUpperCase()).append("','")
-                                .append(inmueble.getE05().toUpperCase()).append("','")
-                                .append(inmueble.getE05N().toUpperCase()).append("','")
-                                .append(inmueble.getE06().toUpperCase()).append("','")
-                                .append(inmueble.getE07().toUpperCase()).append("','")
-                                .append(inmueble.getCveft()).append("','")
-                                .append(inmueble.getE08()).append("','")
-                                .append(inmueble.getE09()).append("','")
-                                .append(inmueble.getTipo_e10()).append("','")
-                                .append(inmueble.getE10()).append("','")
-                                .append(inmueble.getE11()).append("','")
-                                .append(inmueble.getE11_a()).append("','")
-                                .append(inmueble.getE12()).append("','")
-                                .append(inmueble.getE12p()).append("','")
-                                .append(inmueble.getE13()).append("','")
-                                .append(inmueble.getE13_a()).append("','")
-                                .append(inmueble.getTipo_E14()).append("','")
-                                .append(inmueble.getE14()).append("','")
-                                .append(inmueble.getE14_A()).append("','")
-                                .append(inmueble.getTipo_e10_a()).append("','")
-                                .append(inmueble.getE10_A().toUpperCase()).append("','")
-                                .append(inmueble.getTipo_e10_b()).append("','")
-                                .append(inmueble.getE10_B().toUpperCase()).append("','")
-                                .append(inmueble.getTipo_e10_c().toUpperCase()).append("','")
-                                .append(inmueble.getE10_C().toUpperCase()).append("','")
-                                .append(inmueble.getE10_e().toUpperCase()).append("','")
-                                .append(inmueble.getDescrubic().toUpperCase()).append("','")
+                                .append(inmueble.getE03N().toUpperCase()!=null?inmueble.getE03N().toUpperCase():"").append("','").append(inmueble.getE04().toUpperCase()).append("','")
+                                .append(inmueble.getE04N().toUpperCase()!=null?inmueble.getE04N().toUpperCase():"").append("','")
+                                .append(inmueble.getE05().toUpperCase()!=null?inmueble.getE05().toUpperCase():"").append("','")
+                                .append(inmueble.getE05N().toUpperCase()!=null?inmueble.getE05N().toUpperCase():"").append("','")
+                                .append(inmueble.getE06().toUpperCase()!=null?inmueble.getE06().toUpperCase():"").append("','")
+                                .append(inmueble.getE07().toUpperCase()!=null?inmueble.getE07().toUpperCase():"").append("','")
+                                .append(inmueble.getCveft()!=null?inmueble.getCveft():"").append("','")
+                                .append(inmueble.getE08()!=null?inmueble.getE08():"").append("','")
+                                .append(inmueble.getE09()!=null?inmueble.getE09():"").append("','")
+                                .append(inmueble.getTipo_e10()!=null?inmueble.getTipo_e10():"").append("','")
+                                .append(inmueble.getE10()!=null?inmueble.getE10():"").append("','")
+                                .append(inmueble.getE11()!=null?inmueble.getE11():"").append("','")
+                                .append(inmueble.getE11_a()!=null?inmueble.getE11_a():"").append("','")
+                                .append(inmueble.getE12()!=null?inmueble.getE12():"").append("','")
+                                .append(inmueble.getE12p()!=null?inmueble.getE12p():"").append("','")
+                                .append(inmueble.getE13()!=null?inmueble.getE13():"").append("','")
+                                .append(inmueble.getE13_a()!=null?inmueble.getE13_a():"").append("','")
+                                .append(inmueble.getTipo_E14()!=null?inmueble.getTipo_E14():"").append("','")
+                                .append(inmueble.getE14()!=null?inmueble.getE14():"").append("','")
+                                .append(inmueble.getE14_A()!=null?inmueble.getE14_A():"").append("','")
+                                .append(inmueble.getTipo_e10_a()!=null?inmueble.getTipo_e10_a():"").append("','")
+                                .append(inmueble.getE10_A().toUpperCase()!=null?inmueble.getE10_A().toUpperCase():"").append("','")
+                                .append(inmueble.getTipo_e10_b()!=null?inmueble.getTipo_e10_b():"").append("','")
+                                .append(inmueble.getE10_B().toUpperCase()!=null?inmueble.getE10_B().toUpperCase():"").append("','")
+                                .append(inmueble.getTipo_e10_c().toUpperCase()!=null?inmueble.getTipo_e10_c().toUpperCase():"").append("','")
+                                .append(inmueble.getE10_C().toUpperCase()!=null?inmueble.getE10_C().toUpperCase():"").append("','")
+                                .append(inmueble.getE10_e().toUpperCase()!=null?inmueble.getE10_e().toUpperCase():"").append("','")
+                                .append(inmueble.getDescrubic().toUpperCase()!=null?inmueble.getDescrubic().toUpperCase():"").append("','")
                                 .append(inmueble.getCoordx()).append("','")
                                 .append(inmueble.getCoordy()).append("','")
-                                .append(inmueble.getE19().toUpperCase()).append("','")
+                                .append(inmueble.getE19().toUpperCase()!=null?inmueble.getE19().toUpperCase():"").append("','")
                                 .append(inmueble.getTipo_e19() == null?"":inmueble.getTipo_e19()).append("','")
-                                .append(inmueble.getPunteo()).append("','")
-                                .append(inmueble.getMod_cat()).append("','")
+                                .append(inmueble.getPunteo()!=null?inmueble.getPunteo():"").append("','")
+                                .append(inmueble.getMod_cat()!=null?inmueble.getMod_cat():"").append("','")
                                 .append(inmueble.getOrigen().toUpperCase()).append("','")
                                 .append(inmueble.getCvegeo2016().toUpperCase()).append("','")
                                 .append(inmueble.getE20().toUpperCase()).append("','")
                                 .append(inmueble.getId_deftramo()).append("','")
-                                .append(inmueble.getE10_cvevial()).append("','")
-                                .append(inmueble.getE23()).append("') resultado");
+                                .append(inmueble.getE10_cvevial()!=null?inmueble.getE10_cvevial():"").append("','")
+                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("') resultado");
                         break;
                     case getE23A:
                         sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE()); 

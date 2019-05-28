@@ -30,6 +30,24 @@ const objForm = [
     title:'title-referencia'
   },
   {
+    id:'e11',
+    key: 'domicilio',
+    name:'Número exterior',
+    title:'title-domicilio',
+  },
+  {
+    id:'e13',
+    key: 'domicilio',
+    name:'número interior',
+    title:'title-domicilio',
+  },
+  {
+    id:'e14_A',
+    key: 'asentamiento',
+    name:'código postal',
+    title:'title-asentamiento',
+  },
+  {
     id:'e03',
     key: 'ubicacion-geografica',
     name:'e03',
@@ -89,6 +107,13 @@ const objForm = [
     name:'Nombre de vialidad',
     title:'title-calle-posterior',
   },
+  {
+    id:'id_UE',
+    key: 'referencia',
+    name:'clave del establecimiento',
+    title:'title-referencia',
+  },
+  
 ]
 
 const objForm2=[
@@ -214,6 +239,21 @@ const inputsEditables = [
   },
   {
     id:'id_UE',
+  },
+  {
+    id:'origen',
+  },
+  {
+    id:'c154',
+  },
+  {
+    id:'e08',
+  },
+  {
+    id:'e09',
+  },
+  {
+    id:'e17_DESC',
   },
 ]
 

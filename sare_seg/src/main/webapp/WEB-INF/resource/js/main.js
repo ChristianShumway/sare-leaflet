@@ -1672,10 +1672,15 @@ const HandleWhatDoYouWantToDo = (coor) => {
           MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
         } else {
           //Lo deja puntear y agrega el punto
+          enabledInputs()
+          handleActionTargetRef()
+          handleActionButtons('enabled')
           MDM6('hideMarkers', 'identify')
           MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
           handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
           handleHideAlertPickMap()
+          fillCatalogo()
+          fillCatalogoConjuntosComerciales()
         }
       break
   }

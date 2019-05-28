@@ -42,7 +42,7 @@ public class BackingGuardar extends BackingSincroniza {
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble,object, proyecto)) {
                             if (InterfaceGuardar.getGuardaUe(proyecto, object)) {
-                                if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
+                                //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
                                             if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
@@ -62,9 +62,9 @@ public class BackingGuardar extends BackingSincroniza {
                             } else {
                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                             }
-                        } else {
-                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                        }
+//                        } else {
+//                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+//                        }
                     } else if (validacion == 96) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
                     } else if (validacion == 99) {
@@ -72,7 +72,7 @@ public class BackingGuardar extends BackingSincroniza {
                     } else if (validacion == 99) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Datos nulos"));
                     } else if (validacion == 98) {
-                        Respuesta.setMensaje(new cat_mensaje("false", "C&oacute;digo Postal fuera de rango para la ubicaci&oacute;n seleccionada"));
+                        Respuesta.setMensaje(new cat_mensaje("false", "Código Postal fuera de rango para la ubicación seleccionada"));
                     } else if (validacion == 98) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Datos erroneos."));
                     }
@@ -175,11 +175,22 @@ public class BackingGuardar extends BackingSincroniza {
             regresar=true;
         }
             inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
-            inmueble.setId_deftramo(new BigDecimal(InterfaceGuardar.getidDeftramo(proyecto, inmueble)));
+            int deftramo=InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+            inmueble.setId_deftramo(new BigDecimal(deftramo));
+            if(validadeftramo(deftramo)){
+                inmueble.setId_deftramo(inmueble.getId_UE());
+            }
             object.setE23(inmueble.getE23());
             object.setId_deftramo(inmueble.getId_deftramo());
             
         return regresar;
+    }
+    
+    private boolean validadeftramo(int deftramo){
+        boolean regresar=false;
+        if(deftramo==0)
+            regresar=true;
+          return regresar;  
     }
 
     private boolean GuardarUeOCl(cat_vw_punteo_sare inmueble, Integer proyecto, String usuario) {
