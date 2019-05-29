@@ -221,6 +221,7 @@ const callServiceFindUE=(id_ue)=>{
 
 //Comienza a mostrar datos en la interfaz
 const showDataInterfaz = data => {
+  handleActionPunteoAlta('off')
   //obtiene el código postal
   getCp(data[0].datos.datos[0].e03)
   validateCoord(data)
@@ -1555,6 +1556,7 @@ const showViewPreliminar = d => {
 
 const handleShowResult = result => {
   const user = dataUserFromLoginLocalStorage.nombre
+  const checkboxPuntearAlta = document.getElementById('puntear-alta')
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
@@ -1573,7 +1575,9 @@ const handleShowResult = result => {
           cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
-          handleActiveVisibleSearch()
+         // handleActiveVisibleSearch()
+          //!checkboxPuntearAlta.checked ? handleVisibleSearch() : false
+          !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
         }
       }
       
@@ -1990,12 +1994,15 @@ const buildDetalle = ficha => {
 // función boton opción cancelar
 const handleCancelClick = () => {
   let id_ue=document.getElementById('id_UE').value
+  const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
   handleTipoPunteo()
   handleActionButtons('disabled')
-  handleActiveVisibleSearch()
+  handleActionPunteoAlta('on')
+  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
+  //handleActiveVisibleSearch()
   eliminaFuncionEliminiarDuplicadosSelects()
   bandera_ratificar=false
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
@@ -2030,6 +2037,7 @@ const callServiceLiberaClave=(id_ue)=>{
 }
 
 const cleanForm = () => {
+  const checkboxPuntearAlta = document.getElementById('puntear-alta')
   //limpia formularios
   handleCleanForms()
   //posicion el mapa en su posicion inicial
@@ -2045,7 +2053,8 @@ const cleanForm = () => {
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
-  handleVisibleSearch() 
+  !checkboxPuntearAlta.checked ? handleVisibleSearch() : false
+  //handleVisibleSearch() 
   //oculta mensaje 
   handleHideAlertPickMap()
   

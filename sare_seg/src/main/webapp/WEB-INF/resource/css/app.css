@@ -973,6 +973,10 @@ body.swal2-toast-shown .swal2-container.swal2-shown {
   line-height: 4.5em !important;
 }
 
+.swal2-icon.swal2-success {
+  width: 6em !important;
+}
+
 .swal2-icon.swal2-error [class^=swal2-x-mark-line][class$=left] {
   left: 0.6em !important;
 }

@@ -195,13 +195,24 @@ const handleShowRaticaHideSearch = () => {
 }
 
 //funcion que limpia los formularios
-
 const handleCleanForms=()=>
 {
     inputsClean.map(input => document.getElementById(input.id).value="")
     $("#e10_A").empty().attr("disabled", true);
     $("#e10_B").empty().attr("disabled", true);
     $("#e10_C").empty().attr("disabled", true);
+}
+
+//Función para activar y desactivar puntear alta
+const handleActionPunteoAlta = status => {
+  const checkPuntearAlta = document.getElementById('puntear-alta')
+
+  if(status === 'off' && !checkPuntearAlta.checked) {
+    //alert('desactiva opcion')
+    checkPuntearAlta.setAttribute('disabled', true)
+  } else if (status === 'on'){
+    checkPuntearAlta.removeAttribute('disabled')
+  }
 }
 
 
