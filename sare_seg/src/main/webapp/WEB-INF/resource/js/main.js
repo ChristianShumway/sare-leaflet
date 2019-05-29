@@ -488,7 +488,7 @@ const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacio
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
   let posicionFinal = ''
-  finClavesVistaLock > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVistaLock
+  finClavesVistaLock >= totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVistaLock
 
   tabla = `
     <div id='container-search-cleelist-lock' class='container-search-cleelist'>
@@ -1671,7 +1671,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       isAlta=true
       if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
-          MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+          MDM6('hideMarkers', 'identify')
         } else {
           //Lo deja puntear y agrega el punto
           enabledInputs()
