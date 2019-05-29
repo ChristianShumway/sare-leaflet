@@ -45,11 +45,11 @@ public class BackingGuardar extends BackingSincroniza {
                                 //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
-//                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
-//                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
-//                                            } else {
+                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
+                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
+                                            } else {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                            //}
+                                            }
                                         } else {
                                             Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                         }
