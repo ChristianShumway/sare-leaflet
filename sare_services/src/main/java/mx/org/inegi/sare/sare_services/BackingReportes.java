@@ -14,7 +14,8 @@ import java.util.Map;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
+import mx.org.inegi.sare.Enums.ProyectosEnum;
+import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceReportes;
 import net.sf.jasperreports.engine.JRException;
@@ -36,7 +37,7 @@ import org.springframework.stereotype.Service;
  * @author LIDIA.VAZQUEZ
  */
 @Service("BackingReportes")
-public class BackingReportes {
+public class BackingReportes extends DaoTransformaCartografia {
     
     @Autowired
     @Qualifier("datosConexionDao")
@@ -79,6 +80,9 @@ public class BackingReportes {
                 }
             }
             params.put("where", whereReporte);
+            ProyectosEnum proyectos;
+            proyectos=getProyecto(proyecto);
+            params.put("esquema", getEsquemaPostgres(proyectos));
             params.put("DIR",request.getServletContext().getRealPath("/WEB-INF/"));
             params.put("URL", URLImagen);
             if (tipoArchivo.equals("EXCEL")) {

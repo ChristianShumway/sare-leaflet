@@ -45,14 +45,13 @@ public class BackingPunteoSare extends BackingBusquedaSare
         return TipoArea;
     }
     
-    public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, String r, String ce, String id_ue){
+    public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, Boolean isAlta, String ce, String id_ue){
         Respuesta=new cat_respuesta_services();
         cat_coordenadas coordMercator;
         cat_ubicacion_punteo ubicacion_punteo = null;
         List<cat_vial> cat_vial = null;
         cat_vial vial=null;
         Boolean isCE=true;
-        Boolean isAlta=true;
         if(TipoCartografia.Geografica.getCodigo().equals(tc))
         {
             Double cX = Double.parseDouble(x.replace(",", "."));
@@ -63,9 +62,8 @@ public class BackingPunteoSare extends BackingBusquedaSare
         {
             coordMercator = new cat_coordenadas(x, y);
         }
-        if(!id_ue.equals("")){
+        if(!isAlta){
             List<cat_vw_punteo_sare> catBusquedaOracle=InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2,id_ue);
-            isAlta=false;
             if(catBusquedaOracle.size()>0)
             {
                  isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
