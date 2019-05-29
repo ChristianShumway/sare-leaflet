@@ -25,6 +25,7 @@ let arrayClavesBloqueadas = ""
 let arrayClavesBloqueadasTodas = ""
 let banderaDesbloquear = false
 let bandera=false
+let isAlta=false
 
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -809,7 +810,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     'x': x, 
     'y': y, 
     'tc': tc, 
-    'r': r, 
+    'r': isAlta, 
     'ce': ce, 
     'id_ue': id_ue
   }, urlServices['serviceIdentify'].type,  data => {
@@ -1667,6 +1668,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
         })
       }
     case 'puntear_alta':
+      isAlta=true
       if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
           MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});

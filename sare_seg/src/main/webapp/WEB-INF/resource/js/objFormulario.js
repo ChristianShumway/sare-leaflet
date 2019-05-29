@@ -90,6 +90,18 @@ const objForm = [
     title:'title-ubicacion-geografica',
   },
   {
+    id:'tipo_e10n',
+    key: 'domicilio',
+    name:'Tipo de Vialidad',
+    title:'title-domicilio',
+  }, 
+  {
+    id:'e10',
+    key: 'domicilio',
+    name:'Nombre de Vialidad',
+    title:'title-domicilio',
+  }, 
+  {
     id:'e10_A',
     key: 'entre-vialidades',
     name:'Nombre de vialidad 1',
