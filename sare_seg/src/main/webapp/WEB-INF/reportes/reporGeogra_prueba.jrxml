@@ -125,6 +125,7 @@
 	</style>
 	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
 	<parameter name="where" class="java.lang.String"/>
+	<parameter name="esquema" class="java.lang.String"/>
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select CASE
@@ -165,7 +166,7 @@
 
 end ce,cestatal cve_ce,tramo_control,origen,ID_UE,clee_emp,e08,e09,E23A,c154,e03 cve_ent,e04 cve_mun,e05 cve_loc,e06 cve_ageb,
 e07 cve_mza,tipo_e10,e10 nomvial,e11 numext,e11a numextalf,tipo_e14,e14,e12,e19,e20
-from CE2019_SEG.vw_punteo_sare where SARE_ST in ('10','20')  $P!{where} and cestatal is not null order by
+from ce2019_seg.vw_punteo_sare where SARE_ST in ('10','20')  $P!{where} and cestatal is not null order by
 cestatal,tramo_control,origen,e23a,clee_emp,id_ue,c154]]>
 	</queryString>
 	<field name="CE" class="java.lang.String"/>
