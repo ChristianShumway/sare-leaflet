@@ -1576,9 +1576,9 @@ const handleShowResult = result => {
           cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
-         // handleActiveVisibleSearch()
-          //!checkboxPuntearAlta.checked ? handleVisibleSearch() : false
+          //handleActiveVisibleSearch()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
+          handleActionPunteoAlta('on')
         }
       }
       
