@@ -38,7 +38,7 @@ const handleChangeOptions = option => {
   const idWms = urlServices['map'].label;
   const checkBox = document.getElementById(`checkbox-${option}`)
   checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
-  if (option == "sucursal") {
+  if (option == "checkbox-sucursal") {
     addCapas(checkBox);
   }
   else {
@@ -80,7 +80,7 @@ const addCapas = chk => {
     }
   } else {
     if (chk.checked === 'noFalse') {
-
+        
     }
     else {
       remLay('c101')
@@ -2124,16 +2124,16 @@ const handleLogOut = () =>{
 }
 
 const handleSessionActive = () => {            
-//  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
-//    if (data[0].datos.success == false) {                                                
-//      alertToastForm('No se ha iniciado sesión', 'error')
-//      setTimeout( () => window.location.href = './' , 1500 )
-//    } else {
-//      dataUserFromLoginLocalStorage=data[0].datos.datos
-//    }
-//  }, 
-//    () => {}
-//  )      
+  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
+    if (data[0].datos.success == false) {                                                
+      alertToastForm('No se ha iniciado sesión', 'error')
+      setTimeout( () => window.location.href = './' , 1500 )
+    } else {
+      dataUserFromLoginLocalStorage=data[0].datos.datos
+    }
+  }, 
+    () => {}
+  )      
 }
 
 // ALERTA NORMAL 
