@@ -1671,6 +1671,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
           timer: 2000
         })
       }
+      break
     case 'puntear_alta':
       isAlta=true
       if (level<=13) {

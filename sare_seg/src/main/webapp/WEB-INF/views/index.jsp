@@ -9,9 +9,9 @@
 <%  
     String rutaMain          =request.getServletContext().getRealPath("/WEB-INF/resource/js/main.js");
     String rutaService       =request.getServletContext().getRealPath("/WEB-INF/resource/js/services.js");
-    String rutaAppCss        =request.getServletContext().getRealPath("/WEB-INF/resources/css/app.css");
-    String rutaActionDom     =request.getServletContext().getRealPath("/WEB-INF/resources/js/actionsDom.js");
-    String rutaObjFormulario =request.getServletContext().getRealPath("/WEB-INF/resources/js/objFormulario.js");
+    String rutaAppCss        =request.getServletContext().getRealPath("/WEB-INF/resource/css/app.css");
+    String rutaActionDom     =request.getServletContext().getRealPath("/WEB-INF/resource/js/actionsDom.js");
+    String rutaObjFormulario =request.getServletContext().getRealPath("/WEB-INF/resource/js/objFormulario.js");
     
     
     String archivo=getArchivo(rutaMain);    
