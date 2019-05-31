@@ -92,24 +92,27 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     @Override
     public boolean getGuardaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble, boolean isAlta) {
         StringBuilder sql;
-        boolean regresa;
+        double regresa=0L;
+        boolean regresar;
         proyectos=getProyecto(proyecto);
         sql=getSql(proyectos,inmueble,MetodosGuardar.getGuardaUe, "", isAlta);
-         regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Boolean>() {
+         regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Double>() {
             @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean regresar;
-                int fila=0;
+            public Double extractData(ResultSet rs) throws SQLException, DataAccessException {
+                double regresar;
+                double fila=0;
                 while(rs.next())
                 {
-                    fila = rs.getInt("resultado");
+                    fila = rs.getDouble("resultado");
                     
                 }
-                regresar=fila>0;
+                regresar=fila;
                 return regresar;
             }
         });
-        return regresa;
+         inmueble.setId_UE(String.valueOf(regresa));
+         regresar=regresa>0L;
+        return regresar;
     }
     
     

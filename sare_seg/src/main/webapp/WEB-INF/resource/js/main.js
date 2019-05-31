@@ -819,7 +819,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
         bandera=false;
-        if(typeof data[0].datos.datos !== null)
+        if( data[0].datos.datos != null)
         {
             const {catVial} = data[0].datos.datos
             catalogoCatVial = catVial
@@ -1646,6 +1646,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
+      isAlta=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
       {
