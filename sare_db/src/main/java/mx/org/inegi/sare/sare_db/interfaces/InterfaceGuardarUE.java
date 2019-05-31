@@ -18,7 +18,7 @@ public interface InterfaceGuardarUE {
     
     public String getClaveProvisional(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, String capa);
     
-    public boolean getGuardaUe(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
+    public boolean getGuardaUe(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, boolean isAlta);
     
     public String e23a(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     

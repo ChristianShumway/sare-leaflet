@@ -119,12 +119,6 @@ const objForm = [
     name:'Nombre de vialidad',
     title:'title-calle-posterior',
   },
-  {
-    id:'id_UE',
-    key: 'referencia',
-    name:'clave del establecimiento',
-    title:'title-referencia',
-  },
   
 ]
 
@@ -248,9 +242,6 @@ const inputsEditables = [
   },
   {
     id:'e20',
-  },
-  {
-    id:'id_UE',
   },
   {
     id:'origen',

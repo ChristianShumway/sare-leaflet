@@ -1530,10 +1530,14 @@ const showViewPreliminar = d => {
         
         var a = decodeURIComponent(idobj[1])
         a = a.replace(/\+/g, ' ')
+        if(idobj[0]=='id_UE' && isAlta){
+            a="00"; //se inicializa en 00 para las altas y evitar que el truene el objeto en el servicio
+        }
         if(Type=='select-one')
         {
             a=document.getElementById(idobj[0]).value
         }
+            
             ObjectRequest[idobj[0]] = a
             $("#" + idobj[0] + "_pv").text(a)
         })
@@ -1563,7 +1567,8 @@ const handleShowResult = result => {
     {
       'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'obj': JSON.stringify(ObjectRequest),
-      'usuario':user
+      'usuario':user,
+      'isAlta':isAlta
     }, 
     urlServices['serviceSaveUEAlter'].type, 
     data => {

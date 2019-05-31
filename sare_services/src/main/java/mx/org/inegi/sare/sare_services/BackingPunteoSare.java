@@ -131,7 +131,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
                                         ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.gettipo_e10n().toLowerCase()));
                                     }
                                  }
-                                 if(ubicacion_punteo.getMod_cat()==2 || isAlta)
+                                 if(ubicacion_punteo.getMod_cat()==2)
                                  {
                                      List<cat_vial> catVial=InterfacePunteoSare.getCatTipoVial(proyecto); 
                                      ubicacion_punteo.setCatVial(catVial);

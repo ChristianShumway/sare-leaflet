@@ -162,11 +162,11 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "guardarUE.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services guardarUE(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "obj") String obj, @RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
+    public cat_respuesta_services guardarUE(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "obj") String obj, @RequestParam(value = "usuario") String usuario, HttpServletRequest request, @RequestParam(value = "isAlta") Boolean isAlta) throws Exception {
         Gson gson = new Gson();
         cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
         String ip = request.getRemoteAddr();
-        return BackingGuardar.SaveUE(proyecto, inmueble, usuario, ip);
+        return BackingGuardar.SaveUE(proyecto, inmueble, usuario, ip, isAlta);
     }
     
     @RequestMapping(value = "login.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
