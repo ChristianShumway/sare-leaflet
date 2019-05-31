@@ -128,6 +128,35 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
+        <script>
+        $(document).ready(function(){
+         var hovered_over = false;
+         document.onmousewheel = function(){ stopWheel(); } /* IE7, IE8 */
+         if(document.addEventListener){ /* Chrome, Safari, Firefox */
+                document.addEventListener('DOMMouseScroll', stopWheel, false);
+         }
+                
+         function stopWheel(e){
+            if(!e){
+                e = window.event;
+            } /* IE7, IE8, Chrome, Safari */
+            if (e.ctrlKey == true  ) {
+                e.returnValue = false; /* IE7, IE8 */
+            }   
+         }
+        
+         $("#mapa").on("mouseenter", function (crtl) {
+            hovered_over = false;
+         });
+        
+         $("#mapa").on("mouseleave", function (crtl) {
+            hovered_over = true;
+          });           
+       });
+
+
+</script> 
+
   </head>
 
   <body>
