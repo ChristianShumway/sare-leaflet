@@ -23,7 +23,7 @@ public class cat_ubicacion_punteo {
     private String e07;
     private String cveft;
     private String E10;
-    private String TIPO_E10;
+    private String tipo_e10;
     private String tipo_e10n;
     private String E10_cvevial;
     private String E10_cveseg;
@@ -40,7 +40,7 @@ public class cat_ubicacion_punteo {
     public cat_ubicacion_punteo() {
     }
 
-    public cat_ubicacion_punteo(String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String cveft, String E10, String TIPO_E10, String tipo_e10n, String E10_cvevial, String E10_cveseg, String cvegeo, List<cat_vial> E10_X, String coord_x, String coord_y, String distancia, List<cat_tipo_vialidad> catVial, String punteo, int mod_cat, String cvegeo2016) {
+    public cat_ubicacion_punteo(String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String cveft, String E10, String tipo_e10, String tipo_e10n, String E10_cvevial, String E10_cveseg, String cvegeo, List<cat_vial> E10_X, String coord_x, String coord_y, String distancia, List<cat_tipo_vialidad> catVial, String punteo, int mod_cat, String cvegeo2016) {
         this.e03 = e03;
         this.e03N = e03N;
         this.e04 = e04;
@@ -51,7 +51,7 @@ public class cat_ubicacion_punteo {
         this.e07 = e07;
         this.cveft = cveft;
         this.E10 = E10;
-        this.TIPO_E10 = TIPO_E10;
+        this.tipo_e10 = tipo_e10;
         this.tipo_e10n = tipo_e10n;
         this.E10_cvevial = E10_cvevial;
         this.E10_cveseg = E10_cveseg;
@@ -145,12 +145,12 @@ public class cat_ubicacion_punteo {
         this.E10 = E10;
     }
 
-    public String getTIPO_E10() {
-        return TIPO_E10;
+    public String gettipo_e10() {
+        return tipo_e10;
     }
 
-    public void setTIPO_E10(String TIPO_E10) {
-        this.TIPO_E10 = TIPO_E10;
+    public void settipo_e10(String tipo_e10) {
+        this.tipo_e10 = tipo_e10;
     }
 
     public String gettipo_e10n() {

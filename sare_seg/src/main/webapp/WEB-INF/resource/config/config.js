@@ -35,8 +35,8 @@ var projectParams = {
     ],
     'onLoad': init,  
     'onIdentify': identify,
-    'onMoveEnd': zooma,
-    'onZoomEnd': zooma,
+    'onMoveEnd': eventoMoveZoom,
+    'onZoomEnd': eventoMoveZoom,
     'btnTogglePanels': true
     
 };

@@ -129,29 +129,31 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
           String esquema="";
           switch(proyecto){
               case Establecimientos_GrandesY_Empresas_EGE:
-                  esquema="sare_seg2018_act";
+                  esquema="sare_mas2019_act";
               break;
               case Construccion:
-                  esquema="";
+                  esquema="sare_mas2019_act";
               break;
             case Convenios:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Muestra_Rural:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Operativo_Masivo:
                  esquema="sare_mas2019_act";
               break;
             case Organismos_Operadores_De_Agua:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Pesca_Mineria:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
             case Transportes:
-                 esquema="";
+                 esquema="sare_mas2019_act";
               break;
+            default:
+                esquema="sare_mas2019_act";
           }
           return esquema;
       }

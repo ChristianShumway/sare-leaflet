@@ -378,7 +378,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     ubicacion_punteo.setE06(rs.getString("cve_ageb")!=null?rs.getString("cve_ageb"):"");
                     ubicacion_punteo.setE07(rs.getString("cve_mza")!=null?rs.getString("cve_mza"):"");
                     ubicacion_punteo.setCveft(rs.getString("cveft")!=null?rs.getString("cveft"):"");
-                    ubicacion_punteo.setTIPO_E10(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
+                    ubicacion_punteo.settipo_e10n(rs.getString("tipovial")!=null?rs.getString("tipovial"):"");
                     ubicacion_punteo.setE10_cvevial(rs.getString("cvevial")!=null?rs.getString("cvevial"):"");
                     ubicacion_punteo.setE10(rs.getString("nomvial")!=null?rs.getString("nomvial"):"");
                     ubicacion_punteo.setCoord_x(rs.getString("x")!=null?rs.getString("x"):"");

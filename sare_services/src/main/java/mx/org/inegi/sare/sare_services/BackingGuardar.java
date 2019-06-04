@@ -28,28 +28,32 @@ public class BackingGuardar extends BackingSincroniza {
     @Qualifier("DaoBackingGuardarSare")
     InterfaceGuardarUE InterfaceGuardar;
 
-    public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare_guardado object, String usuario, String ip) {
+    public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare_guardado object, String usuario, String ip, Boolean isAlta) {
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
-
+        int validacion=1;
         if (inmueble != null) {
             if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
                 try {
-                    int validacion = InterfaceGuardar.getValidaUe(proyecto, object);
+                    if(!isAlta)
+                    {
+                        validacion = InterfaceGuardar.getValidaUe(proyecto, object);
+                    }
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble,object, proyecto)) {
-                            if (InterfaceGuardar.getGuardaUe(proyecto, object)) {
+                            if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
                                 //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
+                                inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
-//                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
-//                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
-//                                            } else {
+                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
+                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
+                                            } else {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                            //}
+                                            }
                                         } else {
                                             Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                         }
@@ -93,7 +97,7 @@ public class BackingGuardar extends BackingSincroniza {
     el  dto cat_vw_punteo_sare_guardado y se pasan a cat_vw_punteo_sare los valores*/
     private cat_vw_punteo_sare inicializa(cat_vw_punteo_sare_guardado inmueble) {
         cat_vw_punteo_sare regresar = new cat_vw_punteo_sare();
-        regresar.setID_UE(inmueble.getId_UE());
+        regresar.setID_UE(new BigDecimal(inmueble.getId_UE()));
         regresar.setORIGEN(new BigDecimal(inmueble.getOrigen()));
         regresar.setC154(inmueble.getC154());
         regresar.setE08(inmueble.getE08());
@@ -178,7 +182,7 @@ public class BackingGuardar extends BackingSincroniza {
             int deftramo=InterfaceGuardar.getidDeftramo(proyecto, inmueble);
             inmueble.setId_deftramo(new BigDecimal(deftramo));
             if(validadeftramo(deftramo)){
-                inmueble.setId_deftramo(inmueble.getId_UE());
+                inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE()));
             }
             object.setE23(inmueble.getE23());
             object.setId_deftramo(inmueble.getId_deftramo());

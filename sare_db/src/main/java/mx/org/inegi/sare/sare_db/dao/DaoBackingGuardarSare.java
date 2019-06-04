@@ -52,7 +52,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         StringBuilder sql;
         int regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,inmueble,MetodosGuardar.getValidaUe, "");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getValidaUe, "",false);
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -74,7 +74,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         StringBuilder sql;
         String regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,inmueble,MetodosGuardar.getClaveProvisional,capa);
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getClaveProvisional,capa,false);
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -90,26 +90,29 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
     
     @Override
-    public boolean getGuardaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
+    public boolean getGuardaUe(Integer proyecto, cat_vw_punteo_sare_guardado inmueble, boolean isAlta) {
         StringBuilder sql;
-        boolean regresa;
+        double regresa=0L;
+        boolean regresar;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,inmueble,MetodosGuardar.getGuardaUe, "");
-         regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Boolean>() {
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getGuardaUe, "", isAlta);
+         regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Double>() {
             @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean regresar;
-                int fila=0;
+            public Double extractData(ResultSet rs) throws SQLException, DataAccessException {
+                double regresar;
+                double fila=0;
                 while(rs.next())
                 {
-                    fila = rs.getInt("resultado");
+                    fila = rs.getDouble("resultado");
                     
                 }
-                regresar=fila>0;
+                regresar=fila;
                 return regresar;
             }
         });
-        return regresa;
+         inmueble.setId_UE(String.valueOf(regresa));
+         regresar=regresa>0L;
+        return regresar;
     }
     
     
@@ -118,7 +121,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         StringBuilder sql;
         String regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,inmueble,MetodosGuardar.getE23A,"");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getE23A,"",false);
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -138,7 +141,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         StringBuilder sql;
         Integer regresa;
         proyectos=getProyecto(proyecto);
-        sql=getSql(proyectos,inmueble,MetodosGuardar.getidDeftramo,"");
+        sql=getSql(proyectos,inmueble,MetodosGuardar.getidDeftramo,"",false);
          regresa=jdbcTemplateocl.query(sql.toString(),new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -152,7 +155,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         });
         return regresa; 
     }
-    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa)
+    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa, boolean isAlta)
     {
         StringBuilder sql=new StringBuilder();
         String esquemaPos,esquemaOcl;
@@ -237,7 +240,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE20().toUpperCase()).append("','")
                                 .append(inmueble.getId_deftramo()).append("','")
                                 .append(inmueble.getE10_cvevial()!=null?inmueble.getE10_cvevial():"").append("','")
-                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("') resultado");
+                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("','").append(isAlta).append("') resultado");
                         break;
                     case getE23A:
                         sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where id_ue = ").append(inmueble.getId_UE()); 

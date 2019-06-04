@@ -57,7 +57,7 @@ public class BackingLogin {
            user.setProyecto(proyecto);
            user=consultaUsuario(user);
            {
-               if(!user.getCe().equals(""))
+               if(user.getCe()!=null)
                {
                    user.setUsuario(usuario);
                    user.setProyecto(proyecto);
@@ -69,7 +69,7 @@ public class BackingLogin {
                     }
                }
                else{
-                   Respuesta.setMensaje(new cat_mensaje("false", "No cuenta con permiso para acceder al sistema"));
+                   Respuesta.setMensaje(new cat_mensaje("warning", "No cuenta con permiso para acceder al sistema"));
                }
            }
         }

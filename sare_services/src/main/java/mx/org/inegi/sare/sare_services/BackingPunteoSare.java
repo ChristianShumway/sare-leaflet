@@ -128,10 +128,10 @@ public class BackingPunteoSare extends BackingBusquedaSare
                                     ubicacion_punteo.setE10_X(getVialidades(proyecto,ubicacion_punteo.getE10_X()));
                                     if(ubicacion_punteo.gettipo_e10n()!=null && !ubicacion_punteo.gettipo_e10n().equals(""))
                                     {
-                                        ubicacion_punteo.setTIPO_E10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.gettipo_e10n().toLowerCase()));
+                                        ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto,ubicacion_punteo.gettipo_e10n().toLowerCase()));
                                     }
                                  }
-                                 if(ubicacion_punteo.getMod_cat()==2 || isAlta)
+                                 if(ubicacion_punteo.getMod_cat()==2)
                                  {
                                      List<cat_vial> catVial=InterfacePunteoSare.getCatTipoVial(proyecto); 
                                      ubicacion_punteo.setCatVial(catVial);

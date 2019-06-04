@@ -9,9 +9,9 @@
 <%  
     String rutaMain          =request.getServletContext().getRealPath("/WEB-INF/resource/js/main.js");
     String rutaService       =request.getServletContext().getRealPath("/WEB-INF/resource/js/services.js");
-    String rutaAppCss        =request.getServletContext().getRealPath("/WEB-INF/resources/css/app.css");
-    String rutaActionDom     =request.getServletContext().getRealPath("/WEB-INF/resources/js/actionsDom.js");
-    String rutaObjFormulario =request.getServletContext().getRealPath("/WEB-INF/resources/js/objFormulario.js");
+    String rutaAppCss        =request.getServletContext().getRealPath("/WEB-INF/resource/css/app.css");
+    String rutaActionDom     =request.getServletContext().getRealPath("/WEB-INF/resource/js/actionsDom.js");
+    String rutaObjFormulario =request.getServletContext().getRealPath("/WEB-INF/resource/js/objFormulario.js");
     
     
     String archivo=getArchivo(rutaMain);    
@@ -128,6 +128,35 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
+        <script>
+        $(document).ready(function(){
+         var hovered_over = false;
+         document.onmousewheel = function(){ stopWheel(); } /* IE7, IE8 */
+         if(document.addEventListener){ /* Chrome, Safari, Firefox */
+                document.addEventListener('DOMMouseScroll', stopWheel, false);
+         }
+                
+         function stopWheel(e){
+            if(!e){
+                e = window.event;
+            } /* IE7, IE8, Chrome, Safari */
+            if (e.ctrlKey == true  ) {
+                e.returnValue = false; /* IE7, IE8 */
+            }   
+         }
+        
+         $("#mapa").on("mouseenter", function (crtl) {
+            hovered_over = false;
+         });
+        
+         $("#mapa").on("mouseleave", function (crtl) {
+            hovered_over = true;
+          });           
+       });
+
+
+</script> 
+
   </head>
 
   <body>

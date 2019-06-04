@@ -38,7 +38,7 @@ const handleChangeOptions = option => {
   const idWms = urlServices['map'].label;
   const checkBox = document.getElementById(`checkbox-${option}`)
   checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
-  if (option == "sucursal") {
+  if (option == "checkbox-sucursal") {
     addCapas(checkBox);
   }
   else {
@@ -80,7 +80,7 @@ const addCapas = chk => {
     }
   } else {
     if (chk.checked === 'noFalse') {
-
+        
     }
     else {
       remLay('c101')
@@ -819,7 +819,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     if (data[0].operation) {
         bandera=false;
-        if(typeof data[0].datos.datos !== null)
+        if( data[0].datos.datos != null)
         {
             const {catVial} = data[0].datos.datos
             catalogoCatVial = catVial
@@ -1530,10 +1530,14 @@ const showViewPreliminar = d => {
         
         var a = decodeURIComponent(idobj[1])
         a = a.replace(/\+/g, ' ')
+        if(idobj[0]=='id_UE' && isAlta){
+            a="00"; //se inicializa en 00 para las altas y evitar que el truene el objeto en el servicio
+        }
         if(Type=='select-one')
         {
             a=document.getElementById(idobj[0]).value
         }
+            
             ObjectRequest[idobj[0]] = a
             $("#" + idobj[0] + "_pv").text(a)
         })
@@ -1563,7 +1567,8 @@ const handleShowResult = result => {
     {
       'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
       'obj': JSON.stringify(ObjectRequest),
-      'usuario':user
+      'usuario':user,
+      'isAlta':isAlta
     }, 
     urlServices['serviceSaveUEAlter'].type, 
     data => {
@@ -1641,6 +1646,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
+      isAlta=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
       {
@@ -1671,6 +1677,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
           timer: 2000
         })
       }
+      break
     case 'puntear_alta':
       isAlta=true
       if (level<=13) {
@@ -2123,16 +2130,16 @@ const handleLogOut = () =>{
 }
 
 const handleSessionActive = () => {            
-//  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
-//    if (data[0].datos.success == false) {                                                
-//      alertToastForm('No se ha iniciado sesión', 'error')
-//      setTimeout( () => window.location.href = './' , 1500 )
-//    } else {
-//      dataUserFromLoginLocalStorage=data[0].datos.datos
-//    }
-//  }, 
-//    () => {}
-//  )      
+  sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
+    if (data[0].datos.success == false) {                                                
+      alertToastForm('No se ha iniciado sesión', 'error')
+      setTimeout( () => window.location.href = './' , 1500 )
+    } else {
+      dataUserFromLoginLocalStorage=data[0].datos.datos
+    }
+  }, 
+    () => {}
+  )      
 }
 
 // ALERTA NORMAL 
