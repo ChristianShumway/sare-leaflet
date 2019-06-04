@@ -1,5 +1,8 @@
 let objDataHeight = {}
 const arrayNameWraps = ['referencia', 'ubicacion-geografica', 'domicilio', 'asentamiento', 'entre-vialidades', 'calle-posterior', 'edificio']
+let wrapFloatActive = false
+let nameContainerFloating = ''
+const arrayWrapBtns = ['wrap-btns-referencia', 'wrap-btns-ugeografica', 'wrap-btns-domicilio', 'wrap-btns-asentamiento', 'wrap-btns-evialidades', 'wrap-btns-cposterior', 'wrap-btns-edificios']
 
 window.onload = () => {
   handleSessionActive()
@@ -26,6 +29,13 @@ const handleVisibleSearch = () => {
     row.style.display  = 'flex'
     tituloBusqueda.style.display = 'none'
     containerSearch.dataset.visible = 'show'
+  }
+
+  if (nameContainerFloating){
+    setTimeout (() => {
+      // alert('hay valor')
+      handlePositionContainerForm(nameContainerFloating)
+    }, 700 )
   }
  
 }
@@ -84,7 +94,7 @@ const handleVisibleRatifica = () => {
   const containerRatifica = document.getElementById('container-ratifica')
   let visible = containerRatifica.dataset.visible
   if(visible == 'show'){
-    containerRatifica.animate([{ height:'auto' , opacity:1, padding:'10px 0'}, {height:0, opacity:0, padding:0}], {duration:500, fill:'forwards'})
+    containerRatifica.animate([{ height:'auto' , opacity:1, padding:'5px 0'}, {height:0, opacity:0, padding:0}], {duration:500, fill:'forwards'})
     containerRatifica.dataset.visible = 'hide'
   } else {
     containerRatifica.animate([{ height:0 , opacity:0, padding:0}, {height:'auto', opacity:1, padding:'10px 0'}], {duration:500, fill:'forwards'})
@@ -153,23 +163,28 @@ const handleActionTargetRef = () => {
   })
 }
 
-const handleActionTarget = wrap => {
+const handleActionTarget = (wrap, float) => {
 
   arrayNameWraps.map( name => {
     const container = document.getElementById(`title-${name}`)
-    const contenidoInputs = document.getElementById(`inputs-${name}`)
     let visible = container.dataset.visible
-    
-    if (name == wrap) {
-      if(visible == 'hide'){
-        handleVisibleForm(wrap)
-      }
-    } else {
-      if (visible == 'show'){
-        handleVisibleForm(name)
+    const contenidoInputs = document.getElementById(`inputs-${name}`)
+    if(!wrapFloatActive){
+      if (name == wrap) {
+        if(visible == 'hide'){
+          handleVisibleForm(wrap)
+        }
+      } else {
+        if (visible == 'show'){
+          handleVisibleForm(name)
+        }
       }
     }
   })
+
+  if(wrapFloatActive){
+    switchArrowFlotating(float)
+  }
 }
 
 const handleHideForm = () => {
@@ -215,6 +230,164 @@ const handleActionPunteoAlta = status => {
   }
 }
 
+const handlePositionContainerForm = (wrap, idBtn = '', action = '', title = '') => {
+  nameContainerFloating = wrap
+  const wrapFloating = document.getElementById(wrap)
+
+  if (wrapFloatActive) {
+    wrapFloating.style.top = getPositionContainerFlotatingForm()
+  } else if (!wrapFloatActive) {
+    wrapFloating.classList.add('container-form-float')
+    wrapFloating.style.top = getPositionContainerFlotatingForm()
+    handleShowIconsFloatingWrap(idBtn, action)
+    wrapFloatActive = true
+  }
+
+  if(title){
+    const idTitle = document.getElementById(title)
+    let visible = idTitle.dataset.visible
+    if(visible === 'show'){
+      titlesWarpForm.map(item => {
+        if(item.title === title) handleVisibleForm(item.key)
+      })
+    }
+  }
+  
+}
+
+const handleReturnContainerForm = (wrap, idBtn = '', action = '', title = '') => {
+  nameContainerFloating = ''
+  wrapFloatActive = false
+  const wrapFloating = document.getElementById(wrap)
+  wrapFloating.classList.remove('container-form-float')
+  wrapFloating.style.top = 'initial'
+  handleShowIconsFloatingWrap(idBtn, action)
+
+  if(title){
+    const idTitle = document.getElementById(title)
+    let visible = idTitle.dataset.visible
+    if(visible === 'hide'){
+      titlesWarpForm.map (item => {
+        if(item.title === title) handleVisibleForm(item.key)
+      })
+    }
+    // else if(visible === 'show'){
+    //   titlesWarpForm.map (item => {
+    //     if(item.title === title) handleVisibleForm(item.key)
+    //   })
+    //   //alert('esta abierto')
+    // }
+  }
+}
+
+const getPositionContainerFlotatingForm = () => {
+  const containerMap = document.getElementById('container-map')
+  let coords = containerMap.getBoundingClientRect()
+  let topContainer = coords.top < 85 ? 85 : coords.top
+  //alert(topContainer)
+  return `${topContainer}px`
+}
+
+const handleShowIconsFloatingWrap = (idBtn, action) => {
+  const btnFloat = document.getElementById(`icon-${idBtn}-float`)
+  const btnStatic = document.getElementById(`icon-${idBtn}-static`)
+  const wrapBtnsFlotating = document.getElementById(`wrap-btns-${idBtn}`)
+
+  if(action === 'float'){
+    btnFloat.classList.add('btn-inactive')
+    btnStatic.classList.remove('btn-inactive')
+    arrayWrapBtns.map (wrap => {
+      const idWrap = document.getElementById(wrap)
+      if (idWrap !== wrapBtnsFlotating) idWrap.style.display = 'none'
+    })
+  } else if (action === 'static'){
+    btnFloat.classList.remove('btn-inactive')
+    btnStatic.classList.add('btn-inactive')
+    arrayWrapBtns.map (wrap => {
+      const idWrap = document.getElementById(wrap)
+      if (idWrap !== wrapBtnsFlotating) idWrap.style.display = 'contents'
+    })
+  }
+}
+
+const switchArrowFlotating = float => {
+  switch (float) {
+    case 'ubicacion-float-der':
+      handleReturnContainerForm('op-preferencia', 'referencia', 'static', 'title-referencia')
+      handleVisibleForm('referencia')
+      handlePositionContainerForm('op-ugeografica', 'ugeografica', 'float', 'title-ubicacion-geografica' )
+      handleVisibleForm('ubicacion-geografica')
+      break
+    case 'referencia-float-izq':
+      handleReturnContainerForm('op-ugeografica', 'ugeografica', 'static', 'title-ubicacion-geografica')
+      handleVisibleForm('ubicacion-geografica')
+      handlePositionContainerForm('op-preferencia', 'referencia', 'float', 'title-referencia' )
+      handleVisibleForm('referencia')
+      break
+    case 'domicilio-float-der':
+      handleReturnContainerForm('op-ugeografica', 'ugeografica', 'static', 'title-ubicacion-geografica')
+      handleVisibleForm('ubicacion-geografica')
+      handlePositionContainerForm('op-domicilio', 'domicilio', 'float', 'title-domicilio')
+      handleVisibleForm('domicilio')
+      break
+    case 'ubicacion-float-izq':
+      handleReturnContainerForm('op-domicilio', 'domicilio', 'static', 'title-domicilio')
+      handleVisibleForm('domicilio')
+      handlePositionContainerForm('op-ugeografica', 'ugeografica', 'float', 'title-ubicacion-geografica')
+      handleVisibleForm('ubicacion-geografica')
+      break
+    case 'asentamiento-float-der':
+      handleReturnContainerForm('op-domicilio', 'domicilio', 'static', 'title-domicilio')
+      handleVisibleForm('domicilio')
+      handlePositionContainerForm('op-asentamiento', 'asentamiento', 'float', 'title-asentamiento')
+      handleVisibleForm('asentamiento')
+      break
+    case 'domicilio-float-izq':
+      handleReturnContainerForm('op-asentamiento', 'asentamiento', 'static', 'title-asentamiento')
+      handleVisibleForm('asentamiento')
+      handlePositionContainerForm('op-domicilio', 'domicilio', 'float', 'title-domicilio')
+      handleVisibleForm('domicilio')
+      break
+    case 'vialidades-float-der':
+      handleReturnContainerForm('op-asentamiento', 'asentamiento', 'static', 'title-asentamiento')
+      handleVisibleForm('asentamiento')
+      handlePositionContainerForm('op-evialidades', 'evialidades', 'float', 'title-entre-vialidades')
+      handleVisibleForm('entre-vialidades')
+      break
+    case 'asentamiento-float-izq':
+      handleReturnContainerForm('op-evialidades', 'evialidades', 'static', 'title-entre-vialidades')
+      handleVisibleForm('entre-vialidades')
+      handlePositionContainerForm('op-asentamiento', 'asentamiento', 'float', 'title-asentamiento')
+      handleVisibleForm('asentamiento')
+      break
+    case 'calle-float-der':
+      handleReturnContainerForm('op-evialidades', 'evialidades', 'static', 'title-entre-vialidades')
+      handleVisibleForm('entre-vialidades')
+      handlePositionContainerForm('op-cposterior', 'cposterior', 'float', 'title-calle-posterior')
+      handleVisibleForm('calle-posterior')
+      break
+    case 'vialidades-float-izq':
+      handleReturnContainerForm('op-cposterior', 'cposterior', 'static', 'title-calle-posterior')
+      handleVisibleForm('calle-posterior')
+      handlePositionContainerForm('op-evialidades', 'evialidades', 'float', 'title-entre-vialidades')
+      handleVisibleForm('entre-vialidades')
+      break
+    case 'edificio-float-der':
+      handleReturnContainerForm('op-cposterior', 'cposterior', 'static', 'title-calle-posterior')
+      handleVisibleForm('calle-posterior')
+      handlePositionContainerForm('op-edificios', 'edificios', 'float', 'title-edificio')
+      handleVisibleForm('edificio')
+      break
+    case 'calle-float-izq':
+      handleReturnContainerForm('op-edificios', 'edificios', 'static', 'title-edificio')
+      handleVisibleForm('edificio')
+      handlePositionContainerForm('op-cposterior', 'cposterior', 'float', 'title-calle-posterior')
+      handleVisibleForm('calle-posterior')
+      break
+    default:
+      break;
+  }
+}
 
 const handlePressCtrKeyAndKeyCode = e => {
   const evtobj = window.event ? event : e
@@ -228,13 +401,35 @@ const handlePressCtrKeyAndKeyCode = e => {
     }
   }
 
-  if(evtobj.keyCode == 82 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('referencia')
-  if(evtobj.keyCode == 85 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('ubicacion-geografica')
-  if(evtobj.keyCode == 68 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('domicilio')
-  if(evtobj.keyCode == 65 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('asentamiento')
-  if(evtobj.keyCode == 86 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('entre-vialidades')
-  if(evtobj.keyCode == 67 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('calle-posterior')
-  if(evtobj.keyCode == 69 && evtobj.ctrlKey && evtobj.altKey) handleVisibleForm('edificio')
+  if(evtobj.keyCode == 82 && evtobj.ctrlKey && evtobj.altKey) {
+    handlePositionContainerForm('op-preferencia', 'referencia', 'float', 'title-referencia')
+    handleVisibleForm('referencia')
+  }
+  if(evtobj.keyCode == 85 && evtobj.ctrlKey && evtobj.altKey) {
+    handlePositionContainerForm('op-ugeografica', 'ugeografica', 'float', 'title-ubicacion-geografica')
+    handleVisibleForm('ubicacion-geografica')
+  }
+  if(evtobj.keyCode == 68 && evtobj.ctrlKey && evtobj.altKey){
+    handlePositionContainerForm('op-domicilio', 'domicilio', 'float', 'title-domicilio')
+    handleVisibleForm('domicilio')
+  } 
+  if(evtobj.keyCode == 65 && evtobj.ctrlKey && evtobj.altKey){
+    handlePositionContainerForm('op-asentamiento', 'asentamiento', 'float', 'title-asentamiento')
+    handleVisibleForm('asentamiento')
+  } 
+  if(evtobj.keyCode == 86 && evtobj.ctrlKey && evtobj.altKey){
+    handlePositionContainerForm('op-evialidades', 'evialidades', 'float', 'title-entre-vialidades')
+    handleVisibleForm('entre-vialidades')
+  } 
+  if(evtobj.keyCode == 67 && evtobj.ctrlKey && evtobj.altKey){
+    handlePositionContainerForm('op-cposterior', 'cposterior', 'float', 'title-calle-posterior')
+    handleVisibleForm('calle-posterior')
+  } 
+  if(evtobj.keyCode == 69 && evtobj.ctrlKey && evtobj.altKey){
+    handlePositionContainerForm('op-edificios', 'edificios', 'float', 'title-edificio')
+    handleVisibleForm('edificio')
+  } 
 }
 
 document.onkeydown = handlePressCtrKeyAndKeyCode
+

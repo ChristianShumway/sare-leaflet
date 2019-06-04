@@ -449,3 +449,34 @@ const inputsClean = [
   
   
 ]
+
+const titlesWarpForm = [
+  {
+    title: 'title-referencia',
+    key: 'referencia' 
+  },
+  {
+    title: 'title-ubicacion-geografica',
+    key: 'ubicacion-geografica'
+  }, 
+  { 
+    title: 'title-domicilio',
+    key: 'domicilio'
+  }, 
+  {
+    title: 'title-asentamiento',
+    key: 'asentamiento'
+  }, 
+  {
+    title: 'title-entre-vialidades',
+    key: 'entre-vialidades'
+  }, 
+  {
+    title: 'title-calle-posterior',
+    key: 'calle-posterior'
+  }, 
+  {
+    title: 'title-edificio',
+    key: 'edificio'
+  }
+]

@@ -189,7 +189,7 @@
           <div class="col s12 m8 offset-m2 l6 offset-l3 wrap-search">
             <div class="input-field">
               <input 
-                placeholder="Realizar Busqueda..." 
+                placeholder="Realizar Busqueda de la Clave..." 
                 id="clave-busqueda" 
                 name="clave-busqueda" 
                 type="text" 
@@ -198,8 +198,8 @@
               >
             </div>
               <div class="btns-search">   
-                <a onclick="buscarUE()" class="btn-search search-third tooltipped" data-position="bottom" data-tooltip="Busqueda por clave" >Buscar</a>
-                <a onclick="handleViewCleeList()" class="btn-search search-third tooltipped" data-position="bottom" data-tooltip="Ver lista de claves" >Ver</a>
+                <a onclick="buscarUE()" class="btn-search search-four tooltipped" data-position="bottom" data-tooltip="Busqueda por clave" >Buscar</a>
+                <a onclick="handleViewCleeList()" class="btn-search search-five tooltipped" data-position="bottom" data-tooltip="Ver lista de claves" >Ver</a>
               </div>
           </div>
         </div>
@@ -343,11 +343,19 @@
           <div class="row row-form">
             
             <!-- OPCIÓN REFERENCIA -->
-            <div class="col s12 m6 l4 wrap-form op-referencia animated slideInLeft">
+            <div class="col s12 m6 l4 wrap-form op-referencia animated slideInLeft" id="op-preferencia">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('referencia')" id="title-referencia">
                 <i class="material-icons" id="icon-referencia">add</i>
                 <div class="titlew">
                   <p>Referencia</p>
+                </div>
+                <div id="wrap-btns-referencia" class="wrap-btn-floating-static">
+                  <a  id="icon-referencia-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-preferencia', 'referencia', 'float', 'title-referencia')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-referencia-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-preferencia', 'referencia', 'static', 'title-referencia')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-referencia">
@@ -376,19 +384,27 @@
                   <label for="e17_DESC">SCIAN</label>
                 </div>
                 <div class="input-field">
-                  <a onclick="handleActionTarget('ubicacion-geografica')" class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('ubicacion-geografica','ubicacion-float-der')" class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
             <!-- OPCIÓN REFERENCIA -->
 
             <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
-            <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica animated slideInUp">
+            <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica animated slideInUp" id="op-ugeografica">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('ubicacion-geografica')" id="title-ubicacion-geografica">
                 <i class="material-icons" id="icon-ubicacion-geografica">add</i> 
                 <div class="titlew">
                   <p>Ubicación Geográfica</p>
                 </div> 
+                <div id="wrap-btns-ugeografica" class="wrap-btn-floating-static">
+                  <a  id="icon-ugeografica-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-ugeografica', 'ugeografica', 'float', 'title-ubicacion-geografica' )" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-ugeografica-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-ugeografica', 'ugeografica', 'static', 'title-ubicacion-geografica')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
+                </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-ubicacion-geografica">
                 <div class="input-field">
@@ -424,19 +440,27 @@
                   <label for="e07">Manzana</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('referencia')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
-                  <a onclick="handleActionTarget('domicilio')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('referencia','referencia-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('domicilio','domicilio-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
             <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
 
             <!-- OPCIÓN DOMICILIO -->
-            <div class="col s12 m6 l4 wrap-form op-domicilio animated slideInRight">
+            <div class="col s12 m6 l4 wrap-form op-domicilio animated slideInRight" id="op-domicilio">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('domicilio')" id="title-domicilio">
                 <i class="material-icons" id="icon-domicilio">add</i>
                 <div class="titlew">
                   <p>Domicilio</p>
+                </div>
+                <div id="wrap-btns-domicilio" class="wrap-btn-floating-static">
+                  <a  id="icon-domicilio-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-domicilio', 'domicilio', 'float', 'title-domicilio')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-domicilio-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-domicilio', 'domicilio', 'static', 'title-domicilio')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-domicilio">
@@ -475,19 +499,27 @@
                   <label for="e13_a">E13 A Letra</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('ubicacion-geografica')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
-                  <a onclick="handleActionTarget('asentamiento')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('ubicacion-geografica','ubicacion-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('asentamiento','asentamiento-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
             <!-- OPCIÓN DOMICILIO -->
 
             <!-- OPCIÓN ASENTAMIENTO -->
-            <div class="col s12 m6 l4 wrap-form op-referencia animated slideInLeft">
+            <div class="col s12 m6 l4 wrap-form op-asentamiento animated slideInLeft" id="op-asentamiento">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('asentamiento')" id="title-asentamiento">
                 <i class="material-icons" id="icon-asentamiento">add</i>
                 <div class="titlew">
                   <p>Asentamiento</p>
+                </div>
+                <div id="wrap-btns-asentamiento" class="wrap-btn-floating-static">
+                  <a  id="icon-asentamiento-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-asentamiento', 'asentamiento', 'float', 'title-asentamiento')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-asentamiento-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-asentamiento', 'asentamiento', 'static', 'title-asentamiento')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-asentamiento">
@@ -506,19 +538,27 @@
                   <label for="e14">Nombre del Asentamiento</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('domicilio')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
-                  <a onclick="handleActionTarget('entre-vialidades')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('domicilio','domicilio-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('entre-vialidades','vialidades-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
             <!-- OPCIÓN ASENTAMIENTO -->
 
             <!-- OPCIÓN ENTRE VIALIDADES -->
-            <div class="col s12 m6 l4 wrap-form op-entre-vialidades animated slideInUp">
+            <div class="col s12 m6 l4 wrap-form op-entre-vialidades animated slideInUp" id="op-evialidades">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('entre-vialidades')" id="title-entre-vialidades">
                 <i class="material-icons"  id="icon-entre-vialidades">add</i>
                 <div class="titlew">
                   <p>Entre Vialidades</p>
+                </div>
+                <div id="wrap-btns-evialidades" class="wrap-btn-floating-static">
+                  <a  id="icon-evialidades-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-evialidades', 'evialidades', 'float', 'title-entre-vialidades')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-evialidades-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-evialidades', 'evialidades', 'static', 'title-entre-vialidades')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-entre-vialidades">
@@ -555,19 +595,27 @@
                   <label id="labele10_B" for="e10_B" class="active">Nombre de la Vialidad No.2</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('asentamiento')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
-                  <a onclick="handleActionTarget('calle-posterior')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('asentamiento','asentamiento-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('calle-posterior','calle-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
             <!-- OPCIÓN ENTRE VIALIDADES -->
 
             <!-- OPCIÓN CALLE POSTERIOR -->
-            <div class="col s12 m6 l4 wrap-form op-calle-posterior animated slideInRight">
+            <div class="col s12 m6 l4 wrap-form op-calle-posterior animated slideInRight" id="op-cposterior">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('calle-posterior')" id="title-calle-posterior">
                 <i class="material-icons" id="icon-calle-posterior">add</i>
                 <div class="titlew">
                   <p>Calle Posterior</p>
+                </div>
+                <div id="wrap-btns-cposterior" class="wrap-btn-floating-static">
+                  <a  id="icon-cposterior-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-cposterior', 'cposterior', 'float', 'title-calle-posterior')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-cposterior-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-cposterior', 'cposterior', 'static', 'title-calle-posterior')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-calle-posterior">
@@ -592,8 +640,8 @@
                   <label for="textarea1">Descripción de la ubicación del establecimiento</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('entre-vialidades')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
-                  <a onclick="handleActionTarget('edificio')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('entre-vialidades','vialidades-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('edificio','edificio-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
               
@@ -601,11 +649,19 @@
             <!-- OPCIÓN CALLE POSTERIOR -->
 
             <!-- OPCIÓN EDIFICIO, CENTROS COMERCIALES -->
-            <div class="col s12 m6 l4 wrap-form op-edificio-centros-comerciales animated slideInLeft">
+            <div class="col s12 m6 l4 wrap-form op-edificio-centros-comerciales animated slideInLeft" id="op-edificios">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('edificio')" id="title-edificio">
                 <i class="material-icons" id="icon-edificio">add</i>
                 <div class="titlew">
                   <p>Edificio, Centro Comercial</p>
+                </div>
+                <div id="wrap-btns-edificios" class="wrap-btn-floating-static">
+                  <a  id="icon-edificios-float" class="btn-in-out-container" onclick="handlePositionContainerForm('op-edificios', 'edificios', 'float', 'title-edificio')" >
+                    <i class="material-icons tooltipped" data-position="top" data-tooltip="Flotar Contenedor">transit_enterexit</i>
+                  </a>
+                  <a  id="icon-edificios-static" class="btn-in-out-container btn-inactive" onclick="handleReturnContainerForm('op-edificios', 'edificios', 'static', 'title-edificio')" >
+                    <i class="material-icons tooltipped" data-position="right" data-tooltip="Regresar Contenedor">transit_enterexit</i>
+                  </a>
                 </div>
               </div>
               <div class="inputs-option z-depth-3" id="inputs-edificio">
@@ -632,7 +688,7 @@
                   <label for="e20">E20 No. Local</label>
                 </div>
                 <div class="input-field btns-prev-next">
-                  <a onclick="handleActionTarget('calle-posterior')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
+                  <a onclick="handleActionTarget('calle-posterior','calle-float-izq')" class="previous-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
             </div>
