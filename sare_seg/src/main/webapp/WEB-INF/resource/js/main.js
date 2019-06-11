@@ -88,11 +88,14 @@ const addCapas = chk => {
     if (typeof chk.mza !== 'undefined' && chk.mza === true) {
       remLay('c103')
       addLay('c102')
-      addLay('c102r')
+      addLay('c103r')
+      addLay('c108')
+      addLay('c107')
+      addLay('c107r')
     }
     if (typeof chk.ageb !== 'undefined' && chk.ageb === true) {
       remLay('c102')
-      remLay('c102r')
+      remLay('c103r')
       addLay('c103')
     }
   }
@@ -116,9 +119,9 @@ const addLay = item => {
 const ordenaLayer = () => {
   if (layersSARE.indexOf('c102') > 0) {
     remLay('c102')
-    remLay('c102r')
+    remLay('c103r')
     layersSARE.unshift('c102')
-    layersSARE.unshift('c102r')
+    layersSARE.unshift('c103r')
   } else if (layersSARE.indexOf('c103') > 0) {
     remLay('c103')
     layersSARE.unshift('c103')

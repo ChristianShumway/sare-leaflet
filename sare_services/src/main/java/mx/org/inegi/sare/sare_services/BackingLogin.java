@@ -48,14 +48,19 @@ public class BackingLogin {
     {
         String ip=InetAddress.getLocalHost().getHostAddress();
         HttpSession session = request.getSession(true);
-        cat_respuesta_services Respuesta;
+        cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_usuarios user=new cat_usuarios();
-        Respuesta=getAuthValidWeb(usuario,password,ip);
+        user.setUsuario(usuario);
+        user.setProyecto(proyecto);
+        user=consultaUsuario(user);
+        if(user.getPass().equals(password)){
+            Respuesta.setMensaje(new cat_mensaje("Exito",""));
+        }else{
+            Respuesta=getAuthValidWeb(usuario,password,ip);
+        }
         if(Respuesta.getMensaje().getType().equals("Exito"))
         {
-           user.setUsuario(usuario);
-           user.setProyecto(proyecto);
-           user=consultaUsuario(user);
+           
            {
                if(user.getCe()!=null)
                {
