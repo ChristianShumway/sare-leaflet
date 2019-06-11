@@ -2020,6 +2020,7 @@ const handleCancelClick = () => {
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
+  layersSARE = ['c100', 'c101', 'wdenue']
 }
 
 const callServiceLiberaClave=(id_ue)=>{
