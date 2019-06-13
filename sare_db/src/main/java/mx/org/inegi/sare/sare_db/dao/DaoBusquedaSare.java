@@ -433,17 +433,20 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLE);
-        switch (proyectos) {
-            case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString()) > 0) {
-                    regresa = true;
-                }
-                break;
-            default:
-                if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
-                    regresa = true;
-                }
+        if(cve_unica!=null && !cve_unica.equals(""))
+        {
+            switch (proyectos) {
+                case Operativo_Masivo:
+                    if (jdbcTemplate.update(sql.toString()) > 0) {
+                        regresa = true;
+                    }
+                    break;
+                default:
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
+                        regresa = true;
+                    }
 
+            }
         }
 
         return regresa;

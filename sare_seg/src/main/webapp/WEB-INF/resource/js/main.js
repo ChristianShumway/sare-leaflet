@@ -30,8 +30,27 @@ let isAlta=false
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
+function disable() 
+{
+    object.onscroll = handler;	
+    object.addEventListener ("scroll", handler, useCapture);					
+    object.attachEvent ("onscroll", handler);
+//    $(window).on('mousewheel DOMMouseScroll', function() 
+//    {
+//        return false;
+//    });
+//document.removeEventListener('mousewheel', Go);
+//document.removeEventListener('DOMMouseScroll', Go);
+}
+function enable() {
+document.addEventListener('mousewheel', Go);
+document.addEventListener('DOMMouseScroll', Go);
+}
 
-const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
+const init = () => {
+    //disable()
+    addCapas ( { 'checked': true, 'id': 'unidades' } )
+}
 
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
@@ -189,9 +208,9 @@ const callServiceFindUE=(id_ue)=>{
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+    'proyecto':dataUserFromLoginLocalStorage.proyecto,
     'p':'1',
-    'tramo':dataUserFromLoginLocalStorage.tramoControl,
+    'tramo':dataUserFromLoginLocalStorage.tramo_control,
     'ce': dataUserFromLoginLocalStorage.ce, 
     'usuario':dataUserFromLoginLocalStorage.nombre,
     'id_ue': id_ue
@@ -264,7 +283,7 @@ const fillForm = data => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogo = () => {
   sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
@@ -286,7 +305,7 @@ const fillCatalogo = () => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogoConjuntosComerciales = () => {
   sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCatalogoConjuntosComerciales'].type, 
     data => {
       if (data[0].operation) {
@@ -310,7 +329,7 @@ const fillCatalogoConjuntosComerciales = () => {
 }
 const fillCatalogoC154 = () => {
   sendAJAX(urlServices['servicegetC154_catalogo'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['servicegetC154_catalogo'].type, 
     data => {
       if (data[0].operation) {
@@ -335,7 +354,7 @@ const fillCatalogoC154 = () => {
 }
 const fillCatalogoOrigen = () => {
   sendAJAX(urlServices['servicegetOrigen_catalogo'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['servicegetOrigen_catalogo'].type, 
     data => {
       if (data[0].operation) {
@@ -369,7 +388,7 @@ const acercarWithExtent = data => {
 const getCp=ce=>{
   sendAJAX(
     urlServices['serviceCP'].url, 
-    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCP'].type, 
     data => {
       cpObj = data[0].datos
@@ -406,8 +425,8 @@ const handleViewCleeList = () => {
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
-      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'proyecto': dataUserFromLoginLocalStorage.proyecto, 
+      'tramo': dataUserFromLoginLocalStorage.tramo_control, 
       'id_ue': dataUserFromLoginLocalStorage.ce,
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
@@ -864,7 +883,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   //showalertpunteoloading();
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+    'proyecto':dataUserFromLoginLocalStorage.proyecto,
     'x': x, 
     'y': y, 
     'tc': tc, 
@@ -1065,7 +1084,8 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 }
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
-const handleFillTipoDeVialidades = selectId => {
+const handleFillTipoDeVialidades = selectId => 
+{
     //selectId.setAttribute('onchange', 'asignaValorId()')
     let opt = document.createElement('option')
     opt.appendChild( document.createTextNode("Seleccione") )
@@ -1077,6 +1097,13 @@ const handleFillTipoDeVialidades = selectId => {
     opt.value = item.tipo_e10
     selectId.appendChild(opt)
   })
+}
+
+const ejecutar =() => 
+{
+    const id_ue = document.getElementById('id_UE').value
+    confirm("")
+    callServiceLiberaClave(id_ue)  
 }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
@@ -1535,7 +1562,7 @@ const validaCp = () => {
   {
     'codigo': $("#e14_A").val(),
     'cve_ent': $("#e03").val(),
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion
+    'proyecto':dataUserFromLoginLocalStorage.proyecto
   }, 
   urlServices['serviceValCP'].type, 
   data => {
@@ -1621,8 +1648,8 @@ const showViewPreliminar = d => {
       ObjectRequest['Cvegeo2016'] = cve_geo2016
       ObjectRequest['Cvegeo'] = cve_geo
       ObjectRequest['CE'] = dataUserFromLoginLocalStorage.ce
-      ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramoControl
-      ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramoControl
+      ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramo_control
+      ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramo_control
       ObjectRequest['mod_cat'] = mod_cat
       ObjectRequest['punteo'] = punteo
       ObjectRequest['coordx'] = xycoorsx
@@ -1641,7 +1668,7 @@ const handleShowResult = result => {
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'obj': JSON.stringify(ObjectRequest),
       'usuario':user,
       'isAlta':isAlta
@@ -1882,7 +1909,7 @@ const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      { 'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 'x': x, 'y': y},
+      { 'proyecto': dataUserFromLoginLocalStorage.proyecto, 'x': x, 'y': y},
       urlServices['serviceIdentifyStreetView'].type, 
       data => {
         if (data[0].operation) {
@@ -1929,7 +1956,7 @@ const mostrarMensaje = () => {
 const callServicioIdentificar = (capas, x, y) => {
   sendAJAX(urlServices['serviceIdentifyUE'].url,
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto': dataUserFromLoginLocalStorage.proyecto,
       'x': x,
       'y': y,
       'opciones': capas
@@ -2120,7 +2147,7 @@ const handleCancelClick = () => {
 const callServiceLiberaClave=(id_ue)=>{
   sendAJAX(urlServices['serviceLiberaClave'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'id_ue': id_ue
     }, urlServices['serviceLiberaClave'].type, 
     data => {
@@ -2232,6 +2259,8 @@ const handleSessionActive = () => {
     if (data[0].datos.success == false) {                                                
       alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
+      let id_ue=document.getElementById('id_UE').value
+      callServiceLiberaClave(id_ue)
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
     }
@@ -2437,8 +2466,8 @@ const CargaTablaBloqueadas=()=> {
   
   sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
-      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'proyecto': dataUserFromLoginLocalStorage.proyecto, 
+      'tramo': dataUserFromLoginLocalStorage.tramo_control, 
       'id_ue':dataUserFromLoginLocalStorage.ce
     }, urlServices['serviceListaClavesBloqueadas'].type, 
      data => {
@@ -2508,7 +2537,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
   if (result.value) {
     sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'id_ue': id_ue,
       'usuario':user
     }, 

@@ -130,32 +130,51 @@
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
         <script>
         $(document).ready(function(){
+           // disable()
          var hovered_over = false;
-         document.onmousewheel = function(){ stopWheel(); } /* IE7, IE8 */
+         document.onmousewheel = function(){$("#mapa").on("wheel", event => {
+                   if (event.originalEvent.ctrlKey) {
+                       return;
+                   }
+
+                   if (event.originalEvent.metaKey) {
+                       return;
+                   }
+
+                   if (event.originalEvent.altKey) {
+                       return;
+                   }
+
+                   event.preventDefault();
+               });} /* IE7, IE8 */
          if(document.addEventListener){ /* Chrome, Safari, Firefox */
-                document.addEventListener('DOMMouseScroll', stopWheel, false);
-         }
-                
-         function stopWheel(e){
-            if(!e){
-                e = window.event;
-            } /* IE7, IE8, Chrome, Safari */
-            if (e.ctrlKey == true  ) {
-                e.returnValue = false; /* IE7, IE8 */
-            }   
-         }
-        
-         $("#mapa").on("mouseenter", function (crtl) {
-            hovered_over = false;
-         });
-        
-         $("#mapa").on("mouseleave", function (crtl) {
-            hovered_over = true;
-          });           
+             $("#mapa").on("wheel", event => {
+                   if (event.originalEvent.ctrlKey) {
+                       event.returnValue = false;
+                   }
+
+                   if (event.originalEvent.metaKey) {
+                       event.returnValue = false;
+                   }
+
+                   if (event.originalEvent.altKey) {
+                       event.returnValue = false;
+                   }
+
+                   event.preventDefault();
+               });
+                //document.addEventListener('DOMMouseScroll', stopWheel, false);
+         }     
        });
-
-
 </script> 
+<script type="text/javascript">
+    window.addEventListener("beforeunload", function (e) {
+      ejecutar();
+      (e || window.event).returnValue = null;
+      return null;
+    });
+    
+</script>
 
   </head>
 

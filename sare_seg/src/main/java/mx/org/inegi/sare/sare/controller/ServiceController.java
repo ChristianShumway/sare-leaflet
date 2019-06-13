@@ -214,10 +214,9 @@ public class ServiceController {
     public ResponseLocal validaSesion(HttpSession session) {
         String respuesta = null;
         ResponseLocal response = new ResponseLocal();
-        Map u = (Map) session.getAttribute("respuesta");
+        Object u = (Object) session.getAttribute("respuesta");
         if (u == null) {
             respuesta = "/";
-            
             response.setSuccess(false);
         } else {
             response.setDatos(u);
