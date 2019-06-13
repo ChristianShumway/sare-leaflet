@@ -85,7 +85,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                             rs.getString("numext") != null && !"".equals(rs.getString("numext")) ? new BigDecimal(rs.getString("numext")) : new BigDecimal(0),
                             rs.getString("numextalf") != null ? rs.getString("numextalf") : "",
                             rs.getString("e12") != null ? rs.getString("e12") : "",
-                            rs.getString("numint") != null && !"".equals(rs.getString("numint")) ? new BigDecimal(rs.getString("numint")) : new BigDecimal(0),
+                            rs.getString("numint") != null && !"".equals(rs.getString("numint")) ? rs.getString("numint") : "",
                             rs.getString("numintalf") != null ? rs.getString("numintalf") : "",
                             rs.getString("e14") != null ? rs.getString("e14") : "",
                             rs.getString("e14_a") != null ? rs.getString("e14_a") : "",

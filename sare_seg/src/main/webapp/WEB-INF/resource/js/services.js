@@ -107,6 +107,16 @@ var urlServices = {
         type: 'POST',
         label: 'desbloquea'
     },
+     servicegetC154_catalogo: {
+        url: 'getC154_catalogo.do',
+        type: 'POST',
+        label: 'getC154_catalogo'
+    },
+     servicegetOrigen_catalogo: {
+        url: 'getOrigen_catalogo.do',
+        type: 'POST',
+        label: 'getOrigen_catalogo'
+    },
     serviceValidasesion: {
         url: 'validaSesion.do',
         type: 'POST',

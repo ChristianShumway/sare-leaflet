@@ -56,7 +56,7 @@ const addLayerEconomicas = (chk, option) => {
         case 'denue':
           addLay('wdenue')
         case 'unicos':
-          addLay('c101u')
+          addLay('c101')
         case 'matrices':
           addLay('C101M')
         case 'postes':
@@ -163,6 +163,10 @@ const buscarUE = () => {
 const findUE = id_ue => {
   xycoorsx=''
   xycoorsy=''
+  document.getElementById("origen").style.display='block';
+  document.getElementById("c154").style.display='block';
+  document.getElementById("catorigen").style.display='none';
+  document.getElementById("catc154").style.display='none';
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -298,6 +302,56 @@ const fillCatalogoConjuntosComerciales = () => {
           opt.appendChild( document.createTextNode(o.descripcion) )
           opt.value = o.tipo_e19  
           o.tipo_e19 === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
+const fillCatalogoC154 = () => {
+  sendAJAX(urlServices['servicegetC154_catalogo'].url, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    urlServices['servicegetC154_catalogo'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('catc154')
+        opcSelected.style.display='block';
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccion"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripción) )
+          opt.value = o.codigo  
+          o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
+const fillCatalogoOrigen = () => {
+  sendAJAX(urlServices['servicegetOrigen_catalogo'].url, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    urlServices['servicegetOrigen_catalogo'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('catorigen') 
+        opcSelected.style.display='block';
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccion"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripción) )
+          opt.value = o.codigo  
+          o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
         })
       } else { }
@@ -1013,6 +1067,10 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId => {
     //selectId.setAttribute('onchange', 'asignaValorId()')
+    let opt = document.createElement('option')
+    opt.appendChild( document.createTextNode("Seleccione") )
+    opt.value = "Seleccione"
+    selectId.appendChild(opt)
   catalogoCatVial.map( item =>{
     let opt = document.createElement('option')
     opt.appendChild( document.createTextNode(item.tipo_e10n) )
@@ -1523,6 +1581,8 @@ const showViewPreliminar = d => {
       d = d.replace(/Seleccione/g, '')
       var dpv = d.split("&")
       var Type;
+      let valororigen;
+      let valorc154;
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
         if(idobj[0]!='tramo_control' && idobj[0]!='coord_x' && idobj[0]!='coord_y'){
@@ -1536,10 +1596,23 @@ const showViewPreliminar = d => {
         if(idobj[0]=='id_UE' && isAlta){
             a="00"; //se inicializa en 00 para las altas y evitar que el truene el objeto en el servicio
         }
+        if(idobj[0]=='catorigen' && idobj[1]!=""){
+            valororigen=idobj[1]
+        }
+        if(idobj[0]=='catc154' && idobj[1]!=""){
+            valorc154=idobj[1]
+        }
+        if(idobj[0]=='origen' && idobj[1]==""){
+            a=valororigen
+        }
+        if(idobj[0]=='c154' && idobj[1]==""){
+            a=valorc154
+        }
         if(Type=='select-one')
         {
             a=document.getElementById(idobj[0]).value
         }
+        
             
             ObjectRequest[idobj[0]] = a
             $("#" + idobj[0] + "_pv").text(a)
@@ -1581,12 +1654,14 @@ const handleShowResult = result => {
           return;
         }
         else {
+          layersSARE = ['c100', 'c101', 'wdenue']
           cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
           //handleActiveVisibleSearch()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
           handleActionPunteoAlta('on')
+          
         }
       }
       
@@ -1649,6 +1724,12 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
+      document.getElementById("id_UE").style.display='block';
+      document.getElementById("label_idUE").style.display='block';
+      document.getElementById("origen").style.display='block';
+      document.getElementById("c154").style.display='block';
+      document.getElementById("catc154").style.display='none';
+      document.getElementById("catorigen").style.display='none';
       isAlta=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
@@ -1682,6 +1763,10 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear_alta':
+      document.getElementById("id_UE").style.display='none';
+      document.getElementById("label_idUE").style.display='none';
+      document.getElementById("origen").style.display='none';
+      document.getElementById("c154").style.display='none';
       isAlta=true
       if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
@@ -1697,10 +1782,13 @@ const HandleWhatDoYouWantToDo = (coor) => {
           handleHideAlertPickMap()
           fillCatalogo()
           fillCatalogoConjuntosComerciales()
+          fillCatalogoC154()
+          fillCatalogoOrigen()
         }
       break
   }
 }
+
 
 const radioSelect = option => {
   switch (option) {
@@ -2005,7 +2093,14 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
+  document.getElementById("id_UE").style.display='block';
+  document.getElementById("label_idUE").style.display='block';
+  document.getElementById("origen").style.display='block';
+  document.getElementById("c154").style.display='block';
+  document.getElementById("catorigen").style.display='none';
+  document.getElementById("catc154").style.display='none';
   let id_ue=document.getElementById('id_UE').value
+  layersSARE = ['c100', 'c101', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
   punteo = 'U'
@@ -2020,7 +2115,6 @@ const handleCancelClick = () => {
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
-  layersSARE = ['c100', 'c101', 'wdenue']
 }
 
 const callServiceLiberaClave=(id_ue)=>{

@@ -390,13 +390,17 @@
               <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
                   <input placeholder="CLEE_EST" id="id_UE" name="id_UE" type="text" disabled >
-                  <label for="id_UE">CLEE_EST</label>
+                  <label id="label_idUE" for="id_UE">CLEE_EST</label>
                 </div>
                 <div class="input-field">
+                  <select class="browser-default" id="catorigen" name="catorigen" style="display: none">
+                  </select>
                   <input placeholder="Origen" id="origen" name="origen" type="text" disabled >
                   <label for="origen">Origen</label>
                 </div>
                 <div class="input-field">
+                  <select class="browser-default" id="catc154" name="catc154" style="display: none">
+                  </select>
                   <input placeholder="C154" id="c154" name="c154" type="text" disabled >
                   <label for="c154">C154</label>
                 </div>

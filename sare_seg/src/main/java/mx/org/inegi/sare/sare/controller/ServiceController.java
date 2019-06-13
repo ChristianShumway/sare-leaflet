@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
+import mx.org.inegi.sare.sare_db.dto.cat_c154;
+import mx.org.inegi.sare.sare_db.dto.cat_codigo;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
@@ -197,6 +199,15 @@ public class ServiceController {
     @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services desbloquea(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "usuario") String usuario) throws Exception {
         return BackingDesbloqueo.Desbloqueo(proyecto,id_ue,usuario);
+    }
+    
+    @RequestMapping(value = "getC154_catalogo.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_c154> getC154_catalogo(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getCatalogoC154(proyecto);
+    }
+    @RequestMapping(value = "getOrigen_catalogo.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_codigo> getOrigen_catalogo(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getCodigos(proyecto);
     }
     
     @RequestMapping(value = "/validaSesion.do", method = RequestMethod.POST, produces = javax.ws.rs.core.MediaType.APPLICATION_JSON)

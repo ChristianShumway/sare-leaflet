@@ -122,7 +122,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e11") != null ? new BigDecimal(rs.getString("e11")) : new BigDecimal(0),
                                     rs.getString("e11a") != null ? rs.getString("e11a") : "",
                                     rs.getString("e12") != null ? rs.getString("e12") : "",
-                                    rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                                    rs.getString("e13") != null ? rs.getString("e13") : "",
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
@@ -173,7 +173,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e11") != null ? new BigDecimal(rs.getString("e11")) : new BigDecimal(0),
                                     rs.getString("e11a") != null ? rs.getString("e11a") : "",
                                     rs.getString("e12") != null ? rs.getString("e12") : "",
-                                    rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                                    rs.getString("e13") != null ? rs.getString("e13") : "",
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
@@ -288,7 +288,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             rs.getString("e19") != null ? rs.getString("e19") : "",
                             rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
                             rs.getString("e20") != null ? rs.getString("e20") : "",
-                            rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                            rs.getString("e13") != null ? rs.getString("e13") : "",
                             rs.getString("cve_unica_duplicada") != null ? rs.getString("cve_unica_duplicada") : "");
                 }
                 regresa.add(fila);

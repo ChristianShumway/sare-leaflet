@@ -61,7 +61,7 @@ public class BackingGuardar extends BackingSincroniza {
                                         Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                     }
                                 } else {
-                                    Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                                    Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
                                 }
                             } else {
                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
