@@ -334,7 +334,7 @@ const fillCatalogoC154 = () => {
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
-          opt.appendChild( document.createTextNode(o.descripción) )
+          opt.appendChild( document.createTextNode(o.codigo+"-"+o.descripción) )
           opt.value = o.codigo  
           o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
@@ -360,7 +360,7 @@ const fillCatalogoOrigen = () => {
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
-          opt.appendChild( document.createTextNode(o.descripción) )
+          opt.appendChild( document.createTextNode(o.codigo+"-"+o.descripción) )
           opt.value = o.codigo  
           o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
@@ -1094,7 +1094,6 @@ const handleFillTipoDeVialidades = selectId =>
 const ejecutar =() => 
 {
     const id_ue = document.getElementById('id_UE').value
-    confirm("")
     callServiceLiberaClave(id_ue)  
 }
 

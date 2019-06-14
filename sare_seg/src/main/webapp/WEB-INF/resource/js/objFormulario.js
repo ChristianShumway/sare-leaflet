@@ -30,6 +30,12 @@ const objForm = [
     title:'title-asentamiento',
   },
   {
+    id:'e14',
+    key: 'asentamiento',
+    name:'Nombre del asentamiento',
+    title:'title-asentamiento',
+  },
+  {
     id:'e03',
     key: 'ubicacion-geografica',
     name:'e03',
@@ -231,15 +237,6 @@ const inputsEditables = [
   },
   {
     id:'e14',
-  },
-  {
-    id:'tipo_e10_an',
-  },
-  {
-    id:'tipo_e10_bn',
-  },
-  {
-    id:'tipo_e10_cn',
   },
   {
     id:'descrubic',

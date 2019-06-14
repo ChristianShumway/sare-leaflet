@@ -129,6 +129,24 @@
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
         <script>
+        var getBrowserInfo = function() 
+        {
+            var ua= navigator.userAgent, tem, 
+            M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+            if(/trident/i.test(M[1])){
+                tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+                return 'IE '+(tem[1] || '');
+            }
+            if(M[1]=== 'Chrome'){
+                tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+                if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+            }
+            M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+            if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+            return M.join(' ');
+        };
+
+        console.log(getBrowserInfo());
         $(document).ready(function(){
            // disable()
          var hovered_over = false;
@@ -147,7 +165,9 @@
 
                    event.preventDefault();
                });} /* IE7, IE8 */
-         if(document.addEventListener){ /* Chrome, Safari, Firefox */
+         if(document.addEventListener){
+             /* Chrome, Safari, Firefox */
+             var navegador=getBrowserInfo();
              $("#mapa").on("wheel", event => {
                    if (event.originalEvent.ctrlKey) {
                        event.returnValue = false;
@@ -160,8 +180,10 @@
                    if (event.originalEvent.altKey) {
                        event.returnValue = false;
                    }
-
-                   event.preventDefault();
+                   if(navegador=='Chrome 75')
+                   {
+                        event.preventDefault();
+                   }
                });
                 //document.addEventListener('DOMMouseScroll', stopWheel, false);
          }     
