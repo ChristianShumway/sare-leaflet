@@ -53,7 +53,7 @@ public class BackingLogin {
         user.setUsuario(usuario);
         user.setProyecto(proyecto);
         user=consultaUsuario(user);
-        if(user.getPass().equals(password)){
+        if(user.getPass()!=null && user.getPass().equals(password)){
             Respuesta.setMensaje(new cat_mensaje("Exito",""));
         }else{
             Respuesta=getAuthValidWeb(usuario,password,ip);

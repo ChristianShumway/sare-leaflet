@@ -292,12 +292,13 @@
           </div>
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
+              
               <div class="check-option">
-                <p class="option-title" id="option-unicos">Unicos</p>
+                <p class="option-title option-active" id="option-c101">Sucursales</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-unicos" onchange="handleChangeOptions('unicos')">
+                    <input type="checkbox" checked="true" id="c101" onchange="handleChangeOptions('c101')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -305,11 +306,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title option-active" id="option-sucursal">Sucursales</p>
+                <p class="option-title option-active" id="option-wdenue">DENUE</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" checked="true" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
+                    <input type="checkbox"  checked="true" id="wdenue" onchange="handleChangeOptions('wdenue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -317,11 +318,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title option-active" id="option-denue">DENUE</p>
+                <p class="option-title" id="option-C101M">Matrices</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox"  checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
+                    <input type="checkbox" id="C101M" onchange="handleChangeOptions('C101M')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -329,23 +330,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title" id="option-matrices">Matrices</p>
+                <p class="option-title" id="option-c104">Postes de Kilometraje</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-matrices" onchange="handleChangeOptions('matrices')">
-                    <span class="lever"></span>
-                    Activo
-                  </label>
-                </div>
-              </div>
-  
-              <div class="check-option">
-                <p class="option-title" id="option-postes">Postes de Kilometraje</p>
-                <div class="switch">
-                  <label>
-                    Inactivo
-                    <input type="checkbox" id="checkbox-postes" onchange="handleChangeOptions('postes')">
+                    <input type="checkbox" id="c104" onchange="handleChangeOptions('c104')">
                     <span class="lever"></span>
                     Activo
                   </label>

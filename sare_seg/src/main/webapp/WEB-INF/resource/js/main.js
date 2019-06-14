@@ -26,38 +26,22 @@ let arrayClavesBloqueadasTodas = ""
 let banderaDesbloquear = false
 let bandera=false
 let isAlta=false
+let combosc154yOrigen=false
 
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
-function disable() 
+const init = () => 
 {
-    object.onscroll = handler;	
-    object.addEventListener ("scroll", handler, useCapture);					
-    object.attachEvent ("onscroll", handler);
-//    $(window).on('mousewheel DOMMouseScroll', function() 
-//    {
-//        return false;
-//    });
-//document.removeEventListener('mousewheel', Go);
-//document.removeEventListener('DOMMouseScroll', Go);
-}
-function enable() {
-document.addEventListener('mousewheel', Go);
-document.addEventListener('DOMMouseScroll', Go);
-}
-
-const init = () => {
-    //disable()
     addCapas ( { 'checked': true, 'id': 'unidades' } )
 }
 
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
   const idWms = urlServices['map'].label;
-  const checkBox = document.getElementById(`checkbox-${option}`)
+  const checkBox = document.getElementById(`${option}`)
   checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
-  if (option == "checkbox-sucursal") {
+  if (option == "c101") {
     addCapas(checkBox);
   }
   else {
@@ -72,16 +56,18 @@ const addLayerEconomicas = (chk, option) => {
   if (chk.checked === true) {
     if (layersSARE.indexOf(chk.id) < 0) {
       switch (option) {
-        case 'denue':
+        case 'wdenue': //denue
           addLay('wdenue')
-        case 'unicos':
+          break;
+        case 'c101': //unicos y sucursales
           addLay('c101')
-        case 'matrices':
+          break;
+        case 'C101M': //matrices
           addLay('C101M')
-        case 'postes':
+          break;
+        case 'c104': //postes de kilometraje
           addLay('c104')
-        case 'sucursal':
-          addLay('c101')
+          break;
       }
     }
   } else {
@@ -105,18 +91,22 @@ const addCapas = chk => {
       remLay('c101')
     }
     if (typeof chk.mza !== 'undefined' && chk.mza === true) {
-      remLay('c103')
-      addLay('c102')
-      addLay('c103r')
-      addLay('c108')
-      addLay('c107')
-      addLay('c107r')
+      remLay('c103') //Ageb
+      remLay('c103r') // ageb rural
+      remLay('c107') //localidades urbanas
+      remLay('c107r') // localidades rurales
+      remLay('c108') // municipios
+      addLay('c102') //manzanas
     }
     if (typeof chk.ageb !== 'undefined' && chk.ageb === true) {
       remLay('c102')
-      remLay('c103r')
+      addLay('c103r')
       addLay('c103')
+      addLay('c107')
+      addLay('c107r')
+      addLay('c108')
     }
+    
   }
   ordenaLayer()
   MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } })
@@ -153,7 +143,7 @@ const zooma = () => {
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
   var level = MDM6('getZoomLevel')
-  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false })
+  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false  })
   : level >= 13 ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true })
   : addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false })
 }
@@ -328,6 +318,7 @@ const fillCatalogoConjuntosComerciales = () => {
   '')
 }
 const fillCatalogoC154 = () => {
+  combosc154yOrigen=true;
   sendAJAX(urlServices['servicegetC154_catalogo'].url, 
     {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['servicegetC154_catalogo'].type, 
@@ -353,6 +344,7 @@ const fillCatalogoC154 = () => {
   '')
 }
 const fillCatalogoOrigen = () => {
+  combosc154yOrigen=true;
   sendAJAX(urlServices['servicegetOrigen_catalogo'].url, 
     {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['servicegetOrigen_catalogo'].type, 
@@ -1758,6 +1750,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       document.getElementById("catc154").style.display='none';
       document.getElementById("catorigen").style.display='none';
       isAlta=false;
+      combosc154yOrigen=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
       {
@@ -1809,8 +1802,11 @@ const HandleWhatDoYouWantToDo = (coor) => {
           handleHideAlertPickMap()
           fillCatalogo()
           fillCatalogoConjuntosComerciales()
-          fillCatalogoC154()
-          fillCatalogoOrigen()
+          if(!combosc154yOrigen)
+          {
+            fillCatalogoC154()
+            fillCatalogoOrigen()
+          }
         }
       break
   }
