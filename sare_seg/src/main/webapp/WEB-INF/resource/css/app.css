@@ -30,6 +30,17 @@ body{
   align-items: center;
   transition: .5s;
 }
+#filtroXclase{
+    position: absolute;
+    right:0.5rem;
+    background-color: #2d384a;
+    top:0.5rem;
+    z-index: 2;
+    display: none;
+}
+#filtroXclase{
+        left:40rem;
+}
 
 /* .swal2-icon.swal2-info{
     left: 2rem;

@@ -445,6 +445,7 @@
                 <div class="input-field">
                   <input placeholder="SCIAN" id="e17_DESC" name="e17_DESC" type="text" disabled >
                   <label for="e17_DESC">SCIAN</label>
+                  <a class="btn-floating colorGrisApp" id="filtroXclase" onclick="FiltroXClase($(this).attr('id'))"><i class="material-icons">filter_list</i></a>
                 </div>
                 <div class="input-field">
                   <a onclick="handleActionTarget('ubicacion-geografica','ubicacion-float-der')" class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>

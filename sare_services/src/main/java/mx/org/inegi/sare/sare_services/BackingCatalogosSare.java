@@ -11,6 +11,8 @@ import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_c154;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
+import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
+import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -66,5 +68,17 @@ public class BackingCatalogosSare {
         codigos.add(new cat_codigo("9", "Altas"));
 
         return codigos;
+    }
+    
+     public cat_respuesta_services getDatosClasesPorFiltro(Integer proyecto,String cveoper, String codigoScian) {
+        cat_respuesta_services respuesta = new cat_respuesta_services();
+        try {
+            respuesta.setDatos(InterfaceCatalogosSare.getDatosClasesPorFiltro(proyecto,cveoper, codigoScian));
+            respuesta.setMensaje(new cat_mensaje("true", "Se cargo la información"));
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            respuesta.setMensaje(new cat_mensaje("true", "No se cargo la información"+ex));
+        }
+        return respuesta;
     }
 }

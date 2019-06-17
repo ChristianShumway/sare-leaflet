@@ -121,5 +121,10 @@ var urlServices = {
         url: 'validaSesion.do',
         type: 'POST',
         label: 'desbloquea'
-    }    
+    },
+    getDatosClasesPorFiltro: {
+        url: 'getDatosClasesPorFiltro.do',
+        label: 'getDatosClasesPorFiltro',
+        type: 'GET'
+    }
 };

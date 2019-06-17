@@ -27,6 +27,8 @@ let banderaDesbloquear = false
 let bandera=false
 let isAlta=false
 let combosc154yOrigen=false
+let valorScian;
+let htmlDivClases
 
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -1782,6 +1784,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear_alta':
+      document.getElementById("filtroXclase").style.display='block';
       document.getElementById("id_UE").style.display='none';
       document.getElementById("label_idUE").style.display='none';
       document.getElementById("origen").style.display='none';
@@ -2578,4 +2581,237 @@ const tiempoInactividad = () => {
     localStorage.clear()
     alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad', 'error')
   }     
+}
+
+
+function FiltroXClase(id){
+        //var htmlDivClases;
+         setTimeout(function () {
+            llamarServicioclases('00');
+            }, 200);
+                    htmlDivClases = '<label id=label_sector style="display:block"><h6><b>Sectores</b><h6>';
+                    htmlDivClases += '<select id=\"filtro_sector\" style="display:block" onchange=llamarServicioclases(this.value,$(this).html())>';
+                     htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_subsector style="display:none" ><h6><b>Subsectores</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subsector\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                     htmlDivClases += '<label id=label_rama style="display:none" ><h6><b>Ramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_rama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_subrama style="display:none"><h6><b>Subramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subrama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html()))>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                     htmlDivClases += '</select>';
+                     htmlDivClases += '<label id=label_clase style="display:none" ><h6><b>Clases</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_clase\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                     htmlDivClases += '</select>';
+                    inicializaSwal(id);
+        
+//        html += '<label id=label_' + value.id + '><b>' + value.etiqueta + '</b></label>';
+//                    html += '    <select id=filtro_' + value.id + ' style="display:block" onchange=' + value.metodo + '>';
+//                    html += '</select>';
+    
+}
+
+function inicializaSwal(id){
+    swal({
+        title: '<div >' + "Filtro Por Clases" + '</div>',
+        html: htmlDivClases,
+        width: '650px',
+        height: '100px',
+        heightAuto: true,
+        confirmButtonText: 'Aceptar',
+        //customClass: 'swal-grafica',
+        showCloseButton: true,
+        confirmButtonColor: '#787878'
+        
+    }).then((value)=>{
+        claseScian=añadirParametroScian();
+        if(id=="filtroXclase"){
+            document.getElementById('e17_DESC').value=valorScian;
+        }else{
+            
+        }
+        
+    });
+}
+
+function añadirParametroScian(){
+    let sector,subsector,rama,subrama,clase,clase_scian,valor,sel;
+    
+    clase=$("#filtro_clase").val();
+    sel = document.getElementById("filtro_clase");
+    if(clase!="Seleccione"){
+        clase_scian=clase;
+        valor="";
+        valor=sel. options[sel. selectedIndex]. innerText;
+    }else{
+        subrama=$("#filtro_subrama").val();
+        sel = document.getElementById("filtro_subrama");
+        if(subrama!="Seleccione"){
+            clase_scian=subrama;
+            valor="";
+            valor=sel. options[sel. selectedIndex]. innerText;
+        }else{
+            rama=$("#filtro_rama").val();
+            sel = document.getElementById("filtro_rama");
+            if(rama!="Seleccione"){
+                clase_scian=rama;
+                valor="";
+                valor=sel. options[sel. selectedIndex]. innerText;
+            }else{
+                subsector=$("#filtro_subsector").val();
+                sel = document.getElementById("filtro_subsector");
+                if(subsector!="Seleccione"){
+                    clase_scian=subsector;
+                    valor="";
+                    valor=sel. options[sel. selectedIndex]. innerText;
+                }else{
+                    sector=$("#filtro_sector").val();
+                    sel = document.getElementById("filtro_clase");
+                    if(sector!="Seleccione"){
+                        clase_scian=sector;
+                        valor="";
+                        valor=sel. options[sel. selectedIndex]. innerText;
+                    }else{
+                       clase_scian="00";
+                       valor="";
+                       valor=sel. options[sel. selectedIndex]. innerText;
+                    }
+                }
+            }
+        }
+    }
+    valorScian=clase_scian+"-"+valor;
+    return clase_scian;
+}
+
+function llamarServicioclases(codigoScian, valor){
+   
+   // alert(codigoScian)
+   var sel;
+    sendAJAX(urlServices['getDatosClasesPorFiltro'].url, 
+        {
+            cveoper:dataUserFromLoginLocalStorage.ce, 
+            proyecto:dataUserFromLoginLocalStorage.proyecto, 
+            codigoScian:codigoScian
+        }, 
+        
+        urlServices['getDatosClasesPorFiltro'].type, 
+        data => {
+
+            if(data[0].datos.datos.length){
+                
+                clasesFiltro = JSON.stringify(data[0].datos.datos);
+                localStorage.setItem("JSONFiltrarClases", JSON.stringify(data[0].datos.datos));
+                if (clasesFiltro != null) {
+                    var clasesFiltro_2 = JSON.parse(clasesFiltro);
+                    if(codigoScian=='00'){
+                 
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+//                         $('#filtro_sector').append($('<option>', {
+//                             value:value.codigo,
+//                             text: value.description
+//                        }));
+                       $("#filtro_sector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                       
+                     });
+                     $("#label_subsector").css("display","none");
+                     $("#filtro_subsector").css("display","none");
+                     $("#label_rama").css("display","none");
+                     $("#filtro_rama").css("display","none");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                    //inicializaSwal();
+                }else{
+                   if(codigoScian.length==2){
+                    sel = document.getElementById("filtro_subsector");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_subsector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_subsector").css("display","block");
+                     $("#filtro_subsector").css("display","block");
+                     $("#label_rama").css("display","none");
+                     $("#filtro_rama").css("display","none");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                    //inicializaSwal();
+                }else{
+                    if(codigoScian.length==3){
+                    sel = document.getElementById("filtro_rama");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_rama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_rama").css("display","block");
+                     $("#filtro_rama").css("display","block");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                }else{
+                    if(codigoScian.length==4){
+                    sel = document.getElementById("filtro_subrama");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                      $("#filtro_subrama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_subrama").css("display","block");
+                     $("#filtro_subrama").css("display","block");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                }else{
+                    sel = document.getElementById("filtro_clase");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_clase").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                      $("#label_clase").css("display","block");
+                     $("#filtro_clase").css("display","block");
+                     valorScian=+"-"+value.descripción
+                }
+                }
+                }
+                }
+                
+//                 htmlDivClases = "<label id=label_1><h6><b>Sector</b><h6></label>\n\
+//                       <select id=filtro_1 style=\"display:block\" onchange=llamarServicioclases(this.value)><option value=\"Seleccione\">Seleccione</option>\n\
+//                    <option value=\"agricultura\">Agricultura</option></select>'";
+                }
+            }else {
+                var dataStorage = localStorage.getItem("JSONFiltrarClases");
+                losDatosLocales = JSON.parse(dataStorage);
+            }
+        }, () =>{}
+    )  
+     
 }

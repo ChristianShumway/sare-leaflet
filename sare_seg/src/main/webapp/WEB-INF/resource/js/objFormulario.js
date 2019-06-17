@@ -265,9 +265,6 @@ const inputsEditables = [
   {
     id:'e09',
   },
-  {
-    id:'e17_DESC',
-  },
 ]
 
 let inputsVialidadesClean=[
