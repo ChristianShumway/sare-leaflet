@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
@@ -65,7 +66,12 @@ public class BackingLogin {
                if(user.getCe()!=null)
                {
                    user.setUsuario(usuario);
-                   user.setProyecto(proyecto);
+                   if(!Objects.equals(proyecto, null))
+                   {
+                    user.setProyecto(proyecto);
+                   }else{
+                       user.setProyecto(5); //se inicializa con el proyecto en 5 de operativo masivo pero se necesita ver como cachar este dato
+                   }
                    user.setIp(ip);
                     if(registraAccesoPG(user))
                     {
