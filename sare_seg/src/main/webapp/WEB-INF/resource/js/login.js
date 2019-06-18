@@ -11,7 +11,7 @@ let dataUserObj = {
   tipoSare: '',
   tramoControl: '',
   usuario: '',
-  proyectoSesion:''
+  proyectoSesion:'',
 }
 let loading = 'false'
 
@@ -20,13 +20,16 @@ window.onload = ( () => {
 })
 
 const goFormLogin = () => {
-  const card = document.getElementById('card')
+  //const card = document.getElementById('card')
   const selectSare = document.getElementById('cual-sare')
   const selectSelected = document.getElementById('id-select-sare')
   const title = 'Selecciona a cual tipo de SARE deseas ingresar'
   // selectSare.value ? card.style.transform = 'rotatex(180deg)' : alertToastLogin(title)
   if (selectSare.value){
-    card.style.transform = 'rotatex(180deg)'
+    //card.style.transform = 'rotatex(180deg)'
+    dataUserObj.proyectoSesion = parseInt(selectSare.value)
+    localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
+    window.location.href =  './index.html'
     selectSelected.classList.remove('select-no-selected', 'animated', 'shake')
   } else {
     selectSelected.classList.add('select-no-selected', 'animated', 'shake')
@@ -93,7 +96,7 @@ const handleClickValidaUsuario = () => {
         loading = 'false'
         handleVisibleLoading()
       } else if (type == 'Exito') {
-        const {acceso, ce, cve_operativa, nombre, tramo_control, usuario,proyecto} = data[0].datos.usuario
+        const {acceso, ce, cve_operativa, nombre, tramo_control, usuario} = data[0].datos.usuario
         dataUserObj = {
           acceso,
           ce,
@@ -102,15 +105,14 @@ const handleClickValidaUsuario = () => {
           tipoSare: cualSare.value,
           tramoControl: tramo_control,
           usuario,
-          proyectoSesion:proyecto
+          proyectoSesion:'',
         }
         loading = 'false'
         handleVisibleLoading()        
-        localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
+        //localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
         card.style.transform = 'rotatex(180deg)'
         //window.location.href =  './index.html'
       }
-        
       
     }, 
     () => {}

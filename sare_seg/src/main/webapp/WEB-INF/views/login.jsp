@@ -20,7 +20,7 @@
       <div id="card" class="card">
     
         <div class="wrap-login-front">
-          <a class="go-back" onclick="goLoginBack()" title="Regresar"><img src="resources/images/iconos/left-arrow.png" alt="atrás"></a>
+          <!--<a class="go-back" onclick="goLoginBack()" title="Regresar"><img src="resources/images/iconos/left-arrow.png" alt="atrás"></a>-->
           <p class="titulo-inicio-sesion">Inicio de Sesión</p>
           <p class="txt-indicaciones">Ingresa tu información de registro</p>
           <div class="wrap-input user" id="wrap-input-user">
@@ -55,14 +55,14 @@
           <div class="wrap-select-sare custom-select" id="select-sare">
             <select name="cual-sare" id="cual-sare">
               <option value="">Seleccione SARE...</option>
-              <option value="4">Construcción</option>
+              <!--<option value="4">Construcción</option>
               <option value="7">Convenios</option>
               <option value="1">Establecimientos grandes y empresas</option>
-              <option value="6">Muestra Rural</option>
+              <option value="6">Muestra Rural</option>-->
               <option value="5">Operativo Masivo</option>
-              <option value="8">Organismos operadores de agua</option>
+              <!--<option value="8">Organismos operadores de agua</option>
               <option value="2">Pesca - Mineria</option>
-              <option value="3">Transportes</option>
+              <option value="3">Transportes</option>-->
             </select>
           </div>
           <a onclick="goFormLogin()" class="btn-inicio-sesion">Iniciar Ahora</a>

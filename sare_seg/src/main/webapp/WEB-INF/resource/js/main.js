@@ -1412,9 +1412,9 @@ const addLiberados=()=> {
 }
 
 const validations=(totalInputs,object,campo)=>{
-   let inputsInfo = 0 
-   let msgInputEmpty;
-    for (let input = 0; input < totalInputs; input++) {
+  let inputsInfo = 0 
+  let msgInputEmpty;
+  for (let input = 0; input < totalInputs; input++) {
     const { id, name, title, key } = object[input]
     const element = document.getElementById(id)
     const wrapTitle = document.getElementById(title)
@@ -1431,7 +1431,7 @@ const validations=(totalInputs,object,campo)=>{
       containerInputsVisible = false
       if(campo!=undefined)
       {
-           msgInputEmpty = `si no existe ${name} no debe existir ${campo}`
+          msgInputEmpty = `si no existe ${name} no debe existir ${campo}`
       }
       else
       {
@@ -1453,7 +1453,7 @@ const validations=(totalInputs,object,campo)=>{
       inputsInfo++
 
       wrapTitle.id == title &&
-        wrapTitle.classList.remove('error')
+      wrapTitle.classList.remove('error')
     }
 
   }
@@ -1564,7 +1564,10 @@ const validaCp = () => {
           
       }
       else {
-        modalViewPreliminar()    
+        if(nameContainerFloating){
+          handleReturnContainerForm(nameContainerFloating)
+        }  
+        modalViewPreliminar()  
       }
     }
   }, () => { })
