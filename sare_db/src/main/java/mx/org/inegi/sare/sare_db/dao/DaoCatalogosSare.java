@@ -154,7 +154,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
                          sql.append("select codigo,descripcion_scian from ").append(esquemaPos).append(".get_tc_scian(?)");
                         break;
                     case AsentamientosHumanos:
-                        sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(esquemaPos).append(".cat_asentamientos_humanos order by descripcion)");
+                        sql.append("select '0' id_tipoasen,'Seleccione' descripcion, 'Seleccione' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(esquemaPos).append(".cat_asentamientos_humanos order by descripcion)");
                     break;
                     case ConjuntoComercial:
                        sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(esquemaPos).append(".cat_tipo_conjunto_comercial");

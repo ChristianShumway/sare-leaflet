@@ -32,14 +32,13 @@ body{
 }
 #filtroXclase{
     position: absolute;
-    right:0.5rem;
     background-color: #2d384a;
-    top:0.5rem;
+    top:0.1rem;
     z-index: 2;
     display: none;
 }
 #filtroXclase{
-        left:40rem;
+        left:93%;
 }
 
 /* .swal2-icon.swal2-info{

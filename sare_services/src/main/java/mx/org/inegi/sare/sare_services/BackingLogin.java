@@ -70,7 +70,7 @@ public class BackingLogin {
                    {
                     user.setProyecto(proyecto);
                    }else{
-                       user.setProyecto(5); //se inicializa con el proyecto en 5 de operativo masivo pero se necesita ver como cachar este dato
+                       user.setProyecto(5); //se inicializa con el proyecto en 5 de operativo masivo pero se necesita ver como cachar este 
                    }
                    user.setIp(ip);
                     if(registraAccesoPG(user))
