@@ -33,7 +33,6 @@ const goFormLogin = () => {
     alertToastLogin(title)
     setTimeout( () => selectSelected.classList.remove('animated', 'shake'), 1000 )
   }
-  //alert(cualSare.value)
 }
 
 const goLoginBack = () => {
@@ -66,6 +65,7 @@ const handleClickUsuarioPasswordEmpty = () => {
 }
 
 const handleClickValidaUsuario = () => {
+  const card = document.getElementById('card')
   loading = 'true'
   handleVisibleLoading()
   sendAJAX(
@@ -79,7 +79,7 @@ const handleClickValidaUsuario = () => {
     data => { 
       // wrapUser.classList.remove('wrap-input-empty')
       // wrapPassword.classList.remove('wrap-input-empty')
-
+      console.log(data[0].datos)
       const {type, messages} = data[0].datos.mensaje
 
       if (type == 'warning'){
@@ -107,7 +107,8 @@ const handleClickValidaUsuario = () => {
         loading = 'false'
         handleVisibleLoading()        
         localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
-        window.location.href =  './index.html'
+        card.style.transform = 'rotatex(180deg)'
+        //window.location.href =  './index.html'
       }
         
       

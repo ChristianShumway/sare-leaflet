@@ -18,30 +18,8 @@
   <div class="login-container">
     <div id="flip-container">
       <div id="card" class="card">
-
-        <div class="wrap-login-front">
-          <div class="logo-bienvenida">
-            <img src="resources/images/logos/logo-inegi.png" alt="inegi">
-          </div>
-          <p class="titulo-bienvenida">Bienvenido al</p>
-          <p class="txt-bienvenida">Sistema de Alta y Reubicación de Establecimientos</p>
-          <div class="wrap-select-sare custom-select" id="select-sare">
-            <select name="cual-sare" id="cual-sare">
-              <option value="">Seleccione SARE...</option>
-              <option value="4">Construcción</option>
-              <option value="7">Convenios</option>
-              <option value="1">Establecimientos grandes y empresas</option>
-              <option value="6">Muestra Rural</option>
-              <option value="5">Operativo Masivo</option>
-              <option value="8">Organismos operadores de agua</option>
-              <option value="2">Pesca - Mineria</option>
-              <option value="3">Transportes</option>
-            </select>
-          </div>
-          <a onclick="goFormLogin()" class="btn-inicio-sesion">Iniciar Ahora</a>
-        </div>
     
-        <div class="wrap-login-back">
+        <div class="wrap-login-front">
           <a class="go-back" onclick="goLoginBack()" title="Regresar"><img src="resources/images/iconos/left-arrow.png" alt="atrás"></a>
           <p class="titulo-inicio-sesion">Inicio de Sesión</p>
           <p class="txt-indicaciones">Ingresa tu información de registro</p>
@@ -66,6 +44,28 @@
           <div class="logo-bienvenida-back">
             <img src="resources/images/logos/logo-inegi.png" alt="inegi">
           </div>
+        </div>
+        
+        <div class="wrap-login-back">
+          <div class="logo-bienvenida">
+            <img src="resources/images/logos/logo-inegi.png" alt="inegi">
+          </div>
+          <p class="titulo-bienvenida">Bienvenido al</p>
+          <p class="txt-bienvenida">Sistema de Alta y Reubicación de Establecimientos</p>
+          <div class="wrap-select-sare custom-select" id="select-sare">
+            <select name="cual-sare" id="cual-sare">
+              <option value="">Seleccione SARE...</option>
+              <option value="4">Construcción</option>
+              <option value="7">Convenios</option>
+              <option value="1">Establecimientos grandes y empresas</option>
+              <option value="6">Muestra Rural</option>
+              <option value="5">Operativo Masivo</option>
+              <option value="8">Organismos operadores de agua</option>
+              <option value="2">Pesca - Mineria</option>
+              <option value="3">Transportes</option>
+            </select>
+          </div>
+          <a onclick="goFormLogin()" class="btn-inicio-sesion">Iniciar Ahora</a>
         </div>
         
       </div>

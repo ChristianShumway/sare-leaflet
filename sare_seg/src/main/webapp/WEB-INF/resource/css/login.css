@@ -49,10 +49,6 @@ body{
   box-shadow: 3px 3px 29px darkslategrey;
 }
 
-/* .card:hover, .card.flip{
-  transform: rotatex(180deg);
-} */
-
 .wrap-login-front, .wrap-login-back{
   position: absolute;
   width: 100%;
