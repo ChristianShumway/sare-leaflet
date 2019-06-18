@@ -39,7 +39,7 @@ public class cat_vw_punteo_sare {
     private BigDecimal E11;
     private String E11A;
     private String E12;
-    private BigDecimal E13;
+    private String E13;
     private String E13A;
     private String E14;
     private String E14_A;
@@ -92,7 +92,7 @@ public class cat_vw_punteo_sare {
 
     public cat_vw_punteo_sare(String CE, BigDecimal COORD_X, BigDecimal COORD_Y, String DESCRUBIC, String E03, String E03N, String E04, String E04N, 
             String E05, String E05N, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B,
-            String E10_C, BigDecimal E11, String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, String E19, String E20, 
+            String E10_C, BigDecimal E11, String E11A, String E12, String E13, String E13A, String E14, String E14_A, String E19, String E20, 
             BigDecimal ID_UE, BigDecimal ORIGEN, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, 
             String TIPO_E14, String TIPO_E19, String TRAMO_CONTROL, String punteo, String e10_cvevial, String e12p, String cvegeo, 
             String Mod_cat, String Cveft, String Cvegeo2016, String E10_e, String E23, BigDecimal Id_inmueble, BigDecimal Id_deftramo) {
@@ -151,7 +151,7 @@ public class cat_vw_punteo_sare {
             String TIPO_E10, String E10, String e10_cvevial, String e10_cveseg, BigDecimal E11, String E11A, String TIPO_E14, String E14,
             String TIPO_E10_A, String E10_A, String TIPO_E10_B, String E10_B, String TIPO_E10_C, String E10_C, String DESCRUBIC,
             BigDecimal COORD_X, BigDecimal COORD_Y, String cod_resultado, String tipo_reg, String E12, String e12p, String E19, String TIPO_E19,
-            String E20, BigDecimal E13, String cve_unica_duplicada) {
+            String E20, String E13, String cve_unica_duplicada) {
         this.ID_UE = ID_UE;
         this.E03 = E03;
         this.E03N = E03N;
@@ -194,7 +194,7 @@ public class cat_vw_punteo_sare {
     public cat_vw_punteo_sare(BigDecimal A, String CE, String CE_DESCRIPCION, String CESTATAL, String CLEE_EMP, BigDecimal COORD_X,
             BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E03N, String E04, String E04N, String E05, String E05N,
             String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11,
-            String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19,
+            String E11A, String E12, String E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19,
             String E20, String E23A, BigDecimal ID_DEFTRAMO, BigDecimal ID_EVENTO, BigDecimal ID_UE, BigDecimal JA, BigDecimal JC, 
             BigDecimal ORIGEN, String SARE_ST, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, 
             String TIPO_E14, String TIPO_E19, String TRAMO_CONTROL) {
@@ -251,7 +251,7 @@ public class cat_vw_punteo_sare {
 
     public cat_vw_punteo_sare(String CESTATAL, BigDecimal COORD_X, BigDecimal COORD_Y, String C154, String DESCRUBIC, String E03, String E04, 
             String E05, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, BigDecimal E11, 
-            String E11A, String E12, BigDecimal E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, 
+            String E11A, String E12, String E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, 
             String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, Integer estatus_punteo, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, 
             String TIPO_E10_C, String TIPO_E14, String TIPO_E19) {
         this.CESTATAL = CESTATAL;
@@ -693,11 +693,11 @@ public class cat_vw_punteo_sare {
         this.E12 = E12;
     }
 
-    public BigDecimal getE13() {
+    public String getE13() {
         return E13;
     }
 
-    public void setE13(BigDecimal E13) {
+    public void setE13(String E13) {
         this.E13 = E13;
     }
 

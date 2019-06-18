@@ -34,7 +34,7 @@ public class cat_vw_punteo_sare_guardado {
     private String e10_e;
     private BigDecimal e11;
     private String e11_a;
-    private BigDecimal e13;
+    private String e13;
     private String e13_a;
     private String tipo_E14;
     private String e14_A;
@@ -72,7 +72,7 @@ public class cat_vw_punteo_sare_guardado {
     public cat_vw_punteo_sare_guardado() {
     }
 
-    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, BigDecimal e11, String e11_a, BigDecimal e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17) {
+    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, BigDecimal e11, String e11_a, String e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17) {
         this.id_UE = id_UE;
         this.origen = origen;
         this.c154 = c154;
@@ -413,11 +413,11 @@ public class cat_vw_punteo_sare_guardado {
         this.e11_a = e11_a;
     }
 
-    public BigDecimal getE13() {
+    public String getE13() {
         return e13;
     }
 
-    public void setE13(BigDecimal e13) {
+    public void setE13(String e13) {
         this.e13 = e13;
     }
 

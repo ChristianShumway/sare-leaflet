@@ -26,19 +26,24 @@ let arrayClavesBloqueadasTodas = ""
 let banderaDesbloquear = false
 let bandera=false
 let isAlta=false
+let combosc154yOrigen=false
+let valorScian;
+let htmlDivClases
 
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
-
-const init = () => addCapas ( { 'checked': true, 'id': 'unidades' } )
+const init = () => 
+{
+    addCapas ( { 'checked': true, 'id': 'unidades' } )
+}
 
 const handleChangeOptions = option => {
   const title = document.getElementById(`option-${option}`)
   const idWms = urlServices['map'].label;
-  const checkBox = document.getElementById(`checkbox-${option}`)
+  const checkBox = document.getElementById(`${option}`)
   checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
-  if (option == "checkbox-sucursal") {
+  if (option == "c101") {
     addCapas(checkBox);
   }
   else {
@@ -53,16 +58,18 @@ const addLayerEconomicas = (chk, option) => {
   if (chk.checked === true) {
     if (layersSARE.indexOf(chk.id) < 0) {
       switch (option) {
-        case 'denue':
+        case 'wdenue': //denue
           addLay('wdenue')
-        case 'unicos':
-          addLay('c101u')
-        case 'matrices':
-          addLay('C101M')
-        case 'postes':
-          addLay('c104')
-        case 'sucursal':
+          break;
+        case 'c101': //unicos y sucursales
           addLay('c101')
+          break;
+        case 'C101M': //matrices
+          addLay('C101M')
+          break;
+        case 'c104': //postes de kilometraje
+          addLay('c104')
+          break;
       }
     }
   } else {
@@ -86,15 +93,22 @@ const addCapas = chk => {
       remLay('c101')
     }
     if (typeof chk.mza !== 'undefined' && chk.mza === true) {
-      remLay('c103')
-      addLay('c102')
-      addLay('c102r')
+      remLay('c103') //Ageb
+      remLay('c103r') // ageb rural
+      remLay('c107') //localidades urbanas
+      remLay('c107r') // localidades rurales
+      remLay('c108') // municipios
+      addLay('c102') //manzanas
     }
     if (typeof chk.ageb !== 'undefined' && chk.ageb === true) {
       remLay('c102')
-      remLay('c102r')
+      addLay('c103r')
       addLay('c103')
+      addLay('c107')
+      addLay('c107r')
+      addLay('c108')
     }
+    
   }
   ordenaLayer()
   MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } })
@@ -116,9 +130,9 @@ const addLay = item => {
 const ordenaLayer = () => {
   if (layersSARE.indexOf('c102') > 0) {
     remLay('c102')
-    remLay('c102r')
+    remLay('c103r')
     layersSARE.unshift('c102')
-    layersSARE.unshift('c102r')
+    layersSARE.unshift('c103r')
   } else if (layersSARE.indexOf('c103') > 0) {
     remLay('c103')
     layersSARE.unshift('c103')
@@ -131,7 +145,7 @@ const zooma = () => {
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
   var level = MDM6('getZoomLevel')
-  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false })
+  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false  })
   : level >= 13 ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true })
   : addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false })
 }
@@ -160,6 +174,10 @@ const buscarUE = () => {
 const findUE = id_ue => {
   xycoorsx=''
   xycoorsy=''
+  document.getElementById("origen").style.display='block';
+  document.getElementById("c154").style.display='block';
+  document.getElementById("catorigen").style.display='none';
+  document.getElementById("catc154").style.display='none';
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -182,9 +200,9 @@ const callServiceFindUE=(id_ue)=>{
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+    'proyecto':dataUserFromLoginLocalStorage.proyecto,
     'p':'1',
-    'tramo':dataUserFromLoginLocalStorage.tramoControl,
+    'tramo':dataUserFromLoginLocalStorage.tramo_control,
     'ce': dataUserFromLoginLocalStorage.ce, 
     'usuario':dataUserFromLoginLocalStorage.nombre,
     'id_ue': id_ue
@@ -257,7 +275,7 @@ const fillForm = data => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogo = () => {
   sendAJAX(urlServices['serviceCatalogoAsentamientos'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCatalogoAsentamientos'].type, 
     data => {
       if (data[0].operation) {
@@ -279,7 +297,7 @@ const fillCatalogo = () => {
 //función que llena el catalogo al hacer la busqueda
 const fillCatalogoConjuntosComerciales = () => {
   sendAJAX(urlServices['serviceCatalogoConjuntosComerciales'].url, 
-    {'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCatalogoConjuntosComerciales'].type, 
     data => {
       if (data[0].operation) {
@@ -301,6 +319,58 @@ const fillCatalogoConjuntosComerciales = () => {
     }, 
   '')
 }
+const fillCatalogoC154 = () => {
+  combosc154yOrigen=true;
+  sendAJAX(urlServices['servicegetC154_catalogo'].url, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
+    urlServices['servicegetC154_catalogo'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('catc154')
+        opcSelected.style.display='block';
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccion"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.codigo+"-"+o.descripción) )
+          opt.value = o.codigo  
+          o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
+const fillCatalogoOrigen = () => {
+  combosc154yOrigen=true;
+  sendAJAX(urlServices['servicegetOrigen_catalogo'].url, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
+    urlServices['servicegetOrigen_catalogo'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('catorigen') 
+        opcSelected.style.display='block';
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccion"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.codigo+"-"+o.descripción) )
+          opt.value = o.codigo  
+          o.codigo === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
 
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = data => {
@@ -312,7 +382,7 @@ const acercarWithExtent = data => {
 const getCp=ce=>{
   sendAJAX(
     urlServices['serviceCP'].url, 
-    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyectoSesion}, 
+    { 'cve_ent': ce, 'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
     urlServices['serviceCP'].type, 
     data => {
       cpObj = data[0].datos
@@ -349,8 +419,8 @@ const handleViewCleeList = () => {
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
-      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'proyecto': dataUserFromLoginLocalStorage.proyecto, 
+      'tramo': dataUserFromLoginLocalStorage.tramo_control, 
       'id_ue': dataUserFromLoginLocalStorage.ce,
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
@@ -807,7 +877,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
   //showalertpunteoloading();
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+    'proyecto':dataUserFromLoginLocalStorage.proyecto,
     'x': x, 
     'y': y, 
     'tc': tc, 
@@ -1008,14 +1078,25 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph='') =>{
 }
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
-const handleFillTipoDeVialidades = selectId => {
+const handleFillTipoDeVialidades = selectId => 
+{
     //selectId.setAttribute('onchange', 'asignaValorId()')
+    let opt = document.createElement('option')
+    opt.appendChild( document.createTextNode("Seleccione") )
+    opt.value = "Seleccione"
+    selectId.appendChild(opt)
   catalogoCatVial.map( item =>{
     let opt = document.createElement('option')
     opt.appendChild( document.createTextNode(item.tipo_e10n) )
     opt.value = item.tipo_e10
     selectId.appendChild(opt)
   })
+}
+
+const ejecutar =() => 
+{
+    const id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_ue)  
 }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
@@ -1474,7 +1555,7 @@ const validaCp = () => {
   {
     'codigo': $("#e14_A").val(),
     'cve_ent': $("#e03").val(),
-    'proyecto':dataUserFromLoginLocalStorage.proyectoSesion
+    'proyecto':dataUserFromLoginLocalStorage.proyecto
   }, 
   urlServices['serviceValCP'].type, 
   data => {
@@ -1520,6 +1601,8 @@ const showViewPreliminar = d => {
       d = d.replace(/Seleccione/g, '')
       var dpv = d.split("&")
       var Type;
+      let valororigen;
+      let valorc154;
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
         if(idobj[0]!='tramo_control' && idobj[0]!='coord_x' && idobj[0]!='coord_y'){
@@ -1533,10 +1616,23 @@ const showViewPreliminar = d => {
         if(idobj[0]=='id_UE' && isAlta){
             a="00"; //se inicializa en 00 para las altas y evitar que el truene el objeto en el servicio
         }
+        if(idobj[0]=='catorigen' && idobj[1]!=""){
+            valororigen=idobj[1]
+        }
+        if(idobj[0]=='catc154' && idobj[1]!=""){
+            valorc154=idobj[1]
+        }
+        if(idobj[0]=='origen' && idobj[1]==""){
+            a=valororigen
+        }
+        if(idobj[0]=='c154' && idobj[1]==""){
+            a=valorc154
+        }
         if(Type=='select-one')
         {
             a=document.getElementById(idobj[0]).value
         }
+        
             
             ObjectRequest[idobj[0]] = a
             $("#" + idobj[0] + "_pv").text(a)
@@ -1545,8 +1641,8 @@ const showViewPreliminar = d => {
       ObjectRequest['Cvegeo2016'] = cve_geo2016
       ObjectRequest['Cvegeo'] = cve_geo
       ObjectRequest['CE'] = dataUserFromLoginLocalStorage.ce
-      ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramoControl
-      ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramoControl
+      ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramo_control
+      ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramo_control
       ObjectRequest['mod_cat'] = mod_cat
       ObjectRequest['punteo'] = punteo
       ObjectRequest['coordx'] = xycoorsx
@@ -1565,7 +1661,7 @@ const handleShowResult = result => {
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'obj': JSON.stringify(ObjectRequest),
       'usuario':user,
       'isAlta':isAlta
@@ -1578,12 +1674,14 @@ const handleShowResult = result => {
           return;
         }
         else {
+          layersSARE = ['c100', 'c101', 'wdenue']
           cleanForm()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
           //handleActiveVisibleSearch()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
           handleActionPunteoAlta('on')
+          
         }
       }
       
@@ -1646,7 +1744,14 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
+      document.getElementById("id_UE").style.display='block';
+      document.getElementById("label_idUE").style.display='block';
+      document.getElementById("origen").style.display='block';
+      document.getElementById("c154").style.display='block';
+      document.getElementById("catc154").style.display='none';
+      document.getElementById("catorigen").style.display='none';
       isAlta=false;
+      combosc154yOrigen=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
       {
@@ -1679,6 +1784,11 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear_alta':
+      document.getElementById("filtroXclase").style.display='block';
+      document.getElementById("id_UE").style.display='none';
+      document.getElementById("label_idUE").style.display='none';
+      document.getElementById("origen").style.display='none';
+      document.getElementById("c154").style.display='none';
       isAlta=true
       if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
@@ -1694,10 +1804,16 @@ const HandleWhatDoYouWantToDo = (coor) => {
           handleHideAlertPickMap()
           fillCatalogo()
           fillCatalogoConjuntosComerciales()
+          if(!combosc154yOrigen)
+          {
+            fillCatalogoC154()
+            fillCatalogoOrigen()
+          }
         }
       break
   }
 }
+
 
 const radioSelect = option => {
   switch (option) {
@@ -1791,7 +1907,7 @@ const StreetView=(x,y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
   if (tc === 'mercator') {
     sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-      { 'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 'x': x, 'y': y},
+      { 'proyecto': dataUserFromLoginLocalStorage.proyecto, 'x': x, 'y': y},
       urlServices['serviceIdentifyStreetView'].type, 
       data => {
         if (data[0].operation) {
@@ -1838,7 +1954,7 @@ const mostrarMensaje = () => {
 const callServicioIdentificar = (capas, x, y) => {
   sendAJAX(urlServices['serviceIdentifyUE'].url,
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto': dataUserFromLoginLocalStorage.proyecto,
       'x': x,
       'y': y,
       'opciones': capas
@@ -2002,7 +2118,14 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
+  document.getElementById("id_UE").style.display='block';
+  document.getElementById("label_idUE").style.display='block';
+  document.getElementById("origen").style.display='block';
+  document.getElementById("c154").style.display='block';
+  document.getElementById("catorigen").style.display='none';
+  document.getElementById("catc154").style.display='none';
   let id_ue=document.getElementById('id_UE').value
+  layersSARE = ['c100', 'c101', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
   punteo = 'U'
@@ -2022,7 +2145,7 @@ const handleCancelClick = () => {
 const callServiceLiberaClave=(id_ue)=>{
   sendAJAX(urlServices['serviceLiberaClave'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'id_ue': id_ue
     }, urlServices['serviceLiberaClave'].type, 
     data => {
@@ -2134,6 +2257,8 @@ const handleSessionActive = () => {
     if (data[0].datos.success == false) {                                                
       alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
+      let id_ue=document.getElementById('id_UE').value
+      callServiceLiberaClave(id_ue)
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
     }
@@ -2339,8 +2464,8 @@ const CargaTablaBloqueadas=()=> {
   
   sendAJAX(urlServices['serviceListaClavesBloqueadas'].url, 
     {
-      'proyecto': dataUserFromLoginLocalStorage.proyectoSesion, 
-      'tramo': dataUserFromLoginLocalStorage.tramoControl, 
+      'proyecto': dataUserFromLoginLocalStorage.proyecto, 
+      'tramo': dataUserFromLoginLocalStorage.tramo_control, 
       'id_ue':dataUserFromLoginLocalStorage.ce
     }, urlServices['serviceListaClavesBloqueadas'].type, 
      data => {
@@ -2410,7 +2535,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
   if (result.value) {
     sendAJAX(urlServices['serviceDesbloqueoClavesBloqueadas'].url, 
     {
-      'proyecto':dataUserFromLoginLocalStorage.proyectoSesion,
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
       'id_ue': id_ue,
       'usuario':user
     }, 
@@ -2456,4 +2581,237 @@ const tiempoInactividad = () => {
     localStorage.clear()
     alertToastForm('Sesión se cerrará por permanecer 30 minutos sin actividad', 'error')
   }     
+}
+
+
+function FiltroXClase(id){
+        //var htmlDivClases;
+         setTimeout(function () {
+            llamarServicioclases('00');
+            }, 200);
+                    htmlDivClases = '<label id=label_sector style="display:block"><h6><b>Sectores</b><h6>';
+                    htmlDivClases += '<select id=\"filtro_sector\" style="display:block" onchange=llamarServicioclases(this.value,$(this).html())>';
+                     htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_subsector style="display:none" ><h6><b>Subsectores</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subsector\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                     htmlDivClases += '<label id=label_rama style="display:none" ><h6><b>Ramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_rama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_subrama style="display:none"><h6><b>Subramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subrama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html()))>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                     htmlDivClases += '</select>';
+                     htmlDivClases += '<label id=label_clase style="display:none" ><h6><b>Clases</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_clase\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                     htmlDivClases += '</select>';
+                    inicializaSwal(id);
+        
+//        html += '<label id=label_' + value.id + '><b>' + value.etiqueta + '</b></label>';
+//                    html += '    <select id=filtro_' + value.id + ' style="display:block" onchange=' + value.metodo + '>';
+//                    html += '</select>';
+    
+}
+
+function inicializaSwal(id){
+    swal({
+        title: '<div >' + "Filtro Por Clases" + '</div>',
+        html: htmlDivClases,
+        width: '650px',
+        height: '100px',
+        heightAuto: true,
+        confirmButtonText: 'Aceptar',
+        //customClass: 'swal-grafica',
+        showCloseButton: true,
+        confirmButtonColor: '#787878'
+        
+    }).then((value)=>{
+        claseScian=añadirParametroScian();
+        if(id=="filtroXclase"){
+            document.getElementById('e17_DESC').value=valorScian;
+        }else{
+            
+        }
+        
+    });
+}
+
+function añadirParametroScian(){
+    let sector,subsector,rama,subrama,clase,clase_scian,valor,sel;
+    
+    clase=$("#filtro_clase").val();
+    sel = document.getElementById("filtro_clase");
+    if(clase!="Seleccione"){
+        clase_scian=clase;
+        valor="";
+        valor=sel. options[sel. selectedIndex]. innerText;
+    }else{
+        subrama=$("#filtro_subrama").val();
+        sel = document.getElementById("filtro_subrama");
+        if(subrama!="Seleccione"){
+            clase_scian=subrama;
+            valor="";
+            valor=sel. options[sel. selectedIndex]. innerText;
+        }else{
+            rama=$("#filtro_rama").val();
+            sel = document.getElementById("filtro_rama");
+            if(rama!="Seleccione"){
+                clase_scian=rama;
+                valor="";
+                valor=sel. options[sel. selectedIndex]. innerText;
+            }else{
+                subsector=$("#filtro_subsector").val();
+                sel = document.getElementById("filtro_subsector");
+                if(subsector!="Seleccione"){
+                    clase_scian=subsector;
+                    valor="";
+                    valor=sel. options[sel. selectedIndex]. innerText;
+                }else{
+                    sector=$("#filtro_sector").val();
+                    sel = document.getElementById("filtro_clase");
+                    if(sector!="Seleccione"){
+                        clase_scian=sector;
+                        valor="";
+                        valor=sel. options[sel. selectedIndex]. innerText;
+                    }else{
+                       clase_scian="00";
+                       valor="";
+                       valor=sel. options[sel. selectedIndex]. innerText;
+                    }
+                }
+            }
+        }
+    }
+    valorScian=clase_scian+"-"+valor;
+    return clase_scian;
+}
+
+function llamarServicioclases(codigoScian, valor){
+   
+   // alert(codigoScian)
+   var sel;
+    sendAJAX(urlServices['getDatosClasesPorFiltro'].url, 
+        {
+            cveoper:dataUserFromLoginLocalStorage.ce, 
+            proyecto:dataUserFromLoginLocalStorage.proyecto, 
+            codigoScian:codigoScian
+        }, 
+        
+        urlServices['getDatosClasesPorFiltro'].type, 
+        data => {
+
+            if(data[0].datos.datos.length){
+                
+                clasesFiltro = JSON.stringify(data[0].datos.datos);
+                localStorage.setItem("JSONFiltrarClases", JSON.stringify(data[0].datos.datos));
+                if (clasesFiltro != null) {
+                    var clasesFiltro_2 = JSON.parse(clasesFiltro);
+                    if(codigoScian=='00'){
+                 
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+//                         $('#filtro_sector').append($('<option>', {
+//                             value:value.codigo,
+//                             text: value.description
+//                        }));
+                       $("#filtro_sector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                       
+                     });
+                     $("#label_subsector").css("display","none");
+                     $("#filtro_subsector").css("display","none");
+                     $("#label_rama").css("display","none");
+                     $("#filtro_rama").css("display","none");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                    //inicializaSwal();
+                }else{
+                   if(codigoScian.length==2){
+                    sel = document.getElementById("filtro_subsector");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_subsector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_subsector").css("display","block");
+                     $("#filtro_subsector").css("display","block");
+                     $("#label_rama").css("display","none");
+                     $("#filtro_rama").css("display","none");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                    //inicializaSwal();
+                }else{
+                    if(codigoScian.length==3){
+                    sel = document.getElementById("filtro_rama");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_rama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_rama").css("display","block");
+                     $("#filtro_rama").css("display","block");
+                     $("#label_subrama").css("display","none");
+                     $("#filtro_subrama").css("display","none");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                }else{
+                    if(codigoScian.length==4){
+                    sel = document.getElementById("filtro_subrama");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                      $("#filtro_subrama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                     
+                     $("#label_subrama").css("display","block");
+                     $("#filtro_subrama").css("display","block");
+                     $("#label_clase").css("display","none");
+                     $("#filtro_clase").css("display","none");
+                }else{
+                    sel = document.getElementById("filtro_clase");
+                     $.each(sel, function (index, value) 
+                     {
+                         sel.remove(0);
+                     });
+                    $.each(clasesFiltro_2, function (index, value) 
+                     {
+                       $("#filtro_clase").append('<option value='+value.codigo+">"+value.descripción+"</option>");
+                     });
+                      $("#label_clase").css("display","block");
+                     $("#filtro_clase").css("display","block");
+                     valorScian=+"-"+value.descripción
+                }
+                }
+                }
+                }
+                
+//                 htmlDivClases = "<label id=label_1><h6><b>Sector</b><h6></label>\n\
+//                       <select id=filtro_1 style=\"display:block\" onchange=llamarServicioclases(this.value)><option value=\"Seleccione\">Seleccione</option>\n\
+//                    <option value=\"agricultura\">Agricultura</option></select>'";
+                }
+            }else {
+                var dataStorage = localStorage.getItem("JSONFiltrarClases");
+                losDatosLocales = JSON.parse(dataStorage);
+            }
+        }, () =>{}
+    )  
+     
 }

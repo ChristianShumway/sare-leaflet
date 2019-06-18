@@ -96,6 +96,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         boolean regresar;
         proyectos=getProyecto(proyecto);
         sql=getSql(proyectos,inmueble,MetodosGuardar.getGuardaUe, "", isAlta);
+        try{
          regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Double>() {
             @Override
             public Double extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -110,6 +111,10 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 return regresar;
             }
         });
+        }
+         catch(Exception e){
+             regresa=0L;
+         }
          inmueble.setId_UE(String.valueOf(regresa));
          regresar=regresa>0L;
         return regresar;

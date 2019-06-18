@@ -129,33 +129,74 @@
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
         <script>
+        var getBrowserInfo = function() 
+        {
+            var ua= navigator.userAgent, tem, 
+            M= ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+            if(/trident/i.test(M[1])){
+                tem=  /\brv[ :]+(\d+)/g.exec(ua) || [];
+                return 'IE '+(tem[1] || '');
+            }
+            if(M[1]=== 'Chrome'){
+                tem= ua.match(/\b(OPR|Edge)\/(\d+)/);
+                if(tem!= null) return tem.slice(1).join(' ').replace('OPR', 'Opera');
+            }
+            M= M[2]? [M[1], M[2]]: [navigator.appName, navigator.appVersion, '-?'];
+            if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
+            return M.join(' ');
+        };
+
+        console.log(getBrowserInfo());
         $(document).ready(function(){
+           // disable()
          var hovered_over = false;
-         document.onmousewheel = function(){ stopWheel(); } /* IE7, IE8 */
-         if(document.addEventListener){ /* Chrome, Safari, Firefox */
-                document.addEventListener('DOMMouseScroll', stopWheel, false);
-         }
-                
-         function stopWheel(e){
-            if(!e){
-                e = window.event;
-            } /* IE7, IE8, Chrome, Safari */
-            if (e.ctrlKey == true  ) {
-                e.returnValue = false; /* IE7, IE8 */
-            }   
-         }
-        
-         $("#mapa").on("mouseenter", function (crtl) {
-            hovered_over = false;
-         });
-        
-         $("#mapa").on("mouseleave", function (crtl) {
-            hovered_over = true;
-          });           
+         document.onmousewheel = function(){$("#mapa").on("wheel", event => {
+                   if (event.originalEvent.ctrlKey) {
+                       return;
+                   }
+
+                   if (event.originalEvent.metaKey) {
+                       return;
+                   }
+
+                   if (event.originalEvent.altKey) {
+                       return;
+                   }
+
+                   event.preventDefault();
+               });} /* IE7, IE8 */
+         if(document.addEventListener){
+             /* Chrome, Safari, Firefox */
+             var navegador=getBrowserInfo();
+             $("#mapa").on("wheel", event => {
+                   if (event.originalEvent.ctrlKey) {
+                       event.returnValue = false;
+                   }
+
+                   if (event.originalEvent.metaKey) {
+                       event.returnValue = false;
+                   }
+
+                   if (event.originalEvent.altKey) {
+                       event.returnValue = false;
+                   }
+                   if(navegador=='Chrome 75')
+                   {
+                        event.preventDefault();
+                   }
+               });
+                //document.addEventListener('DOMMouseScroll', stopWheel, false);
+         }     
        });
-
-
 </script> 
+<script type="text/javascript">
+    window.addEventListener("beforeunload", function (e) {
+      ejecutar();
+      (e || window.event).returnValue = null;
+      return null;
+    });
+    
+</script>
 
   </head>
 
@@ -273,12 +314,13 @@
           </div>
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
+              
               <div class="check-option">
-                <p class="option-title" id="option-unicos">Unicos</p>
+                <p class="option-title option-active" id="option-c101">Sucursales</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-unicos" onchange="handleChangeOptions('unicos')">
+                    <input type="checkbox" checked="true" id="c101" onchange="handleChangeOptions('c101')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -286,11 +328,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title option-active" id="option-sucursal">Sucursales</p>
+                <p class="option-title option-active" id="option-wdenue">DENUE</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" checked="true" id="checkbox-sucursal" onchange="handleChangeOptions('sucursal')">
+                    <input type="checkbox"  checked="true" id="wdenue" onchange="handleChangeOptions('wdenue')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -298,11 +340,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title option-active" id="option-denue">DENUE</p>
+                <p class="option-title" id="option-C101M">Matrices</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox"  checked="true" id="checkbox-denue" onchange="handleChangeOptions('denue')">
+                    <input type="checkbox" id="C101M" onchange="handleChangeOptions('C101M')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -310,23 +352,11 @@
               </div>
   
               <div class="check-option">
-                <p class="option-title" id="option-matrices">Matrices</p>
+                <p class="option-title" id="option-c104">Postes de Kilometraje</p>
                 <div class="switch">
                   <label>
                     Inactivo
-                    <input type="checkbox" id="checkbox-matrices" onchange="handleChangeOptions('matrices')">
-                    <span class="lever"></span>
-                    Activo
-                  </label>
-                </div>
-              </div>
-  
-              <div class="check-option">
-                <p class="option-title" id="option-postes">Postes de Kilometraje</p>
-                <div class="switch">
-                  <label>
-                    Inactivo
-                    <input type="checkbox" id="checkbox-postes" onchange="handleChangeOptions('postes')">
+                    <input type="checkbox" id="c104" onchange="handleChangeOptions('c104')">
                     <span class="lever"></span>
                     Activo
                   </label>
@@ -390,13 +420,17 @@
               <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
                   <input placeholder="CLEE_EST" id="id_UE" name="id_UE" type="text" disabled >
-                  <label for="id_UE">CLEE_EST</label>
+                  <label id="label_idUE" for="id_UE">CLEE_EST</label>
                 </div>
                 <div class="input-field">
+                  <select class="browser-default" id="catorigen" name="catorigen" style="display: none">
+                  </select>
                   <input placeholder="Origen" id="origen" name="origen" type="text" disabled >
                   <label for="origen">Origen</label>
                 </div>
                 <div class="input-field">
+                  <select class="browser-default" id="catc154" name="catc154" style="display: none">
+                  </select>
                   <input placeholder="C154" id="c154" name="c154" type="text" disabled >
                   <label for="c154">C154</label>
                 </div>
@@ -411,6 +445,7 @@
                 <div class="input-field">
                   <input placeholder="SCIAN" id="e17_DESC" name="e17_DESC" type="text" disabled >
                   <label for="e17_DESC">SCIAN</label>
+                  <a class="btn-floating colorGrisApp" id="filtroXclase" onclick="FiltroXClase($(this).attr('id'))"><i class="material-icons">filter_list</i></a>
                 </div>
                 <div class="input-field">
                   <a onclick="handleActionTarget('ubicacion-geografica','ubicacion-float-der')" class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>

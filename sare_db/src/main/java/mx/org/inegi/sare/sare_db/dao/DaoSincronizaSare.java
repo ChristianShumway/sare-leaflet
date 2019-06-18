@@ -95,7 +95,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                         rs.getString("numext")!=null && !"".equals(rs.getString("numext"))?new BigDecimal(rs.getString("numext")):new BigDecimal(0),
                         rs.getString("numextalf")!=null?rs.getString("numextalf"):"",
                         rs.getString("e12")!=null?rs.getString("e12"):"",
-                        rs.getString("numint")!=null && !"".equals(rs.getString("numint"))?new BigDecimal(rs.getString("numint")):new BigDecimal(0),
+                        rs.getString("numint")!=null && !"".equals(rs.getString("numint"))?rs.getString("numint"):"",
                         rs.getString("numintalf")!=null?rs.getString("numintalf"):"",
                         rs.getString("e14")!=null?rs.getString("e14"):"",
                         rs.getString("e14_a")!=null?rs.getString("e14_a"):"",
@@ -691,19 +691,23 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa;
          proyectos=getProyecto(proyecto);
          sql=getSql(proyectos,inmueble,null,Metodossincroniza.ConfirmaUe);
-        regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean regresar;
-                int fila=0;
-                while(rs.next())
-                {
-                    fila=rs.getInt("resultado");
+         try{
+            regresa=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<Boolean>() {
+                @Override
+                public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                    boolean regresar;
+                    int fila=0;
+                    while(rs.next())
+                    {
+                        fila=rs.getInt("resultado");
+                    }
+                    regresar=fila>0;
+                    return regresar;
                 }
-                regresar=fila>0;
-                return regresar;
-            }
-        });
+            });
+         }catch(Exception e){
+             regresa=false;
+         }
         return regresa; 
     }
     

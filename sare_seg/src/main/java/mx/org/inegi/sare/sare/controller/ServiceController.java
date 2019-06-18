@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
+import mx.org.inegi.sare.sare_db.dto.cat_c154;
+import mx.org.inegi.sare.sare_db.dto.cat_codigo;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
@@ -199,14 +201,27 @@ public class ServiceController {
         return BackingDesbloqueo.Desbloqueo(proyecto,id_ue,usuario);
     }
     
+    @RequestMapping(value = "getC154_catalogo.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_c154> getC154_catalogo(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getCatalogoC154(proyecto);
+    }
+    @RequestMapping(value = "getOrigen_catalogo.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_codigo> getOrigen_catalogo(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getCodigos(proyecto);
+    }
+    
+    @RequestMapping(value = "getDatosClasesPorFiltro.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getDatosClasesPorFiltro(@RequestParam(value = "cveoper") String cveoper, @RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "codigoScian") String codigoScian) {
+        return BackingCatalogosSare.getDatosClasesPorFiltro(proyecto,cveoper, codigoScian);
+    }
+    
     @RequestMapping(value = "/validaSesion.do", method = RequestMethod.POST, produces = javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public ResponseLocal validaSesion(HttpSession session) {
         String respuesta = null;
         ResponseLocal response = new ResponseLocal();
-        Map u = (Map) session.getAttribute("respuesta");
+        Object u = (Object) session.getAttribute("respuesta");
         if (u == null) {
             respuesta = "/";
-            
             response.setSuccess(false);
         } else {
             response.setDatos(u);

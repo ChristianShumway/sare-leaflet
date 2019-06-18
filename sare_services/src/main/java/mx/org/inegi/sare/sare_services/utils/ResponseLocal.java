@@ -28,7 +28,7 @@ public class ResponseLocal {
     private List<String> divNOT;
     private List<String> divNC;
     private Integer total;
-    private Map datos;
+    private Object datos;
     private String titulo;
 
     public ResponseLocal() {
@@ -255,11 +255,11 @@ public class ResponseLocal {
         this.total = total;
     }
 
-    public Map getDatos() {
+    public Object getDatos() {
         return datos;
     }
 
-    public void setDatos(Map datos) {
+    public void setDatos(Object datos) {
         this.datos = datos;
     }
 

@@ -1,6 +1,7 @@
 var urlServices = {
     map: {
-        url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SARE_RENEM_EGE_2018.map&', //  Consuelo
+        url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SARE_2019.map&', //  Masivo
+        //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SARE_RENEM_EGE_2018.map&', //  Consuelo
         //url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_RENEM_EGE_2018.map&',
         label: 'sare',
         type: 'Wms'
@@ -106,9 +107,24 @@ var urlServices = {
         type: 'POST',
         label: 'desbloquea'
     },
+     servicegetC154_catalogo: {
+        url: 'getC154_catalogo.do',
+        type: 'POST',
+        label: 'getC154_catalogo'
+    },
+     servicegetOrigen_catalogo: {
+        url: 'getOrigen_catalogo.do',
+        type: 'POST',
+        label: 'getOrigen_catalogo'
+    },
     serviceValidasesion: {
         url: 'validaSesion.do',
         type: 'POST',
         label: 'desbloquea'
-    }    
+    },
+    getDatosClasesPorFiltro: {
+        url: 'getDatosClasesPorFiltro.do',
+        label: 'getDatosClasesPorFiltro',
+        type: 'GET'
+    }
 };

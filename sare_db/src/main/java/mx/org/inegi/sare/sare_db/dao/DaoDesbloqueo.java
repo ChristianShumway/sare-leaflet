@@ -85,7 +85,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                             rs.getString("numext") != null && !"".equals(rs.getString("numext")) ? new BigDecimal(rs.getString("numext")) : new BigDecimal(0),
                             rs.getString("numextalf") != null ? rs.getString("numextalf") : "",
                             rs.getString("e12") != null ? rs.getString("e12") : "",
-                            rs.getString("numint") != null && !"".equals(rs.getString("numint")) ? new BigDecimal(rs.getString("numint")) : new BigDecimal(0),
+                            rs.getString("numint") != null && !"".equals(rs.getString("numint")) ? rs.getString("numint") : "",
                             rs.getString("numintalf") != null ? rs.getString("numintalf") : "",
                             rs.getString("e14") != null ? rs.getString("e14") : "",
                             rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
@@ -125,16 +125,22 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
         sql = getSql(super.proyectos, id_ue, Desbloqueo.Desbloqueo);
-        switch (proyectos) {
-            case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString()) > 0) {
-                    regresar = true;
-                }
-                break;
-            default:
-                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                    regresar = true;
-                }
+        if(id_ue!=null || !"".equals(id_ue))
+        {
+            switch (proyectos)
+            {
+                case Operativo_Masivo:
+                    if (jdbcTemplate.update(sql.toString()) > 0) 
+                    {
+                        regresar = true;
+                    }
+                    break;
+                default:
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) 
+                    {
+                        regresar = true;
+                    }
+            }
         }
         return regresar;
     }
@@ -246,12 +252,12 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         sql = getSql(super.proyectos, id_ue, Desbloqueo.completaGuardado);
         switch (proyectos) {
             case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                if (jdbcTemplate.update(sql.toString()) > 0) {
                     regresar = true;
                 }
                 break;
             default:
-                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresar = true;
                 }
 

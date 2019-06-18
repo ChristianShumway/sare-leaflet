@@ -122,7 +122,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e11") != null ? new BigDecimal(rs.getString("e11")) : new BigDecimal(0),
                                     rs.getString("e11a") != null ? rs.getString("e11a") : "",
                                     rs.getString("e12") != null ? rs.getString("e12") : "",
-                                    rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                                    rs.getString("e13") != null ? rs.getString("e13") : "",
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
@@ -173,7 +173,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e11") != null ? new BigDecimal(rs.getString("e11")) : new BigDecimal(0),
                                     rs.getString("e11a") != null ? rs.getString("e11a") : "",
                                     rs.getString("e12") != null ? rs.getString("e12") : "",
-                                    rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                                    rs.getString("e13") != null ? rs.getString("e13") : "",
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
@@ -288,7 +288,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                             rs.getString("e19") != null ? rs.getString("e19") : "",
                             rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
                             rs.getString("e20") != null ? rs.getString("e20") : "",
-                            rs.getString("e13") != null ? new BigDecimal(rs.getString("e13")) : new BigDecimal(0),
+                            rs.getString("e13") != null ? rs.getString("e13") : "",
                             rs.getString("cve_unica_duplicada") != null ? rs.getString("cve_unica_duplicada") : "");
                 }
                 regresa.add(fila);
@@ -433,17 +433,20 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLE);
-        switch (proyectos) {
-            case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString()) > 0) {
-                    regresa = true;
-                }
-                break;
-            default:
-                if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
-                    regresa = true;
-                }
+        if(cve_unica!=null && !cve_unica.equals(""))
+        {
+            switch (proyectos) {
+                case Operativo_Masivo:
+                    if (jdbcTemplate.update(sql.toString()) > 0) {
+                        regresa = true;
+                    }
+                    break;
+                default:
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
+                        regresa = true;
+                    }
 
+            }
         }
 
         return regresa;
@@ -624,7 +627,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     private StringBuilder filtrarSqlPg(String ce, String esquemaPos, String id_ue, int origen) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT to_char(id_ue,'FM999999999999999999') as id_ue, e03, e04, e05, e06, e07, e08, e09, lpad(to_char(tipo_e10,'FM999999999999999999'),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, lpad(to_char(tipo_e14,'FM999999999999999999'),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a,'FM999999999999999999'),2,'0') tipo_e10_a, e10_a, ");
-        sql.append("lpad(to_char(tipo_e10_b,'FM999999999999999999'),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c,'FM999999999999999999'),2,'0') tipo_e10_c, e10_c, coord_x as coorx, to_char(coord_y,'FM999999999999999999') as coory, descrubic, sare_st estatus_punteo, e12, ");
+        sql.append("lpad(to_char(tipo_e10_b,'FM999999999999999999'),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c,'FM999999999999999999'),2,'0') tipo_e10_c, e10_c, coord_x as coorx, coord_y as coory, descrubic, sare_st estatus_punteo, e12, ");
         sql.append("e19, tipo_e19, e20, e13, TRIM(e13a) as e13_a,e14_a, to_char(origen,'FM999999999999999999') origen, cestatal, e23a e23_a,"); //modificar e23a por e23 es solo para pruebas, e13_a por e13a, e12_p por e12, e11_a por e11
         sql.append("e17, e17||' - '||e17_desc as codigo_scian,c154");
         sql.append(" FROM ").append(esquemaPos).append(".VW_PUNTEO_SARE");

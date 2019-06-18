@@ -1,17 +1,5 @@
 const objForm = [
   {
-    id:'origen',
-    key: 'referencia',
-    name:'origen',
-    title:'title-referencia'
-  },
-  {
-    id:'c154',
-    key: 'referencia',
-    name:'c154',
-    title:'title-referencia'
-  },
-  {
     id:'e08',
     key: 'referencia',
     name:'e08',
@@ -36,15 +24,15 @@ const objForm = [
     title:'title-domicilio',
   },
   {
-    id:'e13',
-    key: 'domicilio',
-    name:'número interior',
-    title:'title-domicilio',
-  },
-  {
     id:'e14_A',
     key: 'asentamiento',
     name:'código postal',
+    title:'title-asentamiento',
+  },
+  {
+    id:'e14',
+    key: 'asentamiento',
+    name:'Nombre del asentamiento',
     title:'title-asentamiento',
   },
   {
@@ -132,62 +120,93 @@ const objForm2=[
 ]
 
 const objFormRural=[
-   {
-    id:'descrubic',
-    key: 'calle-posterior',
-    name:'Descripción de la ubicación del establecimiento',
-    title:'title-calle-posterior'
-  },
-  {
-    id:'e11',
-    key: 'domicilio',
-    name:'número exterior',
-    title:'title-domicilio'
-  },   
+    {
+        id:'tipo_e10n',
+        key: 'domicilio',
+        name:'Tipo de vialidad',
+        title:'title-domicilio'
+    },
+    {
+        id:'e10',
+        key: 'domicilio',
+        name:'Nombre de vialidad',
+        title:'title-domicilio'
+    },
+    {
+        id:'e11',
+        key: 'domicilio',
+        name:'número exterior',
+        title:'title-domicilio'
+    },  
+    {
+        id:'tipo_e10_an',
+        key: 'entre-vialidades',
+        name:'Tipo vialidad 1',
+        title:'title-entre-vialidades'
+    },
+    {
+        id:'tipo_e10_bn',
+        key: 'entre-vialidades',
+        name:'Tipo vialidad 2',
+        title:'title-entre-vialidades'
+    },
+    {
+        id:'tipo_e10_cn',
+        key: 'calle-posterior',
+        name:'Tipo de vialidad 3',
+        title:'title-calle-posterior'
+    },
+    {
+        id:'descrubic',
+        key: 'calle-posterior',
+        name:'Descripción de la ubicación del establecimiento',
+        title:'title-calle-posterior'
+    },
+  
 ]
 const objFormCentrocomercial=[
    {
-    id:'E12p',
-    key: 'edificio',
-    name:'Piso del edificio',
-    title:'title-edificio'
-  }, 
-  {
-    id:'E12',
-    key: 'edificio',
-    name:'Numero de Edificio',
-    title:'title-edificio'
-  }, 
-  {
-    id:'e19',
-    key: 'edificio',
-    name:'Nombre Edificio',
-    title:'title-edificio'
-  }, 
-  {
-    id:'e20',
-    key: 'edificio',
-    name:'Numero de Local',
-    title:'title-edificio'
-  }, 
-  {
-    id:'e13',
-    key: 'domicilio',
-    name:'Numero interior',
-    title:'title-domicilio'
-  }, 
-  {
-    id:'e13_a',
-    key: 'domicilio',
-    name:'Letra interior',
-    title:'title-domicilio'
-  }, 
-  {
-    id:'tipo_E19',
-    key: 'edificio',
-    name:'Tipo de corredor o centro comercial',
-    title:'title-edificio'
-  }, 
+        id:'E12p',
+        key: 'edificio',
+        name:'Piso del edificio',
+        title:'title-edificio'
+    }, 
+    {
+        id:'E12',
+        key: 'edificio',
+        name:'Numero de Edificio',
+        title:'title-edificio'
+    }, 
+    {
+        id:'e19',
+        key: 'edificio',
+        name:'Nombre Edificio',
+        title:'title-edificio'
+    }, 
+    {
+        id:'e20',
+        key: 'edificio',
+        name:'Numero de Local',
+        title:'title-edificio'
+    }, 
+    {
+        id:'e13',
+        key: 'domicilio',
+        name:'Numero interior',
+        title:'title-domicilio'
+    }, 
+    {
+        id:'e13_a',
+        key: 'domicilio',
+        name:'Letra interior',
+        title:'title-domicilio'
+    }, 
+    {
+        id:'tipo_E19',
+        key: 'edificio',
+        name:'Tipo de corredor o centro comercial',
+        title:'title-edificio'
+    }, 
 ]
 
 const inputsEditables = [
@@ -220,15 +239,6 @@ const inputsEditables = [
     id:'e14',
   },
   {
-    id:'tipo_e10_an',
-  },
-  {
-    id:'tipo_e10_bn',
-  },
-  {
-    id:'tipo_e10_cn',
-  },
-  {
     id:'descrubic',
   },
   {
@@ -254,9 +264,6 @@ const inputsEditables = [
   },
   {
     id:'e09',
-  },
-  {
-    id:'e17_DESC',
   },
 ]
 

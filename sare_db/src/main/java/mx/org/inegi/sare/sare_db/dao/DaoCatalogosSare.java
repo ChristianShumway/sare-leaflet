@@ -9,9 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
+import mx.org.inegi.sare.sare_db.dto.cat_c154;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
+import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,10 +42,44 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
     
     private List<cat_asentamientos_humanos> resultado=new ArrayList<>();
     private List<cat_conjunto_comercial> resultadoCC=new ArrayList<>();
-    
+
     public enum catalogos{
-        AsentamientosHumanos, ConjuntoComercial
+        AsentamientosHumanos, ConjuntoComercial, CodigoScian
     }
+    
+    @Override
+    public List<cat_c154> getDatosClasesPorFiltro(Integer proyecto, String cveoper, String codigoScian) {
+       StringBuilder sql = new StringBuilder();
+       final Object[] params = new Object[1];
+       
+         params[0]=codigoScian;
+         super.proyectos=super.getProyecto(proyecto);
+        sql=getSql(super.proyectos,catalogos.CodigoScian);
+        
+        List<cat_c154> listaCEs = new ArrayList<>();
+        listaCEs = jdbcTemplate.query(sql.toString(), params, new ResultSetExtractor<List<cat_c154>>() {
+            @Override
+            public List<cat_c154> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<cat_c154> FiltroPorClase = new ArrayList<>();
+
+                cat_c154 fila = new cat_c154();
+                while (rs.next()) {
+                    fila = new cat_c154(rs.getString("codigo"), rs.getString("descripcion_scian"));
+                    FiltroPorClase.add(fila);
+                }
+                rs.close();
+                return FiltroPorClase;
+            }
+        });
+        try {
+            jdbcTemplate.getDataSource().getConnection().close();
+        } catch (SQLException ex) {
+            Logger.getLogger(DaoCatalogosSare.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listaCEs;
+    }
+    
+    
     
     @Override
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception{
@@ -112,6 +150,9 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
                 esquemaOcl=getEsquemaOracle(proyecto);
                 switch(catalogo)
                 {
+                    case CodigoScian:
+                         sql.append("select codigo,descripcion_scian from ").append(esquemaPos).append(".get_tc_scian(?)");
+                        break;
                     case AsentamientosHumanos:
                         sql.append("select '0' id_tipoasen,'Seleccione' descripcion, '00' tipo_e14 union all (SELECT id_tipoasen::text, descripcion, tipo_e14 FROM ").append(esquemaPos).append(".cat_asentamientos_humanos order by descripcion)");
                     break;
