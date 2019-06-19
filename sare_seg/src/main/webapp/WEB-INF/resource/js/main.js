@@ -2143,6 +2143,12 @@ const handleCancelClick = () => {
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
+
+  objForm.map(obj => {
+    const wrapTitle = document.getElementById(obj.title)
+    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+  })
+  
 }
 
 const callServiceLiberaClave=(id_ue)=>{
