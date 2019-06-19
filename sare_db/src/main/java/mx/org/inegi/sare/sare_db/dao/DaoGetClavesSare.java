@@ -162,7 +162,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
                                 + "(to_char(FECHA_UNO,'HH24')::numeric - to_char(FECHA_DOS,'HH24')::numeric)\n"
                                 + "DIFERENCIA_HORAS,to_char(FECHA_UNO,'MI')::numeric - to_char(FECHA_DOS,'MI')::numeric DIFERENCIA_MINUTOS,\n"
-                                + "(to_char(FECHA_UNO,'SS')::numeric - to_char(FECHA_DOS,'SS')::numeric)*-1\n"
+                                + "(to_char(FECHA_UNO,'SS')::numeric - to_char(FECHA_DOS,'SS')::numeric)\n"
                                 + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)) DIFERENCIA_DIAS  "
                                 + "FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_TIMESTAMP(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_TIMESTAMP"
                                 + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(current_timestamp, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
@@ -171,12 +171,12 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (current_timestamp-sare_st_time)"
                                 + ">'00 01:00:00') query1) query2) query3 order by time_lock desc");
                     } else {
-                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || 'dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
                                 + "(to_char(FECHA_UNO,'HH24')::numeric - to_char(FECHA_DOS,'HH24')::numeric)\n"
                                 + "DIFERENCIA_HORAS,to_char(FECHA_UNO,'MI')::numeric - to_char(FECHA_DOS,'MI')::numeric DIFERENCIA_MINUTOS,\n"
                                 + "(to_char(FECHA_UNO,'SS')::numeric - to_char(FECHA_DOS,'SS')::numeric)*-1\n"
-                                + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)) DIFERENCIA_DIAS  "
+                                + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)/1000000) DIFERENCIA_DIAS  "
                                 + "FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_TIMESTAMP(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_TIMESTAMP"
                                 + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(current_timestamp, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
                                 + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue inner join ").
@@ -198,7 +198,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)"
                                 + ">'00 01:00:00'))) order by time_lock desc");
                     } else {
-                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || 'dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
                                 + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
                                 + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
