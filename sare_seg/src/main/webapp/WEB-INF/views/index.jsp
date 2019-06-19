@@ -435,11 +435,11 @@
                   <label for="c154">C154</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre del Establecimiento" id="e08" name="e08" type="text" disabled >
+                  <input placeholder="Nombre del Establecimiento" style="text-transform:uppercase;" id="e08" name="e08" type="text" disabled >
                   <label for="e08">Nombre del Establecimiento</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="Razón Social" id="e09" name="e09" type="text" disabled >
+                  <input placeholder="Razón Social" style="text-transform:uppercase;" id="e09" name="e09" type="text" disabled >
                   <label for="e09">Razón Social</label>
                 </div>
                 <div class="input-field">
@@ -539,7 +539,7 @@
                   <input id="tipo_e10_cvevial" name="tipo_e10_cvevial" type="text" hidden readonly >
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre de Vialidad" id="e10" name="e10" type="text" disabled >
+                  <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" id="e10" name="e10" type="text" disabled >
                   <label for="e10">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
@@ -598,7 +598,7 @@
                 </div>
                 <div id="cp_val"></div>
                 <div class="input-field">
-                  <input placeholder="Nombre del Asentamiento" id="e14" name="e14" type="text" disabled >
+                  <input placeholder="Nombre del Asentamiento" style="text-transform:uppercase;" id="e14" name="e14" type="text" disabled >
                   <label for="e14">Nombre del Asentamiento</label>
                 </div>
                 <div class="input-field btns-prev-next">
@@ -643,7 +643,7 @@
                   <label id="labele10_A" for="e10_A" class="active">Nombre de la Vialidad No.1</label>
                 </div>
                 <div class="input-field">
-                  <input id="tipo_e10_b" name="tipo_e10_b" type="text" hidden >
+                  <input id="tipo_e10_b" style="text-transform:uppercase;" name="tipo_e10_b" type="text" hidden >
                 </div>
                 <div class="input-field" id="wrap-tipo-vialidad-dos">
                   <input placeholder="Tipo de Vialidad 2" id="tipo_e10_bn" name="tipo_e10_bn" type="text" disabled >

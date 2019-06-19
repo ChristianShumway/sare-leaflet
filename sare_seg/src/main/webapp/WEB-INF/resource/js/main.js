@@ -29,6 +29,7 @@ let isAlta=false
 let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
+let validaAltas=false
 
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -152,6 +153,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
+  
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
     claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
@@ -178,6 +180,7 @@ const findUE = id_ue => {
   document.getElementById("c154").style.display='block';
   document.getElementById("catorigen").style.display='none';
   document.getElementById("catc154").style.display='none';
+  document.getElementById("filtroXclase").style.display='none';
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -305,7 +308,7 @@ const fillCatalogoConjuntosComerciales = () => {
         const opcSelected =document.getElementById('tipo_E19') 
         let opt = document.createElement('option')
         opt.appendChild(document.createTextNode("Seleccione") )
-        opt.value="Seleccion"
+        opt.value="Seleccione"
         opt.setAttribute('selected', true)
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
@@ -331,7 +334,7 @@ const fillCatalogoC154 = () => {
         opcSelected.style.display='block';
         let opt = document.createElement('option')
         opt.appendChild(document.createTextNode("Seleccione") )
-        opt.value="Seleccion"
+        opt.value="Seleccione"
         opt.setAttribute('selected', true)
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
@@ -357,7 +360,7 @@ const fillCatalogoOrigen = () => {
         opcSelected.style.display='block';
         let opt = document.createElement('option')
         opt.appendChild(document.createTextNode("Seleccione") )
-        opt.value="Seleccion"
+        opt.value="Seleccione"
         opt.setAttribute('selected', true)
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
@@ -416,6 +419,7 @@ const showModalMsgError = data => {
 
 // Función ver lista claves
 const handleViewCleeList = () => {
+  document.getElementById("filtroXclase").style.display='none';
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
@@ -826,6 +830,7 @@ const handleSearchCleeListLock = () => {
 
 // Función ratificar
 const ratificar = request => {
+  isAlta=false;
   handleVisibleRatifica()
   if (request == 'si') {
     enabledInputs()
@@ -1424,6 +1429,9 @@ const validations=(totalInputs,object,campo)=>{
 
     if (element.value == '' || element.value=='Seleccione') 
     {
+      if(isAlta){
+          validaAltas=true
+      }
       element.style.borderColor = 'red'
       element.classList.add('animated', 'shake')
       visible == 'hide' ? handleVisibleForm(key) : false
@@ -1448,10 +1456,12 @@ const validations=(totalInputs,object,campo)=>{
       break
     } else 
     {
+      if(isAlta){
+          validaAltas=false;
+      }
       element.style.borderColor = '#eeeeee'
       containerInputsVisible = true
       inputsInfo++
-
       wrapTitle.id == title &&
       wrapTitle.classList.remove('error')
     }
@@ -1467,15 +1477,21 @@ const validations=(totalInputs,object,campo)=>{
       visible == 'show' ? handleVisibleForm(wrapKey) : false
     }
   }
-
-  inputsInfo == totalInputs && validaCp()
+  if(totalInputs>2)
+  {
+    inputsInfo == totalInputs && validaCp()
+  }
 }
 
 // Función validación de formulario campos vacios
 const handleFormValidations = () => {
   let totalInputs
   let numero_ext=document.getElementById('e11').value;
-  
+  if(isAlta){
+      totalInputs = objFormAlta.length
+      validations(totalInputs,objFormAlta)
+  }
+  if(!validaAltas){
   if(punteo=='U' && mod_cat=='1') {
     totalInputs = objForm.length
     validations(totalInputs,objForm)
@@ -1514,6 +1530,7 @@ const handleFormValidations = () => {
   }
  }
 }
+}
 
 var campo
 const validaEdificio = () => {
@@ -1529,7 +1546,7 @@ const validaEdificio = () => {
       break
     }
     else {
-      if (element.value == '' || element.value=='0' || element.value=='Seleccion') {
+      if (element.value == '' || element.value=='0' || element.value=='Seleccione') {
         bandera=0
         element.style.borderColor = '#eeeeee'
       }
@@ -1692,9 +1709,9 @@ const handleShowResult = result => {
         handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
       }
     }, () => swal({
-        title: 'Identificación de Unidades Económicas!',
+        title: 'Almacenando el punto!',
         text: 'Por favor espere un momento',
-        timer: 2000,
+        timer: 5000,
         onOpen: () => swal.showLoading() 
       }).then(
         () => { },
@@ -1747,13 +1764,16 @@ const HandleWhatDoYouWantToDo = (coor) => {
       }
       break
     case 'puntear':
+        
       document.getElementById("id_UE").style.display='block';
       document.getElementById("label_idUE").style.display='block';
       document.getElementById("origen").style.display='block';
       document.getElementById("c154").style.display='block';
       document.getElementById("catc154").style.display='none';
       document.getElementById("catorigen").style.display='none';
+      document.getElementById("filtroXclase").style.display='none';
       isAlta=false;
+      validaAltas=false;
       combosc154yOrigen=false;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
@@ -1792,6 +1812,8 @@ const HandleWhatDoYouWantToDo = (coor) => {
       document.getElementById("label_idUE").style.display='none';
       document.getElementById("origen").style.display='none';
       document.getElementById("c154").style.display='none';
+      document.getElementById("catc154").style.display='block';
+      document.getElementById("catorigen").style.display='block';
       isAlta=true
       if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')

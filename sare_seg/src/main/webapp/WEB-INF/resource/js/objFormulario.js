@@ -1,4 +1,5 @@
 const objForm = [
+  
   {
     id:'e08',
     key: 'referencia',
@@ -22,6 +23,12 @@ const objForm = [
     key: 'domicilio',
     name:'Número exterior',
     title:'title-domicilio',
+  },
+  {
+    id:'tipo_E14',
+    key: 'asentamiento',
+    name:'tipo de asentamiento humano',
+    title:'title-asentamiento',
   },
   {
     id:'e14_A',
@@ -117,6 +124,21 @@ const objForm2=[
         name:'e05',
         title:'title-ubicacion-geografica',
     },
+]
+
+const objFormAlta=[
+  {
+    id:'catorigen',
+    key: 'referencia',
+    name:'origen',
+    title:'title-referencia'    
+  },   
+  {
+    id:'catc154',
+    key: 'referencia',
+    name:'C154',
+    title:'title-referencia'    
+  },
 ]
 
 const objFormRural=[
