@@ -1604,7 +1604,7 @@ const modalViewPreliminar = () => {
     width: sizeScreen, 
     html: htmlDiv, 
     confirmButtonText: 'Aceptar', 
-    customClass: 'swal-wide', 
+    customClass: 'swal-view', 
     confirmButtonColor: '#0f0f0f', 
     allowEscapeKey: false, 
     allowOutsideClick: false, 
@@ -2614,26 +2614,26 @@ function FiltroXClase(id){
          setTimeout(function () {
             llamarServicioclases('00');
             }, 200);
-                    htmlDivClases = '<label id=label_sector style="display:block"><h6><b>Sectores</b><h6>';
-                    htmlDivClases += '<select id=\"filtro_sector\" style="display:block" onchange=llamarServicioclases(this.value,$(this).html())>';
-                     htmlDivClases +='<option>Seleccione</option>'
-                    htmlDivClases += '</select>';
-                    htmlDivClases += '<label id=label_subsector style="display:none" ><h6><b>Subsectores</b></h6></label>';
-                    htmlDivClases += '<select id=\"filtro_subsector\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases = '<label id=label_sector class="label-clases" style="display:block"><h6><b>Sectores</b><h6>';
+                    htmlDivClases += '<select id=\"filtro_sector\" class="filtros-clases" style="display:block" onchange=llamarServicioclases(this.value,$(this).html())>';
                     htmlDivClases +='<option>Seleccione</option>'
                     htmlDivClases += '</select>';
-                     htmlDivClases += '<label id=label_rama style="display:none" ><h6><b>Ramas</b></h6></label>';
-                    htmlDivClases += '<select id=\"filtro_rama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases += '<label id=label_subsector class="label-clases" style="display:none" ><h6><b>Subsectores</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subsector\" class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
                     htmlDivClases +='<option>Seleccione</option>'
                     htmlDivClases += '</select>';
-                    htmlDivClases += '<label id=label_subrama style="display:none"><h6><b>Subramas</b></h6></label>';
-                    htmlDivClases += '<select id=\"filtro_subrama\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html()))>';
+                    htmlDivClases += '<label id=label_rama class="label-clases" style="display:none" ><h6><b>Ramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_rama\" class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
                     htmlDivClases +='<option>Seleccione</option>'
-                     htmlDivClases += '</select>';
-                     htmlDivClases += '<label id=label_clase style="display:none" ><h6><b>Clases</b></h6></label>';
-                    htmlDivClases += '<select id=\"filtro_clase\" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_subrama class="label-clases" style="display:none"><h6><b>Subramas</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_subrama\"  class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html()))>';
                     htmlDivClases +='<option>Seleccione</option>'
-                     htmlDivClases += '</select>';
+                    htmlDivClases += '</select>';
+                    htmlDivClases += '<label id=label_clase class="label-clases" style="display:none" ><h6><b>Clases</b></h6></label>';
+                    htmlDivClases += '<select id=\"filtro_clase\" class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
+                    htmlDivClases +='<option>Seleccione</option>'
+                    htmlDivClases += '</select>';
                     inicializaSwal(id);
         
 //        html += '<label id=label_' + value.id + '><b>' + value.etiqueta + '</b></label>';
@@ -2644,10 +2644,9 @@ function FiltroXClase(id){
 
 function inicializaSwal(id){
     swal({
-        title: '<div >' + "Filtro Por Clases" + '</div>',
+        title: '<div id="filtroxclases" >' + "Filtro Por Clases" + '</div>',
         html: htmlDivClases,
-        width: '650px',
-        height: '100px',
+        customClass: 'swal-wide',
         heightAuto: true,
         confirmButtonText: 'Aceptar',
         //customClass: 'swal-grafica',
@@ -2762,6 +2761,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
+                     $("#filtro_subsector").append("<option value=seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_subsector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2783,6 +2783,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
+                     $("#filtro_rama").append("<option value=seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_rama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2801,6 +2802,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
+                    $("#filtro_subrama").append("<option value=seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                       $("#filtro_subrama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2816,6 +2818,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
+                    $("#filtro_clase").append("<option value=seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_clase").append('<option value='+value.codigo+">"+value.descripción+"</option>");
