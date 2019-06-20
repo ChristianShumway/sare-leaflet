@@ -2347,9 +2347,9 @@ async function OpenReportes (size, action) {
   })  
  
   if (reporte) {
-    let src = urlServices['serviceReporte'].url + '?proyecto=1&tipo=PDF&reporte=' + reporte +'&ce=00&ran=' + Math.random() 
+    let src = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
     let leyenda = ''
-    let srcExcel = urlServices['serviceReporte'].url + '?proyecto=1&tipo=EXCEL&reporte=' + reporte +'&ce=00&ran=' + Math.random() 
+    let srcExcel = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=EXCEL&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
     
     if(reporte === '1'){
         leyenda = 'Descargaste reporte de manzanas'
