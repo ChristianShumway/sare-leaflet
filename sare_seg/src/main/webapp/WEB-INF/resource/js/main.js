@@ -1757,7 +1757,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
         Swal.fire ({
           position: 'bottom-end',
           type: 'warning',
-          title: 'Debe acercarse mas sobre el mapa para identificar una unidad economica',
+          title: 'Debe acercarse más sobre el mapa para identificar una unidad económica',
           showConfirmButton: false,
           timer: 2000
         }) 
@@ -1786,7 +1786,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
         Swal.fire ({
           position: 'bottom-end',
           type: 'warning',
-          title: 'Debe seleccionar una unidad economica a puntear',
+          title: 'Debe seleccionar una unidad económica a puntear',
           showConfirmButton: false,
           timer: 2000
         })
