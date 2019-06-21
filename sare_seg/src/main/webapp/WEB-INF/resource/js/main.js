@@ -1948,11 +1948,10 @@ const modalGoogleMap = (x, y, tc) => {
 
 //Funcion para identificar la unidad economica y llamar el servicio
 const identificaUE = (x,y) => {
-  let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : ''
-  capas += ($('#checkbox-matrices').is(":checked")) ? 'Matrices,' : ''
-  capas += ($('#checkbox-sucursal').is(":checked")) ? 'Sucursales,' : ''
-  capas += ($('#checkbox-unicos').is(":checked")) ? 'Unicos,' : ''
-  capas += ($('#checkbox-postes').is(":checked")) ? 'Postes,' : ''
+  let capas = ($('#wdenue').is(":checked")) ? 'DENUE,' : ''
+  capas += ($('#C101M').is(":checked")) ? 'Matrices,' : ''
+  capas += ($('#c101').is(":checked")) ? 'Sucursales,' : ''
+  capas += ($('#c104').is(":checked")) ? 'Postes,' : ''
   capas = capas.slice(0, -1)
 
   capas.length === 0 ? mostrarMensaje() : callServicioIdentificar(capas,x,y)
@@ -1965,6 +1964,7 @@ const mostrarMensaje = () => {
     text: 'Seleccione una capa de información',
     showCancelButton: true,
     showConfirmButton: false,
+    customClass: 'swal-view',
     allowEscapeKey: true,
     allowOutsideClick: true,
     html: true,
@@ -2000,6 +2000,7 @@ const callServicioIdentificar = (capas, x, y) => {
             text: data[0].datos.mensaje.messages,
             showCloseButton: true,
             showConfirmButton: false,
+            customClass: 'swal-view',
             confirmButtonColor: "#5562eb",
             allowEscapeKey: true,
             allowOutsideClick: true,
@@ -2042,7 +2043,7 @@ const modalShowInfoUE = (rows, capas) => {
     width: sizeScreen, 
     html: '<div id="tabL"></div>', 
     confirmButtonText: 'Aceptarr', 
-    customClass: 'swal-wide', 
+    customClass: 'swal-view', 
     confirmButtonColor: '#0f0f0f', 
     allowEscapeKey: false, 
     allowOutsideClick: false, 
@@ -2289,7 +2290,6 @@ const handleSessionActive = () => {
       alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
       let id_ue=document.getElementById('id_UE').value
-      callServiceLiberaClave(id_ue)
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
     }
@@ -2597,7 +2597,7 @@ const tiempoInactividad = () => {
   let tiempo 
   const resetTimer = () => { 
     clearTimeout(tiempo) 
-    tiempo = setTimeout(logout, 3600000)
+    tiempo = setTimeout(logout, 60000)
   }     
   window.onload = resetTimer 
   // DOM Events 
