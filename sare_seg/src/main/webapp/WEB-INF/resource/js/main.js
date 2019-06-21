@@ -2335,7 +2335,7 @@ const openReportesAjax=(opcion)=>{
         xhr.responseType = 'blob';
         if(xhr.readyState==1){
                 swal ({
-                title: '<span style="width:100%;">Buscando información!</span>',
+                title: '<span style="width:100%;">Generando reporte!</span>',
                 text: 'Por favor espere un momento',
                 timer: 15000,
                 onOpen: () => swal.showLoading()
