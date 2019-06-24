@@ -29,14 +29,15 @@ var treeConfig = {
 
         },
         B3: {
-           ype: 'Wms',
-            label: 'Ortofotos - INEGI',
-            img: '../../resources/img/mapaBase/baseOrtos.jpg',
-            url: ['https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?', 'https://gaia.inegi.org.mx/mdmCache/service/wms?'],
-            layer: 'MapaBaseOrtofoto',
-            rights: '&copy; INEGI 2013',
-            tiled: true,
-            desc: 'CONJUNTO DE IMAGENES AEREAS ORTORECTIFICADAS A DIVERSAS ESCALAS Y RESOLUCIONES, PROVENIENTES DEL ACERVO DE ORTOFOTOS DE INEGI Y QUE CORRESPONDEN A TOMAS REALIZADAS EN EL LAPSO 2005-2012.'
+            type:'Wms',
+                label:'Ortofotos - INEGI',
+                img:'../../resources/img/mapaBase/baseOrtos.jpg',		             
+                url:['http://gaiamapas1.inegi.org.mx/mdmCache/service/wms?','http://gaiamapas3.inegi.org.mx/mdmCache/service/wms?','http://gaiamapas2.inegi.org.mx/mdmCache/service/wms?'],
+                layer:'MapaBaseOrtofoto',
+				rights:'&copy; INEGI 2013',
+                tiled:true,
+                desc:'CONJUNTO DE IMAGENES AEREAS ORTORECTIFICADAS A DIVERSAS ESCALAS Y RESOLUCIONES, PROVENIENTES DEL ACERVO DE ORTOFOTOS DE INEGI Y QUE CORRESPONDEN A TOMAS REALIZADAS EN EL LAPSO 2005-2012.',
+                clasification:'RASTER'               	 
         },
         B4: {
             type: 'Wms',

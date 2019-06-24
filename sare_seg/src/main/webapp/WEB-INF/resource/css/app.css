@@ -546,11 +546,11 @@ nav ul a {
 
 /* estilos pisados mapa */
 .custom-scaleControl-extent{
-  display: none !important;
+  //display: none !important;
 }
 
 .custom-scaleControl-zoomout {
-  top: 26px !important;
+  //top: 26px !important;
 }
 
 .custom-scaleControl-pos-aditional {
