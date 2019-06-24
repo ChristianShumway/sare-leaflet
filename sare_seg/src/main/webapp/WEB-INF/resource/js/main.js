@@ -1581,9 +1581,22 @@ const validaCp = () => {
           
       }
       else {
+
         if(nameContainerFloating){
+          let containerFloat = nameContainerFloating.slice(3)
+          const btnFloat = document.getElementById(`icon-${containerFloat}-float`)
+          const btnStatic = document.getElementById(`icon-${containerFloat}-static`)
+          //alert(containerFloat)
+          btnFloat.classList.remove('btn-inactive')
+          btnStatic.classList.add('btn-inactive')
+          arrayWrapBtns.map (wrap => {
+            const idWrap = document.getElementById(wrap)
+            idWrap.style.display = 'contents'
+          }) 
+
           handleReturnContainerForm(nameContainerFloating)
-        }  
+        } 
+
         modalViewPreliminar()  
       }
     }
@@ -1701,6 +1714,10 @@ const handleShowResult = result => {
           //handleActiveVisibleSearch()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
           handleActionPunteoAlta('on')
+          arrayWrapBtns.map (wrap => {
+            const idWrap = document.getElementById(wrap)
+            idWrap.style.display = 'contents'
+          }) 
           
         }
       }
@@ -1757,7 +1774,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
         Swal.fire ({
           position: 'bottom-end',
           type: 'warning',
-          title: 'Debe acercarse mas sobre el mapa para identificar una unidad economica',
+          title: 'Debe acercarse más sobre el mapa para identificar una unidad económica',
           showConfirmButton: false,
           timer: 2000
         }) 
@@ -1786,7 +1803,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
         Swal.fire ({
           position: 'bottom-end',
           type: 'warning',
-          title: 'Debe seleccionar una unidad economica a puntear',
+          title: 'Debe seleccionar una unidad económica a puntear',
           showConfirmButton: false,
           timer: 2000
         })
@@ -1948,11 +1965,10 @@ const modalGoogleMap = (x, y, tc) => {
 
 //Funcion para identificar la unidad economica y llamar el servicio
 const identificaUE = (x,y) => {
-  let capas = ($('#checkbox-denue').is(":checked")) ? 'DENUE,' : ''
-  capas += ($('#checkbox-matrices').is(":checked")) ? 'Matrices,' : ''
-  capas += ($('#checkbox-sucursal').is(":checked")) ? 'Sucursales,' : ''
-  capas += ($('#checkbox-unicos').is(":checked")) ? 'Unicos,' : ''
-  capas += ($('#checkbox-postes').is(":checked")) ? 'Postes,' : ''
+  let capas = ($('#wdenue').is(":checked")) ? 'DENUE,' : ''
+  capas += ($('#C101M').is(":checked")) ? 'Matrices,' : ''
+  capas += ($('#c101').is(":checked")) ? 'Sucursales,' : ''
+  capas += ($('#c104').is(":checked")) ? 'Postes,' : ''
   capas = capas.slice(0, -1)
 
   capas.length === 0 ? mostrarMensaje() : callServicioIdentificar(capas,x,y)
@@ -1965,6 +1981,7 @@ const mostrarMensaje = () => {
     text: 'Seleccione una capa de información',
     showCancelButton: true,
     showConfirmButton: false,
+    customClass: 'swal-view',
     allowEscapeKey: true,
     allowOutsideClick: true,
     html: true,
@@ -2000,6 +2017,7 @@ const callServicioIdentificar = (capas, x, y) => {
             text: data[0].datos.mensaje.messages,
             showCloseButton: true,
             showConfirmButton: false,
+            customClass: 'swal-view',
             confirmButtonColor: "#5562eb",
             allowEscapeKey: true,
             allowOutsideClick: true,
@@ -2042,7 +2060,7 @@ const modalShowInfoUE = (rows, capas) => {
     width: sizeScreen, 
     html: '<div id="tabL"></div>', 
     confirmButtonText: 'Aceptarr', 
-    customClass: 'swal-wide', 
+    customClass: 'swal-view', 
     confirmButtonColor: '#0f0f0f', 
     allowEscapeKey: false, 
     allowOutsideClick: false, 
@@ -2170,7 +2188,22 @@ const handleCancelClick = () => {
     const wrapTitle = document.getElementById(obj.title)
     if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
   })
-  
+
+  if(nameContainerFloating){
+    let containerFloat = nameContainerFloating.slice(3)
+    const btnFloat = document.getElementById(`icon-${containerFloat}-float`)
+    const btnStatic = document.getElementById(`icon-${containerFloat}-static`)
+    //alert(containerFloat)
+    btnFloat.classList.remove('btn-inactive')
+    btnStatic.classList.add('btn-inactive')
+    arrayWrapBtns.map (wrap => {
+      const idWrap = document.getElementById(wrap)
+      idWrap.style.display = 'contents'
+    }) 
+
+    handleReturnContainerForm(nameContainerFloating)
+  } 
+
 }
 
 const callServiceLiberaClave=(id_ue)=>{
@@ -2289,7 +2322,6 @@ const handleSessionActive = () => {
       alertToastForm('No se ha iniciado sesión', 'error')
       setTimeout( () => window.location.href = './' , 1500 )
       let id_ue=document.getElementById('id_UE').value
-      callServiceLiberaClave(id_ue)
     } else {
       dataUserFromLoginLocalStorage=data[0].datos.datos
     }
@@ -2311,7 +2343,13 @@ const alertPosition = () => {
 
 /* METODOS PARA LAS OPCIONES DEL MENU INFERIOR IMPRESION Y REPORTES*/ 
 const opcionMenu = opcion => {     
-  switch (opcion){         
+  switch (opcion){
+    case 1:
+        openReportesAjax(1)
+      break;
+    case 5:
+        openReportesAjax(2)
+      break;
     case 2: 
       OpenReportes('desktop', 'vista') 
       break
@@ -2322,6 +2360,45 @@ const opcionMenu = opcion => {
       imprimir() 
   }     
 } 
+
+const openReportesAjax=(opcion)=>{
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce=01', true);
+        xhr.responseType = 'blob';
+        if(xhr.readyState==1){
+                swal ({
+                title: '<span style="width:100%;">Generando reporte!</span>',
+                text: 'Por favor espere un momento',
+                timer: 15000,
+                onOpen: () => swal.showLoading()
+              })
+                .then(() => { },
+                  dismiss => {}
+                )
+        }
+        xhr.onload = function(e) {
+        if (this.status == 200) {
+            var blob = new Blob([this.response], {type: 'application/pdf'});
+            //var link = document.createElement('a');
+            var file = window.URL.createObjectURL(this.response);
+            Swal.fire({
+                title: '<strong>Reporte</strong>',
+                width: '100%', 
+                html: `<iframe class='iframe-reporte' src=""></iframe>`,
+                showCloseButton: true,
+                showCancelButton: false,
+                showConfirmButton: false,
+                focusConfirm: false,
+            })
+             var file = window.URL.createObjectURL(this.response);
+             document.querySelector("iframe").src = file;
+//            link.download = "reporte.pdf";
+//            link.click(); 
+            //swal.close();
+        }
+        };
+    xhr.send();
+}
 
 async function OpenReportes (size, action) {
   const {value: reporte} = await Swal.fire({
@@ -2339,42 +2416,43 @@ async function OpenReportes (size, action) {
       return new Promise((resolve) => {
         if (value === '1' || value === '2'|| value === '3') {
           resolve()
+          
         } else {
           resolve('Selecciona el reporte a visualizar')
         }
       })
     }
   })  
- 
-  if (reporte) {
-    let src = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
-    let leyenda = ''
-    let srcExcel = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=EXCEL&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
-    
-    if(reporte === '1'){
-        leyenda = 'Descargaste reporte de manzanas'
-    } else if (reporte === '2'){
-        leyenda = 'Descargaste reporte de localidades'
-    }
-
-    if (action == 'vista'){
-      if (size == 'desktop'){
-        Swal.fire({
-          title: '<strong>Reporte</strong>',
-          width: '100%', 
-          html: `<iframe class='iframe-reporte' src=${src}></iframe>`,
-          showCloseButton: true,
-          showCancelButton: false,
-          showConfirmButton: false,
-          focusConfirm: false,
-        })
-      } else  if (size == 'movil'){
-        window.open(src, 'fullscreen=yes')
-      } 
-    } else if (action == 'descarga'){
-      window.location.href = srcExcel    
-    }
-  }  
+ openReportesAjax(reporte)
+//  if (reporte) {
+//    let src = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
+//    let leyenda = ''
+//    let srcExcel = urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=EXCEL&reporte=' + reporte +'&ce='+dataUserFromLoginLocalStorage.ce+'&ran=' + Math.random() 
+//    
+//    if(reporte === '1'){
+//        leyenda = 'Descargaste reporte de manzanas'
+//    } else if (reporte === '2'){
+//        leyenda = 'Descargaste reporte de localidades'
+//    }
+//
+//    if (action == 'vista'){
+//      if (size == 'desktop'){
+//        Swal.fire({
+//          title: '<strong>Reporte</strong>',
+//          width: '100%', 
+//          html: `<iframe class='iframe-reporte' src=${src}></iframe>`,
+//          showCloseButton: true,
+//          showCancelButton: false,
+//          showConfirmButton: false,
+//          focusConfirm: false,
+//        })
+//      } else  if (size == 'movil'){
+//        window.open(src, 'fullscreen=yes')
+//      } 
+//    } else if (action == 'descarga'){
+//      window.location.href = srcExcel    
+//    }
+//  }  
 }
 var imprimir = function() {
   $('#window_bottom').hide();
@@ -2598,7 +2676,7 @@ const tiempoInactividad = () => {
   let tiempo 
   const resetTimer = () => { 
     clearTimeout(tiempo) 
-    tiempo = setTimeout(logout, 3600000)
+    tiempo = setTimeout(logout, 60000)
   }     
   window.onload = resetTimer 
   // DOM Events 

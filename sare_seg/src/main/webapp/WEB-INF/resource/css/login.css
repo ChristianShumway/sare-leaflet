@@ -26,12 +26,12 @@ body{
   position: relative;
   margin: 10px auto;
   width: 40%;
-  transition: all 1s ease-in-out;
+  transition: all .5s ease;
   
 }
 
 #flip-container:hover{
-  transform: scale(1.04);
+  /* transform: scale(1.01); */
 }
 
 .card {
