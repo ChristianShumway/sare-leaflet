@@ -213,6 +213,7 @@ const callServiceFindUE=(id_ue)=>{
   urlServices['serviceSearch'].type, 
   data => {
     if(data[0].operation){
+       swal.close();
       //muestra mensaje si hay error
       showModalMsgError(data)
       //realiza acercamiento en el mapa
@@ -233,10 +234,13 @@ const callServiceFindUE=(id_ue)=>{
     swal({
       title: 'Buscando información de la clave:' +id_ue,
       text: 'Por favor espere un momento',
-      timer: 2000,
+      //timer: 2000,
       onOpen:  () => swal.showLoading() 
     })
     .then( () => { },
+        dismiss => {
+           
+      }
     )
   })
 }
@@ -429,6 +433,7 @@ const handleViewCleeList = () => {
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
+      swal.close();
       dataCleeListNew = data[0]
       popupCleeList(data[0].datos)
     }, 
@@ -436,7 +441,7 @@ const handleViewCleeList = () => {
       swal ({
         title: '<span style="width:100%;">Buscando información!</span>',
         text: 'Por favor espere un momento',
-        timer: 2000,
+        //timer: 2000,
         //html: true,
         onOpen: () => swal.showLoading()
       })
@@ -893,6 +898,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     
     
     if (data[0].operation) {
+        swal.close();
         bandera=false;
         if( data[0].datos.datos != null)
         {
@@ -938,7 +944,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     swal ({
       title: '<span style="width:100%;">Buscando información de punteo!</span>',
       text: 'Por favor espere un momento',
-      timer: 4000,
+      //timer: 4000,
       onOpen: () => swal.showLoading()
     })
     .then(
@@ -1702,6 +1708,7 @@ const handleShowResult = result => {
     urlServices['serviceSaveUEAlter'].type, 
     data => {
       if (data[0].operation) {
+        swal.close();
         if (data[0].datos.mensaje.type === 'false') {
           handleShowSaveAlert('error', 'Error', data[0].datos.mensaje.messages, false)
           return;
@@ -1721,22 +1728,20 @@ const handleShowResult = result => {
           
         }
       }
-      
       else {
         handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
       }
-    }, () => swal({
-        title: 'Almacenando el punto!',
-        text: 'Por favor espere un momento',
-        timer: 5000,
-        onOpen: () => swal.showLoading() 
-      }).then(
-        () => { },
-        (dismiss) => {
-          if (dismiss === 'timer') {
-          }
-        }
-      ) //handleShowSaveAlert('info', 'Guardando', 'Almacenando información, por favor espere un momento', true)
+    }, () => 
+      swal({
+      title: 'Almacenando el punto!',
+      text: 'Por favor espere un momento',
+      onOpen:  () => swal.showLoading() 
+    })
+    .then( () => { },
+        dismiss => {
+           
+      }
+    )
     )
         
   } //close if result.value
@@ -2003,6 +2008,7 @@ const callServicioIdentificar = (capas, x, y) => {
     },
     urlServices['serviceIdentifyUE'].type, function (data) {
       if (data[0].operation) {
+          swal.close();
         if (data[0].datos.mensaje.messages === null) {
           MDM6('hideMarkers', 'identify')
           var dataToFrm = data[0].datos.datos
@@ -2033,18 +2039,16 @@ const callServicioIdentificar = (capas, x, y) => {
 
       }
     }, () => {
-      swal({
-        title: 'Identificación de Unidades Económicas!',
+        swal({
+     title: 'Identificación de Unidades Económicas!',
         text: 'Por favor espere un momento',
-        timer: 5000,
-        onOpen: () => swal.showLoading() 
-      }).then(
-        () => { },
-        (dismiss) => {
-          if (dismiss === 'timer') {
-          }
-        }
-      )
+      onOpen:  () => swal.showLoading() 
+    })
+    .then( () => { },
+        dismiss => {
+           
+      }
+    )
     }
   )
 }
@@ -2363,13 +2367,13 @@ const opcionMenu = opcion => {
 
 const openReportesAjax=(opcion)=>{
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce=01', true);
+        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
         if(xhr.readyState==1){
                 swal ({
                 title: '<span style="width:100%;">Generando reporte!</span>',
                 text: 'Por favor espere un momento',
-                timer: 15000,
+                //timer: 15000,
                 onOpen: () => swal.showLoading()
               })
                 .then(() => { },
@@ -2378,6 +2382,7 @@ const openReportesAjax=(opcion)=>{
         }
         xhr.onload = function(e) {
         if (this.status == 200) {
+            swal.close();
             var blob = new Blob([this.response], {type: 'application/pdf'});
             //var link = document.createElement('a');
             var file = window.URL.createObjectURL(this.response);
@@ -2397,7 +2402,25 @@ const openReportesAjax=(opcion)=>{
             //swal.close();
         }
         };
-    xhr.send();
+   xhr.onreadystatechange = function (oEvent) {  
+    if (xhr.readyState === 4) {  
+        if (xhr.status === 200) {  
+          //console.log(oEvent)  
+        } else 
+        { 
+                swal.close();
+                Swal.fire
+                ({
+                  position: 'bottom-end',
+                  type: 'warning',
+                  title: "Error interno, por favor intente nuevamente!",
+                  showConfirmButton: false,
+                  timer: 2000
+                })
+        }  
+    }  
+}; 
+    xhr.send(null);
 }
 
 async function OpenReportes (size, action) {
