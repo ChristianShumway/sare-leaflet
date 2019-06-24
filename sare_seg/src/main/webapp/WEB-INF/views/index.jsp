@@ -360,7 +360,6 @@
                     <span class="lever"></span>
                     Activo
                   </label>
-                </div>
               </div>
 
             </div>

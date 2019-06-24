@@ -10,6 +10,19 @@ body{
 #mdm6DinamicPanel{
     display: block!important
 } 
+.swal-wide{
+    width: 600px  !important;
+    left: 100px !important;
+    top:-85px !important;
+    font-family: cursive;
+}
+.filtros-clases{
+    color: gray !important;
+}
+.label-clases {
+    color: gray !important;
+    
+}
 #btn-top {
   position: fixed;
   bottom: 23px;
