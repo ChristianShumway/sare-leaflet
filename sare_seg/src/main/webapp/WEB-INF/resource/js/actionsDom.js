@@ -7,6 +7,7 @@ const arrayWrapBtns = ['wrap-btns-referencia', 'wrap-btns-ugeografica', 'wrap-bt
 window.onload = () => {
   handleSessionActive()
   handleHideForm()
+  addAttributeTitle()
 }
 
 // Función para mostar u ocultar modulo de busqueda de clave
@@ -433,3 +434,19 @@ const handlePressCtrKeyAndKeyCode = e => {
 
 document.onkeydown = handlePressCtrKeyAndKeyCode
 
+
+const addAttributeTitle = () => {
+  const urlApi = 'http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6'
+  const script = document.createElement('script')
+  script.src = urlApi
+  script.addEventListener('load', postLoadFunction)
+  document.head.appendChild(script)
+
+  function postLoadFunction() {
+    setTimeout( () => {
+      document.getElementById('scaleControl_zoomIn').setAttribute('title','Acercar')
+      document.getElementById('scaleControl_extent').setAttribute('title','Expandir') 
+      document.getElementById('scaleControl_zoomOut').setAttribute('title','Alejar')
+    },500) 
+  }  
+}

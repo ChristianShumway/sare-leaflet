@@ -1581,9 +1581,22 @@ const validaCp = () => {
           
       }
       else {
+
         if(nameContainerFloating){
+          let containerFloat = nameContainerFloating.slice(3)
+          const btnFloat = document.getElementById(`icon-${containerFloat}-float`)
+          const btnStatic = document.getElementById(`icon-${containerFloat}-static`)
+          //alert(containerFloat)
+          btnFloat.classList.remove('btn-inactive')
+          btnStatic.classList.add('btn-inactive')
+          arrayWrapBtns.map (wrap => {
+            const idWrap = document.getElementById(wrap)
+            idWrap.style.display = 'contents'
+          }) 
+
           handleReturnContainerForm(nameContainerFloating)
-        }  
+        } 
+
         modalViewPreliminar()  
       }
     }
@@ -1701,6 +1714,10 @@ const handleShowResult = result => {
           //handleActiveVisibleSearch()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
           handleActionPunteoAlta('on')
+          arrayWrapBtns.map (wrap => {
+            const idWrap = document.getElementById(wrap)
+            idWrap.style.display = 'contents'
+          }) 
           
         }
       }
@@ -2170,7 +2187,22 @@ const handleCancelClick = () => {
     const wrapTitle = document.getElementById(obj.title)
     if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
   })
-  
+
+  if(nameContainerFloating){
+    let containerFloat = nameContainerFloating.slice(3)
+    const btnFloat = document.getElementById(`icon-${containerFloat}-float`)
+    const btnStatic = document.getElementById(`icon-${containerFloat}-static`)
+    //alert(containerFloat)
+    btnFloat.classList.remove('btn-inactive')
+    btnStatic.classList.add('btn-inactive')
+    arrayWrapBtns.map (wrap => {
+      const idWrap = document.getElementById(wrap)
+      idWrap.style.display = 'contents'
+    }) 
+
+    handleReturnContainerForm(nameContainerFloating)
+  } 
+
 }
 
 const callServiceLiberaClave=(id_ue)=>{
