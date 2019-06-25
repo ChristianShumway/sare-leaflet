@@ -37,6 +37,11 @@ public class BackingValidacionesSare {
     
     public cat_respuesta_services validacp(String cp, String entidad, Integer proyecto) throws Exception{
         cat_respuesta_services respuesta=new cat_respuesta_services();
+        if(cp.equals("") || cp == null)
+        {
+            List<cat_codigo_postal> codigoPostal=getcatcp(entidad,proyecto);
+            cp=codigoPostal.get(0).getCp_final();
+        }
         try
         {
         respuesta.setDatos(InterfaceValidacionesSare.isValidCpMsj(cp, entidad, proyecto));
