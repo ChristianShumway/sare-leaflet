@@ -1583,8 +1583,15 @@ const validaCp = () => {
   urlServices['serviceValCP'].type, 
   data => {
     if (data[0].operation) {
-      if (data[0].datos.result === false) {
-          
+      if (data[0].datos.mensaje.type === "false") {
+          Swal.fire
+          ({
+            position: 'bottom-end',
+            type: 'warning',
+            title: data[0].datos.mensaje.messages,
+            showConfirmButton: false,
+            timer: 3000
+          })
       }
       else {
 
@@ -2869,7 +2876,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
-                     $("#filtro_subsector").append("<option value=seleccione>Seleccione</option>");
+                     $("#filtro_subsector").append("<option value=Seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_subsector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2891,7 +2898,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
-                     $("#filtro_rama").append("<option value=seleccione>Seleccione</option>");
+                     $("#filtro_rama").append("<option value=Seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_rama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2910,7 +2917,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
-                    $("#filtro_subrama").append("<option value=seleccione>Seleccione</option>");
+                    $("#filtro_subrama").append("<option value=Seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                       $("#filtro_subrama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
@@ -2926,7 +2933,7 @@ function llamarServicioclases(codigoScian, valor){
                      {
                          sel.remove(0);
                      });
-                    $("#filtro_clase").append("<option value=seleccione>Seleccione</option>");
+                    $("#filtro_clase").append("<option value=Seleccione>Seleccione</option>");
                     $.each(clasesFiltro_2, function (index, value) 
                      {
                        $("#filtro_clase").append('<option value='+value.codigo+">"+value.descripción+"</option>");
