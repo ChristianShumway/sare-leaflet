@@ -2733,8 +2733,7 @@ const tiempoInactividad = () => {
 }
 
 
-function FiltroXClase(id){
-        //var htmlDivClases;
+const FiltroXClase=id=>{
          setTimeout(function () {
             llamarServicioclases('00');
             }, 200);
@@ -2759,21 +2758,16 @@ function FiltroXClase(id){
                     htmlDivClases +='<option>Seleccione</option>'
                     htmlDivClases += '</select>';
                     inicializaSwal(id);
-        
-//        html += '<label id=label_' + value.id + '><b>' + value.etiqueta + '</b></label>';
-//                    html += '    <select id=filtro_' + value.id + ' style="display:block" onchange=' + value.metodo + '>';
-//                    html += '</select>';
     
 }
 
-function inicializaSwal(id){
+const inicializaSwal=(id)=>{
     swal({
         title: '<div id="filtroxclases" >' + "Filtro Por Clases" + '</div>',
         html: htmlDivClases,
         customClass: 'swal-wide',
         heightAuto: true,
         confirmButtonText: 'Aceptar',
-        //customClass: 'swal-grafica',
         showCloseButton: true,
         confirmButtonColor: '#787878'
         
@@ -2788,186 +2782,93 @@ function inicializaSwal(id){
     });
 }
 
-const añadirParametroScianNew=()=>{
-    let claseScian=0;
+const añadirParametroScian=()=>{
+    let claseScian=0,valor,valorReal,clase;
     filtrosScian.map( id => {
+    const sel=document.getElementById(id.id)
     const idElement = document.getElementById(id.id).value
-    idElement!="Seleccione"?claseScian=idElement:alert(claseScian)
+    idElement!="Seleccione"?claseScian=idElement:""
+    valor=sel. options[sel. selectedIndex]. innerText;
+    if(claseScian!=0 && valor!="Seleccione"){
+        valorReal=valor;
+        clase=claseScian
+        claseScian=0
+        valorScian=clase+"-"+valorReal;
+        return
+    }
   })
 }
 
-function añadirParametroScian(){
-    let sector,subsector,rama,subrama,clase,clase_scian,valor,sel;
-    
-    clase=$("#filtro_clase").val();
-    sel = document.getElementById("filtro_clase");
-    if(clase!="Seleccione"){
-        clase_scian=clase;
-        valor="";
-        valor=sel. options[sel. selectedIndex]. innerText;
-    }else{
-        subrama=$("#filtro_subrama").val();
-        sel = document.getElementById("filtro_subrama");
-        if(subrama!="Seleccione"){
-            clase_scian=subrama;
-            valor="";
-            valor=sel. options[sel. selectedIndex]. innerText;
-        }else{
-            rama=$("#filtro_rama").val();
-            sel = document.getElementById("filtro_rama");
-            if(rama!="Seleccione"){
-                clase_scian=rama;
-                valor="";
-                valor=sel. options[sel. selectedIndex]. innerText;
-            }else{
-                subsector=$("#filtro_subsector").val();
-                sel = document.getElementById("filtro_subsector");
-                if(subsector!="Seleccione"){
-                    clase_scian=subsector;
-                    valor="";
-                    valor=sel. options[sel. selectedIndex]. innerText;
-                }else{
-                    sector=$("#filtro_sector").val();
-                    sel = document.getElementById("filtro_clase");
-                    if(sector!="Seleccione"){
-                        clase_scian=sector;
-                        valor="";
-                        valor=sel. options[sel. selectedIndex]. innerText;
-                    }else{
-                       clase_scian="00";
-                       valor="";
-                       valor=sel. options[sel. selectedIndex]. innerText;
-                    }
-                }
-            }
-        }
-    }
-    valorScian=clase_scian+"-"+valor;
-    return clase_scian;
+const actionFiltrosScian=(id,clasesFiltro_2,array,etiqueta)=>
+{
+    const elemento = document.getElementById(id.id)
+    $.each(elemento, function (index, value) 
+    {
+        elemento.remove(0);
+    });
+        const opt = document.createElement('option');
+        opt.value="Seleccione";
+        opt.innerHTML = "Seleccione";
+        elemento.appendChild(opt);
+    clasesFiltro_2.map( id => 
+    {
+        const opt = document.createElement('option');
+        opt.value=id.codigo;
+        opt.innerHTML = id.descripción;
+        elemento.appendChild(opt);
+    })
+    array.map( id => 
+    {
+        let elemen = document.getElementById(id.id)
+        id.id=="label_"+etiqueta || id.id=="filtro_"+etiqueta?elemen.style.display="block":elemen.style.display="none";
+    })
 }
 
-function llamarServicioclases(codigoScian, valor){
-   
-   // alert(codigoScian)
+const llamarServicioclases=(codigoScian, valor)=>{
    var sel;
     sendAJAX(urlServices['getDatosClasesPorFiltro'].url, 
-        {
-            cveoper:dataUserFromLoginLocalStorage.ce, 
-            proyecto:dataUserFromLoginLocalStorage.proyecto, 
-            codigoScian:codigoScian
-        }, 
-        
-        urlServices['getDatosClasesPorFiltro'].type, 
+    {
+        cveoper:dataUserFromLoginLocalStorage.ce, 
+        proyecto:dataUserFromLoginLocalStorage.proyecto, 
+        codigoScian:codigoScian
+    },    
+    urlServices['getDatosClasesPorFiltro'].type, 
         data => {
-
             if(data[0].datos.datos.length){
-                
                 clasesFiltro = JSON.stringify(data[0].datos.datos);
                 localStorage.setItem("JSONFiltrarClases", JSON.stringify(data[0].datos.datos));
-                if (clasesFiltro != null) {
-                    var clasesFiltro_2 = JSON.parse(clasesFiltro);
-                    if(codigoScian=='00'){
-                 
-                    $.each(clasesFiltro_2, function (index, value) 
-                     {
-//                         $('#filtro_sector').append($('<option>', {
-//                             value:value.codigo,
-//                             text: value.description
-//                        }));
-                       $("#filtro_sector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
-                       
-                     });
-                     $("#label_subsector").css("display","none");
-                     $("#filtro_subsector").css("display","none");
-                     $("#label_rama").css("display","none");
-                     $("#filtro_rama").css("display","none");
-                     $("#label_subrama").css("display","none");
-                     $("#filtro_subrama").css("display","none");
-                     $("#label_clase").css("display","none");
-                     $("#filtro_clase").css("display","none");
-                    //inicializaSwal();
-                }else{
-                   if(codigoScian.length==2){
-                    sel = document.getElementById("filtro_subsector");
-                     $.each(sel, function (index, value) 
-                     {
-                         sel.remove(0);
-                     });
-                     $("#filtro_subsector").append("<option value=Seleccione>Seleccione</option>");
-                    $.each(clasesFiltro_2, function (index, value) 
-                     {
-                       $("#filtro_subsector").append('<option value='+value.codigo+">"+value.descripción+"</option>");
-                     });
-                     
-                     $("#label_subsector").css("display","block");
-                     $("#filtro_subsector").css("display","block");
-                     $("#label_rama").css("display","none");
-                     $("#filtro_rama").css("display","none");
-                     $("#label_subrama").css("display","none");
-                     $("#filtro_subrama").css("display","none");
-                     $("#label_clase").css("display","none");
-                     $("#filtro_clase").css("display","none");
-                    //inicializaSwal();
-                }else{
-                    if(codigoScian.length==3){
-                    sel = document.getElementById("filtro_rama");
-                     $.each(sel, function (index, value) 
-                     {
-                         sel.remove(0);
-                     });
-                     $("#filtro_rama").append("<option value=Seleccione>Seleccione</option>");
-                    $.each(clasesFiltro_2, function (index, value) 
-                     {
-                       $("#filtro_rama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
-                     });
-                     
-                     $("#label_rama").css("display","block");
-                     $("#filtro_rama").css("display","block");
-                     $("#label_subrama").css("display","none");
-                     $("#filtro_subrama").css("display","none");
-                     $("#label_clase").css("display","none");
-                     $("#filtro_clase").css("display","none");
-                }else{
-                    if(codigoScian.length==4){
-                    sel = document.getElementById("filtro_subrama");
-                     $.each(sel, function (index, value) 
-                     {
-                         sel.remove(0);
-                     });
-                    $("#filtro_subrama").append("<option value=Seleccione>Seleccione</option>");
-                    $.each(clasesFiltro_2, function (index, value) 
-                     {
-                      $("#filtro_subrama").append('<option value='+value.codigo+">"+value.descripción+"</option>");
-                     });
-                     
-                     $("#label_subrama").css("display","block");
-                     $("#filtro_subrama").css("display","block");
-                     $("#label_clase").css("display","none");
-                     $("#filtro_clase").css("display","none");
-                }else{
-                    sel = document.getElementById("filtro_clase");
-                     $.each(sel, function (index, value) 
-                     {
-                         sel.remove(0);
-                     });
-                    $("#filtro_clase").append("<option value=Seleccione>Seleccione</option>");
-                    $.each(clasesFiltro_2, function (index, value) 
-                     {
-                       $("#filtro_clase").append('<option value='+value.codigo+">"+value.descripción+"</option>");
-                     });
-                      $("#label_clase").css("display","block");
-                     $("#filtro_clase").css("display","block");
-                     valorScian=+"-"+value.descripción
-                }
-                }
-                }
-                }
-                
-//                 htmlDivClases = "<label id=label_1><h6><b>Sector</b><h6></label>\n\
-//                       <select id=filtro_1 style=\"display:block\" onchange=llamarServicioclases(this.value)><option value=\"Seleccione\">Seleccione</option>\n\
-//                    <option value=\"agricultura\">Agricultura</option></select>'";
-                }
-            }else {
+            if (clasesFiltro != null) 
+            {
+                let clasesFiltro_2 = JSON.parse(clasesFiltro);
+            if(codigoScian=='00'){
+                const sector = document.getElementById("filtro_sector")
+                actionFiltrosScian(sector,clasesFiltro_2,ElementosSector,"sector")
+            }else
+            {
+                let codigo=codigoScian.length;
+            switch(codigo)
+            {
+                case 2:
+                    const subsector = document.getElementById("filtro_subsector")
+                    actionFiltrosScian(subsector,clasesFiltro_2,ElementosSubSector,"subsector")
+                break;
+                case 3:
+                    const rama = document.getElementById("filtro_rama")
+                    actionFiltrosScian(rama,clasesFiltro_2,ElementosRama,"rama")
+                break;
+                case 4:
+                    const subrama = document.getElementById("filtro_subrama")
+                    actionFiltrosScian(subrama,clasesFiltro_2,ElementosSubRama,"subrama")
+                break;
+                default:
+                    const clase = document.getElementById("filtro_clase")
+                    actionFiltrosScian(clase,clasesFiltro_2,ElementosClase,"clase")
+                break;  
+            }
+            }
+            }
+            }else 
+            {
                 var dataStorage = localStorage.getItem("JSONFiltrarClases");
                 losDatosLocales = JSON.parse(dataStorage);
             }

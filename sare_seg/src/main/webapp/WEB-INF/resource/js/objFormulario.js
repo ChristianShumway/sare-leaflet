@@ -503,23 +503,147 @@ const titlesWarpForm = [
 
 const filtrosScian=[
     {
-        title:'filtro_clase',
-        id:'filtro_clase'
-    },
-    {
-        title:'filtro_subrama',
-        id:'filtro_subrama'
-    },
-    {
-        title:'filtro_rama',
-        id:'filtro_rama'
+        title:'filtro_sector',
+        id:'filtro_sector'
     },
     {
         title:'filtro_subsector',
         id:'filtro_subsector'
     },
     {
-        title:'filtro_sector',
-        id:'filtro_sector'
+        title:'filtro_rama',
+        id:'filtro_rama'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    }
+    
+]
+const ElementosSector=[
+    {
+        title:'label_subsector',
+        id:'label_subsector'
+    },
+    {
+        title:'filtro_subsector',
+        id:'filtro_subsector'
+    },
+    {
+        title:'label_rama',
+        id:'label_rama'
+    },
+    {
+        title:'filtro_rama',
+        id:'filtro_rama'
+    },
+    {
+        title:'label_subrama',
+        id:'label_subrama'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'label_clase',
+        id:'label_clase'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    }
+]
+const ElementosSubSector=[
+    {
+        title:'label_subsector',
+        id:'label_subsector'
+    },
+    {
+        title:'filtro_subsector',
+        id:'filtro_subsector'
+    },
+    {
+        title:'label_rama',
+        id:'label_rama'
+    },
+    {
+        title:'filtro_rama',
+        id:'filtro_rama'
+    },
+    {
+        title:'label_subrama',
+        id:'label_subrama'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'label_clase',
+        id:'label_clase'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    }
+]
+const ElementosRama=[
+    {
+        title:'label_rama',
+        id:'label_rama'
+    },
+    {
+        title:'filtro_rama',
+        id:'filtro_rama'
+    },
+    {
+        title:'label_subrama',
+        id:'label_subrama'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'label_clase',
+        id:'label_clase'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    }
+]
+const ElementosSubRama=[
+    
+    {
+        title:'label_subrama',
+        id:'label_subrama'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'label_clase',
+        id:'label_clase'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    }
+]
+const ElementosClase=[
+    {
+        title:'label_clase',
+        id:'label_clase'
+    },
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
     }
 ]
