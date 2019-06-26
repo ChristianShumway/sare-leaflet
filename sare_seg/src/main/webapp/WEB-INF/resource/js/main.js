@@ -30,12 +30,13 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-
+var id_ue;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
 const init = () => 
 {
+    id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
 }
 
@@ -153,7 +154,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
-  
+  id_ue=document.getElementById('id_UE').value;
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
     claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
@@ -174,6 +175,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
+  id_ue=id_ue;
   xycoorsx=''
   xycoorsy=''
   document.getElementById("origen").style.display='block';
@@ -200,6 +202,7 @@ const findUE = id_ue => {
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
+  
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -213,6 +216,7 @@ const callServiceFindUE=(id_ue)=>{
   urlServices['serviceSearch'].type, 
   data => {
     if(data[0].operation){
+        
        swal.close();
       //muestra mensaje si hay error
       showModalMsgError(data)
@@ -221,6 +225,7 @@ const callServiceFindUE=(id_ue)=>{
       cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
+      id_ue=id_ue;
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -873,7 +878,7 @@ const handleActiveVisibleSearch = () => {
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    let id_ue=document.getElementById('id_UE').value
+    id_ue=document.getElementById('id_UE').value
     let ce=dataUserFromLoginLocalStorage.ce
     let tr=dataUserFromLoginLocalStorage.tramo_control
     let u=dataUserFromLoginLocalStorage.nombre
@@ -1106,7 +1111,7 @@ const handleFillTipoDeVialidades = selectId =>
 
 const ejecutar =() => 
 {
-    const id_ue = document.getElementById('id_UE').value
+    id_ue = document.getElementById('id_UE').value
     callServiceLiberaClave(id_ue)  
 }
 
@@ -1804,6 +1809,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
       isAlta=false;
       validaAltas=false;
       combosc154yOrigen=false;
+      id_ue=document.getElementById('id_UE').value;
       let clee_est=document.getElementById('id_UE').value;
       if(clee_est!='' || clee_est==null)    
       {
@@ -1916,7 +1922,7 @@ const HandleActionsSaveNewPoint = option =>{
 const identificar = coor => {
   MDM6('hideMarkers', 'identify')
   let level = MDM6('getZoomLevel')
-  const id_ue = document.getElementById('id_UE').value
+ id_ue = document.getElementById('id_UE').value
   let visible = document.getElementById('container-ratifica').dataset.visible
      
   if(id_ue != '')
@@ -2178,7 +2184,7 @@ const handleCancelClick = () => {
   document.getElementById("c154").style.display='block';
   document.getElementById("catorigen").style.display='none';
   document.getElementById("catc154").style.display='none';
-  let id_ue=document.getElementById('id_UE').value
+   id_ue=document.getElementById('id_UE').value
   layersSARE = ['c100', 'c101', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
@@ -2214,6 +2220,7 @@ const handleCancelClick = () => {
 
     handleReturnContainerForm(nameContainerFloating)
   } 
+  id_ue=document.getElementById('id_UE').value;
 
 }
 
@@ -2264,6 +2271,8 @@ const cleanForm = () => {
   //handleVisibleSearch() 
   //oculta mensaje 
   handleHideAlertPickMap()
+  
+  id_ue=document.getElementById('id_UE').value;
   
   
 }

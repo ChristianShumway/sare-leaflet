@@ -190,11 +190,7 @@
        });
 </script> 
 <script type="text/javascript">
-    window.addEventListener("beforeunload", function (e) {
-      ejecutar();
-      (e || window.event).returnValue = null;
-      return null;
-    });
+    
     
 </script>
 
