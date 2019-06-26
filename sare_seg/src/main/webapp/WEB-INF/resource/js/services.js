@@ -24,11 +24,11 @@ var urlServices = {
     },
     serviceIdentifyUE: {
         url: 'getListUEbyXY.do',
-        type: 'get'
+        type: 'post'
     },
     serviceIdentifyStreetView:{
         url: 'transformCoords.do',
-        type: 'get'
+        type: 'post'
     },
     serviceSearch: {
         url: 'getbusqueda.do',
@@ -36,7 +36,7 @@ var urlServices = {
     },
     serviceSaveUEAlter: {
         url: 'guardarUE.do',
-        type: 'get'
+        type: 'POST'
     },
     getListadoUnidadesEconomicas: {  
         url: 'getListadoUnidadesEconomicas.do',  
@@ -49,7 +49,7 @@ var urlServices = {
     },
     serviceValCP:{
         url: 'validaCP.do',
-        type: 'GET'
+        type: 'POST'
     },
     serviceCatalogoAsentamientos: {
         url: 'getCatAsentamientosHumanos.do',
@@ -61,7 +61,7 @@ var urlServices = {
     },
     serviceLiberaClave: {
         url: 'liberacve.do',
-        type: 'get'
+        type: 'POST'
     },
     serviceSaveUE: {
         url: 'guardarUE.do',
@@ -69,16 +69,16 @@ var urlServices = {
     },
     serviceGetExtent: {
         url: 'getExtent.do',
-        type: 'get'
+        type: 'POST'
     },
     serviceIdentifica: {
         url: 'getIdentifica.do',
-        type: 'get'
+        type: 'POST'
     },
     serviceLogin: {
         url: 'Login.do',
         //url: 'http://10.106.12.23:8080/sisac_2018/getLogin.do',
-        type: 'get'
+        type: 'POST'
     },
     
     serviceReporte: {
@@ -125,6 +125,6 @@ var urlServices = {
     getDatosClasesPorFiltro: {
         url: 'getDatosClasesPorFiltro.do',
         label: 'getDatosClasesPorFiltro',
-        type: 'GET'
+        type: 'POST'
     }
 };
