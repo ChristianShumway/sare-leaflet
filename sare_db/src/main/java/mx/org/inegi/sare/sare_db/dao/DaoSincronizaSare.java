@@ -92,7 +92,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                         rs.getString("e10_a")!=null?rs.getString("e10_a"):"",
                         rs.getString("e10_b")!=null?rs.getString("e10_b"):"",
                         rs.getString("e10_c")!=null?rs.getString("e10_c"):"",
-                        rs.getString("numext")!=null && !"".equals(rs.getString("numext"))?new BigDecimal(rs.getString("numext")):new BigDecimal(0),
+                        rs.getString("numext")!=null && !"".equals(rs.getString("numext"))?rs.getString("numext"):"",
                         rs.getString("numextalf")!=null?rs.getString("numextalf"):"",
                         rs.getString("e12")!=null?rs.getString("e12"):"",
                         rs.getString("numint")!=null && !"".equals(rs.getString("numint"))?rs.getString("numint"):"",
