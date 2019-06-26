@@ -2788,6 +2788,14 @@ function inicializaSwal(id){
     });
 }
 
+const añadirParametroScianNew=()=>{
+    let claseScian=0;
+    filtrosScian.map( id => {
+    const idElement = document.getElementById(id.id).value
+    idElement!="Seleccione"?claseScian=idElement:alert(claseScian)
+  })
+}
+
 function añadirParametroScian(){
     let sector,subsector,rama,subrama,clase,clase_scian,valor,sel;
     

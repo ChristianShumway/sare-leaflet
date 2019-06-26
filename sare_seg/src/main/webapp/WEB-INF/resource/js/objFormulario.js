@@ -500,3 +500,26 @@ const titlesWarpForm = [
     key: 'edificio'
   }
 ]
+
+const filtrosScian=[
+    {
+        title:'filtro_clase',
+        id:'filtro_clase'
+    },
+    {
+        title:'filtro_subrama',
+        id:'filtro_subrama'
+    },
+    {
+        title:'filtro_rama',
+        id:'filtro_rama'
+    },
+    {
+        title:'filtro_subsector',
+        id:'filtro_subsector'
+    },
+    {
+        title:'filtro_sector',
+        id:'filtro_sector'
+    }
+]
