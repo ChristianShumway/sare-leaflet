@@ -1727,7 +1727,7 @@ const handleShowResult = result => {
         }
         else {
           layersSARE = ['c100', 'c101', 'wdenue']
-          cleanForm()
+          handleCancelClick()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
           //handleActiveVisibleSearch()

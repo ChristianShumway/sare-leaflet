@@ -159,7 +159,13 @@ const objFormRural=[
         key: 'domicilio',
         name:'número exterior',
         title:'title-domicilio'
-    },  
+    }, 
+    {
+        id:'tipo_E14',
+        key: 'asentamiento',
+        name:'tipo de asentamiento humano',
+        title:'title-asentamiento'
+    }, 
     {
         id:'tipo_e10_an',
         key: 'entre-vialidades',
