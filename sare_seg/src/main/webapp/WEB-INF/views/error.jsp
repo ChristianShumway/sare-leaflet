@@ -11,7 +11,7 @@
   <style>
     @import url(https://fonts.googleapis.com/css?family=Righteous);
     body{ margin: 0; width: 100%; background-color: #01a99c;}
-    .container-error{ display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 15px 0; }
+    .container-error{ display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 15px 0; width: 100%; height: 97vh; }
     .container-img-error, .container-texto-error{ text-align: center; }
     .container-img-error img{ width: 90%; animation: mueve 3s linear infinite; }
     .img-alerta{ position: absolute; bottom: 0; cursor: pointer; animation: crece 2.5s infinite; }
@@ -20,6 +20,11 @@
       animation: shad-anim 15s linear infinite;
       width: 100.4%;
       background-image: linear-gradient( 45deg, transparent 45%,hsla(48,20%,90%,1) 45%,hsla(48,20%,90%,1) 55%, transparent 0 );
+    }
+
+    .logo-inegi {
+      width: 140px !important;
+      margin-bottom: 80px;
     }
 
      @keyframes crece{
@@ -69,7 +74,8 @@
   
   <section class="container-error">
     <div class="container-img-error">
-      <img src="resources/images/error-dino.png" alt="error">
+      <!-- <img src="resources/images/error-dino.png" alt="error"> -->
+      <img class="logo-inegi" src="resources/images/logos/INEGI.png" alt="error" />
     </div>
     
     <div class="container-texto-error">
@@ -77,7 +83,7 @@
     </div>
   </section>
   
-  <img class="img-alerta" src="resources/images/alerta.png" alt="alerta">
+  <!-- <img class="img-alerta" src="resources/images/alerta.png" alt="alerta"> -->
 
 </body>
 
