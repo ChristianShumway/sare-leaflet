@@ -281,6 +281,7 @@ const fillForm = data => {
       : $("#" + i).val(e);
   })
   fillCatalogo()
+  fillCatalogoPiso()
   fillCatalogoConjuntosComerciales()
 }
 
@@ -293,11 +294,40 @@ const fillCatalogo = () => {
       if (data[0].operation) {
         const arrAsent = data[0].datos
         const opcSelected =document.getElementById('tipo_E14')            
-        
+         let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccione"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
           opt.appendChild( document.createTextNode(o.descripcion) )
           opt.value = o.tipo_e14
+          o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
+          opcSelected.appendChild(opt)
+        })
+      } else { }
+    }, 
+  '')
+}
+
+const fillCatalogoPiso = () => {
+  sendAJAX(urlServices['serviceCatalogoPiso'].url, 
+    {'proyecto':dataUserFromLoginLocalStorage.proyecto}, 
+    urlServices['serviceCatalogoPiso'].type, 
+    data => {
+      if (data[0].operation) {
+        const arrAsent = data[0].datos
+        const opcSelected =document.getElementById('E12p')            
+         let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode("Seleccione") )
+        opt.value="Seleccione"
+        opt.setAttribute('selected', true)
+        opcSelected.appendChild(opt)
+        arrAsent.forEach( (o, i) => {
+          let opt = document.createElement('option')
+          opt.appendChild( document.createTextNode(o.descripcion) )
+          opt.value = o.tipo_e12p
           o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
         })
@@ -1682,11 +1712,17 @@ const showViewPreliminar = d => {
         if(Type=='select-one')
         {
             a=document.getElementById(idobj[0]).value
+            const sel=document.getElementById(idobj[0])
+            let valor=sel. options[sel. selectedIndex]. innerText;
+            ObjectRequest[idobj[0]] = a
+            $("#" + idobj[0] + "_pv").text(valor) 
+        }else{
+           ObjectRequest[idobj[0]] = a
+           $("#" + idobj[0] + "_pv").text(a) 
         }
         
             
-            ObjectRequest[idobj[0]] = a
-            $("#" + idobj[0] + "_pv").text(a)
+            
         })
                 
       ObjectRequest['Cvegeo2016'] = cve_geo2016
@@ -1864,6 +1900,7 @@ const HandleWhatDoYouWantToDo = (coor) => {
           handleHideAlertPickMap()
           fillCatalogo()
           fillCatalogoConjuntosComerciales()
+          fillCatalogoPiso()
           if(!combosc154yOrigen)
           {
             fillCatalogoC154()

@@ -97,6 +97,11 @@ var urlServices = {
         type: 'POST',
         label: 'catConjuntosComerciales'
     },
+    serviceCatalogoPiso: {
+        url: 'getCatPiso.do',
+        type: 'POST',
+        label: 'getCatPiso'
+    },
     serviceListaClavesBloqueadas: {
         url: 'getListadoUnidadesEconomicasBloqueadas.do',
         type: 'POST',

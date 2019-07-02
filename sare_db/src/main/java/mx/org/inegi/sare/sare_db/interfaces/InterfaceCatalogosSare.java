@@ -9,6 +9,7 @@ import java.util.List;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_c154;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
+import mx.org.inegi.sare.sare_db.dto.cat_piso;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 
 /**
@@ -18,6 +19,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 public interface InterfaceCatalogosSare {
     
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception;
+    public List<cat_piso> getCatalogoPiso(Integer proyecto) throws Exception;
     public List<cat_conjunto_comercial> getCatalogoConjuntoComercial(Integer proyecto) throws Exception;
     public List<cat_c154>  getDatosClasesPorFiltro(Integer proyecto,String cveoper, String codigoScian);
     

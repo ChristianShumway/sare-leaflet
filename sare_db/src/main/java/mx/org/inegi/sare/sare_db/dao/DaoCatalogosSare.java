@@ -15,6 +15,7 @@ import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_c154;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
+import mx.org.inegi.sare.sare_db.dto.cat_piso;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,37 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
     
     private List<cat_asentamientos_humanos> resultado=new ArrayList<>();
     private List<cat_conjunto_comercial> resultadoCC=new ArrayList<>();
+    private List<cat_piso> resultadoCatPiso=new ArrayList<>();
+
+    
 
     public enum catalogos{
-        AsentamientosHumanos, ConjuntoComercial, CodigoScian
+        AsentamientosHumanos, ConjuntoComercial, CodigoScian, CatalogoPiso
+    }
+    
+    @Override
+    public List<cat_piso> getCatalogoPiso(Integer proyecto) throws Exception {
+       resultadoCatPiso=new ArrayList<>();
+        StringBuilder sql;
+        super.proyectos=super.getProyecto(proyecto);
+        sql=getSql(super.proyectos,catalogos.CatalogoPiso);
+
+        resultadoCatPiso=jdbcTemplate.query(sql.toString(),new ResultSetExtractor<List<cat_piso>>() 
+        {
+            @Override
+            public List<cat_piso> extractData(ResultSet rs) throws SQLException, DataAccessException 
+            {
+                cat_piso fila;
+                while(rs.next())
+                {
+                    fila=new cat_piso(rs.getString("id_tipopiso"), rs.getString("tipo_e12p"), rs.getString("descripcion"), rs.getString("posicion"), rs.getString("nivel"));
+                    resultadoCatPiso.add(fila);
+                }
+                return resultadoCatPiso;
+            }
+        });
+        
+       return resultadoCatPiso; 
     }
     
     @Override
@@ -159,6 +188,9 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
                     case ConjuntoComercial:
                        sql.append("SELECT id_tipocom::text id_tipocomercial, descripcion, tipo_e19 FROM ").append(esquemaPos).append(".cat_tipo_conjunto_comercial");
                     break;
+                    case CatalogoPiso:
+                    sql.append("SELECT id_tipopiso, tipo_e12p, descripcion, posicion, nivel FROM ").append(esquemaPos).append(".cat_piso order by descripcion");
+                    break;   
                 }
                 break;
             

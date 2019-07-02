@@ -19,6 +19,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
+import mx.org.inegi.sare.sare_db.dto.cat_piso;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
@@ -194,6 +195,11 @@ public class ServiceController {
     @RequestMapping(value = "getCatConjuntosComerciales.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_conjunto_comercial> getCatConjuntosComerciales(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingCatalogosSare.getCatalogoConjuntosComerciales(proyecto);
+    }
+    
+    @RequestMapping(value = "getCatPiso.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<cat_piso> getCatPiso(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {
+        return BackingCatalogosSare.getPiso(proyecto);
     }
     
     @RequestMapping(value = "desbloquea.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
