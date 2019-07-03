@@ -739,9 +739,9 @@
                   <label for="e19">E19 Nombre</label>
                 </div>
                 <div class="input-field">
-                    <select class="browser-default" id="E12p" name="E12p">
+                    <select class="browser-default" id="e12p" name="e12p">
                   </select>
-                <label for="E12p" class="active">E12P Piso</label>
+                <label for="e12p" class="active">E12P Piso</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E20 No. Local" id="e20" name="e20" type="text" disabled >

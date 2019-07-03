@@ -31,7 +31,7 @@ public class DefaultController {
                 && clave_operativa != null && !clave_operativa.equals("")
                 && nombre != null && !nombre.equals("")
                 && ce!=null && !ce.equals("")
-                && tramo_control != null && !tramo_control.equals("") && tramo_control.length()==11
+                && tramo_control != null && !tramo_control.equals("")
                 && proyecto != null ) {
            HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(30 * 60);
@@ -60,7 +60,7 @@ public class DefaultController {
                 && clave_operativa != null && !clave_operativa.equals("")
                 && nombre != null && !nombre.equals("")
                 && ce!=null && !ce.equals("")
-                && tramo_control != null && !tramo_control.equals("") && tramo_control.length()==11
+                && tramo_control != null && !tramo_control.equals("") 
                 && proyecto != null ) {
            HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(30 * 60);

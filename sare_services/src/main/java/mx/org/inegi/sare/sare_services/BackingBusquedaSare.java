@@ -92,6 +92,7 @@ public class BackingBusquedaSare {
                 catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tramo, ce, usuario,1, id_ue);
                 if (catBusquedaOracle.size() > 0) 
                 {
+                    
                     if(!ce.equals("00"))
                     {
                         if(InterfaceBusquedaSare.ocupaCveunicaOCL(proyecto, id_ue)){
@@ -287,6 +288,7 @@ public class BackingBusquedaSare {
                                     {
                                           InterfaceBusquedaSare.liberaCveunicaOCL(proyecto,id_ue);
                                           busqueda.put("e", "b3");
+                                          
                                           Regresar.setDatos(busqueda);
                                     }
                                     break;

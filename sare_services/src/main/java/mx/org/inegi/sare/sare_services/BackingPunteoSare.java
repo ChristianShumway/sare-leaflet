@@ -178,7 +178,7 @@ public class BackingPunteoSare extends BackingBusquedaSare
             vialidad.setTipo_e10_X("99");
             tipo_vial=InterfacePunteoSare.getTipoVial(proyecto, vial.getTipo_e10_Xn().toLowerCase());
             if(tipo_vial == null){
-                tipo_vial=InterfacePunteoSare.getTipoVial(proyecto, "ninguno");
+                tipo_vial=InterfacePunteoSare.getTipoVial(proyecto, "otro (especifique)");
             }
             vialidad.setTipo_e10_X(tipo_vial);
             returnVialidades.add(vialidad);

@@ -51,9 +51,9 @@ public class cat_vw_punteo_sare_guardado {
     private String e10_C;
     private String descrubic;
     private String E12;
-    private String tipo_e19;
+    private String tipo_E19;
     private String e19;
-    private String E12p;
+    private String e12p;
     private String e20;
     private String punteo;
     private String mod_cat;
@@ -110,9 +110,9 @@ public class cat_vw_punteo_sare_guardado {
         this.e10_C = e10_C;
         this.descrubic = descrubic;
         this.E12 = E12;
-        this.tipo_e19 = tipo_e19;
+        this.tipo_E19 = tipo_e19;
         this.e19 = e19;
-        this.E12p = E12p;
+        this.e12p = E12p;
         this.e20 = e20;
         this.punteo = punteo;
         this.mod_cat = mod_cat;
@@ -550,11 +550,11 @@ public class cat_vw_punteo_sare_guardado {
     }
 
     public String getTipo_e19() {
-        return tipo_e19;
+        return tipo_E19;
     }
 
     public void setTipo_e19(String tipo_e19) {
-        this.tipo_e19 = tipo_e19;
+        this.tipo_E19 = tipo_e19;
     }
 
     public String getE19() {
@@ -566,11 +566,11 @@ public class cat_vw_punteo_sare_guardado {
     }
 
     public String getE12p() {
-        return E12p;
+        return e12p;
     }
 
     public void setE12p(String E12p) {
-        this.E12p = E12p;
+        this.e12p = E12p;
     }
 
     public String getE20() {

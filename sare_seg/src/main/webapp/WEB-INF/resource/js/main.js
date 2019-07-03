@@ -276,7 +276,7 @@ const validateCoord = data => {
 //función para llenar el formulario
 const fillForm = data => {
   $.each( data[0].datos.datos[0], (i, e) => {
-    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14'|| i=='tipo_E19') 
+    (i === 'e10_A' || i === 'e10_B' || i === 'e10_C' || i=='tipo_E14'|| i=='tipo_E19' || i=='e12p') 
       ? $("#" + i).html("<option value='" + e + "'>" + e + "</option>")
       : $("#" + i).val(e);
   })
@@ -318,7 +318,7 @@ const fillCatalogoPiso = () => {
     data => {
       if (data[0].operation) {
         const arrAsent = data[0].datos
-        const opcSelected =document.getElementById('E12p')            
+        const opcSelected =document.getElementById('e12p')            
          let opt = document.createElement('option')
         opt.appendChild(document.createTextNode("Seleccione") )
         opt.value="Seleccione"
@@ -326,7 +326,8 @@ const fillCatalogoPiso = () => {
         opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
-          opt.appendChild( document.createTextNode(o.descripcion) )
+          let valor="descripción: "+o.descripcion+"/ posición: "+o.posicion+" /  nivel: "+o.nivel
+          opt.appendChild( document.createTextNode(valor) )
           opt.value = o.tipo_e12p
           o.tipo_e14 === opcSelected.value ? opt.setAttribute('selected', true) : false
           opcSelected.appendChild(opt)
@@ -1059,19 +1060,38 @@ const handleTipoPunteo = () => {
   
       const selectField = document.createElement('select')
       handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
+      
+      const inputFieldOtro=document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldOtro, 'tipo_e10n_otro', 'Tipo de la vialidad ')
+      
       const selectFieldTipoE10an = document.createElement('select')
       handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
-      const inputFieldE10a = document.createElement('input')
-      handleAttributesInputOrSelect('input', inputFieldE10a, 'e10_A', 'Nombre de la vialidad 1')
+      
+      const inputFieldOtroan=document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldOtroan, 'tipo_e10_an_otro', 'Tipo de la vialidad 1 ')
+      
+      const inputFieldE10an = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10an, 'e10_A', 'Nombre de la vialidad 1')
+      
       const selectFieldTipoE10bn = document.createElement('select')
       handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
-      const inputFieldE10b = document.createElement('input')
-      handleAttributesInputOrSelect('input', inputFieldE10b, 'e10_B', 'Nombre de la vialidad 2')
+      
+      const inputFieldOtrobn=document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldOtrobn, 'tipo_e10_bn_otro', 'Tipo de la vialidad 2 ')
+      
+      const inputFieldE10bn = document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldE10bn, 'e10_B', 'Nombre de la vialidad 2')
+      
       const selectFieldTipoE10cn = document.createElement('select')
       handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
+      
+      const inputFieldOtrocn=document.createElement('input')
+      handleAttributesInputOrSelect('input', inputFieldOtrocn, 'tipo_e10_cn_otro', 'Tipo de la vialidad Posterior ')
+      
       const inputFieldE10c = document.createElement('input')
       handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
-  
+      
+      
       //función donde se agrega options a los selects con el catálogo de tipo de vialidades
       handleFillTipoDeVialidades(selectField)
       handleFillTipoDeVialidades(selectFieldTipoE10an)
@@ -1079,12 +1099,24 @@ const handleTipoPunteo = () => {
       handleFillTipoDeVialidades(selectFieldTipoE10cn)
    
       wrapTipoVialidad.appendChild(selectField)
+      wrapTipoVialidad.appendChild(inputFieldOtro)
+      
       wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
-      wrapNombreVialidadUno.appendChild(inputFieldE10a)
+      wrapNombreVialidadUno.appendChild(inputFieldOtroan)
+      wrapNombreVialidadUno.appendChild(inputFieldE10an)
+      
       wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
-      wrapNombreVialidadDos.appendChild(inputFieldE10b)
+      wrapNombreVialidadDos.appendChild(inputFieldOtrobn)
+      wrapNombreVialidadDos.appendChild(inputFieldE10bn)
+      
       wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
+      wrapNombreVialidadPosterior.appendChild(inputFieldOtrocn)
       wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
+      
+      document.getElementById("tipo_e10n_otro").style.display='none'
+      document.getElementById("tipo_e10_an_otro").style.display='none'
+      document.getElementById("tipo_e10_bn_otro").style.display='none'
+      document.getElementById("tipo_e10_cn_otro").style.display='none'
       fieldExists = true
     }
 
@@ -1174,6 +1206,11 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
 }
 
 const asignaValorId = item => {
+    document.getElementById('tipo_e10n').value==99?document.getElementById("tipo_e10n_otro").style.display="block":document.getElementById("tipo_e10n_otro").style.display="none"
+    document.getElementById('tipo_e10_an').value==99?document.getElementById("tipo_e10_an_otro").style.display="block":document.getElementById("tipo_e10_an_otro").style.display="none"
+    document.getElementById('tipo_e10_bn').value==99?document.getElementById("tipo_e10_bn_otro").style.display="block":document.getElementById("tipo_e10_bn_otro").style.display="none"
+    document.getElementById('tipo_e10_cn').value==99?document.getElementById("tipo_e10_cn_otro").style.display="block":document.getElementById("tipo_e10_cn_otro").style.display="none"
+
     const campoTipoE10n = document.getElementById('tipo_e10n')
     const campoTipoE10an = document.getElementById('tipo_e10_an')
     const campoTipoE10bn = document.getElementById('tipo_e10_bn')
@@ -1686,7 +1723,7 @@ const showViewPreliminar = d => {
       let valorc154;
       $.each(dpv, function (i, e) {
         var idobj = e.split("=")
-        if(idobj[0]!='tramo_control' && idobj[0]!='coord_x' && idobj[0]!='coord_y'){
+        if(idobj[0]!='tramo_control' && idobj[0]!='coord_x' && idobj[0]!='coord_y' && idobj[0]!='tipo_e10n_otro'){
             Type = document.getElementById(idobj[0]).type;
         }else{
             Type='text';
@@ -1713,8 +1750,8 @@ const showViewPreliminar = d => {
         {
             a=document.getElementById(idobj[0]).value
             const sel=document.getElementById(idobj[0])
-            let valor=sel. options[sel. selectedIndex]. innerText;
-            ObjectRequest[idobj[0]] = a
+            let valor=sel. options[sel. selectedIndex]. innerText!='Seleccione'?sel. options[sel. selectedIndex]. innerText:"";
+            a!='Seleccione'?ObjectRequest[idobj[0]] = a:ObjectRequest[idobj[0]]=""
             $("#" + idobj[0] + "_pv").text(valor) 
         }else{
            ObjectRequest[idobj[0]] = a
@@ -2420,7 +2457,7 @@ const opcionMenu = opcion => {
 
 const openReportesAjax=(opcion)=>{
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
+        xhr.open('POST', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
         if(xhr.readyState==1){
                 swal ({
@@ -2787,7 +2824,7 @@ const FiltroXClase=id=>{
                     htmlDivClases +='<option>Seleccione</option>'
                     htmlDivClases += '</select>';
                     htmlDivClases += '<label id=label_subrama class="label-clases" style="display:none"><h6><b>Subramas</b></h6></label>';
-                    htmlDivClases += '<select id=\"filtro_subrama\"  class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html()))>';
+                    htmlDivClases += '<select id=\"filtro_subrama\"  class="filtros-clases" style="display:none" onchange=llamarServicioclases(this.value,$(this).html())>';
                     htmlDivClases +='<option>Seleccione</option>'
                     htmlDivClases += '</select>';
                     htmlDivClases += '<label id=label_clase class="label-clases" style="display:none" ><h6><b>Clases</b></h6></label>';
@@ -2896,6 +2933,8 @@ const llamarServicioclases=(codigoScian, valor)=>{
                 case 4:
                     const subrama = document.getElementById("filtro_subrama")
                     actionFiltrosScian(subrama,clasesFiltro_2,ElementosSubRama,"subrama")
+                break;
+                case 6:
                 break;
                 default:
                     const clase = document.getElementById("filtro_clase")
