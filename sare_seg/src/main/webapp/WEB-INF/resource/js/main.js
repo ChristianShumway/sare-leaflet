@@ -469,7 +469,7 @@ const handleViewCleeList = () => {
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
-      if(data[0].datos.lenght>0){
+      if(data[0].datos.lenght>0 || data[0].datos.lenght==undefined){
           swal.close();
           dataCleeListNew = data[0]
           popupCleeList(data[0].datos)
