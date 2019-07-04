@@ -146,6 +146,10 @@ public class BackingGuardar extends BackingSincroniza {
         regresar.setCveft(inmueble.getCveft());
         regresar.setCOORD_X(inmueble.getCoordx());
         regresar.setCOORD_Y(inmueble.getCoordy());
+        regresar.setTipo_e10n_otro(inmueble.getTipo_e10n_otro());
+        regresar.setTipo_e10_an_otro(inmueble.getTipo_e10_an_otro());
+        regresar.setTipo_e10_bn_otro(inmueble.getTipo_e10_bn_otro());
+        regresar.setTipo_e10_cn_otro(inmueble.getTipo_e10_cn_otro());
         return regresar;
     }
 

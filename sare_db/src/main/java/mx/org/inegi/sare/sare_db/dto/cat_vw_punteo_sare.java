@@ -85,6 +85,10 @@ public class cat_vw_punteo_sare {
     private String E23;
     private BigDecimal Id_inmueble;
     private BigDecimal Id_deftramo;
+     private String tipo_e10n_otro;
+     private String tipo_e10_an_otro;
+     private String tipo_e10_bn_otro;
+     private String tipo_e10_cn_otro;
     
 
     public cat_vw_punteo_sare() {
@@ -876,5 +880,39 @@ public class cat_vw_punteo_sare {
     public void setTRAMO_CONTROL(String TRAMO_CONTROL) {
         this.TRAMO_CONTROL = TRAMO_CONTROL;
     }
+
+    public String getTipo_e10n_otro() {
+        return tipo_e10n_otro;
+    }
+
+    public void setTipo_e10n_otro(String tipo_e10n_otro) {
+        this.tipo_e10n_otro = tipo_e10n_otro;
+    }
+
+    public String getTipo_e10_an_otro() {
+        return tipo_e10_an_otro;
+    }
+
+    public void setTipo_e10_an_otro(String tipo_e10_an_otro) {
+        this.tipo_e10_an_otro = tipo_e10_an_otro;
+    }
+
+    public String getTipo_e10_bn_otro() {
+        return tipo_e10_bn_otro;
+    }
+
+    public void setTipo_e10_bn_otro(String tipo_e10_bn_otro) {
+        this.tipo_e10_bn_otro = tipo_e10_bn_otro;
+    }
+
+    public String getTipo_e10_cn_otro() {
+        return tipo_e10_cn_otro;
+    }
+
+    public void setTipo_e10_cn_otro(String tipo_e10_cn_otro) {
+        this.tipo_e10_cn_otro = tipo_e10_cn_otro;
+    }
+    
+    
 
 }
