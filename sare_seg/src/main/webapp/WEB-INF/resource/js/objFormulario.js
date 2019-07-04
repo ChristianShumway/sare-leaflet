@@ -194,7 +194,7 @@ const objFormRural=[
 ]
 const objFormCentrocomercial=[
    {
-        id:'E12p',
+        id:'e12p',
         key: 'edificio',
         name:'Piso del edificio',
         title:'title-edificio'
@@ -276,7 +276,7 @@ const inputsEditables = [
     id:'e19',
   },
   {
-    id:'E12p',
+    id:'e12p',
   },
   {
     id:'e20',
@@ -452,7 +452,7 @@ const inputsClean = [
     id:'e19',
   },
   {
-    id:'E12p',
+    id:'e12p',
   },
   {
     id:'e20',
