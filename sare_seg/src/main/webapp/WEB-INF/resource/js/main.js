@@ -469,9 +469,21 @@ const handleViewCleeList = () => {
     }, 
     urlServices['getListadoUnidadesEconomicas'].type, 
     data => { 
-      swal.close();
-      dataCleeListNew = data[0]
-      popupCleeList(data[0].datos)
+      if(data[0].datos.lenght>0){
+          swal.close();
+          dataCleeListNew = data[0]
+          popupCleeList(data[0].datos)
+      }else{
+           Swal.fire
+             ({
+                     position: 'bottom-end',
+                     type: 'warning',
+                     title: 'No se encontraron claves disponibles para la coordinación estatal',
+                     showConfirmButton: false,
+                     timer: 2000
+             })
+      }
+      
     }, 
     () => {
       swal ({
@@ -1102,15 +1114,15 @@ const handleTipoPunteo = () => {
       wrapTipoVialidad.appendChild(inputFieldOtro)
       
       wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
-      wrapNombreVialidadUno.appendChild(inputFieldOtroan)
+      wrapTipoVialidadUno.appendChild(inputFieldOtroan)
       wrapNombreVialidadUno.appendChild(inputFieldE10an)
       
       wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
-      wrapNombreVialidadDos.appendChild(inputFieldOtrobn)
+      wrapTipoVialidadDos.appendChild(inputFieldOtrobn)
       wrapNombreVialidadDos.appendChild(inputFieldE10bn)
       
       wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
-      wrapNombreVialidadPosterior.appendChild(inputFieldOtrocn)
+      wrapTipoVialidadPosterior.appendChild(inputFieldOtrocn)
       wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
       
       document.getElementById("tipo_e10n_otro").style.display='none'
@@ -1206,10 +1218,10 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
 }
 
 const asignaValorId = item => {
-    document.getElementById('tipo_e10n').value==99?document.getElementById("tipo_e10n_otro").style.display="block":document.getElementById("tipo_e10n_otro").style.display="none"
-    document.getElementById('tipo_e10_an').value==99?document.getElementById("tipo_e10_an_otro").style.display="block":document.getElementById("tipo_e10_an_otro").style.display="none"
-    document.getElementById('tipo_e10_bn').value==99?document.getElementById("tipo_e10_bn_otro").style.display="block":document.getElementById("tipo_e10_bn_otro").style.display="none"
-    document.getElementById('tipo_e10_cn').value==99?document.getElementById("tipo_e10_cn_otro").style.display="block":document.getElementById("tipo_e10_cn_otro").style.display="none"
+    document.getElementById('tipo_e10n').value==99?document.getElementById("tipo_e10n_otro").style.display="initial":document.getElementById("tipo_e10n_otro").style.display="none"
+    document.getElementById('tipo_e10_an').value==99?document.getElementById("tipo_e10_an_otro").style.display="initial":document.getElementById("tipo_e10_an_otro").style.display="none"
+    document.getElementById('tipo_e10_bn').value==99?document.getElementById("tipo_e10_bn_otro").style.display="initial":document.getElementById("tipo_e10_bn_otro").style.display="none"
+    document.getElementById('tipo_e10_cn').value==99?document.getElementById("tipo_e10_cn_otro").style.display="initial":document.getElementById("tipo_e10_cn_otro").style.display="none"
 
     const campoTipoE10n = document.getElementById('tipo_e10n')
     const campoTipoE10an = document.getElementById('tipo_e10_an')
@@ -1565,9 +1577,29 @@ const validations=(totalInputs,object,campo)=>{
 const handleFormValidations = () => {
   let totalInputs
   let numero_ext=document.getElementById('e11').value;
+  let vialidad=document.getElementById('tipo_e10').value;
+  let vialidad1=document.getElementById('tipo_e10_a').value;
+  let vialidad2=document.getElementById('tipo_e10_b').value;
+  let vialidad3=document.getElementById('tipo_e10_c').value;
   if(isAlta){
       totalInputs = objFormAlta.length
       validations(totalInputs,objFormAlta)
+      if(vialidad==99){
+          let total = validaOtroEspecifique.length
+          validations(total,validaOtroEspecifique)
+      }
+      if(vialidad1==99){
+          let total = validaOtroEspecifiquevialidad1.length
+          validations(total,validaOtroEspecifiquevialidad1)
+      }
+      if(vialidad2==99){
+          let total = validaOtroEspecifiquevialidad2.length
+          validations(total,validaOtroEspecifiquevialidad2)
+      }
+      if(vialidad3==99){
+          let total = validaOtroEspecifiquevialidad3.length
+          validations(total,validaOtroEspecifiquevialidad3)
+      }
   }
   if(!validaAltas){
   if(punteo=='U' && mod_cat=='1') {
@@ -1760,8 +1792,7 @@ const showViewPreliminar = d => {
         
             
             
-        })
-                
+        })       
       ObjectRequest['Cvegeo2016'] = cve_geo2016
       ObjectRequest['Cvegeo'] = cve_geo
       ObjectRequest['CE'] = dataUserFromLoginLocalStorage.ce
@@ -2476,20 +2507,31 @@ const openReportesAjax=(opcion)=>{
             var blob = new Blob([this.response], {type: 'application/pdf'});
             //var link = document.createElement('a');
             var file = window.URL.createObjectURL(this.response);
-            Swal.fire({
-                title: '<strong>Reporte</strong>',
-                width: '100%', 
-                html: `<iframe class='iframe-reporte' src=""></iframe>`,
-                showCloseButton: true,
-                showCancelButton: false,
-                showConfirmButton: false,
-                focusConfirm: false,
-            })
-             var file = window.URL.createObjectURL(this.response);
-             document.querySelector("iframe").src = file;
-//            link.download = "reporte.pdf";
-//            link.click(); 
-            //swal.close();
+            if(this.response.type=='application/pdf')
+            {
+                Swal.fire({
+                    title: '<strong>Reporte</strong>',
+                    width: '100%', 
+                    html: `<iframe class='iframe-reporte' src=""></iframe>`,
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    showConfirmButton: false,
+                    focusConfirm: false,
+                })
+                 var file = window.URL.createObjectURL(this.response);
+                 document.querySelector("iframe").src = file;
+    //            link.download = "reporte.pdf";
+    //            link.click(); 
+                //swal.close();
+            }else{
+                Swal.fire({
+                    position: 'bottom-end',
+                    type: 'warning',
+                    title: "La operación fue cancelada!",
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+            }
         }
         };
    xhr.onreadystatechange = function (oEvent) {  

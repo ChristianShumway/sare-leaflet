@@ -507,6 +507,49 @@ const titlesWarpForm = [
   }
 ]
 
+const validaOtroEspecifique=[
+    
+      {
+        id:'tipo_e10n_otro',
+        key: 'domicilio',
+        name:'Tipo de la vialidad',
+        title:'title-domicilio'
+       }  
+    
+]
+const validaOtroEspecifiquevialidad1=[
+    
+      {
+        id:'tipo_e10_an_otro',
+        key: 'entre-vialidades',
+        name:'Tipo de la vialidad 1',
+        title:'title-entre-vialidades'
+       }  
+    
+]
+const validaOtroEspecifiquevialidad2=[
+    
+      {
+        id:'tipo_e10_bn_otro',
+        key: 'entre-vialidades',
+        name:'Tipo de la vialidad 2',
+        title:'title-entre-vialidades'
+       }  
+    
+]
+const validaOtroEspecifiquevialidad3=[
+    
+      {
+        id:'tipo_e10_cn_otro',
+        key: 'calle-posterior',
+        name:'Tipo de la vialidad 3',
+        title:'title-calle-posterior'
+       }  
+    
+]
+    
+
+
 const filtrosScian=[
     {
         title:'filtro_sector',

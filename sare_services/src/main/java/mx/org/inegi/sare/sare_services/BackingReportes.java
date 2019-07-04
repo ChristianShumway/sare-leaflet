@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
+import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceReportes;
 import net.sf.jasperreports.engine.JRException;
@@ -87,16 +88,20 @@ public class BackingReportes extends DaoTransformaCartografia {
             params.put("URL", URLImagen);
             if (tipoArchivo.equals("EXCEL")) {
                 exportaExcel(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
-            } else if (tipoArchivo.equals("PDF")) {
+            } else if (tipoArchivo.equals("PDF") && (conne!=null)) {
                 exportaPDF(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
             } else if (tipoArchivo.equals("CSV")) {
                 exportaCSV(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
+            }else{
+                Respuesta.setMensaje(new cat_mensaje("false","No selecciono ningun reporte"));
             }
         } catch (Exception es) {
             es.printStackTrace();
         } finally {
             try {
-                conne.close();
+                if(conne!=null){
+                    conne.close();
+                }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
