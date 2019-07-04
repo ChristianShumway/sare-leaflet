@@ -10,10 +10,20 @@
   <title>ERROR</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Righteous);
-    body{ margin: 0; width: 100%; background-color: #01a99c;}
-    .container-error{ display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 15px 0; width: 100%; height: 97vh; }
+    body{ margin: 0; width: 100%; background-color: #2d384a;}
+    .container-error{ display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 15px 0; width: 100%; /*height: 97vh*/; }
     .container-img-error, .container-texto-error{ text-align: center; }
-    .container-img-error img{ width: 90%; animation: mueve 3s linear infinite; }
+    .container-img-error img{ 
+      width: 90%; 
+      margin: 40px 0 60px 0;
+      /* animation: mueve 3s linear infinite;  */
+    }
+    .container-texto-error h2{
+      color: white;
+      font-family: sans-serif;
+      text-transform: uppercase;
+    }
+
     .img-alerta{ position: absolute; bottom: 0; cursor: pointer; animation: crece 2.5s infinite; }
     h1 { display: inline-block; color: white; font-family: 'Righteous', serif; font-size: 6em; text-shadow: .03em .03em 0 hsla(230,40%,50%,1); position: relative; margin: 0;}
     h1:after { content: attr(data-shadow); position: absolute; top: .05em; left: .05em; z-index: -1; text-shadow: none; background-size: .05em .05em; -webkit-background-clip: text;-webkit-text-fill-color: transparent;
@@ -24,7 +34,11 @@
 
     .logo-inegi {
       width: 140px !important;
-      margin-bottom: 80px;
+      margin-top: 80px;
+    }
+
+    .container-logo-inegi{
+      text-align: center;
     }
 
      @keyframes crece{
@@ -75,15 +89,19 @@
   <section class="container-error">
     <div class="container-img-error">
       <!-- <img src="resources/images/error-dino.png" alt="error"> -->
-      <img class="logo-inegi" src="resources/images/logos/INEGI.png" alt="error" />
+      <img class="logo-sare" src="resources/images/logos/logo-sare-azul.png" alt="error" />
     </div>
     
     <div class="container-texto-error">
-        <h1 data-shadow='Agrega Parámetros'>Agrega Parámetros</h1>
+      <h1 data-shadow='Error en los Parámetros'>Error en los Parámetros</h1>
+      <h2>Agregue parámetros o reporte este problema a su administrador</h2>
     </div>
   </section>
+
+  <div class="container-logo-inegi">
+    <img class="logo-inegi" src="resources/images/logos/INEGI.png" alt="logo" />
+  </div>
   
-  <!-- <img class="img-alerta" src="resources/images/alerta.png" alt="alerta"> -->
 
 </body>
 
