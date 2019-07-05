@@ -527,7 +527,8 @@ const popupCleeList = data => {
     allowEscapeKey: false,
     allowOutsideClick: false,
     onClose: () => {
-      cleeListType = 'normal'
+      cleeListType = 'normal';
+      handleResetList()
     }
   })
 }
@@ -834,6 +835,21 @@ const handleSearchCleeList = () => {
   
   }
 
+}
+
+const handleResetList = () => {
+  const inputValue = document.getElementById('search-cleelist')
+  const arrayCleeFind = []
+  const data = dataCleeListNew.datos
+  
+  if (inputValue.value == ''){
+    actualPagina = 1
+    inicioPaginacion = 1
+    finPaginacion = screen.width <= '480' ? 5 : 7
+    inicioClavesVista = 0
+    finClavesVista = 9
+    cleeListType = 'normal'
+  }
 }
 
 const handleSearchCleeListLock = () => {
