@@ -563,6 +563,10 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   let posicionFinal = ''
   finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
 
+  if (totalPaginaciones < finPaginacion){
+    finPaginacion = totalPaginaciones
+  }
+
   tabla = `
     <div id='container-search-cleelist' class='container-search-cleelist'>
       <span class='text-search-cleelist'>Filtrar:</span>
