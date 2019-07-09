@@ -48,25 +48,26 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
     @Override
     public List<cat_get_claves> getListadoUnidadesEconomicas(Integer proyecto, String id_ue, String tramo) throws Exception {
+        jdbcTemplateocl.getDataSource().getConnection();
         resultado1 = new ArrayList<>();
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(proyectos, id_ue, tramo, UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
         switch (proyectos) {
             case Operativo_Masivo:
-                resultado1 = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
-                    @Override
-                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        cat_get_claves fila;
-                        while (rs.next()) {
-                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"));
-                            resultado1.add(fila);
-                        }
-                        return resultado1;
-                    }
-                });
-                break;
-            default:
+//                resultado1 = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+//                    @Override
+//                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                        cat_get_claves fila;
+//                        while (rs.next()) {
+//                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"));
+//                            resultado1.add(fila);
+//                        }
+//                        return resultado1;
+//                    }
+//                });
+//                break;
+//            default:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -129,7 +130,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         esquemaOcl = getEsquemaOracle(proyecto);
         switch (proyecto) {
             case Operativo_Masivo:
-                sql = getFiltroSql(ce, esquemaPos, tramo, ue);
+                //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
+                sql = getFiltroSql(ce, esquemaOcl, tramo, ue);
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
@@ -148,10 +150,20 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         StringBuilder sql = new StringBuilder();
         if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo().equals(ue)) {
             if (ce.equals("00")) {
-                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
+                //sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
+                sql.append("select ue.id_ue, ue.c154 FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                   .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                   .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue where st_sare='10'");
+
             } else {
-                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
-                sql.append(" and cestatal='").append(ce).append("' and tramo_control='").append(tramo).append("' order by 1");
+                sql.append("select ue.id_ue, ue.c154 FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                   .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                   .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue where st_sare='10' ")
+                   .append("and cve_operativa=").append(tramo);
+//                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
+//                sql.append(" and cestatal='").append(ce).append("' and tramo_control='").append(tramo).append("' order by 1");
             }
 
         } else if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo().equals(ue)) {

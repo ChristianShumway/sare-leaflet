@@ -176,7 +176,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                 esquema="";
               break;
             case Operativo_Masivo:
-                esquema="CE2019_SEG";
+                esquema="ce2019_masrencal";
               break;
             case Organismos_Operadores_De_Agua:
                 esquema="";

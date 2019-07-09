@@ -32,7 +32,7 @@ public interface InterfaceBusquedaSare {
     
     public boolean liberaCveunicaOCL(Integer proyecto,String cve_unica);
     
-    public boolean getValCoorGeo(Integer proyecto, String x, String y);
+    public boolean getValCoorGeo(Integer proyecto, String x, String y, cat_vw_punteo_sare element);
     
     public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue);
 }

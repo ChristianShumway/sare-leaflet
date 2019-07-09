@@ -212,7 +212,7 @@ public class BackingBusquedaSare {
                                                }
                                                else
                                                {
-                                                if(!InterfaceBusquedaSare.getValCoorGeo(proyecto,cX.toString(), cY.toString()))
+                                                if(!InterfaceBusquedaSare.getValCoorGeo(proyecto,cX.toString(), cY.toString(), element))
                                                 {
                                                     element.setCOORD_X(null);
                                                     element.setCOORD_Y(null);
