@@ -257,7 +257,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         BigDecimal clave = new BigDecimal(id_ue);
         switch (proyectos) {
             case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
+                if (jdbcTemplate.update(sql.toString(), new Object[]{usuario, clave, ce}) > 0) {
                     regresar = true;
                 }
                 break;

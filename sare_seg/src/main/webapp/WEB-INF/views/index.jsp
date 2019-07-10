@@ -311,7 +311,7 @@
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
               
-              <div class="check-option">
+<!--              <div class="check-option">
                 <p class="option-title option-active" id="option-c101">Sucursales</p>
                 <div class="switch">
                   <label>
@@ -321,7 +321,7 @@
                     Activo
                   </label>
                 </div>
-              </div>
+              </div>-->
   
               <div class="check-option">
                 <p class="option-title option-active" id="option-wdenue">DENUE</p>
@@ -335,7 +335,7 @@
                 </div>
               </div>
   
-              <div class="check-option">
+<!--              <div class="check-option">
                 <p class="option-title" id="option-C101M">Matrices</p>
                 <div class="switch">
                   <label>
@@ -345,7 +345,7 @@
                     Activo
                   </label>
                 </div>
-              </div>
+              </div>-->
   
               <div class="check-option">
                 <p class="option-title" id="option-c104">Postes de Kilometraje</p>
