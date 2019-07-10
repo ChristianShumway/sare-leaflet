@@ -238,7 +238,7 @@
             <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
             <li onclick="imprimir()"><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
             <li onclick=""><a href="#!"><i class="material-icons">local_printshop</i>Claves bloquedas</a></li>
-            <li><a onclick="handleLogOut()"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>
+<!--            <li><a onclick="handleLogOut()"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>-->
           </ul>
           <!-- END MENU MOVIL -->
         </div>
@@ -771,7 +771,7 @@
           <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
           <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 
           <li onclick="CargaTablaBloqueadas()"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Claves Bloqueadas"><i class="material-icons">lock</i></a></li> 
-          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>
+<!--          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>-->
         </ul>
       </div>
       <!-- END CONTAINER OPTIONS BUTTONS -->

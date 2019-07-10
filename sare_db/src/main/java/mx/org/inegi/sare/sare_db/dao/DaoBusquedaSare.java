@@ -139,7 +139,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e10_b") != null ? rs.getString("tipo_e10_b") : "",
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
-                                    rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "");
+                                    rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
+                                    rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0));
                                     fila.setE12p("");
                             resultado.add(fila);
                         }
@@ -191,7 +192,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e10_b") != null ? rs.getString("tipo_e10_b") : "",
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
-                                    rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "");
+                                    rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
+                                    rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0));
                             resultado.add(fila);
                         }
 
@@ -210,7 +212,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         sql = getSql(null, 0, "", null, "", proyectos, "",id_ue, 0, MetodosBusqueda.OCUPACVEUNICA);
         switch (proyectos) {
             case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
                 break;
@@ -438,7 +440,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         {
             switch (proyectos) {
                 case Operativo_Masivo:
-                    if (jdbcTemplate.update(sql.toString()) > 0) {
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
                         regresa = true;
                     }
                     break;
@@ -550,15 +552,15 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         }
                         break;
                     case LIBERACLAVEUNICAORACLE:
-                        sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        //sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
+                        //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
                         break;
                     case GETVALCOORGEO:
                         sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
                         break;
                     case OCUPACVEUNICA:
-                        sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        //sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare<>'01'");
+                        //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare<>'01'");
                         break;
                 }
                 break;
@@ -635,7 +637,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                    "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n" +
                    "'' origen, ue.ce as cestatal,\n" +
                    "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n" +
-                   "as codigo_scian,ue.c154 ");
+                   "as codigo_scian,ue.c154, inm.id_inmueble ");
         sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                    .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                    .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")

@@ -96,7 +96,7 @@ public class BackingBusquedaSare {
                     if(!ce.equals("00"))
                     {
                         if(InterfaceBusquedaSare.ocupaCveunicaOCL(proyecto, id_ue)){
-                            InterfaceDesbloqueo.RegistraUEComplemento(proyecto, usuario, id_ue);
+                            InterfaceDesbloqueo.RegistraUEComplemento(proyecto,ce, usuario, id_ue);
                         }
                     }
                     listCUPG = InterfaceBusquedaSare.getClavesUnicasPG(proyecto);

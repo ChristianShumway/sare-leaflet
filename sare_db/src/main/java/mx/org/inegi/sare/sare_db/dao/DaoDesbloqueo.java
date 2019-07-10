@@ -56,7 +56,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         int ue = Integer.valueOf(id_ue);
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.consultaPendientes);
+        sql = getSql(super.proyectos,"", id_ue, Desbloqueo.consultaPendientes);
         regresar = jdbcTemplate.query(sql.toString(), new Object[]{ue}, new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
             @Override
             public List<cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -124,13 +124,13 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         boolean regresar = false;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.Desbloqueo);
+        sql = getSql(super.proyectos,"", id_ue, Desbloqueo.Desbloqueo);
         if(id_ue!=null || !"".equals(id_ue))
         {
             switch (proyectos)
             {
                 case Operativo_Masivo:
-                    if (jdbcTemplate.update(sql.toString()) > 0) 
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) 
                     {
                         regresar = true;
                     }
@@ -150,21 +150,21 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         boolean regresar = false;
         if (existeUe(proyecto, id_ue)) {
             if (CompletaSaveUE(proyecto, id_ue)) {
-                regresar = UpdateUE(proyecto, usuario, id_ue);
+                regresar = UpdateUE(proyecto,"", usuario, id_ue);
             }
         } else if (CompletaSaveUE(proyecto, id_ue)) {
-            regresar = InsertUe(proyecto, usuario, id_ue);
+            regresar = InsertUe(proyecto,"", usuario, id_ue);
         }
         return regresar;
     }
 
     @Override
-    public boolean RegistraUEComplemento(Integer proyecto, String usuario, String id_ue) {
+    public boolean RegistraUEComplemento(Integer proyecto,String ce, String usuario, String id_ue) {
         boolean regresar = false;
         if (existeUe(proyecto, id_ue)) {
-            regresar = UpdateUE(proyecto, usuario, id_ue);
+            regresar = UpdateUE(proyecto,ce, usuario, id_ue);
         } else {
-            regresar = InsertUe(proyecto, usuario, id_ue);
+            regresar = InsertUe(proyecto,ce, usuario, id_ue);
         }
         return regresar;
     }
@@ -173,7 +173,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         boolean regresar;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, id_ue, Desbloqueo.existeUe);
+        sql = getSql(proyectos,"", id_ue, Desbloqueo.existeUe);
         switch (proyectos) {
             case Operativo_Masivo:
                 regresar = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
@@ -204,11 +204,11 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         return regresar;
     }
 
-    private boolean UpdateUE(Integer proyecto, String usuario, String id_ue) {
+    private boolean UpdateUE(Integer proyecto, String ce, String usuario, String id_ue) {
         boolean regresar = false;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.updateUE);
+        sql = getSql(super.proyectos, ce,id_ue, Desbloqueo.updateUE);
         switch (proyectos) {
             case Operativo_Masivo:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario}) > 0) {
@@ -224,12 +224,12 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
 
     }
 
-    private boolean InsertUe(Integer proyecto, String usuario, String id_ue) {
+    private boolean InsertUe(Integer proyecto,String ce, String usuario, String id_ue) {
         boolean regresar = false;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.insertUE);
-        int clave = Integer.valueOf(id_ue);
+        sql = getSql(super.proyectos,"", id_ue, Desbloqueo.insertUE);
+        BigDecimal clave = new BigDecimal(id_ue);
         switch (proyectos) {
             case Operativo_Masivo:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
@@ -249,7 +249,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         boolean regresar = false;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.completaGuardado);
+        sql = getSql(super.proyectos,"",id_ue, Desbloqueo.completaGuardado);
         switch (proyectos) {
             case Operativo_Masivo:
                 if (jdbcTemplate.update(sql.toString()) > 0) {
@@ -272,7 +272,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         int regresar;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
-        sql = getSql(super.proyectos, id_ue, Desbloqueo.VerificaDesbloqueo);
+        sql = getSql(super.proyectos,"", id_ue, Desbloqueo.VerificaDesbloqueo);
         regresar = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Integer>() {
             @Override
             public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -286,7 +286,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         return regresar;
     }
 
-    public StringBuilder getSql(ProyectosEnum proyectos, String id_ue, Desbloqueo desbloqueo) {
+    public StringBuilder getSql(ProyectosEnum proyectos,String ce, String id_ue, Desbloqueo desbloqueo) {
         StringBuilder sql = new StringBuilder();
         String esquemaPos, esquemaOcl;
         esquemaPos = getEsquemaPostgres(proyectos);
@@ -299,16 +299,16 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                         sql.append("SELECT ").append(esquemaPos).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");
                         break;
                     case Desbloqueo:
-                        sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST=10 WHERE id_ue='").append(id_ue).append("'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set SARE_ST=10 WHERE id_ue='").append(id_ue).append("'");
                         break;
                     case existeUe:
                         sql.append("SELECT count(distinct id_ue) from ").append(esquemaPos).append(".TR_UE_COMPLEMENTO where id_ue='").append(id_ue).append("'");
                         break;
                     case updateUE:
-                        sql.append("UPDATE ").append(esquemaPos).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=current_timestamp where ID_UE='").append(id_ue).append("'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=current_timestamp, ST_SARE=20, CE=").append(ce).append(" where ID_UE='").append(id_ue).append("'");
                         break;
                     case insertUE:
-                        sql.append("INSERT INTO ").append(esquemaPos).append(".TR_UE_COMPLEMENTO (SARE_ST_USR,ID_UE, SARE_ST_TIME) values (?,?,current_timestamp)");
+                        sql.append("INSERT INTO ").append(esquemaPos).append(".TR_UE_COMPLEMENTO (SARE_ST_USR,ID_UE, SARE_ST_TIME, ST_SARE, CE) values (?,?,current_timestamp,20,?)");
                         break;
                     case completaGuardado:
                         sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='01' where id_ue='").append(id_ue).append("'");

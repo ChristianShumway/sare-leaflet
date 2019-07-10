@@ -16,13 +16,15 @@ public class cat_get_claves {
     private String sare_st_usr;
     private String DIFERENCIA_HORAS;
     private String TIME_LOCK;
+    private String status;
 
     public cat_get_claves() {
     }
 
-    public cat_get_claves(String idue, String c154) {
+    public cat_get_claves(String idue, String c154, String status) {
         this.idue = idue;
         this.c154 = c154;
+        this.status=status;
     }
 
     public cat_get_claves(String idue, String c154, String sare_st_usr, String DIFERENCIA_HORAS, String TIME_LOCK) {
@@ -32,9 +34,16 @@ public class cat_get_claves {
         this.DIFERENCIA_HORAS = DIFERENCIA_HORAS;
         this.TIME_LOCK = TIME_LOCK;
     }
-    
-    
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
+    
     public String getIdue() {
         return idue;
     }

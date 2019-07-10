@@ -71,12 +71,13 @@ public class cat_vw_punteo_sare_guardado {
      private String tipo_e10_an_otro;
      private String tipo_e10_bn_otro;
      private String tipo_e10_cn_otro;
+     private BigDecimal id_inmueble;
     
 
     public cat_vw_punteo_sare_guardado() {
     }
 
-    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, String e11, String e11_a, String e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17) {
+    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, String e11, String e11_a, String e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17, BigDecimal id_inmueble) {
         this.id_UE = id_UE;
         this.origen = origen;
         this.c154 = c154;
@@ -130,12 +131,23 @@ public class cat_vw_punteo_sare_guardado {
         this.coordx = coordx;
         this.coordy = coordy;
         this.E17 = E17;
+        this.id_inmueble=id_inmueble;
     }
 
     public cat_vw_punteo_sare_guardado(BigDecimal bigDecimal, BigDecimal bigDecimal0, BigDecimal bigDecimal1, String string, String string0, String string1, String string2, String string3, String string4, String string5, String string6, String string7, String string8, String string9, String string10, String string11, String string12, String string13, BigDecimal bigDecimal2, String string14, String string15, BigDecimal bigDecimal3, String string16, String string17, String string18, String string19, String string20, BigDecimal bigDecimal4, BigDecimal bigDecimal5, String string21, String string22, String string23, String string24, String string25, String string26, String string27, String string28, String string29, String string30, String string31, String string32, String string33, String string34, String string35, String string36, BigDecimal bigDecimal6, BigDecimal bigDecimal7) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public BigDecimal getId_inmueble() {
+        return id_inmueble;
+    }
+
+    public void setId_inmueble(BigDecimal id_inmueble) {
+        this.id_inmueble = id_inmueble;
+    }
+
+    
+    
     public String getE10_cvevial() {
         return e10_cvevial;
     }

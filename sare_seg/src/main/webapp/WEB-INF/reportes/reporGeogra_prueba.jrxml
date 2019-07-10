@@ -138,70 +138,76 @@
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select CASE
-            WHEN  cestatal ='01' THEN 'AGS'
-            WHEN  cestatal ='02' THEN 'BCN'
-            WHEN  cestatal ='03' THEN 'BCS'
-            WHEN  cestatal ='04' THEN 'CAM'
-            WHEN  cestatal ='05' THEN 'COA'
-            WHEN  cestatal ='06' THEN 'COL'
-            WHEN  cestatal ='07' THEN 'CHS'
-            WHEN  cestatal ='08' THEN 'CHI'
-            WHEN  cestatal ='09' THEN 'DFN'
-            WHEN  cestatal ='10' THEN 'DGO'
-            WHEN  cestatal ='11' THEN 'GTO'
-            WHEN  cestatal ='12' THEN 'GRO'
-            WHEN  cestatal ='13' THEN 'HGO'
-            WHEN  cestatal ='14' THEN 'JAL'
-            WHEN  cestatal ='15' THEN 'MEO'
-            WHEN  cestatal ='16' THEN 'MIC'
-            WHEN  cestatal ='17' THEN 'MOR'
-            WHEN  cestatal ='18' THEN 'NAY'
-            WHEN  cestatal ='19' THEN 'NLN'
-            WHEN  cestatal ='20' THEN 'OAX'
-            WHEN  cestatal ='21' THEN 'PUE'
-            WHEN  cestatal ='22' THEN 'QRO'
-            WHEN  cestatal ='23' THEN 'QTR'
-            WHEN  cestatal ='24' THEN 'SLP'
-            WHEN  cestatal ='25' THEN 'SIN'
-            WHEN  cestatal ='26' THEN 'SON'
-            WHEN  cestatal ='27' THEN 'TAB'
-            WHEN  cestatal ='28' THEN 'TAM'
-            WHEN  cestatal ='29' THEN 'TLA'
-            WHEN  cestatal ='30' THEN 'VER'
-            WHEN  cestatal ='31' THEN 'YUC'
-            WHEN  cestatal ='32' THEN 'ZAC'
-            WHEN  cestatal ='33' THEN 'DFS'
-            WHEN  cestatal ='34' THEN 'MEP'
+            WHEN  ue.ce ='01' THEN 'AGS'
+            WHEN  ue.ce ='02' THEN 'BCN'
+            WHEN  ue.ce ='03' THEN 'BCS'
+            WHEN  ue.ce ='04' THEN 'CAM'
+            WHEN  ue.ce ='05' THEN 'COA'
+            WHEN  ue.ce ='06' THEN 'COL'
+            WHEN  ue.ce ='07' THEN 'CHS'
+            WHEN  ue.ce ='08' THEN 'CHI'
+            WHEN  ue.ce ='09' THEN 'DFN'
+            WHEN  ue.ce ='10' THEN 'DGO'
+            WHEN  ue.ce ='11' THEN 'GTO'
+            WHEN  ue.ce ='12' THEN 'GRO'
+            WHEN  ue.ce ='13' THEN 'HGO'
+            WHEN  ue.ce ='14' THEN 'JAL'
+            WHEN  ue.ce ='15' THEN 'MEO'
+            WHEN  ue.ce ='16' THEN 'MIC'
+            WHEN  ue.ce ='17' THEN 'MOR'
+            WHEN  ue.ce ='18' THEN 'NAY'
+            WHEN  ue.ce ='19' THEN 'NLN'
+            WHEN  ue.ce ='20' THEN 'OAX'
+            WHEN  ue.ce ='21' THEN 'PUE'
+            WHEN  ue.ce ='22' THEN 'QRO'
+            WHEN  ue.ce ='23' THEN 'QTR'
+            WHEN  ue.ce ='24' THEN 'SLP'
+            WHEN  ue.ce ='25' THEN 'SIN'
+            WHEN  ue.ce ='26' THEN 'SON'
+            WHEN  ue.ce ='27' THEN 'TAB'
+            WHEN  ue.ce ='28' THEN 'TAM'
+            WHEN  ue.ce ='29' THEN 'TLA'
+            WHEN  ue.ce ='30' THEN 'VER'
+            WHEN  ue.ce ='31' THEN 'YUC'
+            WHEN  ue.ce ='32' THEN 'ZAC'
+            WHEN  ue.ce ='33' THEN 'DFS'
+            WHEN  ue.ce ='34' THEN 'MEP'
 
-end ce,cestatal cve_ce,tramo_control,origen,ID_UE,clee_emp,e08,e09,E23A,c154,e03 cve_ent,e04 cve_mun,e05 cve_loc,e06 cve_ageb,
-e07 cve_mza,tipo_e10,e10 nomvial,e11 numext,e11a numextalf,tipo_e14,e14,e12,e19,e20
-from sare_mas2019_act.vw_punteo_sare where SARE_ST in ('10','20')  $P!{where} and cestatal is not null order by
-cestatal,tramo_control,origen,e23a,clee_emp,id_ue,c154]]>
+end ce,ue.ce cve_ce,po.cve_operativa tramo_control,inm.origen,ue.ID_UE,inm.clee_emp,ue.e08,ue.e09,ue.E23A,ue.c154,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
+ue.e07 cve_mza,ue.tipo_e10,ue.e10 nomvial,ue.e11 numext,ue.e11a numextalf,ue.tipo_e14,ue.e14,ue.e12,ue.e19,ue.e20
+from 
+ce2019_masrencal.tr_plan_oper po
+join ce2019_masrencal.tr_predios pre on pre.id_cop=po.id_cop
+join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
+
+
+where ST_sare in ('10','20') $P!{where}   order by tramo_control,origen,e23a,clee_emp,id_ue,c154]]>
 	</queryString>
-	<field name="ce" class="java.lang.String"/>
-	<field name="cve_ce" class="java.lang.String"/>
-	<field name="tramo_control" class="java.lang.String"/>
-	<field name="origen" class="java.lang.Long"/>
-	<field name="id_ue" class="java.lang.Long"/>
-	<field name="clee_emp" class="java.lang.String"/>
-	<field name="e08" class="java.lang.String"/>
-	<field name="e09" class="java.lang.String"/>
-	<field name="e23a" class="java.lang.String"/>
-	<field name="c154" class="java.lang.String"/>
-	<field name="cve_ent" class="java.lang.String"/>
-	<field name="cve_mun" class="java.lang.String"/>
-	<field name="cve_loc" class="java.lang.String"/>
-	<field name="cve_ageb" class="java.lang.String"/>
-	<field name="cve_mza" class="java.lang.String"/>
-	<field name="tipo_e10" class="java.lang.Long"/>
-	<field name="nomvial" class="java.lang.String"/>
-	<field name="numext" class="java.lang.Long"/>
-	<field name="numextalf" class="java.lang.String"/>
-	<field name="tipo_e14" class="java.lang.Long"/>
-	<field name="e14" class="java.lang.String"/>
-	<field name="e12" class="java.lang.String"/>
-	<field name="e19" class="java.lang.String"/>
-	<field name="e20" class="java.lang.String"/>
+	<field name="CE" class="java.lang.String"/>
+	<field name="CVE_CE" class="java.math.BigDecimal"/>
+	<field name="TRAMO_CONTROL" class="java.lang.String"/>
+	<field name="ORIGEN" class="java.lang.String"/>
+	<field name="ID_UE" class="java.math.BigDecimal"/>
+	<field name="CLEE_EMP" class="java.lang.String"/>
+	<field name="E08" class="java.lang.String"/>
+	<field name="E09" class="java.lang.String"/>
+	<field name="E23A" class="java.lang.String"/>
+	<field name="C154" class="java.lang.String"/>
+	<field name="CVE_ENT" class="java.lang.String"/>
+	<field name="CVE_MUN" class="java.lang.String"/>
+	<field name="CVE_LOC" class="java.lang.String"/>
+	<field name="CVE_AGEB" class="java.lang.String"/>
+	<field name="CVE_MZA" class="java.lang.String"/>
+	<field name="TIPO_E10" class="java.math.BigDecimal"/>
+	<field name="NOMVIAL" class="java.lang.String"/>
+	<field name="NUMEXT" class="java.math.BigDecimal"/>
+	<field name="NUMEXTALF" class="java.lang.String"/>
+	<field name="TIPO_E14" class="java.math.BigDecimal"/>
+	<field name="E14" class="java.lang.String"/>
+	<field name="E12" class="java.lang.String"/>
+	<field name="E19" class="java.lang.String"/>
+	<field name="E20" class="java.lang.String"/>
 	<variable name="variable1" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
@@ -611,7 +617,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ce}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="178" y="0" width="85" height="28" uuid="c4cda812-c29f-4dcd-960b-a977a13f1ea1"/>
@@ -626,7 +632,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4" rightIndent="4" tabStopWidth="45"/>
 				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{e08}+" "]]></textFieldExpression>
+				<textFieldExpression><![CDATA[" "+$F{E08}+" "]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="263" y="0" width="90" height="28" uuid="38cfd10f-37fa-4ecb-92ad-cc9f4d1cc134"/>
@@ -641,7 +647,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4" rightIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e09}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E09}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="373" y="0" width="23" height="28" uuid="ed7d2979-1d64-48e3-a12c-dea084fc6410"/>
@@ -656,7 +662,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{c154}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{C154}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="452" y="0" width="20" height="28" uuid="7518531e-a3b0-4ede-ade5-fc51c13f31c1"/>
@@ -671,7 +677,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cve_ageb}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVE_AGEB}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="414" y="0" width="18" height="28" uuid="1fa254bd-6dd3-4fd5-a326-c0a90346b1d2"/>
@@ -686,7 +692,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cve_mun}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVE_MUN}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="100" y="0" width="38" height="28" uuid="4049580e-f867-49e1-84bf-7b08ca074dbf"/>
@@ -700,7 +706,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{clee_emp}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CLEE_EMP}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="353" y="0" width="20" height="28" uuid="0b173181-dbbd-48d3-8e6c-1b8d44e2ab43"/>
@@ -715,7 +721,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e23a}.toLowerCase()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E23A}.toLowerCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="432" y="0" width="20" height="28" uuid="ab05065c-d26a-4502-a6ce-7fb9f0683ca1"/>
@@ -730,7 +736,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cve_loc}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVE_LOC}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="396" y="0" width="18" height="28" uuid="23940c64-0509-4131-b9cd-577cdd57a6b3"/>
@@ -745,7 +751,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cve_ent}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVE_ENT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="472" y="0" width="20" height="28" uuid="98afe845-f1d9-4c71-9778-e945230b302c"/>
@@ -760,7 +766,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{cve_mza}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{CVE_MZA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="20" y="0" width="47" height="28" uuid="51da3b53-9b6e-476a-92ef-7fc0de332c37"/>
@@ -775,7 +781,7 @@ CONTROL	]]></text>
 					<font fontName="SansSerif" size="6" isBold="false"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tramo_control}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TRAMO_CONTROL}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="138" y="0" width="40" height="28" uuid="ee5e91c3-ff9a-4585-945a-6e81413b9b22"/>
@@ -789,7 +795,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{id_ue}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ID_UE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="67" y="0" width="33" height="28" uuid="a5538b80-af77-41f1-b1e6-99684a1bf373"/>
@@ -803,7 +809,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{origen}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ORIGEN}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="492" y="0" width="20" height="28" uuid="be1ebb2c-40b6-477d-8c26-617fd20bea87"/>
@@ -818,7 +824,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tipo_e10}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TIPO_E10}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="512" y="0" width="60" height="28" uuid="ba6853c0-ac37-4b10-abc0-276fbcaeb26d"/>
@@ -833,7 +839,7 @@ CONTROL	]]></text>
 					<font fontName="Arial" size="5"/>
 					<paragraph leftIndent="4" rightIndent="4" spacingBefore="4" spacingAfter="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nomvial}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NOMVIAL}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="572" y="0" width="20" height="28" uuid="b108a6c4-a5fb-4004-9d7b-883050dbc199"/>
@@ -848,7 +854,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numext}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NUMEXT}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="592" y="0" width="20" height="28" uuid="f08566d0-ed32-4384-bd60-a80b2fa6d74b"/>
@@ -863,7 +869,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{numextalf}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NUMEXTALF}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="612" y="0" width="20" height="28" uuid="770f5d8a-8f45-401e-89f0-dea0d85606e8"/>
@@ -878,7 +884,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{tipo_e14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{TIPO_E14}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="632" y="0" width="55" height="28" uuid="9a1a853d-5cdb-44a4-8f80-35d670d77587"/>
@@ -893,7 +899,7 @@ CONTROL	]]></text>
 					<font fontName="Arial" size="5"/>
 					<paragraph leftIndent="4" rightIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e14}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E14}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="687" y="0" width="30" height="28" uuid="6dae58d2-4d19-4302-b42b-82d810aab142"/>
@@ -908,7 +914,7 @@ CONTROL	]]></text>
 					<font size="5"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e12}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E12}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="717" y="0" width="55" height="28" uuid="df927723-6eb0-4143-b415-ccfe458dd3a1"/>
@@ -923,7 +929,7 @@ CONTROL	]]></text>
 					<font size="5"/>
 					<paragraph leftIndent="4" rightIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e19}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E19}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="772" y="0" width="30" height="28" uuid="9a8d6cc9-eecb-41f0-9f35-3e0114c1c91f"/>
@@ -938,7 +944,7 @@ CONTROL	]]></text>
 					<font size="5"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{e20}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{E20}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

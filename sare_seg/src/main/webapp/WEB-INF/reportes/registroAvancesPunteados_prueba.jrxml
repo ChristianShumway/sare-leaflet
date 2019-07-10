@@ -270,216 +270,267 @@
 			<defaultValueExpression><![CDATA[01]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT cestatal, origen,  carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
+			<![CDATA[SELECT ce,cestatal,  carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
 (carga_01 +  carga_01A + carga_A1+carga_01C+carga_05+carga_06) carga ,
 (realizado_01 + realizado_01A +realizado_A1+realizado_01C+realizado_05+realizado_06 )realizado FROM (
-SELECT '00' ce, 'NAC' cestatal, 1 orden,
-        origen,
-            sum(CASE WHEN c154 IN ('01') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN c154 IN ('01') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN c154 IN ('01A') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN c154 IN ('01A') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN c154 IN ('A1') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN c154 IN ('A1') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN c154 IN ('01C') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN c154 IN ('01C') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN c154 IN ('05') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN c154 IN ('05') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN c154 IN ('06') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN c154 IN ('06') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_06
-            FROM sare_mas2019_act.vw_punteo_sare
-            WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('01','01A','A1','01C','05','06')
-and 1=1
-            GROUP BY  origen
+SELECT 0 ce, 'NAC' cestatal, 1 orden,
+        
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM  ce2019_MASRENCAL.tr_predios pre 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE   ue.c154 IN ('01','01A','A1','01C','05','06') and 1=1
+$P!{where1}
+            GROUP BY  ue.c154
 
 union all
-SELECT cestatal, CASE
-            WHEN  cestatal ='01' THEN 'AGS'
-            WHEN  cestatal ='02' THEN 'BCN'
-            WHEN  cestatal ='03' THEN 'BCS'
-            WHEN  cestatal ='04' THEN 'CAM'
-            WHEN  cestatal ='05' THEN 'COA'
-            WHEN  cestatal ='06' THEN 'COL'
-            WHEN  cestatal ='07' THEN 'CHS'
-            WHEN  cestatal ='08' THEN 'CHI'
-            WHEN  cestatal ='09' THEN 'DFN'
-            WHEN  cestatal ='10' THEN 'DGO'
-            WHEN  cestatal ='11' THEN 'GTO'
-            WHEN  cestatal ='12' THEN 'GRO'
-            WHEN  cestatal ='13' THEN 'HGO'
-            WHEN  cestatal ='14' THEN 'JAL'
-            WHEN  cestatal ='15' THEN 'MEO'
-            WHEN  cestatal ='16' THEN 'MIC'
-            WHEN  cestatal ='17' THEN 'MOR'
-            WHEN  cestatal ='18' THEN 'NAY'
-            WHEN  cestatal ='19' THEN 'NLN'
-            WHEN  cestatal ='20' THEN 'OAX'
-            WHEN  cestatal ='21' THEN 'PUE'
-            WHEN  cestatal ='22' THEN 'QRO'
-            WHEN  cestatal ='23' THEN 'QTR'
-            WHEN  cestatal ='24' THEN 'SLP'
-            WHEN  cestatal ='25' THEN 'SIN'
-            WHEN  cestatal ='26' THEN 'SON'
-            WHEN  cestatal ='27' THEN 'TAB'
-            WHEN  cestatal ='28' THEN 'TAM'
-            WHEN  cestatal ='29' THEN 'TLA'
-            WHEN  cestatal ='30' THEN 'VER'
-            WHEN  cestatal ='31' THEN 'YUC'
-            WHEN  cestatal ='32' THEN 'ZAC'
-            WHEN  cestatal ='33' THEN 'DFS'
-            WHEN  cestatal ='34' THEN 'MEP'
+SELECT ue.ce, CASE
+            WHEN  ue.ce ='01' THEN 'AGS'
+            WHEN  ue.ce ='02' THEN 'BCN'
+            WHEN  ue.ce ='03' THEN 'BCS'
+            WHEN  ue.ce ='04' THEN 'CAM'
+            WHEN  ue.ce ='05' THEN 'COA'
+            WHEN  ue.ce ='06' THEN 'COL'
+            WHEN  ue.ce ='07' THEN 'CHS'
+            WHEN  ue.ce ='08' THEN 'CHI'
+            WHEN  ue.ce ='09' THEN 'DFN'
+            WHEN  ue.ce ='10' THEN 'DGO'
+            WHEN  ue.ce ='11' THEN 'GTO'
+            WHEN  ue.ce ='12' THEN 'GRO'
+            WHEN  ue.ce ='13' THEN 'HGO'
+            WHEN  ue.ce ='14' THEN 'JAL'
+            WHEN  ue.ce ='15' THEN 'MEO'
+            WHEN  ue.ce ='16' THEN 'MIC'
+            WHEN  ue.ce ='17' THEN 'MOR'
+            WHEN  ue.ce ='18' THEN 'NAY'
+            WHEN  ue.ce ='19' THEN 'NLN'
+            WHEN  ue.ce ='20' THEN 'OAX'
+            WHEN  ue.ce ='21' THEN 'PUE'
+            WHEN  ue.ce ='22' THEN 'QRO'
+            WHEN  ue.ce ='23' THEN 'QTR'
+            WHEN  ue.ce ='24' THEN 'SLP'
+            WHEN  ue.ce ='25' THEN 'SIN'
+            WHEN  ue.ce ='26' THEN 'SON'
+            WHEN  ue.ce ='27' THEN 'TAB'
+            WHEN  ue.ce ='28' THEN 'TAM'
+            WHEN  ue.ce ='29' THEN 'TLA'
+            WHEN  ue.ce ='30' THEN 'VER'
+            WHEN  ue.ce ='31' THEN 'YUC'
+            WHEN  ue.ce ='32' THEN 'ZAC'
+            WHEN  ue.ce ='33' THEN 'DFS'
+            WHEN  ue.ce ='34' THEN 'MEP'
 
 end cestatal, 2 orden,
-     origen,
-          sum(CASE WHEN c154 IN ('01') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN c154 IN ('01') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN c154 IN ('01A') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN c154 IN ('01A') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN c154 IN ('A1') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN c154 IN ('A1') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN c154 IN ('01C') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN c154 IN ('01C') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN c154 IN ('05') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN c154 IN ('05') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN c154 IN ('06') and sare_st in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN c154 IN ('06') and sare_st in ('01') THEN 1 ELSE 0 END) realizado_06
-            FROM sare_mas2019_act.vw_punteo_sare
-            WHERE  origen  in (1,2,3,4,5,6,7,8,9)  AND c154 IN ('01','01A','A1','01C','05','06')
+          sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM  ce2019_MASRENCAL.tr_predios pre 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
+            WHERE  ue.c154 IN ('01','01A','A1','01C','05','06') 
 $P!{where1}
-            GROUP BY cestatal, origen
+            GROUP BY ue.ce, ue.c154
 
-) dd  order by ce,ORIGEN]]>
+) dd  order by ce]]>
 		</queryString>
-		<field name="cestatal" class="java.lang.String"/>
-		<field name="origen" class="java.lang.Long"/>
-		<field name="carga_01" class="java.lang.Long"/>
-		<field name="realizado_01" class="java.lang.Long"/>
-		<field name="carga_01a" class="java.lang.Long"/>
-		<field name="realizado_01a" class="java.lang.Long"/>
-		<field name="carga_a1" class="java.lang.Long"/>
-		<field name="realizado_a1" class="java.lang.Long"/>
-		<field name="carga_01c" class="java.lang.Long"/>
-		<field name="realizado_01c" class="java.lang.Long"/>
-		<field name="carga_05" class="java.lang.Long"/>
-		<field name="realizado_05" class="java.lang.Long"/>
-		<field name="carga_06" class="java.lang.Long"/>
-		<field name="realizado_06" class="java.lang.Long"/>
-		<field name="carga" class="java.lang.Long"/>
-		<field name="realizado" class="java.lang.Long"/>
+		<field name="CE" class="java.math.BigDecimal"/>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="CARGA_01" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01" class="java.math.BigDecimal"/>
+		<field name="CARGA_01A" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01A" class="java.math.BigDecimal"/>
+		<field name="CARGA_A1" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_A1" class="java.math.BigDecimal"/>
+		<field name="CARGA_01C" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_01C" class="java.math.BigDecimal"/>
+		<field name="CARGA_05" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_05" class="java.math.BigDecimal"/>
+		<field name="CARGA_06" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_06" class="java.math.BigDecimal"/>
+		<field name="CARGA" class="java.math.BigDecimal"/>
+		<field name="REALIZADO" class="java.math.BigDecimal"/>
 		<variable name="sumaCarga01" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_01}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_01}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_01}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizado01" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_01}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_01}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_01}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaCarga01A" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_01a}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_01a}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_01A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01A}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizado01A" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_01a}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_01a}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_01A}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01A}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaCargaA1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_a1}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_a1}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_A1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_A1}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizadoA1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_a1}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_a1}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_A1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_A1}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaCarga01C" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_01c}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_01c}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_01C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_01C}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizado01C" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_01c}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_01c}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_01C}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_01C}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaCarga05" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_05}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_05}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_05}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_05}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizado05" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_05}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_05}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_05}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_05}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaCarga06" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga_06}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga_06}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA_06}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_06}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaRealizado06" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado_06}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado_06}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO_06}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_06}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaTotalCarga" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{carga}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{carga}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaTotalRealizado" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{realizado}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{realizado}]]></initialValueExpression>
+			<variableExpression><![CDATA[$F{REALIZADO}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO}]]></initialValueExpression>
 		</variable>
 		<group name="group1">
-			<groupExpression><![CDATA[$F{cestatal}]]></groupExpression>
+			<groupExpression><![CDATA[$F{CE}]]></groupExpression>
 		</group>
 	</subDataset>
 	<parameter name="where" class="java.lang.String"/>
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT *  FROM sare_mas2019_act.vw_punteo_sare limit 1]]>
+		<![CDATA[SELECT ce,cestatal, carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
+(carga_01 +  carga_01A + carga_A1+carga_01C+carga_05+carga_06) carga ,
+(realizado_01 + realizado_01A +realizado_A1+realizado_01C+realizado_05+realizado_06 )realizado FROM (
+SELECT 0 ce, 'NAC' cestatal, 1 orden,
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM  ce2019_MASRENCAL.tr_predios pre 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE   ue.c154 IN ('01','01A','A1','01C','05','06') and 1=1
+            GROUP BY  ue.c154
+
+union all
+SELECT ue.ce, CASE
+            WHEN  ue.ce ='01' THEN 'AGS'
+            WHEN  ue.ce ='02' THEN 'BCN'
+            WHEN  ue.ce ='03' THEN 'BCS'
+            WHEN  ue.ce ='04' THEN 'CAM'
+            WHEN  ue.ce ='05' THEN 'COA'
+            WHEN  ue.ce ='06' THEN 'COL'
+            WHEN  ue.ce ='07' THEN 'CHS'
+            WHEN  ue.ce ='08' THEN 'CHI'
+            WHEN  ue.ce ='09' THEN 'DFN'
+            WHEN  ue.ce ='10' THEN 'DGO'
+            WHEN  ue.ce ='11' THEN 'GTO'
+            WHEN  ue.ce ='12' THEN 'GRO'
+            WHEN  ue.ce ='13' THEN 'HGO'
+            WHEN  ue.ce ='14' THEN 'JAL'
+            WHEN  ue.ce ='15' THEN 'MEO'
+            WHEN  ue.ce ='16' THEN 'MIC'
+            WHEN  ue.ce ='17' THEN 'MOR'
+            WHEN  ue.ce ='18' THEN 'NAY'
+            WHEN  ue.ce ='19' THEN 'NLN'
+            WHEN  ue.ce ='20' THEN 'OAX'
+            WHEN  ue.ce ='21' THEN 'PUE'
+            WHEN  ue.ce ='22' THEN 'QRO'
+            WHEN  ue.ce ='23' THEN 'QTR'
+            WHEN  ue.ce ='24' THEN 'SLP'
+            WHEN  ue.ce ='25' THEN 'SIN'
+            WHEN  ue.ce ='26' THEN 'SON'
+            WHEN  ue.ce ='27' THEN 'TAB'
+            WHEN  ue.ce ='28' THEN 'TAM'
+            WHEN  ue.ce ='29' THEN 'TLA'
+            WHEN  ue.ce ='30' THEN 'VER'
+            WHEN  ue.ce ='31' THEN 'YUC'
+            WHEN  ue.ce ='32' THEN 'ZAC'
+            WHEN  ue.ce ='33' THEN 'DFS'
+            WHEN  ue.ce ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+
+          sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
+            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
+            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
+            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
+            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
+            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
+            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+            FROM  ce2019_MASRENCAL.tr_predios pre 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
+            WHERE   
+ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
+
+            GROUP BY ue.ce, ue.c154
+
+) dd  where ROWNUM <2 order by ce]]>
 	</queryString>
-	<field name="ce" class="java.lang.Double"/>
-	<field name="jc" class="java.lang.Double"/>
-	<field name="ja" class="java.lang.Double"/>
-	<field name="a" class="java.lang.Double"/>
-	<field name="id_ue" class="java.lang.Long"/>
-	<field name="clee_emp" class="java.lang.String"/>
-	<field name="e03" class="java.lang.String"/>
-	<field name="e03n" class="java.lang.String"/>
-	<field name="e04" class="java.lang.String"/>
-	<field name="e04n" class="java.lang.String"/>
-	<field name="e05" class="java.lang.String"/>
-	<field name="e05n" class="java.lang.String"/>
-	<field name="e06" class="java.lang.String"/>
-	<field name="e07" class="java.lang.String"/>
-	<field name="e08" class="java.lang.String"/>
-	<field name="e09" class="java.lang.String"/>
-	<field name="tipo_e10" class="java.lang.Long"/>
-	<field name="e10" class="java.lang.String"/>
-	<field name="e11" class="java.lang.Long"/>
-	<field name="e11a" class="java.lang.String"/>
-	<field name="tipo_e14" class="java.lang.Long"/>
-	<field name="e14" class="java.lang.String"/>
-	<field name="tipo_e10_a" class="java.lang.Long"/>
-	<field name="e10_a" class="java.lang.String"/>
-	<field name="tipo_e10_b" class="java.lang.Long"/>
-	<field name="e10_b" class="java.lang.String"/>
-	<field name="tipo_e10_c" class="java.lang.Long"/>
-	<field name="e10_c" class="java.lang.String"/>
-	<field name="coord_y" class="java.lang.Double"/>
-	<field name="coord_x" class="java.lang.Double"/>
-	<field name="tramo_control" class="java.lang.String"/>
-	<field name="descrubic" class="java.lang.String"/>
-	<field name="e13" class="java.lang.Long"/>
-	<field name="e13a" class="java.lang.String"/>
-	<field name="e12" class="java.lang.String"/>
-	<field name="e20" class="java.lang.String"/>
-	<field name="tipo_e19" class="java.lang.String"/>
-	<field name="e19" class="java.lang.String"/>
-	<field name="e14_a" class="java.lang.String"/>
-	<field name="c154" class="java.lang.String"/>
-	<field name="origen" class="java.lang.Long"/>
-	<field name="e23a" class="java.lang.String"/>
-	<field name="e17" class="java.lang.Long"/>
-	<field name="e17_desc" class="java.lang.String"/>
-	<field name="id_evento" class="java.lang.Long"/>
-	<field name="id_deftramo" class="java.lang.Long"/>
-	<field name="sare_st" class="java.lang.String"/>
-	<field name="cestatal" class="java.lang.String"/>
-	<field name="ce_descripcion" class="java.lang.String"/>
+	<field name="CE" class="java.math.BigDecimal"/>
+	<field name="CESTATAL" class="java.lang.String"/>
+	<field name="CARGA_01" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_01" class="java.math.BigDecimal"/>
+	<field name="CARGA_01A" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_01A" class="java.math.BigDecimal"/>
+	<field name="CARGA_A1" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_A1" class="java.math.BigDecimal"/>
+	<field name="CARGA_01C" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_01C" class="java.math.BigDecimal"/>
+	<field name="CARGA_05" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_05" class="java.math.BigDecimal"/>
+	<field name="CARGA_06" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_06" class="java.math.BigDecimal"/>
+	<field name="CARGA" class="java.math.BigDecimal"/>
+	<field name="REALIZADO" class="java.math.BigDecimal"/>
 	<variable name="titulo" class="java.lang.String">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
@@ -537,7 +588,7 @@ $P!{where1}
 									<textElement textAlignment="Center" verticalAlignment="Middle">
 										<font isBold="true" isItalic="true"/>
 									</textElement>
-									<textFieldExpression><![CDATA[$F{cestatal}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CESTATAL}]]></textFieldExpression>
 								</textField>
 							</jr:cell>
 						</jr:groupHeader>
@@ -558,19 +609,7 @@ $P!{where1}
 							</staticText>
 						</jr:columnHeader>
 						<jr:columnFooter height="0" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="25" rowSpan="1">
-							<textField>
-								<reportElement style="table_TD_2" x="0" y="0" width="102" height="25" uuid="d35a70f1-cc3a-4705-850f-ea84049083d3"/>
-								<box>
-									<topPen lineWidth="0.5"/>
-									<leftPen lineWidth="0.5"/>
-									<bottomPen lineWidth="0.5"/>
-									<rightPen lineWidth="0.5"/>
-								</box>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{origen}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1"/>
 					</jr:column>
 					<jr:columnGroup width="234" uuid="19a3852d-7a47-478e-a530-e536d57a90e6">
 						<jr:columnHeader height="30" rowSpan="1">
@@ -633,7 +672,7 @@ $P!{where1}
 								<textField>
 									<reportElement style="table_TD_2" x="0" y="0" width="118" height="25" uuid="f07c2d09-ee60-43d7-bdaf-92c7a9a3348d"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{carga_01}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CARGA_01}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -675,7 +714,7 @@ $P!{where1}
 								<textField>
 									<reportElement style="table_TD_2" x="0" y="0" width="116" height="25" uuid="ba0234b5-d0d0-4baf-b4cf-e164ced3b0c4"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{realizado_01}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{REALIZADO_01}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -711,7 +750,7 @@ $P!{where1}
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaCarga01C}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaTotalCarga}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
@@ -735,7 +774,7 @@ $P!{where1}
 								<textField>
 									<reportElement style="table_TD_2" x="0" y="0" width="124" height="25" uuid="9ca0d1bb-32ae-4b5d-b8ed-27bc21079662"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{carga_01c}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CARGA}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -753,7 +792,7 @@ $P!{where1}
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaRealizado01C}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaTotalRealizado}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
@@ -777,7 +816,7 @@ $P!{where1}
 								<textField>
 									<reportElement style="table_TD_2" x="0" y="0" width="101" height="25" uuid="af07c6ce-b844-4fe3-ac0a-427681df23ae"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{realizado_01c}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{REALIZADO}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>

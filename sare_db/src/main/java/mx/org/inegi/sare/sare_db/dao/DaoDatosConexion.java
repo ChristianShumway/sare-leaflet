@@ -21,7 +21,7 @@ import org.springframework.stereotype.Repository;
 public class DaoDatosConexion implements InterfaceReportes{
 
     @Autowired
-    @Qualifier("dataSource")
+    @Qualifier("dataSourceOcl")
     private DataSource ds;
 
     @Override

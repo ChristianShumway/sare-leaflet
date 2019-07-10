@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.Enums.UnidadesEconomicasEnum;
 import mx.org.inegi.sare.sare_db.dto.cat_get_claves;
@@ -73,7 +72,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
                         while (rs.next()) {
-                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"));
+                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"), rs.getString("status"));
                             resultado1.add(fila);
                         }
                         return resultado1;
@@ -131,7 +130,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         switch (proyecto) {
             case Operativo_Masivo:
                 //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
-                sql = getFiltroSql(ce, esquemaOcl, tramo, ue);
+                sql = getFiltroSql(ce,esquemaPos, esquemaOcl, tramo, ue);
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
@@ -140,27 +139,29 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
-                sql = getFiltroSql(ce, esquemaOcl, tramo, ue);
+                sql = getFiltroSql(ce,esquemaPos, esquemaOcl, tramo, ue);
                 break;
         }
         return sql;
     }
 
-    private StringBuilder getFiltroSql(String ce, String esquemaOcl, String tramo, String ue) {
+    private StringBuilder getFiltroSql(String ce,String esquemaPos, String esquemaOcl, String tramo, String ue) {
         StringBuilder sql = new StringBuilder();
         if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo().equals(ue)) {
             if (ce.equals("00")) {
                 //sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
-                sql.append("select ue.id_ue, ue.c154 FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                    .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                    .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue where st_sare='10'");
+                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
+                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10'");
 
             } else {
-                sql.append("select ue.id_ue, ue.c154 FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                    .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                    .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue where st_sare='10' ")
+                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ") 
+                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10'")
                    .append("and cve_operativa=").append(tramo);
 //                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
 //                sql.append(" and cestatal='").append(ce).append("' and tramo_control='").append(tramo).append("' order by 1");
@@ -174,13 +175,13 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
                                 + "(to_char(FECHA_UNO,'HH24')::numeric - to_char(FECHA_DOS,'HH24')::numeric)\n"
                                 + "DIFERENCIA_HORAS,to_char(FECHA_UNO,'MI')::numeric - to_char(FECHA_DOS,'MI')::numeric DIFERENCIA_MINUTOS,\n"
-                                + "(to_char(FECHA_UNO,'SS')::numeric - to_char(FECHA_DOS,'SS')::numeric)\n"
-                                + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)) DIFERENCIA_DIAS  "
+                                + "(to_char(FECHA_UNO,'SS')::numeric - to_char(FECHA_DOS,'SS')::numeric)*-1\n"
+                                + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)/1000000) DIFERENCIA_DIAS  "
                                 + "FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_TIMESTAMP(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_TIMESTAMP"
                                 + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(current_timestamp, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl)
-                                .append(".vw_punteo_sare ue inner join ").
-                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (current_timestamp-sare_st_time)"
+                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaPos)
+                                .append(".tr_ue_complemento where ").
+                                append(" st_sare='20' and (current_timestamp-sare_st_time)"
                                 + ">'00 01:00:00') query1) query2) query3 order by time_lock desc");
                     } else {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
@@ -191,9 +192,9 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "DIFERENCIA_SEGUNDOS,TRUNC((to_char(FECHA_UNO,'DDMMYYYY')::numeric - to_char(FECHA_DOS,'DDMMYYYY')::numeric)/1000000) DIFERENCIA_DIAS  "
                                 + "FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_TIMESTAMP(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_TIMESTAMP"
                                 + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(current_timestamp, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue inner join ").
-                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ue.ce=").append(ce).append(" and ue.sare_st='20'"
-                                + " and (current_timestamp-sare_st_time)>'00 01:00:00')query1)query2)query3 order by time_lock desc");
+                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaPos).append(".tr_ue_complemento ").
+                                append(" where st_sare='20' and ce='").append(ce)
+                                .append("' and (current_timestamp-sare_st_time)>'00 01:00:00')query1)query2)query3 order by time_lock desc");
 
                     }
                     break;

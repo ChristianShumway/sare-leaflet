@@ -68,7 +68,7 @@ public class BackingReportes extends DaoTransformaCartografia {
                 if (ce.equals("00")) {
                     whereReporte = "and 1=1";
                 } else {
-                    whereReporte = " and cestatal='" + ce + "'";
+                    whereReporte = " and ue.ce=" + ce + "";
                 }
             } else if (reporte.equals("1")) {
                 nombreArchivo = nombreArchivoJRXMLavanceGabinete;
@@ -77,7 +77,7 @@ public class BackingReportes extends DaoTransformaCartografia {
                 if (ce.equals("00")) {
                     whereReporte = " and 1=1";
                 } else {
-                    whereReporte = " and cestatal='" + ce + "'";
+                    whereReporte = " and ue.ce=" + ce + "";
                 }
             }
             params.put("where", whereReporte);
