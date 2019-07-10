@@ -31,6 +31,7 @@ let valorScian;
 let htmlDivClases
 let validaAltas=false
 var id_ue;
+var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 
@@ -226,6 +227,7 @@ const callServiceFindUE=(id_ue)=>{
       //comienza a mostrar datos en la interfaz
       showDataInterfaz(data)
       id_ue=id_ue;
+      id_inmueble=data[0].datos.datos[0].id_inmueble;
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -1828,6 +1830,7 @@ const showViewPreliminar = d => {
       ObjectRequest['coordy'] = xycoorsy
       ObjectRequest['Cveft'] = cveft
       ObjectRequest['e10_cvevial'] = e10_cve_vial
+      ObjectRequest['id_inmueble'] = id_inmueble
     }
   )
 }
