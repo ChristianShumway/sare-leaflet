@@ -30,9 +30,9 @@ import org.springframework.stereotype.Repository;
 public class DaoValidacionesSare extends DaoTransformaCartografia implements InterfaceValidacionesSare {
 
     
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schema;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schema;
     
     @Autowired    
     @Qualifier("jdbcTemplate")

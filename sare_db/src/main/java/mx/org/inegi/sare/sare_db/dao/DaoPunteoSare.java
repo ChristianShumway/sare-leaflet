@@ -28,7 +28,6 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoPunteoSare")
-@Profile("dev")
 public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSare {
 
     @Autowired

@@ -30,13 +30,13 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
     
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
     
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     
     @Autowired    
     @Qualifier("jdbcTemplate")

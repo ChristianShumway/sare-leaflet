@@ -34,20 +34,20 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
 
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
 
     @Autowired
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
 
     public enum Desbloqueo {
-        Desbloqueo, VerificaDesbloqueo, completaGuardado, existeUe, updateUE, insertUE, consultaPendientes
+        Desbloqueo, VerificaDesbloqueo, completaGuardado, existeUe, updateUE, insertUE, consultaPendientes, DesbloqueoBitacora
     }
 
     @Override
@@ -145,6 +145,31 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         return regresar;
     }
 
+    @Override
+    public boolean DesbloqueoBitacora(Integer proyecto, String id_ue) {
+        boolean regresar = false;
+        StringBuilder sql;
+        super.proyectos = super.getProyecto(proyecto);
+        sql = getSql(super.proyectos,"", id_ue, Desbloqueo.DesbloqueoBitacora);
+        if(id_ue!=null || !"".equals(id_ue))
+        {
+            switch (proyectos)
+            {
+                case Operativo_Masivo:
+                    if (jdbcTemplate.update(sql.toString()) > 0) 
+                    {
+                        regresar = true;
+                    }
+                    break;
+                default:
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) 
+                    {
+                        regresar = true;
+                    }
+            }
+        }
+        return regresar;
+    }
     @Override
     public boolean completaGuardadoOcl(Integer proyecto, String usuario, String id_ue) {
         boolean regresar = false;
@@ -299,7 +324,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                         sql.append("SELECT ").append(esquemaPos).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");
                         break;
                     case Desbloqueo:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set SARE_ST=10 WHERE id_ue='").append(id_ue).append("'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set ST_SARE=10 WHERE id_ue='").append(id_ue).append("'");
                         break;
                     case existeUe:
                         sql.append("SELECT count(distinct id_ue) from ").append(esquemaPos).append(".TR_UE_COMPLEMENTO where id_ue='").append(id_ue).append("'");
@@ -317,6 +342,9 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                         sql.append("SELECT id_ue, tramo_control, cvegeo, cve_ce, cve_ent, nom_ent, cve_mun, nom_mun, cve_loc, nom_loc, cve_ageb, cve_mza, cveft, e08, e09, tipo_e10, substr(nomvial,1,110) nomvial, case when numext ='' then null else numext::numeric end numext, numextalf, e12, e12p, numint, ");
                         sql.append("numintalf, tipo_e14, e14, e14_a, tipo_e10_a, e10_a, tipo_e10_b, e10_b, tipo_e10_c, e10_c, e10_e, descrubic, coord_x::varchar, coord_y::varchar, e19, tipo_e19, punteo, mod_cat, origen, cvegeo2016, oracle, ");
                         sql.append("e20, id_inmueble, id_deftramo, cvevial, e23 FROM ").append(esquemaPos).append(".td_ue_suc where id_ue='").append(id_ue).append("'");
+                        break;
+                    case DesbloqueoBitacora:
+                        sql.append("UPDATE ").append(esquemaPos).append(".TR_UE_COMPLEMENTO set ST_SARE=10 WHERE id_ue='").append(id_ue).append("'");
                         break;
 
                 }

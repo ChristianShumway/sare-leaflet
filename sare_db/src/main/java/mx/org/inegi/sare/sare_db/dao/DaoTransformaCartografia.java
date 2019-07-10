@@ -24,12 +24,11 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoTransformaCartografia")
-@Profile("dev")
 public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas {
 
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schema;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schema;
 
     @Autowired
     @Qualifier("jdbcTemplate")

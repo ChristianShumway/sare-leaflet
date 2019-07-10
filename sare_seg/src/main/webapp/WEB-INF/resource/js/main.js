@@ -13,7 +13,7 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-let layersSARE = ['c100', 'c101', 'wdenue']
+let layersSARE = ['c100', 'c101', 'c101a', 'wdenue']
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -583,13 +583,15 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
         <div class='title-column'>Código</div>
+        <div class='title-column'>Status</div>
       </div>`
 
       for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
-        let {idue, c154} = data[num]
+        let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
           <div class='item-list'><span>${c154}</span></div>
+          <div class='item-list'><span>${status}</span></div>
         </div>`
       }
 
@@ -2843,6 +2845,7 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
           return;
         }
         else {
+          swal.close()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
         }
@@ -2851,9 +2854,18 @@ const handleShowResultDesbloqueo = (result,id_ue) => {
       else {
         handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
       }
-    }, () => handleShowSaveAlert('info', 'Desbloqueando', 'Desbloqueando clave, por favor espere un momento', true)
-    )
-        
+    }, () => {
+      swal ({
+        title: '<span style="width:100%;">Desbloqueando Clave!</span>',
+        text: 'Por favor espere un momento',
+        timer: 2000,
+        onOpen: () => swal.showLoading()
+      })
+        .then(() => { },
+          dismiss => {}
+        )
+    }
+     )   
   } //close if result.value
 }
 /*FIN CLAVES BLOQUEADAS*/

@@ -37,9 +37,9 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
     @Qualifier("schemaSaremdm")
     private String schemamdm;
     
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     
     @Autowired    
     @Qualifier("jdbcTemplate")
@@ -49,9 +49,9 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
     
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
 
     public enum MetodosUEbyXY 
     {

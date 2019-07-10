@@ -869,7 +869,8 @@
 <!--    <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>-->
 <!-- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>  trasplante de api-->
  <!--<script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script> <!-- trasplante de api-->
- <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>
+<script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6&d=gaia.inegi.org.mx" type="text/javascript"></script>
+ <!-- <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>-->
 
 
 </html>

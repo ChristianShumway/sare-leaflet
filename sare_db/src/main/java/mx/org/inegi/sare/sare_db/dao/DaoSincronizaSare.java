@@ -34,13 +34,13 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
     
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
     
-     @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//     @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     
     @Autowired    
     @Qualifier("jdbcTemplate")

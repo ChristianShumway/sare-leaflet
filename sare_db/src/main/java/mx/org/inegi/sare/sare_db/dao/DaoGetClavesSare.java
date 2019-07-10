@@ -37,9 +37,9 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
 
     UnidadesEconomicasEnum UnidadesEconomicasEnum;
 
@@ -154,14 +154,14 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                    .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                    .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                    .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
-                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10'");
+                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and inm.id_ue is not null ");
 
             } else {
                 sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                    .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                    .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                    .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ") 
-                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10'")
+                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and inm.id_ue is not null ")
                    .append("and cve_operativa=").append(tramo);
 //                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
 //                sql.append(" and cestatal='").append(ce).append("' and tramo_control='").append(tramo).append("' order by 1");

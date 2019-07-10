@@ -28,9 +28,9 @@ import org.springframework.stereotype.Repository;
 @Profile("jdbc")
 public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin {
     
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     @Autowired    
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;

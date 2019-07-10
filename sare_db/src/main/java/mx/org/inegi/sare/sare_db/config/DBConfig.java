@@ -177,7 +177,7 @@ public class DBConfig {
         dS.setDefaultReadOnly(false); 
         return dS;
     }
-    @Bean(name = "jdbcTemplatemdmprod")
+    @Bean(name = "jdbcTemplatemdm")
     @Profile("prod")
     public JdbcTemplate jdbcTemplateProdMdm() {
         return new JdbcTemplate(dataSourceProdMdm());
@@ -205,7 +205,8 @@ public class DBConfig {
     }
     
     /* Esquemas en produccion */
-    @Bean(name = "schemaSarePGProd")
+    
+    @Bean(name = "schemaSarePG")
     @Profile({"prod", "sarePGProd"})
     public String getSchemasarePGProd() {
         return env.getProperty("db.prod.schema");
@@ -217,7 +218,7 @@ public class DBConfig {
         return env.getProperty("db.prod.schema.ocl");
     }
     /* Esquemas en produccion  Mdm*/
-    @Bean(name = "schemaSareMdmProd")
+    @Bean(name = "schemaSaremdm")
     @Profile({"prod", "sareMdmProd"})
     public String getSchemasareMdmProd() {
         return env.getProperty("db.prod.schema.mdm");

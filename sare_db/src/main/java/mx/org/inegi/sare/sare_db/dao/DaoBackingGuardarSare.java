@@ -30,13 +30,13 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
     
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
     
-     @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//     @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     
     @Autowired    
     @Qualifier("jdbcTemplate")

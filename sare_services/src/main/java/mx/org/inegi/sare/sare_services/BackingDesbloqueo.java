@@ -42,7 +42,10 @@ public class BackingDesbloqueo extends BackingSincroniza {
                 switch(desbloqueo){
                     case 0:
                         if(InterfaceDesbloqueo.Desbloqueo(proyecto, id_ue)){
-                            respuesta.setMensaje(new cat_mensaje("true", "Exito al desbloquear"));
+                            if(InterfaceDesbloqueo.DesbloqueoBitacora(proyecto,id_ue)){
+                               respuesta.setMensaje(new cat_mensaje("true", "Exito al desbloquear")); 
+                            }
+                            
                         }
                         else{
                             respuesta.setMensaje(new cat_mensaje("false", "- Ocurrió un error al desbloquear el registro en Oracle"));

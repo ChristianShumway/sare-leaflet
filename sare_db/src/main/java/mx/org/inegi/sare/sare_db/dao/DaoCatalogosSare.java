@@ -34,9 +34,9 @@ import org.springframework.stereotype.Repository;
 @Profile("jdbc")
 public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalogosSare {
     
-    @Autowired
-    @Qualifier("schemaSarePG")
-    private String schemapg;
+//    @Autowired
+//    @Qualifier("schemaSarePG")
+//    private String schemapg;
     @Autowired    
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;

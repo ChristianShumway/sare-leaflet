@@ -34,9 +34,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
 
-    @Autowired
-    @Qualifier("schemaSareOcl")
-    private String schemaocl;
+//    @Autowired
+//    @Qualifier("schemaSareOcl")
+//    private String schemaocl;
 
     @Autowired
     @Qualifier("jdbcTemplatemdm")
