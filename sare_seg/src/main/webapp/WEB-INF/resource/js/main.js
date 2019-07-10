@@ -2011,8 +2011,19 @@ const radioSelect = option => {
       HandleActionsSaveNewPoint('no alta')
       break
     case 'calle':
-      alertToastForm('Vista Calle Activado', 'info')
+      setTimeout( () => alertToastForm('Vista Calle Activado', 'info'), 3000)
       HandleActionsSaveNewPoint('no alta')
+      swal.fire({
+        type: 'info',
+        title: 'Recuerda tener activo Popups para poder usar esta opción.',
+        // text: 'Recuerda tenerlos activo  para poder usar esta opción',
+        showConfirmButton: false,
+        allowEscapeKey: true,
+        allowOutsideClick: true,
+        animation: true,
+        // timer: 2000
+      })
+      
       break
     case 'alta':
       alertToastForm('Puntear Alta Activado', 'info')
