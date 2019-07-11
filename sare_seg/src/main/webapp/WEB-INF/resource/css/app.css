@@ -1,6 +1,12 @@
 body{
   overflow: auto !important;
 }
+
+.icon-full{
+  height: 45px !important;
+  line-height: 45px !important;
+}
+
 #mapa {
   height:584px;
   width: 100%;

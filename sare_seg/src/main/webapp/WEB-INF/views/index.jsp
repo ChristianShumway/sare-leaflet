@@ -208,6 +208,7 @@
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a id="ancla-map" onclick='handleModuleScroll(event)' href="#container-map">Mapa</a></li>
                 <li><a id="ancla-form" onclick='handleModuleScroll(event)' href="#container-form">Formulario</a></li>
+                <li><a onclick='handleFullScreen()' id="btn-fullscreen"></a></li>
               </ul>
             </div>
           </nav>

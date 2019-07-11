@@ -3,11 +3,35 @@ const arrayNameWraps = ['referencia', 'ubicacion-geografica', 'domicilio', 'asen
 let wrapFloatActive = false
 let nameContainerFloating = ''
 const arrayWrapBtns = ['wrap-btns-referencia', 'wrap-btns-ugeografica', 'wrap-btns-domicilio', 'wrap-btns-asentamiento', 'wrap-btns-evialidades', 'wrap-btns-cposterior', 'wrap-btns-edificios']
+let flagScreen = 'normal'
+
 
 window.onload = () => {
   handleSessionActive()
   handleHideForm()
   addAttributeTitle()
+  handleIconFullScreen()
+}
+
+const handleFullScreen = () => {
+  if(flagScreen === 'normal'){
+    document.body.requestFullscreen()
+    flagScreen = 'full'
+    handleIconFullScreen()
+  } else if (flagScreen === 'full') {
+    document.exitFullscreen() 
+    flagScreen = 'normal'
+    handleIconFullScreen()
+  }
+}
+
+handleIconFullScreen = () =>{
+  const btnScreen = document.getElementById('btn-fullscreen')
+  if(flagScreen === 'normal'){
+    btnScreen.innerHTML = ' <i class="material-icons icon-full">fullscreen</i>'
+  } else {
+    btnScreen.innerHTML = ' <i class="material-icons icon-full">fullscreen_exit</i>'
+  }
 }
 
 // Función para mostar u ocultar modulo de busqueda de clave
