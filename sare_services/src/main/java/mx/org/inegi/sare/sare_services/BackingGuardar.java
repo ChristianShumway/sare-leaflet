@@ -44,6 +44,7 @@ public class BackingGuardar extends BackingSincroniza {
                     }
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble,object, proyecto)) {
+                            if(InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE())){
                             if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
                                 //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                 inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
@@ -63,6 +64,9 @@ public class BackingGuardar extends BackingSincroniza {
                                 } else {
                                     Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
                                 }
+                            }else{
+                                Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro, hubo un error de conexión"));
+                            }
                             } else {
                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                             }

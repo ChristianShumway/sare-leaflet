@@ -44,7 +44,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     
     public enum MetodosGuardar 
     {
-       getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo
+       getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk
     }
     
     @Override
@@ -160,6 +160,27 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         });
         return regresa; 
     }
+    
+     @Override
+    public boolean UpdateOclStatusOk(Integer proyecto,cat_vw_punteo_sare_guardado object, String id_ue) {
+        boolean regresa = false;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        sql = getSql(proyectos,object, MetodosGuardar.UpdateOclStatusOk,"",false );
+        switch (proyectos) {
+            case Operativo_Masivo:
+                if (jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+            default:
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+        }
+        return regresa;
+
+    }
     public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa, boolean isAlta)
     {
         StringBuilder sql=new StringBuilder();
@@ -254,6 +275,10 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("SELECT id_deftramo");
                         sql.append(" FROM ").append(esquemaOcl).append(".tr_inmuebles where id_inmueble = ").append(inmueble.getId_inmueble());
                         break;
+                    case UpdateOclStatusOk:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='01' where id_ue=? and st_sare='20'");
+                        break;
+                        
                         
                 }
         }
