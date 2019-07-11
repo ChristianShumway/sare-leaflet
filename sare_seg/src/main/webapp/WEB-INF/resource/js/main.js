@@ -13,7 +13,7 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-let layersSARE = ['c100', 'c101', 'c101a', 'wdenue']
+let layersSARE = ['c100', 'c101a', 'wdenue']
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -65,7 +65,7 @@ const addLayerEconomicas = (chk, option) => {
           addLay('wdenue')
           break;
         case 'c101': //unicos y sucursales
-          addLay('c101')
+         // addLay('c101')
           break;
         case 'C101M': //matrices
           addLay('C101M')
@@ -86,14 +86,14 @@ const addCapas = chk => {
   var idWms = urlServices['map'].label
   if (chk.checked == true) {
     if (layersSARE.indexOf('c101') < 0) {
-      addLay('c101')
+      //addLay('c101')
     }
   } else {
     if (chk.checked === 'noFalse') {
         
     }
     else {
-      remLay('c101')
+     // remLay('c101')
     }
     if (typeof chk.mza !== 'undefined' && chk.mza === true) {
       remLay('c103') //Ageb
@@ -282,7 +282,10 @@ const fillForm = data => {
       ? $("#" + i).html("<option value='" + e + "'>" + e + "</option>")
       : $("#" + i).val(e);
   })
-  fillCatalogo()
+  //if(data[0].datos.datos[0].tipo_E14==null)
+  //{
+     fillCatalogo() 
+  //}
   fillCatalogoPiso()
   fillCatalogoConjuntosComerciales()
 }
@@ -296,11 +299,6 @@ const fillCatalogo = () => {
       if (data[0].operation) {
         const arrAsent = data[0].datos
         const opcSelected =document.getElementById('tipo_E14')            
-         let opt = document.createElement('option')
-        opt.appendChild(document.createTextNode("Seleccione") )
-        opt.value="Seleccione"
-        opt.setAttribute('selected', true)
-        opcSelected.appendChild(opt)
         arrAsent.forEach( (o, i) => {
           let opt = document.createElement('option')
           opt.appendChild( document.createTextNode(o.descripcion) )
@@ -1855,7 +1853,7 @@ const handleShowResult = result => {
           return;
         }
         else {
-          layersSARE = ['c100', 'c101', 'wdenue']
+          layersSARE = ['c100', 'wdenue']
           handleCancelClick()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
@@ -2126,7 +2124,7 @@ const modalGoogleMap = (x, y, tc) => {
 const identificaUE = (x,y) => {
   let capas = ($('#wdenue').is(":checked")) ? 'DENUE,' : ''
   capas += ($('#C101M').is(":checked")) ? 'Matrices,' : ''
-  capas += ($('#c101').is(":checked")) ? 'Sucursales,' : ''
+  //capas += ($('#c101').is(":checked")) ? 'Sucursales,' : ''
   capas += ($('#c104').is(":checked")) ? 'Postes,' : ''
   capas = capas.slice(0, -1)
 
@@ -2326,7 +2324,7 @@ const handleCancelClick = () => {
   document.getElementById("catorigen").style.display='none';
   document.getElementById("catc154").style.display='none';
    id_ue=document.getElementById('id_UE').value
-  layersSARE = ['c100', 'c101', 'wdenue']
+  layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
   punteo = 'U'

@@ -10,6 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sql.DataSource;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
@@ -33,6 +36,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
+    
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource DataSource;
 
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
@@ -227,6 +234,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     @Override
     public ArrayList<String> getClavesUnicasPG(Integer proyecto) {
+//        try {
+//            DataSource.getConnection();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(DaoBusquedaSare.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         final ArrayList<String> regresa = new ArrayList<>();
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
