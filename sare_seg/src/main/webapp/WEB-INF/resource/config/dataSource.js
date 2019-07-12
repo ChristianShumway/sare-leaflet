@@ -3,10 +3,12 @@
         proyAlias: 'Mapa Digital de México',
         proyName: 'mdm6',
         servicesVersion: '6.2',
-        mainPath: 'https://10.1.30.102:8181',
+        //mainPath: 'https://10.1.30.102:8181',
+        mainPath: 'https://gaia.inegi.org.mx',
         search: {
             contentType: "application/json; charset=utf-8",
-            url: 'https://10.1.30.102:8181/mdmsearchengine/search',
+          //  url: 'https://10.1.30.102:8181/mdmsearchengine/search',
+          url: 'https://gaia.inegi.org.mx/mdm_searchengine/search',
             type: 'POST',
             dataType: "json",
             jsonp: 'json.wrf',
@@ -15,12 +17,14 @@
         },
         exportList: {
             url: 'https://10.1.30.102:8181/map/export',
+          
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
         },
         saveStats: {
-            url: 'https://10.1.30.102:8181/map/stats/layers',
+            url: 'https://10.1.30.102:8181/map/stats/layers',         
+            
             type: 'POST',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
@@ -58,7 +62,8 @@
         },
         identifyDetail: {
             //url:'http://10.1.30.102:8181/map/query',
-            url: 'http://gaia.inegi.org.mx/NLB/tunnel/TableAliasV60/consulta ',
+            //url: 'http://gaia.inegi.org.mx/NLB/tunnel/TableAliasV60/consulta ',
+            url: 'https://gaia.inegi.org.mx/NLB/tunnel/map/query',
             //url:'https://10.1.30.102:8080/TableAliasV601/consulta',
             type: 'POST',
             contentType: "application/json; charset=utf-8",
