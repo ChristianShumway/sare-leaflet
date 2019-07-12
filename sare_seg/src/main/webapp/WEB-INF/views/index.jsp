@@ -208,7 +208,7 @@
               <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a id="ancla-map" onclick='handleModuleScroll(event)' href="#container-map">Mapa</a></li>
                 <li><a id="ancla-form" onclick='handleModuleScroll(event)' href="#container-form">Formulario</a></li>
-                <li><a onclick='handleFullScreen()' id="btn-fullscreen"></a></li>
+                <li><a onclick='handleFullScreen()' data-toggle="tooltip" id="btn-fullscreen" title="Expandir"></a></li>
               </ul>
             </div>
           </nav>
@@ -236,7 +236,7 @@
             <li><a class="subheader">Opciones</a></li>
             <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>
             <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
-            <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
+<!--            <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>-->
             <li onclick="imprimir()"><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
             <li onclick=""><a href="#!"><i class="material-icons">local_printshop</i>Claves bloquedas</a></li>
 <!--            <li><a onclick="handleLogOut()"><i class="material-icons">exit_to_app</i>Cerrar Sesión</a></li>-->
@@ -769,7 +769,7 @@
         <ul>
           <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
           <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
-          <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
+<!--          <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> -->
           <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 
           <li onclick="CargaTablaBloqueadas()"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Claves Bloqueadas"><i class="material-icons">lock</i></a></li> 
 <!--          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>-->
@@ -867,11 +867,9 @@
       })
     </script>
 
-<!--    <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>-->
-<!-- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script>  trasplante de api-->
- <!--<script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&d=gaia.inegi.org.mx&version=V6" type="text/javascript"></script> <!-- trasplante de api-->
+
 <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6&d=gaia.inegi.org.mx" type="text/javascript"></script>
- <!-- <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>-->
+<!--  <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>-->
 
 
 </html>

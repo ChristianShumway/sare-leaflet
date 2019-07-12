@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registroAvancePunteados" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="15" bottomMargin="20" uuid="ec0b94dd-faa5-4539-a9a1-73b8e0247adc">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registroAvancePunteados" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="15" bottomMargin="20" uuid="ec0b94dd-faa5-4539-a9a1-73b8e0247adc">
 	<property name="ireport.zoom" value="1.3310000000000082"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -270,29 +270,28 @@
 			<defaultValueExpression><![CDATA[01]]></defaultValueExpression>
 		</parameter>
 		<queryString>
-			<![CDATA[SELECT ce,cestatal,  carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
-(carga_01 +  carga_01A + carga_A1+carga_01C+carga_05+carga_06) carga ,
-(realizado_01 + realizado_01A +realizado_A1+realizado_01C+realizado_05+realizado_06 )realizado FROM (
+			<![CDATA[SELECT ce,cestatal,  carga_1, realizado_1, carga_2, realizado_2, carga_3, realizado_3,carga_4,realizado_4,carga_5,realizado_5,carga_6,realizado_6,
+(carga_1 +  carga_2 + carga_3+carga_4+carga_5+carga_6) carga ,
+(realizado_1 + realizado_2 +realizado_3+realizado_4+realizado_5+realizado_6 )realizado FROM (
 SELECT 0 ce, 'NAC' cestatal, 1 orden,
         
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_2,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_2,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_3,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_3,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_4,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_4,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_5,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_5,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_6,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6
             FROM  ce2019_MASRENCAL.tr_predios pre 
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE   ue.c154 IN ('01','01A','A1','01C','05','06') and 1=1
-$P!{where1}
-            GROUP BY  ue.c154
+            WHERE   pre.id_cgo IN ('1','2','3','4','5','6') $P!{where1}
+            GROUP BY  pre.id_cgo
 
 union all
 SELECT ue.ce, CASE
@@ -332,90 +331,90 @@ SELECT ue.ce, CASE
             WHEN  ue.ce ='34' THEN 'MEP'
 
 end cestatal, 2 orden,
-          sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+          sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_2,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_2,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_3,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_3,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_4,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_4,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_5,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_5,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_6,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6
             FROM  ce2019_MASRENCAL.tr_predios pre 
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
-            WHERE  ue.c154 IN ('01','01A','A1','01C','05','06') 
-$P!{where1}
+            WHERE  pre.id_cgo IN ('1','2','3','4','5','6')  $P!{where1}
+
             GROUP BY ue.ce, ue.c154
 
 ) dd  order by ce]]>
 		</queryString>
 		<field name="CE" class="java.math.BigDecimal"/>
 		<field name="CESTATAL" class="java.lang.String"/>
-		<field name="CARGA_01" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_01" class="java.math.BigDecimal"/>
-		<field name="CARGA_01A" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_01A" class="java.math.BigDecimal"/>
-		<field name="CARGA_A1" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_A1" class="java.math.BigDecimal"/>
-		<field name="CARGA_01C" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_01C" class="java.math.BigDecimal"/>
-		<field name="CARGA_05" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_05" class="java.math.BigDecimal"/>
-		<field name="CARGA_06" class="java.math.BigDecimal"/>
-		<field name="REALIZADO_06" class="java.math.BigDecimal"/>
+		<field name="CARGA_1" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_1" class="java.math.BigDecimal"/>
+		<field name="CARGA_2" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_2" class="java.math.BigDecimal"/>
+		<field name="CARGA_3" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_3" class="java.math.BigDecimal"/>
+		<field name="CARGA_4" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_4" class="java.math.BigDecimal"/>
+		<field name="CARGA_5" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_5" class="java.math.BigDecimal"/>
+		<field name="CARGA_6" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_6" class="java.math.BigDecimal"/>
 		<field name="CARGA" class="java.math.BigDecimal"/>
 		<field name="REALIZADO" class="java.math.BigDecimal"/>
-		<variable name="sumaCarga01" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_01}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_01}]]></initialValueExpression>
+		<variable name="sumaCarga1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_1}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizado01" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_01}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_01}]]></initialValueExpression>
+		<variable name="sumaRealizado1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_1}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_1}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaCarga01A" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_01A}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_01A}]]></initialValueExpression>
+		<variable name="sumaCarga2" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_2}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_2}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizado01A" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_01A}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_01A}]]></initialValueExpression>
+		<variable name="sumaRealizado2" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_2}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_2}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaCargaA1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_A1}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_A1}]]></initialValueExpression>
+		<variable name="sumaCarga3" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_3}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_3}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizadoA1" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_A1}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_A1}]]></initialValueExpression>
+		<variable name="sumaRealizado3" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_3}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_3}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaCarga01C" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_01C}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_01C}]]></initialValueExpression>
+		<variable name="sumaCarga4" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_4}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_4}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizado01C" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_01C}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_01C}]]></initialValueExpression>
+		<variable name="sumaRealizado4" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_4}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_4}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaCarga05" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_05}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_05}]]></initialValueExpression>
+		<variable name="sumaCarga5" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_5}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_5}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizado05" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_05}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_05}]]></initialValueExpression>
+		<variable name="sumaRealizado5" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_5}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_5}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaCarga06" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{CARGA_06}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{CARGA_06}]]></initialValueExpression>
+		<variable name="sumaCarga6" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{CARGA_6}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{CARGA_6}]]></initialValueExpression>
 		</variable>
-		<variable name="sumaRealizado06" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
-			<variableExpression><![CDATA[$F{REALIZADO_06}]]></variableExpression>
-			<initialValueExpression><![CDATA[$F{REALIZADO_06}]]></initialValueExpression>
+		<variable name="sumaRealizado6" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
+			<variableExpression><![CDATA[$F{REALIZADO_6}]]></variableExpression>
+			<initialValueExpression><![CDATA[$F{REALIZADO_6}]]></initialValueExpression>
 		</variable>
 		<variable name="sumaTotalCarga" class="java.lang.Long" resetType="Group" resetGroup="group1" calculation="Sum">
 			<variableExpression><![CDATA[$F{CARGA}]]></variableExpression>
@@ -543,14 +542,6 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 				</textElement>
 				<text><![CDATA[Reporte de Avance de Registros Punteados]]></text>
 			</staticText>
-			<image>
-				<reportElement x="12" y="15" width="100" height="50" uuid="9b7bfd45-8b1f-4e61-8c7a-e12b9ebb38d3"/>
-				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
-			</image>
-			<image isUsingCache="false">
-				<reportElement x="468" y="9" width="95" height="45" uuid="fbd158db-2262-47ed-be03-6d31656338e9"/>
-				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
-			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -559,7 +550,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 	<detail>
 		<band height="134">
 			<componentElement>
-				<reportElement key="table 8" style="table 8" mode="Transparent" x="0" y="0" width="572" height="115" backcolor="#F4B084" uuid="0218d156-65d4-44bc-b54f-410c6d7e383b"/>
+				<reportElement key="table 8" style="table 8" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="0" y="0" width="741" height="115" isPrintInFirstWholeBand="true" backcolor="#F4B084" uuid="0218d156-65d4-44bc-b54f-410c6d7e383b"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="01 01C A1 05 06 07 12" uuid="a3c0d3de-8504-482e-b098-07554f815f80">
 						<datasetParameter name="where1">
@@ -567,10 +558,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="102" uuid="c7850ecc-0623-477f-9eda-ba940c986e83">
-						<jr:tableFooter height="0" rowSpan="1"/>
+					<jr:column width="50" uuid="c7850ecc-0623-477f-9eda-ba940c986e83">
 						<jr:groupHeader groupName="group1">
-							<jr:cell style="table_TD_1" height="30" rowSpan="1">
+							<jr:cell style="table_TD_1" height="31" rowSpan="1">
 								<box>
 									<topPen lineWidth="0.5"/>
 									<leftPen lineWidth="0.5"/>
@@ -578,7 +568,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 									<rightPen lineWidth="0.5"/>
 								</box>
 								<textField>
-									<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="102" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="a186e8f5-8f55-49df-bda8-4e1521c539d2"/>
+									<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="50" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="a186e8f5-8f55-49df-bda8-4e1521c539d2"/>
 									<box>
 										<topPen lineWidth="0.5"/>
 										<leftPen lineWidth="0.5"/>
@@ -586,7 +576,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<rightPen lineWidth="0.5"/>
 									</box>
 									<textElement textAlignment="Center" verticalAlignment="Middle">
-										<font isBold="true" isItalic="true"/>
+										<font fontName="SansSerif" isBold="true" isItalic="true"/>
 									</textElement>
 									<textFieldExpression><![CDATA[$F{CESTATAL}]]></textFieldExpression>
 								</textField>
@@ -594,7 +584,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:groupHeader>
 						<jr:columnHeader height="61" rowSpan="2">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="102" height="61" forecolor="#FFFFFF" backcolor="#E47439" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
+								<reportElement mode="Opaque" x="0" y="0" width="50" height="61" forecolor="#FFFFFF" backcolor="#E47439" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#003333"/>
@@ -608,13 +598,12 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<text><![CDATA[CE/Origen]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:columnFooter height="0" rowSpan="1"/>
-						<jr:detailCell style="table_TD" height="25" rowSpan="1"/>
+						<jr:detailCell style="table_TD_2" height="30" rowSpan="1"/>
 					</jr:column>
-					<jr:columnGroup width="234" uuid="19a3852d-7a47-478e-a530-e536d57a90e6">
+					<jr:columnGroup width="120" uuid="19a3852d-7a47-478e-a530-e536d57a90e6">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="234" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="421423c5-40b2-475a-829c-5292b6a64cfc"/>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="421423c5-40b2-475a-829c-5292b6a64cfc"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -625,12 +614,12 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
-								<text><![CDATA['01]]></text>
+								<text><![CDATA[1]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="118" uuid="5785ab62-8045-496f-af97-4bc05ae91475">
+						<jr:column width="60" uuid="5785ab62-8045-496f-af97-4bc05ae91475">
 							<jr:groupHeader groupName="group1">
-								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+								<jr:cell style="table_TD_1" height="31" rowSpan="1">
 									<box>
 										<topPen lineWidth="0.5"/>
 										<leftPen lineWidth="0.5"/>
@@ -638,7 +627,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<rightPen lineWidth="0.5"/>
 									</box>
 									<textField evaluationTime="Group" evaluationGroup="group1">
-										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="118" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="085a8eba-ce8d-4510-9dc9-8d100f0837e5"/>
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="085a8eba-ce8d-4510-9dc9-8d100f0837e5"/>
 										<box>
 											<topPen lineWidth="0.5"/>
 											<leftPen lineWidth="0.5"/>
@@ -648,13 +637,13 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaCarga01}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaCarga1}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="118" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="f892bf13-bad7-4e79-9615-b7a183f31981"/>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="f892bf13-bad7-4e79-9615-b7a183f31981"/>
 									<box>
 										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 										<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -668,19 +657,19 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 									<text><![CDATA[CARGA]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<jr:detailCell style="table_TD_2" height="30" rowSpan="1">
 								<textField>
-									<reportElement style="table_TD_2" x="0" y="0" width="118" height="25" uuid="f07c2d09-ee60-43d7-bdaf-92c7a9a3348d"/>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="f07c2d09-ee60-43d7-bdaf-92c7a9a3348d"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{CARGA_01}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CARGA_1}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="116" uuid="6ca8bc58-43b4-44bc-9505-249bcb3eb2a1">
+						<jr:column width="60" uuid="6ca8bc58-43b4-44bc-9505-249bcb3eb2a1">
 							<jr:groupHeader groupName="group1">
-								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+								<jr:cell style="table_TD_1" height="31" rowSpan="1">
 									<textField evaluationTime="Group" evaluationGroup="group1">
-										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="116" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="9b581864-5072-4c0a-aad1-54e1642e7c29"/>
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="9b581864-5072-4c0a-aad1-54e1642e7c29"/>
 										<box>
 											<topPen lineWidth="0.5"/>
 											<leftPen lineWidth="0.5"/>
@@ -690,13 +679,13 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaRealizado01}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaRealizado1}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="116" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="ee92ea0c-f72e-40e1-baff-0be396e8f89e"/>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="ee92ea0c-f72e-40e1-baff-0be396e8f89e"/>
 									<box>
 										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 										<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -710,19 +699,19 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 									<text><![CDATA[REALIZADO]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<jr:detailCell style="table_TD_2" height="30" rowSpan="1">
 								<textField>
-									<reportElement style="table_TD_2" x="0" y="0" width="116" height="25" uuid="ba0234b5-d0d0-4baf-b4cf-e164ced3b0c4"/>
+									<reportElement style="table_TD_2" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="ba0234b5-d0d0-4baf-b4cf-e164ced3b0c4"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{REALIZADO_01}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{REALIZADO_1}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
 					</jr:columnGroup>
-					<jr:columnGroup width="225" uuid="d907e9f1-0e83-4579-861d-891af8510346">
+					<jr:columnGroup width="120" uuid="d907e9f1-0e83-4579-861d-891af8510346">
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="225" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="0121ffa8-961f-4716-809f-af5e20ac21d6"/>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="0121ffa8-961f-4716-809f-af5e20ac21d6"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -733,14 +722,14 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font isBold="true"/>
 								</textElement>
-								<text><![CDATA['01 C]]></text>
+								<text><![CDATA[2]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:column width="124" uuid="e1518bb9-dd6f-45ce-ad78-a8b3f0ed2efc">
+						<jr:column width="60" uuid="e1518bb9-dd6f-45ce-ad78-a8b3f0ed2efc">
 							<jr:groupHeader groupName="group1">
-								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+								<jr:cell style="table_TD_1" height="31" rowSpan="1">
 									<textField evaluationTime="Group" evaluationGroup="group1">
-										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="124" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="48ef8cc0-7b3f-4d04-af1c-7910c90b19ff"/>
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="48ef8cc0-7b3f-4d04-af1c-7910c90b19ff"/>
 										<box>
 											<topPen lineWidth="0.5"/>
 											<leftPen lineWidth="0.5"/>
@@ -750,13 +739,13 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaTotalCarga}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaCarga2}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="124" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="98a16c7e-acfa-4476-95b9-7d43043df235"/>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="98a16c7e-acfa-4476-95b9-7d43043df235"/>
 									<box>
 										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 										<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -770,19 +759,19 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 									<text><![CDATA[CARGA]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<jr:detailCell style="table_TD_2" height="30" rowSpan="1">
 								<textField>
-									<reportElement style="table_TD_2" x="0" y="0" width="124" height="25" uuid="9ca0d1bb-32ae-4b5d-b8ed-27bc21079662"/>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="9ca0d1bb-32ae-4b5d-b8ed-27bc21079662"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{CARGA}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{CARGA_2}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
-						<jr:column width="101" uuid="68529034-d620-4845-a21a-38d559f49638">
+						<jr:column width="60" uuid="68529034-d620-4845-a21a-38d559f49638">
 							<jr:groupHeader groupName="group1">
-								<jr:cell style="table_TD_1" height="30" rowSpan="1">
+								<jr:cell style="table_TD_1" height="31" rowSpan="1">
 									<textField evaluationTime="Group" evaluationGroup="group1">
-										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="101" height="30" forecolor="#FFFFFF" backcolor="#666666" uuid="efdd01e8-4fb5-4d43-bbae-a90a2ae5a07e"/>
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="efdd01e8-4fb5-4d43-bbae-a90a2ae5a07e"/>
 										<box>
 											<topPen lineWidth="0.5"/>
 											<leftPen lineWidth="0.5"/>
@@ -792,13 +781,13 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 										<textElement textAlignment="Center" verticalAlignment="Middle">
 											<font isBold="true" isItalic="true"/>
 										</textElement>
-										<textFieldExpression><![CDATA[$V{sumaTotalRealizado}]]></textFieldExpression>
+										<textFieldExpression><![CDATA[$V{sumaRealizado2}]]></textFieldExpression>
 									</textField>
 								</jr:cell>
 							</jr:groupHeader>
 							<jr:columnHeader style="table 8_CH" height="31" rowSpan="1">
 								<staticText>
-									<reportElement mode="Opaque" x="0" y="0" width="101" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="4d5c8e25-d591-4307-a3c1-98f4c1fce4af"/>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="4d5c8e25-d591-4307-a3c1-98f4c1fce4af"/>
 									<box>
 										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 										<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -812,11 +801,444 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 									<text><![CDATA[REALIZADO]]></text>
 								</staticText>
 							</jr:columnHeader>
-							<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<jr:detailCell style="table_TD_2" height="30" rowSpan="1">
 								<textField>
-									<reportElement style="table_TD_2" x="0" y="0" width="101" height="25" uuid="af07c6ce-b844-4fe3-ac0a-427681df23ae"/>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="af07c6ce-b844-4fe3-ac0a-427681df23ae"/>
 									<textElement textAlignment="Center" verticalAlignment="Middle"/>
-									<textFieldExpression><![CDATA[$F{REALIZADO}]]></textFieldExpression>
+									<textFieldExpression><![CDATA[$F{REALIZADO_2}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="120" uuid="474bd906-8c73-4baa-a918-5e0de32f246e">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="bcc5d36a-e977-4ae5-9448-47c366d426f4"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[3]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="60" uuid="bfe75a1f-2907-4a8c-8c28-0998be760f7f">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="3900b613-00a6-4000-b7ff-806819879c5f"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga3}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="3c8a14fc-5520-4e59-897d-1f1157eb28c6"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="5df2cb71-7713-4607-a9f9-1aae67c38a0e"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="ce1fe2ab-1c17-4282-b323-4b6b17781d57">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="6c273cd4-eb2e-4191-9157-3f284e48fd07"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado3}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="31bc8934-cd57-4539-8254-bf2cc36dd7e4"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="6f286962-fb85-495d-830e-1e2590894825"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_3}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="120" uuid="b9fe611f-1dfb-412a-9170-9c354d92543b">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="28575e35-28d0-417c-bd5c-24c47a88620a"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[4]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="60" uuid="2ef9e2e5-48da-4526-a6d8-03a219566314">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="61cd4d9e-4b83-436b-8cd9-4ef32002577e"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga4}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="e5a73d67-e1e8-4617-b52f-a36f83e6301d"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="cb7443b8-9cdf-4a4d-8f97-213964081ea9"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_4}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="8a769034-2f17-40aa-99b3-46f9fbd7513d">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="6697a6cd-69cb-4cef-991f-6f2fd1063c9e"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado4}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="e139cf02-2a88-4520-8c49-942ae9e0e7b2"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="aed0653f-50d3-441c-b203-8988dc664ee8"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_4}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="120" uuid="2139e1ad-c5b1-419f-8c7d-0ce13d1b1143">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="b732ce7c-c88e-40d6-9ead-e76add2f85bc"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[5]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="60" uuid="e2316f11-6137-436e-80b3-e950d6e200af">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="9e2a9ca1-21f7-4c00-a29e-039fb6cd1eb1"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga5}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="2b74474f-d786-4c7a-bd48-c2e6f7868dfd"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="c894cda6-6aa1-4b41-b6df-591a81fa234f"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_5}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="60" uuid="49ec274a-3b1d-4df1-a1ae-bc37201a1587">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="e2c4901f-dc49-4f68-97af-6425f42e7293"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado5}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="d3116c36-1e50-43d0-af4c-5f98ab5072b7"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="e4a342b6-61f1-416b-a523-0c15fe4b36b4"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_5}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+					<jr:columnGroup width="131" uuid="1596d479-a687-4380-8d0f-a068696dfc5d">
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="120" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="4dfff85f-97ce-40a7-b02e-836e10aef6f9"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#000000"/>
+									<leftPen lineWidth="0.5" lineColor="#000000"/>
+									<bottomPen lineWidth="0.5" lineColor="#000000"/>
+									<rightPen lineWidth="0.5" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="10" isBold="true" isItalic="false"/>
+									<paragraph lineSpacing="1_1_2" leftIndent="20" rightIndent="20"/>
+								</textElement>
+								<text><![CDATA[6]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:column width="60" uuid="29294160-7b92-4d30-9aaf-adab212e76ba">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="704c0f75-7e44-4a3f-8102-e6763328740a"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaCarga6}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="8247692f-29c7-4a0b-9521-431ec7674eaa"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[CARGA]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="76d3f407-e710-41c6-a02f-b29eb6049ae5"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{CARGA_6}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="71" uuid="6ef4a4da-2afa-4c95-beb9-64aadd99b114">
+							<jr:tableHeader height="0" rowSpan="1"/>
+							<jr:tableFooter height="0" rowSpan="1"/>
+							<jr:groupHeader groupName="group1">
+								<jr:cell height="31" rowSpan="1">
+									<textField evaluationTime="Group" evaluationGroup="group1">
+										<reportElement style="table_TD" mode="Opaque" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" forecolor="#FFFFFF" backcolor="#666666" uuid="a667c721-d394-4e11-9219-afa6554030c4"/>
+										<box>
+											<topPen lineWidth="0.5"/>
+											<leftPen lineWidth="0.5"/>
+											<bottomPen lineWidth="0.5"/>
+											<rightPen lineWidth="0.5"/>
+										</box>
+										<textElement textAlignment="Center" verticalAlignment="Middle">
+											<font isBold="true" isItalic="true"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$V{sumaRealizado6}]]></textFieldExpression>
+									</textField>
+								</jr:cell>
+							</jr:groupHeader>
+							<jr:columnHeader height="31" rowSpan="1">
+								<staticText>
+									<reportElement mode="Opaque" x="0" y="0" width="60" height="31" forecolor="#FFFFFF" backcolor="#E47439" uuid="d8c40502-2dbf-4505-9252-708b6841857a"/>
+									<box>
+										<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+										<topPen lineWidth="0.5" lineColor="#000000"/>
+										<leftPen lineWidth="0.5" lineColor="#000000"/>
+										<bottomPen lineWidth="0.5" lineColor="#000000"/>
+										<rightPen lineWidth="0.5" lineColor="#000000"/>
+									</box>
+									<textElement textAlignment="Center" verticalAlignment="Middle">
+										<font isBold="true"/>
+									</textElement>
+									<text><![CDATA[REALIZADO]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:columnFooter height="30" rowSpan="1"/>
+							<jr:detailCell height="30" rowSpan="1">
+								<textField>
+									<reportElement style="table_TD_2" x="0" y="0" width="60" height="30" isPrintWhenDetailOverflows="true" uuid="4c091226-369c-47ab-b2bf-e040e51e8ceb"/>
+									<textElement textAlignment="Center" verticalAlignment="Middle"/>
+									<textFieldExpression><![CDATA[$F{REALIZADO_6}]]></textFieldExpression>
 								</textField>
 							</jr:detailCell>
 						</jr:column>
@@ -828,25 +1250,25 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 	<pageFooter>
 		<band height="49">
 			<textField>
-				<reportElement x="266" y="16" width="23" height="21" uuid="c0be0f8a-116e-445a-bcf7-e2cd2712aa3b"/>
+				<reportElement x="367" y="8" width="23" height="21" uuid="c0be0f8a-116e-445a-bcf7-e2cd2712aa3b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="26" width="266" height="1" uuid="4118a897-4017-4d19-b4b6-f59b65bb7bcb"/>
+				<reportElement x="0" y="26" width="367" height="1" uuid="4118a897-4017-4d19-b4b6-f59b65bb7bcb"/>
 			</line>
 			<line>
-				<reportElement x="289" y="27" width="266" height="1" uuid="938a5b05-cdf9-4f96-a191-784a0287a67f"/>
+				<reportElement x="390" y="27" width="362" height="1" uuid="938a5b05-cdf9-4f96-a191-784a0287a67f"/>
 			</line>
 			<staticText>
-				<reportElement x="433" y="28" width="104" height="20" uuid="00247605-8339-422c-8992-84895402cc22"/>
+				<reportElement x="564" y="29" width="104" height="20" uuid="00247605-8339-422c-8992-84895402cc22"/>
 				<textElement verticalAlignment="Middle">
 					<font size="8" isBold="false" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de Generación:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
-				<reportElement x="514" y="28" width="54" height="20" uuid="1e8c0c12-5036-4fd9-80a5-e86deab24485"/>
+				<reportElement x="687" y="28" width="54" height="20" uuid="1e8c0c12-5036-4fd9-80a5-e86deab24485"/>
 				<box>
 					<pen lineWidth="0.0"/>
 					<topPen lineWidth="0.0"/>
@@ -864,7 +1286,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 	<noData>
 		<band height="50">
 			<staticText>
-				<reportElement x="205" y="15" width="144" height="20" uuid="d0c935da-68af-4068-8a1b-e96bb8f7cd6c"/>
+				<reportElement x="266" y="15" width="144" height="20" uuid="d0c935da-68af-4068-8a1b-e96bb8f7cd6c"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>

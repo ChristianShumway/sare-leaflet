@@ -14,7 +14,8 @@ body{
   margin-top: 0px;
 }
 #mdm6DinamicPanel{
-    display: block!important
+    display: block!important;
+    visibility:initial !important;
 } 
 .swal-wide{
     width: 600px  !important;
