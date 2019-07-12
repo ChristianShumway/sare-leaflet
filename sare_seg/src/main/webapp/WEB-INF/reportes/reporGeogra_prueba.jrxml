@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteTecnico" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="ec0b94dd-faa5-4539-a9a1-73b8e0247adc">
 	<property name="ireport.zoom" value="1.3310000000000162"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="47"/>
 	<property name="ireport.y" value="0"/>
 	<style name="table">
 		<box>
@@ -133,7 +133,9 @@
 		</conditionalStyle>
 	</style>
 	<scriptlet name="scriptlet1" class="net.sf.jasperreports.engine.JRDefaultScriptlet"/>
-	<parameter name="where" class="java.lang.String"/>
+	<parameter name="where" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<parameter name="esquema" class="java.lang.String"/>
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
@@ -173,7 +175,7 @@
             WHEN  ue.ce ='33' THEN 'DFS'
             WHEN  ue.ce ='34' THEN 'MEP'
 
-end ce,ue.ce cve_ce,po.cve_operativa tramo_control,inm.origen,ue.ID_UE,inm.clee_emp,ue.e08,ue.e09,ue.E23A,ue.c154,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
+end ce,ue.ce cve_ce,po.cve_operativa tramo_control,inm.origen,ue.ID_UE,pre.status_sare,ue.e08,ue.e09,ue.E23A,pre.id_cgo,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
 ue.e07 cve_mza,ue.tipo_e10,ue.e10 nomvial,ue.e11 numext,ue.e11a numextalf,ue.tipo_e14,ue.e14,ue.e12,ue.e19,ue.e20
 from 
 ce2019_masrencal.tr_plan_oper po
@@ -182,18 +184,18 @@ join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
 join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
 
 
-where ST_sare in ('10','20') $P!{where}   order by tramo_control,origen,e23a,clee_emp,id_ue,c154]]>
+where ST_sare in ('10','20')  $P!{where}  order by tramo_control,origen,e23a,status_sare,id_ue,id_cgo]]>
 	</queryString>
 	<field name="CE" class="java.lang.String"/>
 	<field name="CVE_CE" class="java.math.BigDecimal"/>
 	<field name="TRAMO_CONTROL" class="java.lang.String"/>
 	<field name="ORIGEN" class="java.lang.String"/>
 	<field name="ID_UE" class="java.math.BigDecimal"/>
-	<field name="CLEE_EMP" class="java.lang.String"/>
+	<field name="STATUS_SARE" class="java.math.BigDecimal"/>
 	<field name="E08" class="java.lang.String"/>
 	<field name="E09" class="java.lang.String"/>
 	<field name="E23A" class="java.lang.String"/>
-	<field name="C154" class="java.lang.String"/>
+	<field name="ID_CGO" class="java.math.BigDecimal"/>
 	<field name="CVE_ENT" class="java.lang.String"/>
 	<field name="CVE_MUN" class="java.lang.String"/>
 	<field name="CVE_LOC" class="java.lang.String"/>
@@ -224,19 +226,19 @@ where ST_sare in ('10','20') $P!{where}   order by tramo_control,origen,e23a,cle
 				<text><![CDATA[Reporte de Establecimientos Pendientes de Punteo]]></text>
 			</staticText>
 			<image>
-				<reportElement x="22" y="8" width="100" height="50" uuid="d38d5f8b-d408-43c7-97de-31dbab298128"/>
-				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
+				<reportElement x="654" y="6" width="95" height="45" uuid="73aa200f-7b69-4985-829d-133f5f1f71d8"/>
+				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="687" y="0" width="95" height="45" uuid="1e31d781-1d40-416d-bc49-4d5b2ecb23f6"/>
-				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
+				<reportElement x="20" y="1" width="100" height="50" uuid="c09b2a8f-c6c5-495e-be60-dfef2197fb46"/>
+				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="44">
 			<staticText>
-				<reportElement mode="Opaque" x="100" y="0" width="38" height="44" forecolor="#FFFFFF" backcolor="#666666" uuid="d29be934-5628-4657-931e-280391de5a80"/>
+				<reportElement mode="Opaque" x="99" y="0" width="39" height="44" forecolor="#FFFFFF" backcolor="#666666" uuid="d29be934-5628-4657-931e-280391de5a80"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -248,10 +250,10 @@ where ST_sare in ('10','20') $P!{where}   order by tramo_control,origen,e23a,cle
 					<font fontName="SansSerif" size="7" isBold="false"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<text><![CDATA[CVE_EMP]]></text>
+				<text><![CDATA[STATUS_SARE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="67" y="0" width="33" height="44" forecolor="#FFFFFF" backcolor="#666666" uuid="6fe16cc2-04b7-493d-8e54-1a2072ff8d6e"/>
+				<reportElement mode="Opaque" x="67" y="0" width="32" height="44" forecolor="#FFFFFF" backcolor="#666666" uuid="6fe16cc2-04b7-493d-8e54-1a2072ff8d6e"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -263,7 +265,7 @@ where ST_sare in ('10','20') $P!{where}   order by tramo_control,origen,e23a,cle
 					<font fontName="SansSerif" size="7" isBold="false"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<text><![CDATA[ORIGEN]]></text>
+				<text><![CDATA[ID_CGO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="22" height="44" forecolor="#FFFFFF" backcolor="#666666" uuid="be65544d-66e0-4a88-b8f5-4979d262e710"/>
@@ -588,7 +590,7 @@ CONTROL	]]></text>
 				<text><![CDATA[E19]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="772" y="22" width="31" height="22" forecolor="#FFFFFF" backcolor="#666666" uuid="a3062a87-c979-411e-8515-eb3f6f26b82b"/>
+				<reportElement mode="Opaque" x="772" y="22" width="30" height="22" forecolor="#FFFFFF" backcolor="#666666" uuid="a3062a87-c979-411e-8515-eb3f6f26b82b"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -662,7 +664,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{C154}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{STATUS_SARE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="452" y="0" width="20" height="28" uuid="7518531e-a3b0-4ede-ade5-fc51c13f31c1"/>
@@ -695,7 +697,7 @@ CONTROL	]]></text>
 				<textFieldExpression><![CDATA[$F{CVE_MUN}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="100" y="0" width="38" height="28" uuid="4049580e-f867-49e1-84bf-7b08ca074dbf"/>
+				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="99" y="0" width="39" height="28" uuid="4049580e-f867-49e1-84bf-7b08ca074dbf"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -706,7 +708,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{CLEE_EMP}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{STATUS_SARE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="353" y="0" width="20" height="28" uuid="0b173181-dbbd-48d3-8e6c-1b8d44e2ab43"/>
@@ -798,7 +800,7 @@ CONTROL	]]></text>
 				<textFieldExpression><![CDATA[$F{ID_UE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="67" y="0" width="33" height="28" uuid="a5538b80-af77-41f1-b1e6-99684a1bf373"/>
+				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="67" y="0" width="32" height="28" uuid="a5538b80-af77-41f1-b1e6-99684a1bf373"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -809,7 +811,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ORIGEN}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ID_CGO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table_TD_2" stretchType="RelativeToTallestObject" x="492" y="0" width="20" height="28" uuid="be1ebb2c-40b6-477d-8c26-617fd20bea87"/>
