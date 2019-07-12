@@ -574,9 +574,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
 					<jr:column width="44" uuid="c7850ecc-0623-477f-9eda-ba940c986e83">
-						<jr:columnHeader height="61" rowSpan="2">
+						<jr:columnHeader height="68" rowSpan="2">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="44" height="61" forecolor="#FFFFFF" backcolor="#E47439" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
+								<reportElement mode="Opaque" x="0" y="0" width="44" height="67" forecolor="#FFFFFF" backcolor="#E47439" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#003333"/>
@@ -601,9 +601,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:detailCell>
 					</jr:column>
 					<jr:columnGroup width="88" uuid="19a3852d-7a47-478e-a530-e536d57a90e6">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="421423c5-40b2-475a-829c-5292b6a64cfc"/>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="421423c5-40b2-475a-829c-5292b6a64cfc"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -614,7 +614,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[1]]></text>
+								<text><![CDATA[(1) Fusión de manzanas]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="5785ab62-8045-496f-af97-4bc05ae91475">
@@ -673,9 +673,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="88" uuid="d907e9f1-0e83-4579-861d-891af8510346">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="0121ffa8-961f-4716-809f-af5e20ac21d6"/>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="0121ffa8-961f-4716-809f-af5e20ac21d6"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -686,7 +686,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[2]]></text>
+								<text><![CDATA[(2) Subdivisión de manzana]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="e1518bb9-dd6f-45ce-ad78-a8b3f0ed2efc">
@@ -751,9 +751,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="88" uuid="474bd906-8c73-4baa-a918-5e0de32f246e">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="bcc5d36a-e977-4ae5-9448-47c366d426f4"/>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="bcc5d36a-e977-4ae5-9448-47c366d426f4"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -764,7 +764,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[3]]></text>
+								<text><![CDATA[(3) Eliminación de manzana]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="bfe75a1f-2907-4a8c-8c28-0998be760f7f">
@@ -825,9 +825,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="88" uuid="b9fe611f-1dfb-412a-9170-9c354d92543b">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="28575e35-28d0-417c-bd5c-24c47a88620a"/>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="28575e35-28d0-417c-bd5c-24c47a88620a"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -838,7 +838,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[4]]></text>
+								<text><![CDATA[(4) Creación de manzana]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="2ef9e2e5-48da-4526-a6d8-03a219566314">
@@ -899,9 +899,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="88" uuid="2139e1ad-c5b1-419f-8c7d-0ce13d1b1143">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="b732ce7c-c88e-40d6-9ead-e76add2f85bc"/>
+								<reportElement mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="b732ce7c-c88e-40d6-9ead-e76add2f85bc"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -912,7 +912,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true"/>
 								</textElement>
-								<text><![CDATA[5]]></text>
+								<text><![CDATA[(5) Referencia geográfica errónea]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="e2316f11-6137-436e-80b3-e950d6e200af">
@@ -973,9 +973,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="88" uuid="1596d479-a687-4380-8d0f-a068696dfc5d">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="88" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="4dfff85f-97ce-40a7-b02e-836e10aef6f9"/>
+								<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="88" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="4dfff85f-97ce-40a7-b02e-836e10aef6f9"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -985,9 +985,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true" isItalic="false"/>
-									<paragraph lineSpacing="1_1_2" leftIndent="20" rightIndent="20"/>
+									<paragraph lineSpacing="1_1_2"/>
 								</textElement>
-								<text><![CDATA[6]]></text>
+								<text><![CDATA[(6)Apertura de vialidad]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="29294160-7b92-4d30-9aaf-adab212e76ba">
@@ -1048,9 +1048,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="89" uuid="704e30f5-e5e3-4a7e-b3f0-dc68575166c4">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="89" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="81c19ec5-91ff-4944-a6e5-213c538caf82"/>
+								<reportElement mode="Opaque" x="0" y="0" width="89" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="81c19ec5-91ff-4944-a6e5-213c538caf82"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -1060,9 +1060,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="9" isBold="true" isItalic="false"/>
-									<paragraph lineSpacing="1_1_2" leftIndent="20" rightIndent="20"/>
+									<paragraph lineSpacing="1_1_2"/>
 								</textElement>
-								<text><![CDATA[7]]></text>
+								<text><![CDATA[(7) Registros en el mar]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:column width="44" uuid="6e959de7-5814-45da-871d-d4f2cc20a9ee">
@@ -1119,9 +1119,9 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 						</jr:column>
 					</jr:columnGroup>
 					<jr:columnGroup width="90" uuid="0c88fbc3-d0fb-470f-a542-884d230ba94b">
-						<jr:columnHeader height="30" rowSpan="1">
+						<jr:columnHeader height="37" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#E47439" uuid="678eeda8-1921-42b6-b8b0-61d7717b53d8"/>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="37" forecolor="#FFFFFF" backcolor="#E47439" uuid="678eeda8-1921-42b6-b8b0-61d7717b53d8"/>
 								<box>
 									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
 									<topPen lineWidth="0.5" lineColor="#000000"/>
