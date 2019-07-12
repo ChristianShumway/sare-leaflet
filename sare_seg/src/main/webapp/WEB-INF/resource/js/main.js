@@ -3057,3 +3057,10 @@ const llamarServicioclases=(codigoScian, valor)=>{
     )  
      
 }
+
+
+function abrirAyuda(){
+     //$('a[href$=".pdf"]').prop('target', '_blank');
+    window.open( "/sare/resources/ayuda/Manual del Usuario - Sare.pdf", '_blank');     
+} 
+ 
