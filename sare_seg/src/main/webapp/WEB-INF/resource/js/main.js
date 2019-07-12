@@ -1852,6 +1852,25 @@ const handleShowResult = result => {
           handleShowSaveAlert('error', 'Error', data[0].datos.mensaje.messages, false)
           return;
         }
+        if(data[0].datos.mensaje.type === 'error')
+        {
+            Swal.fire({
+            title: 'Ocurrio un error al intentar Guardar!',
+            text: "Deseas intentar nuevamente el guardado?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#10455B',
+            cancelButtonColor: '#424242',
+            confirmButtonText: 'Guardar',
+            cancelButtonText:'Cancelar'
+            }).then((result) => {
+              if (result.value) {
+                modalViewPreliminar()
+              }else{
+                 handleCancelClick()
+              }
+            })
+        }
         else {
           layersSARE = ['c100', 'wdenue']
           handleCancelClick()
@@ -2821,10 +2840,10 @@ var Actiondesbloquear = function (id_ue) {
     text: "",
     type: 'warning',
     showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Correcto, Desbloquear!',
-    cancelButtonText: 'Cancelar'
+    confirmButtonColor: '#10455B',
+    cancelButtonColor: '#424242',
+    confirmButtonText: 'Desbloquear',
+    cancelButtonText:'Cancelar'
   })
     .then( result => handleShowResultDesbloqueo(result,id_ue) )
 }
