@@ -1,12 +1,12 @@
 
-    var sources = {
+    var sourcesConfig = {
         proyAlias: 'Mapa Digital de México',
         proyName: 'mdm6',
         servicesVersion: '6.2',
         //mainPath: 'https://10.1.30.102:8181',
         mainPath: 'https://gaia.inegi.org.mx',
         search: {
-            contentType: "application/json; charset=utf-8",
+            contentType: "application/json; charset=utf-8",        
           //  url: 'https://10.1.30.102:8181/mdmsearchengine/search',
           url: 'https://gaia.inegi.org.mx/mdm_searchengine/search',
             type: 'POST',
