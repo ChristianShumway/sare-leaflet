@@ -227,11 +227,11 @@ where inm.id_ue is not null and ST_sare in ('10','20')  $P!{where} order by tram
 			</staticText>
 			<image>
 				<reportElement x="10" y="17" width="143" height="34" uuid="99f0492b-0f58-4bad-bae8-11ebb2d7cbe6"/>
-				<imageExpression><![CDATA[$P{URL}+"\\INEGI.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape">
 				<reportElement x="644" y="8" width="140" height="47" uuid="36f2cc04-e7fc-4c77-a029-8f7ab4a4e762"/>
-				<imageExpression><![CDATA[$P{URL}+"\\Logo_CE.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
