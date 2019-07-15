@@ -551,7 +551,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 			</staticText>
 			<image>
 				<reportElement x="19" y="15" width="143" height="34" uuid="7d0317a6-ce06-40ba-9258-e201768cc914"/>
-				<imageExpression><![CDATA[$P{URL}+"\\INEGI.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{URL}+"/INEGI.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape">
 				<reportElement x="601" y="8" width="140" height="47" uuid="ace20206-a3d4-406e-8b5d-e242bc59a26b"/>
