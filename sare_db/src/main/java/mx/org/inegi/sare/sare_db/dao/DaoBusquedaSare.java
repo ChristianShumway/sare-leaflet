@@ -234,11 +234,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     @Override
     public ArrayList<String> getClavesUnicasPG(Integer proyecto) {
-//        try {
-//            DataSource.getConnection();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(DaoBusquedaSare.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         final ArrayList<String> regresa = new ArrayList<>();
         StringBuilder sql;
         proyectos = getProyecto(proyecto);

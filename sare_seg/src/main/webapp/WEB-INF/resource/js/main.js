@@ -1634,8 +1634,8 @@ const handleFormValidations = () => {
           validations(totalInputs,objFormCentrocomercial,campo)
           validations(totalInputs,objForm2)
       }else{
-          totalInputs = objForm2.length
-          validations(totalInputs,objForm2)
+          totalInputs = objFormPunteoEnFrente.length
+          validations(totalInputs,objFormPunteoEnFrente)
       }
     }
   else {

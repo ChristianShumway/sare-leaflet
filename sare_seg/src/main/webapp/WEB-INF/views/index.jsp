@@ -128,6 +128,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
         <script>
         var getBrowserInfo = function() 
         {
@@ -210,6 +211,10 @@
                 <li><a id="ancla-form" onclick='handleModuleScroll(event)' href="#container-form">Formulario</a></li>
                 <li><a onclick='handleFullScreen()' data-toggle="tooltip" id="btn-fullscreen" title="Expandir"></a></li>
               </ul>
+            </div>
+              <div class="container-texto-error" id="error-navegador" style="display: none">
+                <h2>NAVEGADOR NO SOPORTADO</h2>
+                <h2>Puedes descargar Chrome <a class="sublineado" href="https://www.google.com/chrome/" target="blank">Aquí</a></h2>
             </div>
           </nav>
           <!-- MENU MOVIL -->
@@ -802,6 +807,13 @@
 
     </div>    
   </body>
+  
+  <script>
+            if(bowser.name == 'Internet Explorer' || bowser.name=='Microsoft Edge'){
+                const contenedorAlertaNavegador = document.getElementById('error-navegador')
+                contenedorAlertaNavegador.style.display="block"
+            }
+    </script>
 
     <script>
       function loadScript(url, callback) {

@@ -29,11 +29,14 @@ public class BackingGuardar extends BackingSincroniza {
     InterfaceGuardarUE InterfaceGuardar;
 
     public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare_guardado object, String usuario, String ip, Boolean isAlta) {
+        if(Integer.valueOf(object.getCE())<10){
+            object.setCE("0"+object.getCE());
+        }
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
         int validacion=1;
         if (inmueble != null) {
-            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
+            if (inmueble.getID_UE() == null || inmueble.getCE().equals("000") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("000")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
@@ -50,11 +53,11 @@ public class BackingGuardar extends BackingSincroniza {
                                 inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
-                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
+                                            /*if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
                                             } else {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                            }
+                                            }*/
                                         } else {
                                             Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                         }

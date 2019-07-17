@@ -6,6 +6,22 @@ body{
   height: 45px !important;
   line-height: 45px !important;
 }
+#error-navegador{
+    color: #ffffff;
+    background: #2d384a ;
+    padding: 10px 30px; 
+    border-radius: 10px;
+    width: 80%;
+    text-align: center;
+}
+
+.sublineado{
+     text-decoration: underline;
+}
+
+#error-navegador p{
+    text-align: center;
+}
 
 #mapa {
   height:584px;

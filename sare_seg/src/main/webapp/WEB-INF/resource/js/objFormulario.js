@@ -43,48 +43,6 @@ const objForm = [
     title:'title-asentamiento',
   },
   {
-    id:'e03',
-    key: 'ubicacion-geografica',
-    name:'e03',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e03N',
-    key: 'ubicacion-geografica',
-    name:'e03N',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e04',
-    key: 'ubicacion-geografica',
-    name:'e04',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e04N',
-    key: 'ubicacion-geografica',
-    name:'e04N',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e05',
-    key: 'ubicacion-geografica',
-    name:'e05',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e06',
-    key: 'ubicacion-geografica',
-    name:'e06',
-    title:'title-ubicacion-geografica',
-  },
-  {
-    id:'e07',
-    key: 'ubicacion-geografica',
-    name:'e07',
-    title:'title-ubicacion-geografica',
-  },
-  {
     id:'tipo_e10n',
     key: 'domicilio',
     name:'Tipo de Vialidad',
@@ -102,6 +60,7 @@ const objForm = [
     name:'Nombre de vialidad 1',
     title:'title-entre-vialidades',
   },
+  
   {
     id:'e10_B',
     key: 'entre-vialidades',
@@ -115,6 +74,101 @@ const objForm = [
     title:'title-calle-posterior',
   },
   
+  
+]
+const objFormPunteoEnFrente = [
+  
+  {
+    id:'e08',
+    key: 'referencia',
+    name:'e08',
+    title:'title-referencia'
+  },
+  {
+    id:'e09',
+    key: 'referencia',
+    name:'e09',
+    title:'title-referencia'
+  },
+  {
+    id:'e17_DESC',
+    key: 'referencia',
+    name:'e17_DESC',
+    title:'title-referencia'
+  },
+  {
+    id:'e11',
+    key: 'domicilio',
+    name:'Número exterior',
+    title:'title-domicilio',
+  },
+  {
+    id:'tipo_E14',
+    key: 'asentamiento',
+    name:'tipo de asentamiento humano',
+    title:'title-asentamiento',
+  },
+  {
+    id:'e14_A',
+    key: 'asentamiento',
+    name:'código postal',
+    title:'title-asentamiento',
+  },
+  {
+    id:'e14',
+    key: 'asentamiento',
+    name:'Nombre del asentamiento',
+    title:'title-asentamiento',
+  },
+  {
+    id:'tipo_e10n',
+    key: 'domicilio',
+    name:'Tipo de Vialidad',
+    title:'title-domicilio',
+  }, 
+  {
+    id:'e10',
+    key: 'domicilio',
+    name:'Nombre de Vialidad',
+    title:'title-domicilio',
+  },
+  {
+    id:'tipo_e10_an',
+    key: 'entre-vialidades',
+    name:'Tipo de vialidad',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'e10_A',
+    key: 'entre-vialidades',
+    name:'Nombre de vialidad 1',
+    title:'title-entre-vialidades',
+  },
+  
+  {
+    id:'tipo_e10_bn',
+    key: 'entre-vialidades',
+    name:'Tipo de vialidad 2',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'e10_B',
+    key: 'entre-vialidades',
+    name:'Nombre de vialidad 2',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'tipo_e10_cn',
+    key: 'calle-posterior',
+    name:'Tipo de Vialidad posterior',
+    title:'title-calle-posterior',
+  },
+  {
+    id:'e10_C',
+    key: 'calle-posterior',
+    name:'Nombre de vialidad',
+    title:'title-calle-posterior',
+  },
 ]
 
 const objForm2=[

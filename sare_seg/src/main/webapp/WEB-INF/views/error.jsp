@@ -7,6 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <link href="https://fonts.googleapis.com/css?family=Pathway+Gothic+One" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
   <title>ERROR</title>
   <style>
     @import url(https://fonts.googleapis.com/css?family=Righteous);
@@ -85,6 +86,7 @@
   </style>
 </head>
 <body>
+    
   
   <section class="container-error">
     <div class="container-img-error">
@@ -100,7 +102,20 @@
 
   <div class="container-logo-inegi">
     <img class="logo-inegi" src="resources/images/logos/INEGI.png" alt="logo" />
+    
   </div>
+    <div class="container-texto-error" id="error-navegador" style="display: none">
+        <h2>NAVEGADOR NO SOPORTADO</h2>
+      <h2>Puedes descargar Chrome <a href="https://www.google.com/chrome/" target="blank">Aquí</a></h2>
+    </div>
+  
+    
+    <script>
+            if(bowser.name == 'Internet Explorer' || bowser.name=='Microsoft Edge'){
+                const contenedorAlertaNavegador = document.getElementById('error-navegador')
+                contenedorAlertaNavegador.style.display="block"
+            }
+    </script>
   
 
 </body>
