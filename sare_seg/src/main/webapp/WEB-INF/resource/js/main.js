@@ -34,6 +34,8 @@ var id_ue;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
+var tipoE10_g,tipoE10a_g,tipoE10b_g,tipoE10c_g;
+var E10_g,E10a_g,E10b_g,E10c_g;
 
 const init = () => 
 {
@@ -228,6 +230,17 @@ const callServiceFindUE=(id_ue)=>{
       showDataInterfaz(data)
       id_ue=id_ue;
       id_inmueble=data[0].datos.datos[0].id_inmueble;
+
+      E10_g=data[0].datos.datos[0].e10;
+      E10a_g=data[0].datos.datos[0].e10_A;
+      E10b_g=data[0].datos.datos[0].e10_B;
+      E10c_g=data[0].datos.datos[0].e10_C;
+      
+      
+      tipoE10_g=data[0].datos.datos[0].tipo_E10;
+      tipoE10a_g=data[0].datos.datos[0].tipo_E10_A;
+      tipoE10b_g=data[0].datos.datos[0].tipo_E10_B;
+      tipoE10c_g=data[0].datos.datos[0].tipo_E10_C;
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -1373,23 +1386,42 @@ const actualizaForm = data => {
   MDM6('hideMarkers', 'identify')
   MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}})
   isChange = true
-    
+      
   for (var entry in data) {
     if (entry == 'e10_X') {
       var arrData = data[entry]
       var html = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>'
+      var htmlB = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>'
+      var htmlC = '<option data-tipo="" data-tipon="" data-cvevial="" data-cveseg="" value="Seleccione">Seleccione</option>'
       calles = []
       objCalles = []
       if (arrData) {
         arrData.forEach(function (o, i) {
           objCalles.push(o)
           calles.push(o.e10_X_cvevial)
-          html += '<option data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+          if((o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
+             html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+           }else{
+             html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+           }
+           
+            if((o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
+                 htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+           }else{
+             htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+           }
+           
+             
+            if((o.e10_X.toUpperCase()==E10c_g.toUpperCase())){
+               htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+           }else{
+             htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+           }
         });
         $('#e10_A').html(html)
-        $('#e10_B').html(html)
+        $('#e10_B').html(htmlB)
         if (arrData.length > 2) {
-          $('#e10_C').html(html)
+          $('#e10_C').html(htmlC)
           $('#e10_C').attr('disabled', false)
         } else {
           $('#e10_C').attr('disabled', true)
@@ -1421,11 +1453,11 @@ const actualizaForm = data => {
         else {
           $('#' + entry).val(data[entry])
         }
-      }
+      }        
     }
   }
      
-}
+ }  
 
 //Asigna Tipo_Vial
 var asignaTipoVial = function (e) {

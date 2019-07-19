@@ -212,6 +212,10 @@ public class BackingBusquedaSare {
                                                }
                                                else
                                                {
+                                                   System.out.println(" el interface trae "+InterfaceBusquedaSare);
+                                                   System.out.println(" el cx que trae "+cX);
+                                                   System.out.println(" el cy que trae "+cY);
+                                                   System.out.println("el element es "+element);
                                                 if(!InterfaceBusquedaSare.getValCoorGeo(proyecto,cX.toString(), cY.toString(), element))
                                                 {
                                                     element.setCOORD_X(null);

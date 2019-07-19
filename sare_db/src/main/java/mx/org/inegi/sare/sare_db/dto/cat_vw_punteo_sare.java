@@ -89,7 +89,7 @@ public class cat_vw_punteo_sare {
      private String tipo_e10_an_otro;
      private String tipo_e10_bn_otro;
      private String tipo_e10_cn_otro;
-    
+    private String cvevial;
 
     public cat_vw_punteo_sare() {
     }
@@ -257,7 +257,7 @@ public class cat_vw_punteo_sare {
             String E05, String E06, String E07, String E08, String E09, String E10, String E10_A, String E10_B, String E10_C, String E11, 
             String E11A, String E12, String E13, String E13A, String E14, String E14_A, BigDecimal E17, String E17_DESC, String E19, String E20, 
             String E23A, BigDecimal ID_UE, BigDecimal ORIGEN, Integer estatus_punteo, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, 
-            String TIPO_E10_C, String TIPO_E14, String TIPO_E19, BigDecimal id_inmueble) {
+            String TIPO_E10_C, String TIPO_E14, String TIPO_E19, BigDecimal id_inmueble,String cvevial) {
         this.CESTATAL = CESTATAL;
         this.COORD_X = COORD_X;
         this.COORD_Y = COORD_Y;
@@ -296,6 +296,7 @@ public class cat_vw_punteo_sare {
         this.TIPO_E14 = TIPO_E14;
         this.TIPO_E19 = TIPO_E19;
         this.Id_inmueble=id_inmueble;
+        this.cvevial=cvevial;
     }
 
     public String getPunteo() {
@@ -912,6 +913,14 @@ public class cat_vw_punteo_sare {
 
     public void setTipo_e10_cn_otro(String tipo_e10_cn_otro) {
         this.tipo_e10_cn_otro = tipo_e10_cn_otro;
+    }
+
+    public String getCvevial() {
+        return cvevial;
+    }
+
+    public void setCvevial(String cvevial) {
+        this.cvevial = cvevial;
     }
     
     

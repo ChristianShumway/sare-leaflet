@@ -36,7 +36,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
-    
+
     @Autowired
     @Qualifier("dataSource")
     private DataSource DataSource;
@@ -44,7 +44,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
 //    private String schemaocl;
-
     @Autowired
     @Qualifier("jdbcTemplatemdm")
     private JdbcTemplate jdbcTemplatemdm;
@@ -147,8 +146,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
                                     rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
-                                    rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0));
-                                    fila.setE12p("");
+                                    rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0),
+                                    rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
+                            fila.setE12p("");
                             resultado.add(fila);
                         }
 
@@ -200,7 +200,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
                                     rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
-                                    rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0));
+                                     rs.getString("id_inmueble") !=null ? new BigDecimal(rs.getString("id_inmueble")):new BigDecimal(0),
+                                    rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
                             resultado.add(fila);
                         }
 
@@ -644,11 +645,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                    "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n" +
                    "'' origen, ue.ce as cestatal,\n" +
                    "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n" +
-                   "as codigo_scian,ue.c154, inm.id_inmueble ");
+                   "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL ");
         sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
-                   .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
-                   .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ");
+                .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ");
         if (origen == 1) {
             sql.append(" where st_sare='10' and ue.id_ue = ").append(id_ue);
         } else {
@@ -664,12 +665,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     private StringBuilder filtrarSqlPg(String ce, String esquemaPos, String id_ue, int origen) {
         StringBuilder sql = new StringBuilder();
-        
+
 //        select * from ce2019_masrencal.tr_plan_oper po
 //join tr_predios pre on pre.id_cop=po.id_cop
 //join tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
 //join tr_etq_val ue on ue.id_ue=pre.id_ue
-
         sql.append("SELECT to_char(id_ue,'FM999999999999999999') as id_ue, e03, e04, e05, e06, e07, e08, e09, lpad(to_char(tipo_e10,'FM999999999999999999'),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, lpad(to_char(tipo_e14,'FM999999999999999999'),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a,'FM999999999999999999'),2,'0') tipo_e10_a, e10_a, ");
         sql.append("lpad(to_char(tipo_e10_b,'FM999999999999999999'),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c,'FM999999999999999999'),2,'0') tipo_e10_c, e10_c, coord_x as coorx, coord_y as coory, descrubic, sare_st estatus_punteo, e12, ");
         sql.append("e19, tipo_e19, e20, e13, TRIM(e13a) as e13_a,e14_a, to_char(origen,'FM999999999999999999') origen, cestatal, e23a e23_a,"); //modificar e23a por e23 es solo para pruebas, e13_a por e13a, e12_p por e12, e11_a por e11

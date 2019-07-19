@@ -274,7 +274,7 @@
 (carga_1 +  carga_2 + carga_3+carga_4+carga_5+carga_6+carga_7) carga ,
 (realizado_1 + realizado_2 +realizado_3+realizado_4+realizado_5+realizado_6+realizado_7)realizado FROM (
 SELECT 0 ce, 'NAC' cestatal, 1 orden,
-        
+
             sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
             sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
             sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_2,
@@ -289,7 +289,7 @@ SELECT 0 ce, 'NAC' cestatal, 1 orden,
             sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01','20', '01') THEN 1 ELSE 0 END) carga_7,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
-            FROM  ce2019_MASRENCAL.tr_predios pre 
+            FROM  ce2019_MASRENCAL.tr_predios pre
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
             WHERE  inm.id_ue is not null and  pre.id_cgo IN ('1','2','3','4','5','6','7') $P!{where1}
@@ -346,10 +346,10 @@ end cestatal, 2 orden,
             sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_7,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
-            FROM  ce2019_MASRENCAL.tr_predios pre 
+            FROM  ce2019_MASRENCAL.tr_predios pre
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue 
-            WHERE inm.id_ue is not null and   pre.id_cgo IN ('1','2','3','4','5','6','7') 
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE inm.id_ue is not null and   pre.id_cgo IN ('1','2','3','4','5','6','7')
 $P!{where1}
             GROUP BY ue.ce
 
@@ -555,7 +555,7 @@ ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
 			</image>
 			<image scaleImage="RetainShape">
 				<reportElement x="601" y="8" width="140" height="47" uuid="ace20206-a3d4-406e-8b5d-e242bc59a26b"/>
-				<imageExpression><![CDATA[$P{URL}+"\\Logo_CE.png"]]></imageExpression>
+				<imageExpression><![CDATA[$P{URL}+"/Logo_CE.png"]]></imageExpression>
 			</image>
 		</band>
 	</pageHeader>
