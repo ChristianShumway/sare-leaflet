@@ -591,7 +591,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
           <div class='item-list'><span>${c154}</span></div>
-          <div class='item-list'><span>${status}</span></div>
+          <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
         </div>`
       }
 

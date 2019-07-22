@@ -863,6 +863,10 @@ nav ul a {
   background: #b71c1c  !important;
 }
 
+.wrap-form input[type='text'], .wrap-form select{
+  text-transform: uppercase;
+}
+
 .title-option i{
   /* position: absolute; */
   /* top: 28%; */
