@@ -3063,4 +3063,9 @@ function abrirAyuda(){
      //$('a[href$=".pdf"]').prop('target', '_blank');
     window.open( "/sare/resources/ayuda/Manual del Usuario - Sare.pdf", '_blank');     
 } 
+
+function soloNumeros(e){
+	var key = window.Event ? e.which : e.keyCode
+	return (key >= 48 && key <= 57)
+}
  

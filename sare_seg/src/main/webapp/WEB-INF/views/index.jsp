@@ -549,7 +549,7 @@
                   <label for="e10_e">Nombre E10 E</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="E11 Número Exterior" id="e11" name="e11" type="text" disabled >
+                  <input placeholder="E11 Número Exterior" id="e11" name="e11" type="text" onKeyPress="return soloNumeros(event)" disabled >
                   <label for="e11">E11 Número Exterior</label>
                 </div>
                 <div class="input-field">
@@ -557,7 +557,7 @@
                   <label for="e11_a">E11 A Letra</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="E13 Número Interior" id="e13" name="e13" type="text" disabled >
+                  <input placeholder="E13 Número Interior" id="e13" name="e13" type="text" onKeyPress="return soloNumeros(event)" disabled >
                   <label for="e13">E13 Número Interior</label>
                 </div>
                 <div class="input-field">
