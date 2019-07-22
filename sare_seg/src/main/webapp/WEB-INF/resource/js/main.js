@@ -599,7 +599,7 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         <div class='title-column'>Status</div>
       </div>`
 
-      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+      for(let num = inicioClavesVista; num < posicionFinal ; num ++){
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
@@ -1184,7 +1184,7 @@ const handleTipoPunteo = () => {
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
 
     fieldExists = false
-  }   
+  }  
 }
 
 //Función crear Input o Select según si es rural
@@ -1298,12 +1298,12 @@ const showAlertPunteoConfirma = (data, title, text) =>{
     text,
     //type: 'error',
     showCloseButton: false,
-    showConfirmButton: true,
-    confirmButtonColor: '#5562eb',
-    confirmButtonText: 'Confirmar',
+   showConfirmButton: false,
+   // confirmButtonColor: '#5562eb',
+   // confirmButtonText: 'Confirmar',
     showCancelButton: true,
     cancelButtonColor: '#424242',
-    cancelButtonText: 'Cancelar',
+    cancelButtonText: 'Aceptar',
     allowEscapeKey: false,
     allowOutsideClick: false,
     customClass: 'swal-wide',
@@ -1398,7 +1398,7 @@ const actualizaForm = data => {
       if (arrData) {
         arrData.forEach(function (o, i) {
           objCalles.push(o)
-          calles.push(o.e10_X_cvevial)
+          calles.push(o.e10_X_cvevial)          
           if((o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
              html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
