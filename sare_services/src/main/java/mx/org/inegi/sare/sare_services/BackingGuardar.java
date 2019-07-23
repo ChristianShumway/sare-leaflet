@@ -29,28 +29,29 @@ public class BackingGuardar extends BackingSincroniza {
     InterfaceGuardarUE InterfaceGuardar;
 
     public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare_guardado object, String usuario, String ip, Boolean isAlta) {
-        if(Integer.valueOf(object.getCE())<10){
-            object.setCE("0"+object.getCE());
+        if (Integer.valueOf(object.getCE()) < 10) {
+            if (object.getCE().length() < 2) {
+                object.setCE("0" + object.getCE());
+            }
         }
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
-        int validacion=1;
+        int validacion = 1;
         if (inmueble != null) {
             if (inmueble.getID_UE() == null || inmueble.getCE().equals("000") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("000")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
                 try {
-                    if(!isAlta)
-                    {
+                    if (!isAlta) {
                         validacion = InterfaceGuardar.getValidaUe(proyecto, object);
                     }
                     if (validacion == 1) {
-                        if (asignaClavesProvisionales(inmueble,object, proyecto)) {
-                            if(InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE())){
-                            if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
-                                //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
-                                inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
+                        if (asignaClavesProvisionales(inmueble, object, proyecto)) {
+                            if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE())) {
+                                if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
+                                    //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
+                                    inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                         if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
                                             /*if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
@@ -67,12 +68,12 @@ public class BackingGuardar extends BackingSincroniza {
                                 } else {
                                     Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
                                 }
-                            }else{                               
+                            } else {
                                 Respuesta.setMensaje(new cat_mensaje("error", "No fue posible guardar el registro, hubo un error de conexión"));
                             }
-                            } else {
-                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                            }
+                        } else {
+                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                        }
 //                        } else {
 //                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
 //                        }
@@ -90,7 +91,7 @@ public class BackingGuardar extends BackingSincroniza {
                 } catch (Exception e) {
                     Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, e);
                     Respuesta.setDatos(false);
-                    Respuesta.setMensaje(new cat_mensaje("false","Fallo al guardar, Error interno de Servidor"));
+                    Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Error interno de Servidor"));
                 }
             }
         }
@@ -161,7 +162,7 @@ public class BackingGuardar extends BackingSincroniza {
         return regresar;
     }
 
-    private boolean asignaClavesProvisionales(cat_vw_punteo_sare object,cat_vw_punteo_sare_guardado inmueble, Integer proyecto) {
+    private boolean asignaClavesProvisionales(cat_vw_punteo_sare object, cat_vw_punteo_sare_guardado inmueble, Integer proyecto) {
         boolean regresar = false;
         if (Integer.valueOf(inmueble.getMod_cat()) == 2) {
             inmueble.setCveft(String.valueOf(1));
@@ -186,27 +187,27 @@ public class BackingGuardar extends BackingSincroniza {
                 inmueble.setCvegeo(object.getE03().concat(object.getE04()).concat(object.getE05()).concat(object.getE06()).concat(object.getE07()));
                 regresar = true;
             }
-            
-            
-            regresar=true;
+
+            regresar = true;
         }
-            inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
-            int deftramo=InterfaceGuardar.getidDeftramo(proyecto, inmueble);
-            inmueble.setId_deftramo(new BigDecimal(deftramo));
-            if(validadeftramo(deftramo)){
-                inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE()));
-            }
-            object.setE23(inmueble.getE23());
-            object.setId_deftramo(inmueble.getId_deftramo());
-            
+        inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
+        int deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+        inmueble.setId_deftramo(new BigDecimal(deftramo));
+        if (validadeftramo(deftramo)) {
+            inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE()));
+        }
+        object.setE23(inmueble.getE23());
+        object.setId_deftramo(inmueble.getId_deftramo());
+
         return regresar;
     }
-    
-    private boolean validadeftramo(int deftramo){
-        boolean regresar=false;
-        if(deftramo==0)
-            regresar=true;
-          return regresar;  
+
+    private boolean validadeftramo(int deftramo) {
+        boolean regresar = false;
+        if (deftramo == 0) {
+            regresar = true;
+        }
+        return regresar;
     }
 
     private boolean GuardarUeOCl(cat_vw_punteo_sare inmueble, Integer proyecto, String usuario) {
