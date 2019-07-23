@@ -11,7 +11,7 @@ let inicioClavesVistaLock = 0
 let finClavesVistaLock = 9
 let dataCleeListNew = {}
 let dataCleeListNewLock = {}
-let xycoorsx, xycoorsy, punteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
+let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
 let layersSARE = ['c100', 'c101a', 'wdenue']
 let dataResultSearchClee = {}
@@ -1087,7 +1087,8 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
-
+  realPunteo = punteo
+  punteo = 'U'
   if(punteo === 'R' || ( punteo === 'U' && confirmacionPunteo )){
     if(fieldExists === false){
       tipoE10n.style.display = 'none'
@@ -1630,70 +1631,100 @@ const validations=(totalInputs,object,campo)=>{
 // Función validación de formulario campos vacios
 const handleFormValidations = () => {
   let totalInputs
-  let numero_ext=document.getElementById('e11').value;
+  const numero_ext=document.getElementById('e11')
+  const numero_int=document.getElementById('e13')
+  const letra_ext=document.getElementById('e11_a')
+  const letra_int=document.getElementById('e13_a')
   let vialidad=document.getElementById('tipo_e10').value;
   let vialidad1=document.getElementById('tipo_e10_a').value;
   let vialidad2=document.getElementById('tipo_e10_b').value;
   let vialidad3=document.getElementById('tipo_e10_c').value;
-  if(isAlta){
-      totalInputs = objFormAlta.length
-      validations(totalInputs,objFormAlta)
-      if(vialidad==99){
-          let total = validaOtroEspecifique.length
-          validations(total,validaOtroEspecifique)
-      }
-      if(vialidad1==99){
-          let total = validaOtroEspecifiquevialidad1.length
-          validations(total,validaOtroEspecifiquevialidad1)
-      }
-      if(vialidad2==99){
-          let total = validaOtroEspecifiquevialidad2.length
-          validations(total,validaOtroEspecifiquevialidad2)
-      }
-      if(vialidad3==99){
-          let total = validaOtroEspecifiquevialidad3.length
-          validations(total,validaOtroEspecifiquevialidad3)
-      }
-  }
-  if(!validaAltas){
-  if(punteo=='U' && mod_cat=='1') {
-    totalInputs = objForm.length
-    validations(totalInputs,objForm)
-  }else{
-    if(punteo=='U' && mod_cat=='2') {
-      if (validaEdificio()) {
-          totalInputs = objFormCentrocomercial.length
-          validations(totalInputs,objFormCentrocomercial,campo)
-          validations(totalInputs,objForm2)
-      }else{
-          totalInputs = objFormPunteoEnFrente.length
-          validations(totalInputs,objFormPunteoEnFrente)
-      }
+  const wrapTitle = document.getElementById('title-domicilio')
+  let visible = wrapTitle.dataset.visible
+
+  if (numero_ext.value == '0' && letra_ext.value == ''){
+    letra_ext.style.borderColor = 'red'
+    letra_ext.classList.add('animated', 'shake')
+    visible == 'hide' ? handleVisibleForm('domicilio') : false
+    msgInputEmpty = `Favor de completar la información del campo E11 A Letra` 
+    alertToastForm(msgInputEmpty, 'error')
+    wrapTitle.classList.add('error')
+    setTimeout(() => letra_ext.classList.remove('animated', 'shake'), 1000)
+    letra_int.style.borderColor = '#eeeeee'
+    //alert('ingresa letra exterior')
+  } else if (numero_int.value == '0' && letra_int.value == ''){
+    letra_int.style.borderColor = 'red'
+    letra_int.classList.add('animated', 'shake')
+    visible == 'hide' ? handleVisibleForm('domicilio') : false
+    msgInputEmpty = `Favor de completar la información del campo E13 A Letra` 
+    alertToastForm(msgInputEmpty, 'error')
+    wrapTitle.classList.add('error')
+    setTimeout(() => letra_int.classList.remove('animated', 'shake'), 1000)
+    letra_ext.style.borderColor = '#eeeeee'
+    //alert('ingresa letra interior')
+  } else {
+    letra_ext.style.borderColor = '#eeeeee'
+    letra_int.style.borderColor = '#eeeeee'
+    if(isAlta){
+        totalInputs = objFormAlta.length
+        validations(totalInputs,objFormAlta)
+        if(vialidad==99){
+            let total = validaOtroEspecifique.length
+            validations(total,validaOtroEspecifique)
+        }
+        if(vialidad1==99){
+            let total = validaOtroEspecifiquevialidad1.length
+            validations(total,validaOtroEspecifiquevialidad1)
+        }
+        if(vialidad2==99){
+            let total = validaOtroEspecifiquevialidad2.length
+            validations(total,validaOtroEspecifiquevialidad2)
+        }
+        if(vialidad3==99){
+            let total = validaOtroEspecifiquevialidad3.length
+            validations(total,validaOtroEspecifiquevialidad3)
+        }
     }
-  else {
-    if(punteo=='R' && mod_cat=='1') {
-      validaCp()
-    }
-    else {
-      if(punteo=='R' && mod_cat=='2') {
-        if (validaEdificio()) {
-            
-          totalInputs = objFormCentrocomercial.length
-          validations(totalInputs,objFormCentrocomercial,campo)
-          validations(totalInputs,objFormRural)
+    if(!validaAltas){
+      if(punteo=='U' && mod_cat=='1') {
+        totalInputs = objForm.length
+        validations(totalInputs,objForm)
+      } else {
+        if(punteo=='U' && mod_cat=='2') {
+          if (validaEdificio()) {
+            totalInputs = objFormCentrocomercial.length
+            validations(totalInputs,objFormCentrocomercial,campo)
+            validations(totalInputs,objForm2)
+          } else{
+            totalInputs = objFormPunteoEnFrente.length
+            validations(totalInputs,objFormPunteoEnFrente)
+          }
         }
         else {
-            if(numero_ext<=0){
-                document.getElementById('e11').value="";
+          if(punteo=='R' && mod_cat=='1') {
+            validaCp()
+          }
+          else {
+            if(punteo=='R' && mod_cat=='2') {
+              if (validaEdificio()) {
+                
+                totalInputs = objFormCentrocomercial.length
+                validations(totalInputs,objFormCentrocomercial,campo)
+                validations(totalInputs,objFormRural)
+              }
+              else {
+                if(numero_ext.value<=0){
+                  document.getElementById('e11').value="";
+                }
+                totalInputs = objFormRural.length
+                validations(totalInputs,objFormRural)
+              }  
             }
-          totalInputs = objFormRural.length
-          validations(totalInputs,objFormRural)
-        }  
+          }
+        }
       }
     }
   }
- }
-}
 }
 
 var campo
@@ -1853,7 +1884,7 @@ const showViewPreliminar = d => {
       ObjectRequest['id_deftramo'] = dataUserFromLoginLocalStorage.tramo_control
       ObjectRequest['tramo_control'] = dataUserFromLoginLocalStorage.tramo_control
       ObjectRequest['mod_cat'] = mod_cat
-      ObjectRequest['punteo'] = punteo
+      ObjectRequest['punteo'] = realPunteo
       ObjectRequest['coordx'] = xycoorsx
       ObjectRequest['coordy'] = xycoorsy
       ObjectRequest['coordx'] = xycoorsx
