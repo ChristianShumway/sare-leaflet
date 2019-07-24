@@ -1645,9 +1645,7 @@ const validations=(totalInputs,object,campo)=>{
 const handleFormValidations = () => {
   let totalInputs
   const numero_ext=document.getElementById('e11')
-  const numero_int=document.getElementById('e13')
   const letra_ext=document.getElementById('e11_a')
-  const letra_int=document.getElementById('e13_a')
   let vialidad=document.getElementById('tipo_e10').value;
   let vialidad1=document.getElementById('tipo_e10_a').value;
   let vialidad2=document.getElementById('tipo_e10_b').value;
@@ -1655,29 +1653,33 @@ const handleFormValidations = () => {
   const wrapTitle = document.getElementById('title-domicilio')
   let visible = wrapTitle.dataset.visible
 
-  if (numero_ext.value == '0' && letra_ext.value == ''){
+  if (numero_ext.value == '' && letra_ext.value == ''){
+    numero_ext.style.borderColor = 'red'
     letra_ext.style.borderColor = 'red'
+    numero_ext.classList.add('animated', 'shake')
     letra_ext.classList.add('animated', 'shake')
     visible == 'hide' ? handleVisibleForm('domicilio') : false
-    msgInputEmpty = `Favor de completar la información del campo E11 A Letra` 
+    msgInputEmpty = `Favor de agregar información en el campo E11 Número Exterior y/o campo E11 A Letra` 
     alertToastForm(msgInputEmpty, 'error')
     wrapTitle.classList.add('error')
-    setTimeout(() => letra_ext.classList.remove('animated', 'shake'), 1000)
-    letra_int.style.borderColor = '#eeeeee'
-    //alert('ingresa letra exterior')
-  } else if (numero_int.value == '0' && letra_int.value == ''){
-    letra_int.style.borderColor = 'red'
-    letra_int.classList.add('animated', 'shake')
+    setTimeout(() =>  {
+      numero_ext.classList.remove('animated', 'shake')
+      letra_ext.classList.remove('animated', 'shake')
+    }, 1000)
+  } else if (numero_ext.value == '0' ){
+    numero_ext.style.borderColor = 'red'
+    numero_ext.classList.add('animated', 'shake')
     visible == 'hide' ? handleVisibleForm('domicilio') : false
-    msgInputEmpty = `Favor de completar la información del campo E13 A Letra` 
+    msgInputEmpty = `Favor de agregar un número mayor a cero en el campo E11 Número Exterior ` 
     alertToastForm(msgInputEmpty, 'error')
     wrapTitle.classList.add('error')
-    setTimeout(() => letra_int.classList.remove('animated', 'shake'), 1000)
+    setTimeout(() =>  {
+      numero_ext.classList.remove('animated', 'shake')
+    }, 1000)
     letra_ext.style.borderColor = '#eeeeee'
-    //alert('ingresa letra interior')
   } else {
+    numero_ext.style.borderColor = '#eeeeee'
     letra_ext.style.borderColor = '#eeeeee'
-    letra_int.style.borderColor = '#eeeeee'
     if(isAlta){
         totalInputs = objFormAlta.length
         validations(totalInputs,objFormAlta)

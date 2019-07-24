@@ -18,12 +18,12 @@ const objForm = [
     name:'e17_DESC',
     title:'title-referencia'
   },
-  {
-    id:'e11',
-    key: 'domicilio',
-    name:'Número exterior',
-    title:'title-domicilio',
-  },
+  // {
+  //   id:'e11',
+  //   key: 'domicilio',
+  //   name:'Número exterior',
+  //   title:'title-domicilio',
+  // },
   {
     id:'tipo_E14',
     key: 'asentamiento',
