@@ -3137,7 +3137,7 @@ const llamarServicioclases=(codigoScian, valor)=>{
 
 function abrirAyuda(){
      //$('a[href$=".pdf"]').prop('target', '_blank');
-    window.open( "/sare/resources/ayuda/Manual del Usuario - Sare.pdf", '_blank');     
+    window.open( "resources/ayuda/Manual_del_Usuario_Sare.pdf", '_blank');     
 } 
 
 function soloNumeros(e){
