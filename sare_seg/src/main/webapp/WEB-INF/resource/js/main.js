@@ -1313,10 +1313,12 @@ const showAlertPunteoConfirma = (data, title, text) =>{
       actualizaForm(data)
       confirmacionPunteo = true
       handleTipoPunteo()
-    } else if (result.dismiss == 'cancel'){
+    } else if (result.dismiss == 'cancel'){        
+      bandera_ratificar=false;
       confirmacionPunteo = false
       handleTipoPunteo()
       funcionesNoRatificado()
+      handleActionButtons('disabled')
     }
   }) 
 }

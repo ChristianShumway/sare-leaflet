@@ -66,7 +66,9 @@ public class BackingPunteoSare extends BackingBusquedaSare {
             }
         }
         if (isCE) {
-            String ta = InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());
+            String ta;
+            String punteoReal= InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());;
+            ta="U";
             if (ta != null) {
                 if (TipoAreaEnum.URBANA.getArea().equals(ta)) {
                     if (InterfacePunteoSare.isPuntoinMza(proyecto, coordMercator.getX(), coordMercator.getY())) {
@@ -119,7 +121,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                                     Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
                                 }
                             }
-                            ubicacion_punteo.setPunteo(ta);
+                            ubicacion_punteo.setPunteo(punteoReal);
                         } else {
                             Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
                         }
@@ -128,7 +130,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                     ubicacion_punteo = InterfacePunteoSare.getInfoPunteoRural(proyecto, coordMercator.getX(), coordMercator.getY());
                     List<cat_vial> catVial = InterfacePunteoSare.getCatTipoVial(proyecto);
                     ubicacion_punteo.setCatVial(catVial);
-                    ubicacion_punteo.setPunteo(ta);
+                    ubicacion_punteo.setPunteo(punteoReal);
                     cat_vial = InterfacePunteoSare.validaInfoPunteoUrbano(ubicacion_punteo.getE03(), ubicacion_punteo.getCvegeo(), ubicacion_punteo.getCveft(), proyecto, ce, coordMercator.getX(), coordMercator.getY());
 
                     if (ubicacion_punteo != null) {

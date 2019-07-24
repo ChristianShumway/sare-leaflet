@@ -33,6 +33,13 @@ public class BackingGuardar extends BackingSincroniza {
             if (object.getCE().length() < 2) {
                 object.setCE("0" + object.getCE());
             }
+        }   
+        if(object.getE11()!=null && object.getE11().equals("0")){
+            object.setE11(null);
+        }
+        
+        if(object.getE13()!=null && object.getE13().equals("0")){
+            object.setE13(null);
         }
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
