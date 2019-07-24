@@ -516,6 +516,7 @@ const handleViewCleeList = () => {
 
 const popupCleeList = data => {
   const notFoundClee = document.getElementById('wrap-list-not-found')
+  // console.log(data.length)
   if (data.length == 0){
     notFoundClee.classList.remove('wrap-inactive')
     notFoundClee.classList.add('animated', 'shake')
@@ -569,11 +570,14 @@ const popupCleeListBloqueadas = data => {
 }
 
 const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
+  // console.log(data)
   let tabla = ''
   const clavesPorVista = 10
   const totalClaves = data.length
   const totalPaginaciones = Math.ceil(totalClaves/clavesPorVista)
+  // console.log(totalPaginaciones)
   let posicionFinal = ''
+  // console.log(finClavesVista)
   finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
 
   if (totalPaginaciones < finPaginacion){
@@ -598,8 +602,9 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
-
-      for(let num = inicioClavesVista; num < posicionFinal ; num ++){
+      // console.log(inicioClavesVista)
+      // console.log(posicionFinal)
+      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
@@ -828,15 +833,20 @@ const handleSearchCleeList = () => {
 
     // encontar similitudes referente al valor de la busqueda y agregarlos a un nuevo objeto
     data.map (item => {
+      // console.log(item)
       if(item.idue.indexOf(inputValue.value) != -1){
         arrayCleeFind.push(item)
       }
     })
 
+    // console.log(arrayCleeFind)
+
     // filtramos solo los que no son repetidos
     let result = arrayCleeFind.filter((valorActual, indiceActual, arreglo) => {
       return arreglo.findIndex(valorDelArreglo => JSON.stringify(valorDelArreglo) === JSON.stringify(valorActual)) === indiceActual
     })
+
+    // console.log(result)
 
     const totalPaginaciones = Math.ceil(result.length/10)
     const numPaginaciones = screen.width <= '480' ? 5 : 7
@@ -850,6 +860,7 @@ const handleSearchCleeList = () => {
   
     cleeListType = 'busqueda'
     dataResultSearchClee.datos = result
+    // console.log(dataResultSearchClee.datos)
     popupCleeList(dataResultSearchClee.datos)
   
   }
