@@ -359,7 +359,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
     
      private cat_ubicacion_punteo execSqlInfoPunteoUrbanoPg(StringBuilder sql){
-        ubicacion_punteo=new cat_ubicacion_punteo();
+        ubicacion_punteo=null;
         ubicacion_punteo=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() 
         {
             @Override

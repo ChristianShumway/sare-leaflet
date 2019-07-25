@@ -117,13 +117,14 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                             if (ubicacion_punteo.getMod_cat() == 2) {
                                 List<cat_vial> catVial = InterfacePunteoSare.getCatTipoVial(proyecto);
                                 ubicacion_punteo.setCatVial(catVial);
-                                if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
+                               // if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
                                     Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
-                                }
+                               // }
                             }
                             ubicacion_punteo.setPunteo(punteoReal);
                         } else {
-                            Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
+                            //Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
+                             Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
                         }
                     }
                 } else if (TipoAreaEnum.RURAL.getArea().equals(ta)) {

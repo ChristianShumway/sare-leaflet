@@ -1020,6 +1020,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
               xycoorsy = '' 
             }
             else {
+              handleActionButtons('disabled')
+              const cancelOption = document.getElementById('item-cancel-option')
+              cancelOption.removeAttribute('disabled')
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
               MDM6('hideMarkers', 'identify')
               xycoorsx = ''
@@ -1330,6 +1333,8 @@ const showAlertPunteoConfirma = (data, title, text) =>{
       handleTipoPunteo()
       funcionesNoRatificado()
       handleActionButtons('disabled')
+       const cancelOption = document.getElementById('item-cancel-option')
+              cancelOption.removeAttribute('disabled')
     }
   }) 
 }
