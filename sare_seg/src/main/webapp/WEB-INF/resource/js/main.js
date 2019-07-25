@@ -1671,17 +1671,6 @@ const handleFormValidations = () => {
       numero_ext.classList.remove('animated', 'shake')
       letra_ext.classList.remove('animated', 'shake')
     }, 1000)
-  } else if (numero_ext.value == '0' ){
-    numero_ext.style.borderColor = 'red'
-    numero_ext.classList.add('animated', 'shake')
-    visible == 'hide' ? handleVisibleForm('domicilio') : false
-    msgInputEmpty = `Favor de agregar un número mayor a cero en el campo E11 Número Exterior ` 
-    alertToastForm(msgInputEmpty, 'error')
-    wrapTitle.classList.add('error')
-    setTimeout(() =>  {
-      numero_ext.classList.remove('animated', 'shake')
-    }, 1000)
-    letra_ext.style.borderColor = '#eeeeee'
   } else {
     numero_ext.style.borderColor = '#eeeeee'
     letra_ext.style.borderColor = '#eeeeee'
