@@ -1021,6 +1021,8 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
             }
             else {
               handleActionButtons('disabled')
+              confirmacionPunteo = false
+              bandera_ratificar=false;
               const cancelOption = document.getElementById('item-cancel-option')
               cancelOption.removeAttribute('disabled')
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
@@ -1334,7 +1336,7 @@ const showAlertPunteoConfirma = (data, title, text) =>{
       funcionesNoRatificado()
       handleActionButtons('disabled')
        const cancelOption = document.getElementById('item-cancel-option')
-              cancelOption.removeAttribute('disabled')
+       cancelOption.removeAttribute('disabled')
     }
   }) 
 }
@@ -2415,7 +2417,7 @@ const handleCancelClick = () => {
   document.getElementById("catorigen").style.display='none';
   document.getElementById("catc154").style.display='none';
    id_ue=document.getElementById('id_UE').value
-  layersSARE = ['c100', 'wdenue']
+ // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
   punteo = 'U'
