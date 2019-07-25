@@ -20,7 +20,7 @@ public interface InterfaceGuardarUE {
     
     public boolean getGuardaUe(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, boolean isAlta);
     
-    public boolean UpdateOclStatusOk(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, String id_ue);
+    public boolean UpdateOclStatusOk(Integer proyecto,cat_vw_punteo_sare_guardado inmueble, String id_ue,boolean isAlta);
     
     public String e23a(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     

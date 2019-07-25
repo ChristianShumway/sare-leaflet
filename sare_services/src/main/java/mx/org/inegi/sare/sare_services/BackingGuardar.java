@@ -33,12 +33,12 @@ public class BackingGuardar extends BackingSincroniza {
             if (object.getCE().length() < 2) {
                 object.setCE("0" + object.getCE());
             }
-        }   
-        if(object.getE11()!=null && object.getE11().equals("0")){
+        }
+        if (object.getE11() != null && object.getE11().equals("0")) {
             object.setE11(null);
         }
-        
-        if(object.getE13()!=null && object.getE13().equals("0")){
+
+        if (object.getE13() != null && object.getE13().equals("0")) {
             object.setE13(null);
         }
         cat_respuesta_services Respuesta = new cat_respuesta_services();
@@ -54,8 +54,8 @@ public class BackingGuardar extends BackingSincroniza {
                         validacion = InterfaceGuardar.getValidaUe(proyecto, object);
                     }
                     if (validacion == 1) {
-                        if (asignaClavesProvisionales(inmueble, object, proyecto)) {
-                            if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE())) {
+                        if (asignaClavesProvisionales(inmueble, object, proyecto,isAlta)) {
+                            if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(),isAlta)) {
                                 if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
                                     //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
@@ -169,7 +169,7 @@ public class BackingGuardar extends BackingSincroniza {
         return regresar;
     }
 
-    private boolean asignaClavesProvisionales(cat_vw_punteo_sare object, cat_vw_punteo_sare_guardado inmueble, Integer proyecto) {
+    private boolean asignaClavesProvisionales(cat_vw_punteo_sare object, cat_vw_punteo_sare_guardado inmueble, Integer proyecto, boolean isAlta) {
         boolean regresar = false;
         if (Integer.valueOf(inmueble.getMod_cat()) == 2) {
             inmueble.setCveft(String.valueOf(1));
@@ -197,8 +197,13 @@ public class BackingGuardar extends BackingSincroniza {
 
             regresar = true;
         }
-        inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
-        int deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+        int deftramo = 12;
+        if (isAlta) {
+            inmueble.setE23("A");
+        } else {
+            inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
+            deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+        }
         inmueble.setId_deftramo(new BigDecimal(deftramo));
         if (validadeftramo(deftramo)) {
             inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE()));

@@ -162,8 +162,11 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     }
     
      @Override
-    public boolean UpdateOclStatusOk(Integer proyecto,cat_vw_punteo_sare_guardado object, String id_ue) {
+    public boolean UpdateOclStatusOk(Integer proyecto,cat_vw_punteo_sare_guardado object, String id_ue,boolean  isAlta) {
         boolean regresa = false;
+        if(isAlta){
+            return true;
+        }else{
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(proyectos,object, MetodosGuardar.UpdateOclStatusOk,"",false );
@@ -179,7 +182,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 }
         }
         return regresa;
-
+        }
     }
     public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa, boolean isAlta)
     {

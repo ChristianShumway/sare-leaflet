@@ -1418,20 +1418,20 @@ const actualizaForm = data => {
         arrData.forEach(function (o, i) {
           objCalles.push(o)
           calles.push(o.e10_X_cvevial)          
-          if((o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
+          if(E10a_g!=null&&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
              html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
-            if((o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
+            if(E10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
                  htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
              
-            if((o.e10_X.toUpperCase()==E10c_g.toUpperCase())){
+            if(E10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){
                htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
