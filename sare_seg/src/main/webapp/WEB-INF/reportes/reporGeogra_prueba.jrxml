@@ -966,6 +966,16 @@ CONTROL	]]></text>
 				</textElement>
 				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="100" y="24" width="12" height="9" backcolor="#FFFFCC" uuid="168ef754-3057-43bc-9507-d8300f80091a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="114" y="23" width="100" height="11" uuid="a2ab5b5e-d1c9-469a-bcef-6326ad919c4d"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Registro bloqueado]]></text>
+			</staticText>
 		</band>
 	</pageFooter>
 	<noData>
