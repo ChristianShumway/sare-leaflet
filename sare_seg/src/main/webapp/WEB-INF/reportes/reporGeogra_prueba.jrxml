@@ -64,10 +64,7 @@
 		</box>
 		<conditionalStyle>
 			<conditionExpression><![CDATA[new Boolean(
-
-    $F{ST_SARE}.equals("20")
-
-
+( new Integer($F{ST_SARE})==20 ? true : false )
 )]]></conditionExpression>
 			<style mode="Opaque" backcolor="#FFFFCC"/>
 		</conditionalStyle>
