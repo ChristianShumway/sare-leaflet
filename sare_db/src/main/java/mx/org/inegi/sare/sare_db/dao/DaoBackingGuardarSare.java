@@ -44,7 +44,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     
     public enum MetodosGuardar 
     {
-       getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk
+       getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk,UpdateOclStatusOcupado
     }
     
     @Override
@@ -115,7 +115,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
          catch(Exception e){
              regresa=0L;
          }
-         inmueble.setId_UE(String.valueOf(regresa));
+         //inmueble.setId_UE(String.valueOf(regresa));
          regresar=regresa>0L;
         return regresar;
     }
@@ -184,7 +184,32 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         return regresa;
         }
     }
-    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa, boolean isAlta)
+    
+    
+    @Override
+    public boolean UpdateOclStatusOcupado(Integer proyecto,cat_vw_punteo_sare_guardado object, String id_ue,boolean  isAlta) {
+        boolean regresa = false;
+        if(isAlta){
+            return true;
+        }else{
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        sql = getSql(proyectos,object, MetodosGuardar.UpdateOclStatusOcupado,"",false );
+        switch (proyectos) {
+            case Operativo_Masivo:
+                if (jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+            default:
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+        }
+        return regresa;
+        }
+    }
+    public StringBuilder getSql(ProyectosEnum proyecto,cat_vw_punteo_sare_guardado inmueble,MetodosGuardar metodo, String capa, boolean isAlta)           
     {
         StringBuilder sql=new StringBuilder();
         String esquemaPos,esquemaOcl;
@@ -282,6 +307,9 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='01' where id_ue=? and st_sare='20'");
                         break;
                         
+                    case UpdateOclStatusOcupado:
+                          sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare='01'");
+                        break;
                         
                 }
         }

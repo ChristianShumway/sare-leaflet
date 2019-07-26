@@ -54,8 +54,8 @@ public class BackingGuardar extends BackingSincroniza {
                         validacion = InterfaceGuardar.getValidaUe(proyecto, object);
                     }
                     if (validacion == 1) {
-                        if (asignaClavesProvisionales(inmueble, object, proyecto,isAlta)) {
-                            if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(),isAlta)) {
+                        if (asignaClavesProvisionales(inmueble, object, proyecto, isAlta)) {
+                            if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(), isAlta)) {
                                 if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
                                     //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
@@ -66,6 +66,11 @@ public class BackingGuardar extends BackingSincroniza {
                                             } else {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                             }*/
+                                            if (ActualicaEstatusComplemento(proyecto, inmueble, usuario)) {
+                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
+                                            } else {
+                                                Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
+                                            }
                                         } else {
                                             Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                         }
@@ -73,6 +78,7 @@ public class BackingGuardar extends BackingSincroniza {
                                         Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                     }
                                 } else {
+                                    InterfaceGuardar.UpdateOclStatusOcupado(proyecto, object, object.getId_UE(), isAlta);
                                     Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
                                 }
                             } else {

@@ -277,6 +277,13 @@ public class BackingSincroniza {
         regresa=InterfaceSincroniza.getConfirmaUe(proyecto, inmueble, usuario);
         return regresa;  
     }
+    
+     protected boolean ActualicaEstatusComplemento(Integer proyecto,cat_vw_punteo_sare inmueble, String usuario)
+    {
+        boolean regresa;
+        regresa=InterfaceSincroniza.getActualizaEstatusComplemento(proyecto, inmueble, usuario);
+        return regresa;  
+    }
      
      
 }

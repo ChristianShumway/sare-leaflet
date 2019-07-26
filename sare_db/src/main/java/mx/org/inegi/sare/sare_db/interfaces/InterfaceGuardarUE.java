@@ -26,5 +26,6 @@ public interface InterfaceGuardarUE {
     
     public Integer getidDeftramo(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     
+    public boolean UpdateOclStatusOcupado(Integer proyecto, cat_vw_punteo_sare_guardado object, String id_ue, boolean isAlta) ;
     
 }

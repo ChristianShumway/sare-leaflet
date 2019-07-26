@@ -64,5 +64,7 @@ public interface InterfaceSincroniza {
     
     public boolean getConfirmaUe(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario);
     
+    public boolean getActualizaEstatusComplemento(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario);
+    
 
 }
