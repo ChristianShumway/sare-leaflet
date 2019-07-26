@@ -197,7 +197,8 @@ join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
 join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
 join ce2019_MASRENCAL.tc_st_sare st on pre.status_sare=st.status_sare
 join ce2019_MASRENCAL.tc_cgo cgo on pre.id_cgo=cgo.id_cgo
-where inm.id_ue is not null and ST_sare in ('10','20')  AND CE='01' order by tramo_control,origen,e23a,clee_emp,id_ue,cgo.id_cgo]]>
+where inm.id_ue is not null and ST_sare in ('10','20') $P!{where}
+ order by tramo_control,origen,e23a,clee_emp,id_ue,cgo.id_cgo]]>
 	</queryString>
 	<field name="ST_SARE" class="java.lang.String"/>
 	<field name="CE" class="java.lang.String"/>
