@@ -1918,6 +1918,7 @@ const showViewPreliminar = d => {
       ObjectRequest['Cveft'] = cveft
       ObjectRequest['e10_cvevial'] = e10_cve_vial
       ObjectRequest['id_inmueble'] = id_inmueble
+      ObjectRequest['navegador'] = versionnavegador
     }
   )
 }

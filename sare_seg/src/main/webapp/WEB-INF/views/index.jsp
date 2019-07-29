@@ -130,6 +130,8 @@
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
         <script>
+        var navegador;
+        var versionnavegador=navigator.userAgent;
         var getBrowserInfo = function() 
         {
             var ua= navigator.userAgent, tem, 
@@ -146,7 +148,7 @@
             if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
             return M.join(' ');
         };
-
+        
         console.log(getBrowserInfo());
         $(document).ready(function(){
            // disable()
@@ -168,7 +170,7 @@
                });} /* IE7, IE8 */
          if(document.addEventListener){
              /* Chrome, Safari, Firefox */
-             var navegador=getBrowserInfo();
+             navegador=getBrowserInfo();
              $("#mapa").on("wheel", event => {
                    if (event.originalEvent.ctrlKey) {
                        event.returnValue = false;

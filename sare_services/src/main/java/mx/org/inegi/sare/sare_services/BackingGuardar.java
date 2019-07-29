@@ -45,7 +45,7 @@ public class BackingGuardar extends BackingSincroniza {
         cat_vw_punteo_sare inmueble = inicializa(object);
         int validacion = 1;
         if (inmueble != null) {
-            if (inmueble.getID_UE() == null || inmueble.getCE().equals("000") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("000")) {
+            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
@@ -172,6 +172,7 @@ public class BackingGuardar extends BackingSincroniza {
         regresar.setTipo_e10_bn_otro(inmueble.getTipo_e10_bn_otro());
         regresar.setTipo_e10_cn_otro(inmueble.getTipo_e10_cn_otro());
         regresar.setId_inmueble(inmueble.getId_inmueble());
+        regresar.setNavegador(inmueble.getNavegador());
         return regresar;
     }
 

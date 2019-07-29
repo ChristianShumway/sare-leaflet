@@ -294,7 +294,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE20().toUpperCase()).append("','")
                                 .append(inmueble.getId_deftramo()).append("','")
                                 .append(inmueble.getE10_cvevial()!=null?inmueble.getE10_cvevial():"").append("','")
-                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("','").append(isAlta).append("') resultado");
+                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("','").append(isAlta).append("','").append(inmueble.getNavegador()).append("') resultado");
                         break;
                     case getE23A:
                         sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".tr_etq_val where id_ue = ").append(inmueble.getId_UE()); 
