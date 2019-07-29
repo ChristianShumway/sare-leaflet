@@ -1432,7 +1432,6 @@ const actualizaForm = data => {
           objCalles.push(o)
           calles.push(o.e10_X_cvevial)          
           if(E10a_g!=null && tipoE10a_g!=null &&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
-                alert(" entro a prellenar el campo de las entre vialidades uno"+E10a_g);
                 //$('#tipo_e10_a').text(o.tipo_e10_X);
                 $('#tipo_e10_a').val(o.tipo_e10_X);
              html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
@@ -1441,7 +1440,6 @@ const actualizaForm = data => {
            }
            
             if(E10b_g!=null&&tipoE10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
-                  alert(" entro a prellenar el campo de las entre validades " +E10b_g);
                   $('#tipo_e10_b').val(o.tipo_e10_X);
                  htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
@@ -1450,7 +1448,6 @@ const actualizaForm = data => {
            
              
            if(E10c_g!=null&&tipoE10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){        
-               alert(" entro a prellenar el campo de la vialidad posterior");
                $('#tipo_e10_c').val(o.tipo_e10_X);
                htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
