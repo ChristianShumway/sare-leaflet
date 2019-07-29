@@ -168,19 +168,19 @@ public class BackingBusquedaSare {
                                                 }
                                                 if (catBusquedaPG.get(0).getTIPO_E10()!= null && !String.valueOf(catBusquedaPG.get(0).getTIPO_E10()).equals("")) 
                                                 {
-                                                    catBusquedaPG.get(0).setTipo_e10n(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(catBusquedaPG.get(0).getTIPO_E10()), tabla[5]));
+                                                    catBusquedaPG.get(0).setTipo_e10n(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(catBusquedaPG.get(0).getTIPO_E10()), tabla[5]));
                                                 }
                                                 if (catBusquedaPG.get(0).getTIPO_E10_A()!= null && !String.valueOf(catBusquedaPG.get(0).getTIPO_E10_A()).equals("")) 
                                                 {
-                                                    catBusquedaPG.get(0).setTipo_e10_an(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(catBusquedaPG.get(0).getTIPO_E10_A()), tabla[5]));
+                                                    catBusquedaPG.get(0).setTipo_e10_an(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(catBusquedaPG.get(0).getTIPO_E10_A()), tabla[5]));
                                                 }
                                                 if (catBusquedaPG.get(0).getTIPO_E10_B()!= null && !String.valueOf(catBusquedaPG.get(0).getTIPO_E10_B()).equals("")) 
                                                 {
-                                                    catBusquedaPG.get(0).setTipo_e10_bn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(catBusquedaPG.get(0).getTIPO_E10_B()), tabla[5]));
+                                                    catBusquedaPG.get(0).setTipo_e10_bn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(catBusquedaPG.get(0).getTIPO_E10_B()), tabla[5]));
                                                 }
                                                 if (catBusquedaPG.get(0).getTIPO_E10_C()!= null && !String.valueOf(catBusquedaPG.get(0).getTIPO_E10_C()).equals("")) 
                                                 {
-                                                    catBusquedaPG.get(0).setTipo_e10_cn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(catBusquedaPG.get(0).getTIPO_E10_C()), tabla[5]));
+                                                    catBusquedaPG.get(0).setTipo_e10_cn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(catBusquedaPG.get(0).getTIPO_E10_C()), tabla[5]));
                                                 }
                                                 catBusquedaPG.get(0).setExtent(extent);
                                             }
@@ -267,19 +267,19 @@ public class BackingBusquedaSare {
                                              }
                                              if (element.getTIPO_E10()!= null && !String.valueOf(element.getTIPO_E10()).equals("")) 
                                              {
-                                                 element.setTipo_e10n(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(element.getTIPO_E10()), tabla[5]));
+                                                 element.setTipo_e10n(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(element.getTIPO_E10()), tabla[5]));
                                              }
                                              if (element.getTIPO_E10_A()!= null && !String.valueOf(element.getTIPO_E10_A()).equals("")) 
                                              {
-                                                 element.setTipo_e10_an(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(element.getTIPO_E10_A()), tabla[5]));
+                                                 element.setTipo_e10_an(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(element.getTIPO_E10_A()), tabla[5]));
                                              }
                                              if (element.getTIPO_E10_B()!= null && !String.valueOf(element.getTIPO_E10_B()).equals("")) 
                                              {
-                                                 element.setTipo_e10_bn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(element.getTIPO_E10_B()), tabla[5]));
+                                                 element.setTipo_e10_bn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(element.getTIPO_E10_B()), tabla[5]));
                                              }
                                              if (element.getTIPO_E10_C()!= null && !String.valueOf(element.getTIPO_E10_C()).equals("")) 
                                              {
-                                                 element.setTipo_e10_cn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,String.valueOf(element.getTIPO_E10_C()), tabla[5]));
+                                                 element.setTipo_e10_cn(InterfaceBusquedaSare.getNombreBusqueda(proyecto,Integer.valueOf(element.getTIPO_E10_C()), tabla[5]));
                                              }
                                              element.setExtent(extent);
                                           

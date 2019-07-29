@@ -364,7 +364,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     }
 
     @Override
-    public String getNombreBusqueda(Integer proyecto, String tipo, String tabla) {
+    public String getNombreBusqueda(Integer proyecto, Integer tipo, String tabla) {
         String regresa = "";
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
@@ -547,7 +547,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         sql = GetSqlExtent(proyecto, metodo, params, tabla, rural, cat_vw_punteo_sare);
                         break;
                     case GETNOMBREBUSQUEDA:
-                        sql.append("select descripcion from ").append(esquemaPos).append(".").append(tabla).append(" where tipo_e10=?");
+                        sql.append("select descripcion from ").append(esquemaPos).append(".").append(tabla).append(" where tipo_e10::int=?");
                         break;
                     case GETNOMBREBUSQUEDAOCL:
                         sql.append("select ").append(campo).append(" from ").append(schemapgEge).append(".").append(tabla).append(" where cve_ent= '").append(cat_vw_punteo_sare.getE03()).append("'");

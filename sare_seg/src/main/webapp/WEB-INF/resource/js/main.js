@@ -236,11 +236,22 @@ const callServiceFindUE=(id_ue)=>{
       E10b_g=data[0].datos.datos[0].e10_B;
       E10c_g=data[0].datos.datos[0].e10_C;
       
-      
+      if(data[0].datos.datos[0].tipo_E10!=null && data[0].datos.datos[0].tipo_E10!='')
+      {
       tipoE10_g=data[0].datos.datos[0].tipo_E10;
+      }
+      if(data[0].datos.datos[0].tipo_E10_A!=null && data[0].datos.datos[0].tipo_E10_A!='')
+      {
       tipoE10a_g=data[0].datos.datos[0].tipo_E10_A;
+      }
+      if(data[0].datos.datos[0].tipo_E10_B!=null && data[0].datos.datos[0].tipo_E10_B!='')
+      {
       tipoE10b_g=data[0].datos.datos[0].tipo_E10_B;
+      }
+      if(data[0].datos.datos[0].tipo_E10_C!=null && data[0].datos.datos[0].tipo_E10_C!='')
+      {
       tipoE10c_g=data[0].datos.datos[0].tipo_E10_C;
+      }
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -1420,20 +1431,27 @@ const actualizaForm = data => {
         arrData.forEach(function (o, i) {
           objCalles.push(o)
           calles.push(o.e10_X_cvevial)          
-          if(E10a_g!=null&&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
+          if(E10a_g!=null && tipoE10a_g!=null &&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
+                alert(" entro a prellenar el campo de las entre vialidades uno"+E10a_g);
+                //$('#tipo_e10_a').text(o.tipo_e10_X);
+                $('#tipo_e10_a').val(o.tipo_e10_X);
              html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
-            if(E10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
+            if(E10b_g!=null&&tipoE10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
+                  alert(" entro a prellenar el campo de las entre validades " +E10b_g);
+                  $('#tipo_e10_b').val(o.tipo_e10_X);
                  htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
              
-            if(E10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){
+           if(E10c_g!=null&&tipoE10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){        
+               alert(" entro a prellenar el campo de la vialidad posterior");
+               $('#tipo_e10_c').val(o.tipo_e10_X);
                htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
              htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';

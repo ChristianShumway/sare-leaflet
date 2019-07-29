@@ -26,7 +26,7 @@ public interface InterfaceBusquedaSare {
     
     public String getExtentBusquedaCvegeo2 (cat_vw_punteo_sare cat_vw_punteo_sare,Integer proyecto, int params, String tabla, boolean mza800, String rural[]);
 
-    public String getNombreBusqueda(Integer proyecto,String tipo, String tabla);
+    public String getNombreBusqueda(Integer proyecto,Integer tipo, String tabla);
     
     public String getNombreBusqueda(cat_vw_punteo_sare cat_vw_punteo_sare,Integer proyecto,int params, String campo, String tabla);
     
