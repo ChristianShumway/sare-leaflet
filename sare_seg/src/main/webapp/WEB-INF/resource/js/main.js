@@ -1663,18 +1663,46 @@ const validations=(totalInputs,object,campo)=>{
   }
 }
 
+const validaNumExt=(numero_ext)=>
+{
+  sendAJAX(urlServices['servicevalida_num_ext'].url, 
+  {
+    'numext': numero_ext
+  }, 
+  urlServices['servicevalida_num_ext'].type, 
+  data => {
+    if (data[0].operation) {
+      if (data[0].datos.mensaje.type === "false") {
+          Swal.fire
+          ({
+            position: 'bottom-end',
+            type: 'warning',
+            title: data[0].datos.mensaje.messages,
+            showConfirmButton: false,
+            timer: 3000
+          })
+          return true
+      }
+      else {
+        return false
+      }
+    }
+  }, () => { })
+    
+}
+
 // Función validación de formulario campos vacios
 const handleFormValidations = () => {
   let totalInputs
   const numero_ext=document.getElementById('e11')
-  const letra_ext=document.getElementById('e11_a')
+  const letra_ext=document.getElementById('e11A')
   let vialidad=document.getElementById('tipo_e10').value;
   let vialidad1=document.getElementById('tipo_e10_a').value;
   let vialidad2=document.getElementById('tipo_e10_b').value;
   let vialidad3=document.getElementById('tipo_e10_c').value;
   const wrapTitle = document.getElementById('title-domicilio')
   let visible = wrapTitle.dataset.visible
-
+  
   if (numero_ext.value == '' && letra_ext.value == ''){
     numero_ext.style.borderColor = 'red'
     letra_ext.style.borderColor = 'red'
@@ -1789,6 +1817,7 @@ const validaEdificio = () => {
 const handleFormValidationsRural = () => {}
 
 const validaCp = () => {
+  const numero_ext=document.getElementById('e11')
   sendAJAX(urlServices['serviceValCP'].url, 
   {
     'codigo': $("#e14_A").val(),
@@ -1824,8 +1853,12 @@ const validaCp = () => {
 
           handleReturnContainerForm(nameContainerFloating)
         } 
-
-        modalViewPreliminar()  
+        if(validaNumExt(numero_ext.value)){
+            
+        }else{
+           modalViewPreliminar() 
+        }
+          
       }
     }
   }, () => { })

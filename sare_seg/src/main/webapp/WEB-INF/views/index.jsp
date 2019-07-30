@@ -128,7 +128,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>-->
         <script>
         var navegador;
         var versionnavegador=navigator.userAgent;
@@ -555,8 +555,8 @@
                   <label for="e11">E11 Número Exterior</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="E11 A Letra" id="e11_a" name="e11_a" type="text" disabled >
-                  <label for="e11_a">E11 A Letra</label>
+                  <input placeholder="E11 A Letra" id="e11A" name="e11A" type="text" disabled >
+                  <label for="e11A">E11 A Letra</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E13 Número Interior" id="e13" name="e13" type="text" onKeyPress="return soloNumeros(event)" disabled >

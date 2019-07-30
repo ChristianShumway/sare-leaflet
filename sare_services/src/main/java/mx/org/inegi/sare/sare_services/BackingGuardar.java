@@ -137,7 +137,7 @@ public class BackingGuardar extends BackingSincroniza {
         regresar.setE10(inmueble.getE10());
         regresar.setE10_e(inmueble.getE10_e());
         regresar.setE11(inmueble.getE11());
-        regresar.setE11A(inmueble.getE11_a());
+        regresar.setE11A(inmueble.gete11A());
         regresar.setE13(inmueble.getE13());
         regresar.setE13A(inmueble.getE13_a());
         regresar.setTIPO_E14(inmueble.getTipo_E14());
