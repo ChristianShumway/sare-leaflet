@@ -113,34 +113,10 @@ public class ServiceController {
         return BackingValidacionesSare.validacp(codigo,cve_ent, proyecto);
     }
     @RequestMapping(value = "validaobjForm.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services validationsobjForm(@RequestParam(value = "obj") String obj) throws Exception {
-        Gson gson = new Gson();
-        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
-        return BackingValidacionesSare.validationsobjForm(inmueble);
-    }
-    @RequestMapping(value = "validaobjFormPunteoEnFrent.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services validationsobjFormPunteoEnFrente(@RequestParam(value = "obj") String obj) throws Exception {
-        Gson gson = new Gson();
-        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
-        return BackingValidacionesSare.validationsobjFormPunteoEnFrente(inmueble);
-    }
-    @RequestMapping(value = "validaobjFormAlta.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services validationsobjFormAlta(@RequestParam(value = "obj") String obj) throws Exception {
-        Gson gson = new Gson();
-        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
-        return BackingValidacionesSare.validationsobjFormAlta(inmueble);
-    }
-    @RequestMapping(value = "validaobjFormRural.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services validationsobjFormRural(@RequestParam(value = "obj") String obj) throws Exception {
-        Gson gson = new Gson();
-        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
-        return BackingValidacionesSare.validationsobjFormRural(inmueble);
-    }
-    @RequestMapping(value = "validaobjFormCentrocomercial.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services validationsobjFormCentrocomercial(@RequestParam(value = "obj") String obj) throws Exception {
-        Gson gson = new Gson();
-        cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
-        return BackingValidacionesSare.validationsobjFormCentrocomercial(inmueble);
+    public cat_respuesta_services validationsobjForm(@RequestParam(value = "obj") String obj, @RequestParam(value = "objrequest") String objrequest) throws Exception {
+        //Gson gson = new Gson();
+        //cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
+        return BackingValidacionesSare.validationsobjForm(obj,objrequest);
     }
     @RequestMapping(value = "valida_num_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext) throws Exception {

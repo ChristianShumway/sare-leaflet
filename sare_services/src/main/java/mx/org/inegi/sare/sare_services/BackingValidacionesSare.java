@@ -7,7 +7,9 @@ package mx.org.inegi.sare.sare_services;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo_postal;
@@ -15,6 +17,9 @@ import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceValidacionesSare;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -99,131 +104,31 @@ public class BackingValidacionesSare {
         return respuesta;
     }
 
-    public cat_respuesta_services validationsobjForm(cat_vw_punteo_sare_guardado objects) {
+    public cat_respuesta_services validationsobjForm(String objects, String obj) {
         cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (objects.getE08().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese E08"));
-        } else if (objects.getE09().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese E09"));
-        } else if (objects.getE17_DESC().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese e17_DESC"));
-        } else if (objects.getTipo_E14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese tipo de asentamiento humano"));
-        } else if (objects.getE14_A().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese código postal"));
-        } else if (objects.getE14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Nombre del asentamiento"));
-        } else if (objects.getTipo_e10n().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de Vialidad"));
-        } else if (objects.getE10().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de Vialidad"));
-        } else if (objects.getE10_A().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 1"));
-        } else if (objects.getE10_B().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 2"));
-        } else if (objects.getE10_C().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 3"));
-        } else {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
-        }
-        return respuesta;
-    }
+        ArrayList lista=new ArrayList();
+        JSONObject outerObject = new JSONObject(obj);
+        JSONObject outerObject1 = new JSONObject(objects);
+        JSONArray jsonArray = outerObject.getJSONArray("object");
+        Map<String, Object> jsonArray1 = outerObject1.toMap();
 
-    public cat_respuesta_services validationsobjFormPunteoEnFrente(cat_vw_punteo_sare_guardado objects) {
-        cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (objects.getE08().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese E08"));
-        } else if (objects.getE09().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese E09"));
-        } else if (objects.getE17_DESC().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese e17_DESC"));
-        } else if (objects.getTipo_E14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese tipo de asentamiento humano"));
-        } else if (objects.getE11().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese número exterior"));
-        } else if (objects.getTipo_E14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese tipo de asentamiento humano"));
-        } else if (objects.getE14_A().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese código postal"));
-        } else if (objects.getE14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Nombre del asentamiento"));
-        } else if (objects.getTipo_e10n().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de Vialidad"));
-        } else if (objects.getTipo_e10_an().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de Vialidad"));
-        } else if (objects.getE10().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de Vialidad"));
-        } else if (objects.getE10_A().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 1"));
-        } else if (objects.getTipo_e10_b().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de Vialidad 2"));
-        } else if (objects.getE10_B().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 2"));
-        } else if (objects.getTipo_e10_c().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de Vialidad Posterior"));
-        } else if (objects.getE10_C().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad 3"));
-        } else {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
+        for(int i=0;i<jsonArray.length();i++){
+            try {
+            JSONObject json,json1;
+                json = jsonArray.getJSONObject(i);
+                //json1 = jsonArray1.getJSONObject(i);
+                   Object ele = json.getString("id");
+                   Object value=(Object) jsonArray1.get(ele);                   
+                   if(value!=null){                     
+                      respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+ele));                      
+                      respuesta.setDatos(json.toString());
+                      break;
+                   }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         }
         return respuesta;
     }
-
-    public cat_respuesta_services validationsobjFormAlta(cat_vw_punteo_sare_guardado objects) {
-        cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (objects.getOrigen().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Origen"));
-        } else if (objects.getC154().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese c154"));
-        } else {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
-        }
-        return respuesta;
-    }
-
-    public cat_respuesta_services validationsobjFormRural(cat_vw_punteo_sare_guardado objects) {
-        cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (objects.getTipo_e10n().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de vialidad"));
-        } else if (objects.getE10().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre de vialidad"));
-        } else if (objects.getE11().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Numero Exterior"));
-        } else if (objects.getTipo_E14().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese tipo de asentamiento humano"));
-        } else if (objects.getTipo_e10_an().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo vialidad 1"));
-        } else if (objects.getTipo_e10_b().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo vialidad 2"));
-        } else if (objects.getTipo_e10_c().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo vialidad 2"));
-        } else if (objects.getDescrubic().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Descripción de la ubicación del establecimiento"));
-        } else {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
-        }
-        return respuesta;
-    }
-     public cat_respuesta_services validationsobjFormCentrocomercial(cat_vw_punteo_sare_guardado objects) {
-        cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (objects.getE12p().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Piso del edificio"));
-        } else if (objects.getE12().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Numero de Edificio"));
-        } else if (objects.getE19().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Nombre Edificio"));
-        } else if (objects.getE20().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Numero de Local"));
-        } else if (objects.getE13().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Numero interior"));
-        } else if (objects.getE13_a().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Letra interior"));
-        } else if (objects.getTipo_E19().equals("")) {
-            respuesta.setMensaje(new cat_mensaje("false", "Ingrese Tipo de corredor o centro comercial"));
-        }  else {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
-        }
-        return respuesta;
-    }
-
+     
 }

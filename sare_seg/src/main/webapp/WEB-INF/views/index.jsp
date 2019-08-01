@@ -114,6 +114,9 @@
     
     <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
+    <script src="resources/js/validacionesBack.js" type="text/javascript"></script>
+    
+    
     
     <!-- Compiled and minified JavaScript -->
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->

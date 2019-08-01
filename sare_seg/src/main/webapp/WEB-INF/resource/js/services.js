@@ -133,11 +133,6 @@ var urlServices = {
         label: 'getDatosClasesPorFiltro',
         type: 'POST'
     },
-    servicevalidaobjForm: {
-        url: 'validaobjForm.do',
-        label: 'validaobjForm',
-        type: 'POST'
-    },
     servicevalida_num_ext: {
         url: 'valida_num_ext.do',
         label: 'valida_num_ext',
@@ -148,26 +143,13 @@ var urlServices = {
         label: 'valida_letra_ext',
         type: 'POST'
     },
-     servicevalidaobjFormPunteoEnFrent: {
-        url: 'validaobjFormPunteoEnFrent.do',
-        label: 'validaobjFormPunteoEnFrent',
+     
+     servicevalidaobjForm: {
+        url: 'validaobjForm.do',
+        label: 'validaobjForm',
         type: 'POST'
     },
-     servicevalidaobjFormAlta: {
-        url: 'validaobjFormAlta.do',
-        label: 'validaobjFormAlta',
-        type: 'POST'
-    },
-     servicevalidaobjFormRural: {
-        url: 'validaobjFormRural.do',
-        label: 'validaobjFormRural',
-        type: 'POST'
-    },
-     servicevalidaobjFormCentrocomercial: {
-        url: 'validaobjFormCentrocomercial.do',
-        label: 'validaobjFormCentrocomercial',
-        type: 'POST'
-    }
+     
     
     
 };
