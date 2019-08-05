@@ -1,0 +1,133 @@
+<style>
+  .wrap-back-ue{
+    display: inline-block;
+    margin: 0 15px 15px 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-back-ue{
+    justify-content: flex-end;
+    align-items: center;
+    padding: 6px 12px;
+    background: #2d384a;
+    color: white;
+    box-shadow: 2px 2px 6px grey;
+    cursor: pointer;
+  }
+
+  .btn-back-ue:hover{
+    background: #151b24;
+  }
+
+  .btn-back-ue i{
+    margin-right: 5px;
+  }
+
+  .tr-none{
+    background: #e0f7fa;
+  }
+
+  .tr-par{
+    background: #b2ebf2;
+  }
+
+  tr{
+    border-bottom: none;
+  }
+
+  .td-title{
+    font-weight: bold;
+  }
+
+  @media screen and (max-width:480px){
+    .wrap-back-ue {
+      margin: 0 0px 15px 0;
+      justify-content: center;
+    }
+
+    .btn-back-ue i {
+      margin-right: 2px;
+    }
+
+    #tabUE_detalle {
+      width: 100%;
+    }
+
+    .tr-none, .tr-par{
+      display: grid;
+      grid-template-columns: 100%;
+      width: 100%;
+    }
+
+    .tr-none td, .tr-par td{
+      text-align: center;
+      padding: 10px 5px;  
+    }
+  }
+</style>
+<div class="qL"> </div>
+
+<div class="">
+  <select id="slcapa" name="slcapa" class="pure-u-1-1" onchange="showUEficha(this.value)">
+    <!--
+    <option value="wdenue">DENUE</option>
+    <option value="unidades">Sucursales</option>
+    -->
+  </select>
+</div>
+
+<br>
+
+<div class="left-align wrap-back-ue">
+  <a class="btn-back-ue" id="btnIdentificaRegresar" onclick="showUEficha($('#slcapa').val())">
+    <i class="material-icons">arrow_back</i>   Regresar
+  </a>
+</div>
+
+<table class="centered tabUE" id="tabUE_DENUE">
+  <thead>
+    <th>CLEE_EST</th>
+    <th>Nombre</th>
+    <th>Razón social</th>
+    <th>Ficha</th>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<table class="centered tabUE" id="tabUE_Matrices">
+  <thead>
+    <th>Clave Unica Matrices</th>
+    <th>Nombre Matrices</th>
+    <th>Razón social Matrices</th>
+    <th>Ficha</th>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<table class="centered tabUE" id="tabUE_Sucursales">
+  <thead>
+    <th>Clave Unica Unidades</th>
+    <th>Nombre Unidades</th>
+    <th>Razón social Unidades</th>
+    <th>Ficha</th>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<table class="centered tabUE" id="tabUE_eje">
+  <tbody></tbody>
+</table>
+
+<div id="tabUE_detalle">
+  <table class="pure-table tabUE" id="tabUE_detalleTab">
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+    $(function () {
+        //showUEficha("wdenue");
+    });
+</script>
+

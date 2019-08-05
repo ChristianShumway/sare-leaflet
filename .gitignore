@@ -11,3 +11,5 @@
 *.class
 
 *.xml
+/sare_seg - copia/target/
+/sare_masivo/target/
