@@ -7,14 +7,12 @@ package mx.org.inegi.sare.sare_services;
 
 import java.util.ArrayList;
 import java.util.List;
-import mx.org.inegi.sare.Enums.TipoAreaEnum;
 import mx.org.inegi.sare.Enums.TipoCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
-import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSareConglomerado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;

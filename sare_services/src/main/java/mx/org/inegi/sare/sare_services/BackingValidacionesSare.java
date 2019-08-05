@@ -130,7 +130,7 @@ public class BackingValidacionesSare {
                    Object ele = json.getString("id");
                    Object nombre = json.getString("name");
                    Object value=(Object) jsonArray1.get(ele);                   
-                   if(value==null){                     
+                   if(value==null || value.equals("")){                     
                       respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));                      
                       respuesta.setDatos(json.toString());
                       break;
@@ -140,8 +140,15 @@ public class BackingValidacionesSare {
                           respuesta.setDatos(json.toString()); 
                           break;
                        }else{
-                           respuesta.setMensaje(new cat_mensaje("true", ""));
+                           if(value.equals("")){
+                               respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));  
+                               respuesta.setDatos(json.toString());
+                               break;
+                           }else{
+                               respuesta.setMensaje(new cat_mensaje("true", ""));
                            respuesta.setDatos(json.toString());
+                           }
+                           
                        }
                    }
         } catch (JSONException e) {
