@@ -28,8 +28,8 @@ public class WebInitializer implements WebApplicationInitializer{
         //rootContext.getEnvironment().setActiveProfiles("sqlite");
         
         //Tambien se pueden agregar dos active profiles
-        // servletContext.setInitParameter("spring.profiles.active", "dev,jdbc,seguimiento");
-        servletContext.setInitParameter("spring.profiles.active", "prod,jdbc,seguimiento");
+         servletContext.setInitParameter("spring.profiles.active", "dev,jdbc,seguimiento");
+        //servletContext.setInitParameter("spring.profiles.active", "prod,jdbc,seguimiento");
 
         //se agrega archivo de configuracion
         //rootContext.register(RootServiceConfig.class); FALTA EXPLICART HASTA QUE HAYA BD
