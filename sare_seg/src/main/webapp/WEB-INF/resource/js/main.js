@@ -581,7 +581,7 @@ const popupCleeListBloqueadas = data => {
 }
 
 const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
-  // console.log(data)
+  console.log(data)
   let tabla = ''
   const clavesPorVista = 10
   const totalClaves = data.length
@@ -613,8 +613,8 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
-      // console.log(inicioClavesVista)
-      // console.log(posicionFinal)
+      console.log(inicioClavesVista)
+      console.log(posicionFinal)
       for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
