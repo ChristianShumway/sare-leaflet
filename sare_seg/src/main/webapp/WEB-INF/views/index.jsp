@@ -115,7 +115,7 @@
     <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
     <script src="resources/js/validacionesBack.js" type="text/javascript"></script>
-    
+    <script src="resources/js/objFormularioBack.js" type="text/javascript"></script>
     
     
     <!-- Compiled and minified JavaScript -->
@@ -131,7 +131,7 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
-<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
         <script>
         var navegador;
         var versionnavegador=navigator.userAgent;
@@ -778,7 +778,8 @@
           <i class="large material-icons">menu</i>
         </a>
         <ul>
-          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
+<!--          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>-->
+          <li><a id='item-save-option' disabled onclick="validaCp()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
           <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
           <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
           <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 

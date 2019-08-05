@@ -15,17 +15,19 @@ const servicevalidaobjform = (object,obj) =>{
   data => {
     if (data[0].operation) {
       if (data[0].datos.mensaje.type === "false") {
-          Swal.fire
-          ({
-            position: 'bottom-end',
-            type: 'warning',
-            title: data[0].datos.mensaje.messages,
-            showConfirmButton: false,
-            timer: 3000
-          })
+          alertToastForm(data[0].datos.mensaje.messages, 'error')
+          const { id, name, title, key } = JSON.parse(data[0].datos.datos)
+          showelementwithmistakeform(data[0].datos.mensaje.messages,id,name,title,key)
           return true
       }
       else {
+            const { id, name, title, key } = JSON.parse(data[0].datos.datos)
+            const wrapTitle = document.getElementById(title)
+            const elemento=document.getElementById(id)
+            let visible = wrapTitle.dataset.visible
+            elemento.style.borderColor = '#eeeeee'
+            wrapTitle.classList.remove('error')
+            visible != 'hide' ? handleVisibleForm(key) : false
         return false
       }
     }

@@ -85,7 +85,7 @@ var urlServices = {
     serviceReporte: {
         url: 'Reportes.do',
         label: 'reporte',
-        type: 'POST'
+        type: 'GET'
     },
     
     validaSesion: {

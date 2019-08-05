@@ -581,7 +581,7 @@ const popupCleeListBloqueadas = data => {
 }
 
 const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
-  // console.log(data)
+  console.log(data)
   let tabla = ''
   const clavesPorVista = 10
   const totalClaves = data.length
@@ -589,8 +589,8 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
   // console.log(totalPaginaciones)
   let posicionFinal = ''
   // console.log(finClavesVista)
-  finClavesVista > totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
-
+  
+  finClavesVista >= totalClaves ? posicionFinal = totalClaves - 1 : posicionFinal = finClavesVista
   if (totalPaginaciones < finPaginacion){
     finPaginacion = totalPaginaciones
   }
@@ -613,8 +613,8 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
-      // console.log(inicioClavesVista)
-      // console.log(posicionFinal)
+      console.log(inicioClavesVista)
+      console.log(posicionFinal)
       for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
@@ -1663,33 +1663,167 @@ const validations=(totalInputs,object,campo)=>{
   }
 }
 
-const validaNumExt=(numero_ext)=>
+const validaNumExt=(numero_ext, letra_ext)=>
 {
   sendAJAX(urlServices['servicevalida_num_ext'].url, 
   {
-    'numext': numero_ext
+    'numext': numero_ext,
+    'letraext': letra_ext
   }, 
   urlServices['servicevalida_num_ext'].type, 
   data => {
     if (data[0].operation) {
       if (data[0].datos.mensaje.type === "false") {
-          Swal.fire
-          ({
-            position: 'bottom-end',
-            type: 'warning',
-            title: data[0].datos.mensaje.messages,
-            showConfirmButton: false,
-            timer: 3000
-          })
+          showelementwithmistakeform(data[0].datos.mensaje.messages,"e11","","title-domicilio","domicilio")
           return true
+      }else{
+          if(data[0].datos.mensaje.type === "falso"){
+              showelementwithmistakeform(data[0].datos.mensaje.messages,"e11","","title-domicilio","domicilio")
+              showelementwithmistakeform(data[0].datos.mensaje.messages,"e11A","","title-domicilio","domicilio")
+              return true
+          }
+          else 
+          {
+            hideelementwithmistakeform("e11","")
+            hideelementwithmistakeform
+            const wrapTitle = document.getElementById('title-domicilio')
+            const numero_ext=document.getElementById('e11')
+            const letra_ext=document.getElementById('e11A')
+            let visible = wrapTitle.dataset.visible
+            numero_ext.style.borderColor = '#eeeeee'
+            letra_ext.style.borderColor = '#eeeeee'
+            wrapTitle.classList.remove('error')
+            visible != 'hide' ? handleVisibleForm("domicilio") : false
+            return false
+          }
       }
-      else {
-        return false
-      }
+      
     }
   }, () => { })
     
 }
+const hideelementwithmistakeform=(id, name, title, key )=>{
+    const wrapTitle = document.getElementById(title)
+    const element=document.getElementById(id)
+    if(wrapTitle!=null){
+        let visible = wrapTitle.dataset.visible
+        element.style.borderColor = '#eeeeee'
+        wrapTitle.classList.remove('error')
+        visible != 'hide' ? handleVisibleForm(key) : false
+    }
+}
+
+const showelementwithmistakeform=(message, id, name, title, key )=>{
+    alertToastForm(message, 'error')
+    const element = document.getElementById(id)
+    const wrapTitle = document.getElementById(title)
+    let visible = wrapTitle.dataset.visible
+    element.style.borderColor = 'red'
+    element.classList.add('animated', 'shake')
+    visible == 'hide' ? handleVisibleForm(key) : false
+    setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
+    wrapTitle.id == title &&
+    wrapTitle.classList.add('error')
+    element.focus()
+}
+
+const validationsBack=(ObjectRequest)=>
+{
+  let totalInputs
+  let vialidad=document.getElementById('tipo_e10').value;
+  let vialidad1=document.getElementById('tipo_e10_a').value;
+  let vialidad2=document.getElementById('tipo_e10_b').value;
+  let vialidad3=document.getElementById('tipo_e10_c').value;
+  const wrapTitle = document.getElementById('title-domicilio')
+  let visible = wrapTitle.dataset.visible
+    if(isAlta){
+        servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormAltaBack))
+        if(vialidad==99){
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiqueBack))){
+                return true
+            }else{
+                return false
+            }
+        }
+        if(vialidad1==99){
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad1Back))){
+                return true
+            }else{
+                return false
+            }
+        }
+        if(vialidad2==99){
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad2Back))){
+                return true
+            }else{
+                return false
+            }
+        }
+        if(vialidad3==99){
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad3Back))){
+                return true
+            }else{
+                return false
+            }
+        }
+    }
+    if(!validaAltas){
+      console.log(punteo)
+      console.log(mod_cat)
+      if(punteo=='U' && mod_cat=='1') {
+        if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
+            return true
+        }else{
+            return false
+        }
+      } else {
+        if(punteo=='U' && mod_cat=='2') {
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
+                return true
+            }else{
+                if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objForm2Back))){
+                    return true
+                }else{
+                    return false
+                }
+            }
+            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormPunteoEnFrenteBack))){
+                return true
+            }else{
+                return false
+            }
+        }
+        else {
+          if(punteo=='R' && mod_cat=='1') {
+            validaCp()
+          }
+          else {
+            if(punteo=='R' && mod_cat=='2') {
+                if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
+                return true
+            }else{
+                if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
+                    return true
+                }else{
+                    return false
+                }
+            }
+                if(numero_ext.value<=0){
+                  document.getElementById('e11').value="";
+                }
+                if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
+                    return true
+                }else{
+                    return false
+                } 
+            }
+          }
+        }
+      }
+    }
+}
+
+
 
 // Función validación de formulario campos vacios
 const handleFormValidations = () => {
@@ -1818,6 +1952,7 @@ const handleFormValidationsRural = () => {}
 
 const validaCp = () => {
   const numero_ext=document.getElementById('e11')
+  const letra_ext=document.getElementById('e11A')
   sendAJAX(urlServices['serviceValCP'].url, 
   {
     'codigo': $("#e14_A").val(),
@@ -1853,10 +1988,31 @@ const validaCp = () => {
 
           handleReturnContainerForm(nameContainerFloating)
         } 
-        if(validaNumExt(numero_ext.value)){
+        if(validaNumExt(numero_ext.value,letra_ext.value)){
             
-        }else{
-           modalViewPreliminar() 
+        }else
+        {
+           const myform = $('#frmSARE')
+           let disabled = myform.find(':input:disabled').removeAttr('disabled')
+           let d = myform.serialize()
+           d = d.replace(/Seleccione/g, '')
+           var dpv = d.split("&")
+           $.each(dpv, function (i, e) {
+               var idobj = e.split("=")
+               var a = decodeURIComponent(idobj[1])
+               a=document.getElementById(idobj[0]).value
+               ObjectRequest[idobj[0]] = a
+           })
+           if(validationsBack(ObjectRequest)){
+               
+           }else{
+                modalViewPreliminar()
+           }
+//           if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
+//               
+//           }else{
+//               modalViewPreliminar() 
+//           }
         }
           
       }
@@ -2574,14 +2730,16 @@ const handleActionButtons = res => {
   if (res == 'enabled') {
     saveOption.removeAttribute('disabled')
     cancelOption.removeAttribute('disabled')
-    saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
+    //saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
+    saveMovilOption.setAttribute('onclick', '')
     saveMovilOption.classList.remove('option-disabled')
     cancelMovilOption.setAttribute('onclick', 'handleCancelClick()')
     cancelMovilOption.classList.remove('option-disabled')
   } else if (res == 'disabled') {
     saveOption.setAttribute('disabled', 'true')
     cancelOption.setAttribute('disabled', 'true')
-    saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
+    //saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
+    saveMovilOption.removeAttribute('onclick', '')
     saveMovilOption.classList.add('option-disabled')
     cancelMovilOption.removeAttribute('onclick', 'handleCancelClick()')
     cancelMovilOption.classList.add('option-disabled')
@@ -2664,7 +2822,7 @@ const opcionMenu = opcion => {
 
 const openReportesAjax=(opcion)=>{
         var xhr = new XMLHttpRequest();
-        xhr.open('POST', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
+        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
         if(xhr.readyState==1){
                 swal ({

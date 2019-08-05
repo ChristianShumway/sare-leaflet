@@ -114,17 +114,11 @@ public class ServiceController {
     }
     @RequestMapping(value = "validaobjForm.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services validationsobjForm(@RequestParam(value = "obj") String obj, @RequestParam(value = "objrequest") String objrequest) throws Exception {
-        //Gson gson = new Gson();
-        //cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
         return BackingValidacionesSare.validationsobjForm(obj,objrequest);
     }
     @RequestMapping(value = "valida_num_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext) throws Exception {
-        return BackingValidacionesSare.valida_num_ext(numext);
-    }
-    @RequestMapping(value = "valida_letra_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services valida_letra_ext(@RequestParam(value = "letraext") String letraext) throws Exception {
-        return BackingValidacionesSare.valida_num_ext(letraext);
+    public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext, @RequestParam(value = "letraext") String letraext) throws Exception {
+        return BackingValidacionesSare.valida_num_ext(numext,letraext);
     }
 
     @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -196,8 +190,13 @@ public class ServiceController {
         return BackingLogin.login(proyecto, usuario, password, request, response);
     }
     
-    @RequestMapping(value = "Reportes.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "Reportes.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services Reportes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "tipo") String tipo,@RequestParam(value = "reporte") String reporte,@RequestParam(value = "ce") String ce, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return BackingReportes.getReporte(proyecto,tipo,reporte,ce, request, response);
+    }
+    
+    @RequestMapping(value = "Reportes.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services ReportesGet(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "tipo") String tipo,@RequestParam(value = "reporte") String reporte,@RequestParam(value = "ce") String ce, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return BackingReportes.getReporte(proyecto,tipo,reporte,ce, request, response);
     }
     

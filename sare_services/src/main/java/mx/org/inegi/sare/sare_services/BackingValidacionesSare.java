@@ -5,6 +5,7 @@
  */
 package mx.org.inegi.sare.sare_services;
 
+import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -78,18 +79,29 @@ public class BackingValidacionesSare {
         return respuesta;
     }
 
-    public cat_respuesta_services valida_num_ext(String num_ext) {
+    public cat_respuesta_services valida_num_ext(String num_ext, String letra_ext) {
         cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (num_ext.equals("")) {
+        if (num_ext.equals("") && !"".equals(letra_ext)) {
             respuesta.setMensaje(new cat_mensaje("true", ""));
         } else {
-            try {
-                Integer.parseInt(num_ext);
-                respuesta.setMensaje(new cat_mensaje("true", ""));
-            } catch (NumberFormatException excepcion) {
-                respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
+            if((num_ext!=null))
+            {
+                try {
+                    Integer.parseInt(num_ext);
+                    respuesta.setMensaje(new cat_mensaje("true", ""));
+                } catch (NumberFormatException excepcion) {
+                    respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
+                    
+                }
+            }else
+            {
+                if(letra_ext.equals("")&& num_ext.equals(""))
+                {
+                    respuesta.setMensaje(new cat_mensaje("falso", "agregue numero exterior"));
+                }else{
+                    respuesta.setMensaje(new cat_mensaje("true", ""));
+                }
             }
-
         }
         return respuesta;
     }
@@ -106,7 +118,6 @@ public class BackingValidacionesSare {
 
     public cat_respuesta_services validationsobjForm(String objects, String obj) {
         cat_respuesta_services respuesta = new cat_respuesta_services();
-        ArrayList lista=new ArrayList();
         JSONObject outerObject = new JSONObject(obj);
         JSONObject outerObject1 = new JSONObject(objects);
         JSONArray jsonArray = outerObject.getJSONArray("object");
@@ -114,15 +125,24 @@ public class BackingValidacionesSare {
 
         for(int i=0;i<jsonArray.length();i++){
             try {
-            JSONObject json,json1;
+            JSONObject json;
                 json = jsonArray.getJSONObject(i);
-                //json1 = jsonArray1.getJSONObject(i);
                    Object ele = json.getString("id");
+                   Object nombre = json.getString("name");
                    Object value=(Object) jsonArray1.get(ele);                   
-                   if(value!=null){                     
-                      respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+ele));                      
+                   if(value==null){                     
+                      respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));                      
                       respuesta.setDatos(json.toString());
                       break;
+                   }else{
+                       if(value.equals("Seleccione")){
+                          respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));                      
+                          respuesta.setDatos(json.toString()); 
+                          break;
+                       }else{
+                           respuesta.setMensaje(new cat_mensaje("true", ""));
+                           respuesta.setDatos(json.toString());
+                       }
                    }
         } catch (JSONException e) {
             e.printStackTrace();
