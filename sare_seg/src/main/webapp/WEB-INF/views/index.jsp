@@ -114,6 +114,9 @@
     
     <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
+    <script src="resources/js/validacionesBack.js" type="text/javascript"></script>
+    
+    
     
     <!-- Compiled and minified JavaScript -->
     <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
@@ -128,8 +131,10 @@
         <link rel="stylesheet" type="text/css" href="resources/css/jquery.dataTables.css">
         <script type="text/javascript" language="javascript" src="resources/js/jquery.dataTables.js"></script>
         <script type="text/javascript" language="javascript" src="resources/js/fnAddTr.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>
+<!--        <script src="https://cdnjs.cloudflare.com/ajax/libs/bowser/1.9.4/bowser.min.js"></script>-->
         <script>
+        var navegador;
+        var versionnavegador=navigator.userAgent;
         var getBrowserInfo = function() 
         {
             var ua= navigator.userAgent, tem, 
@@ -146,7 +151,7 @@
             if((tem= ua.match(/version\/(\d+)/i))!= null) M.splice(1, 1, tem[1]);
             return M.join(' ');
         };
-
+        
         console.log(getBrowserInfo());
         $(document).ready(function(){
            // disable()
@@ -168,7 +173,7 @@
                });} /* IE7, IE8 */
          if(document.addEventListener){
              /* Chrome, Safari, Firefox */
-             var navegador=getBrowserInfo();
+             navegador=getBrowserInfo();
              $("#mapa").on("wheel", event => {
                    if (event.originalEvent.ctrlKey) {
                        event.returnValue = false;
@@ -553,8 +558,8 @@
                   <label for="e11">E11 Número Exterior</label>
                 </div>
                 <div class="input-field">
-                  <input placeholder="E11 A Letra" id="e11_a" name="e11_a" type="text" disabled >
-                  <label for="e11_a">E11 A Letra</label>
+                  <input placeholder="E11 A Letra" id="e11A" name="e11A" type="text" disabled >
+                  <label for="e11A">E11 A Letra</label>
                 </div>
                 <div class="input-field">
                   <input placeholder="E13 Número Interior" id="e13" name="e13" type="text" onKeyPress="return soloNumeros(event)" disabled >

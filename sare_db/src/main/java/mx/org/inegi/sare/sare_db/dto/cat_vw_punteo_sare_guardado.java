@@ -33,7 +33,7 @@ public class cat_vw_punteo_sare_guardado {
     private String e10_cvevial;
     private String e10_e;
     private String e11;
-    private String e11_a;
+    private String e11A;
     private String e13;
     private String e13_a;
     private String tipo_E14;
@@ -72,12 +72,21 @@ public class cat_vw_punteo_sare_guardado {
      private String tipo_e10_bn_otro;
      private String tipo_e10_cn_otro;
      private BigDecimal id_inmueble;
+     private String navegador;
+
+    public String getNavegador() {
+        return navegador;
+    }
+
+    public void setNavegador(String navegador) {
+        this.navegador = navegador;
+    }
     
 
     public cat_vw_punteo_sare_guardado() {
     }
 
-    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, String e11, String e11_a, String e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17, BigDecimal id_inmueble) {
+    public cat_vw_punteo_sare_guardado(String id_UE, String origen, String c154, String e08, String e09, String e17_DESC, String e03, String e03N, String e04, String e04N, String e05, String e05N, String e06, String e07, String tipo_e10, String tipo_e10n, String e10, String e10_e, String e11, String e11A, String e13, String e13_a, String tipo_E14, String e14_A, String e14, String tipo_e10_a, String tipo_e10_an, String e10a_cvevial, String e10_A, String tipo_e10_b, String e10b_cvevial, String e10_B, String tipo_e10_c, String e10c_cvevial, String e10_C, String descrubic, String E12, String tipo_e19, String e19, String E12p, String e20, String punteo, String mod_cat, String tramo_control, BigDecimal id_deftramo, String e23, String Cvegeo, String Cvegeo2016, String CE, String Cveft, BigDecimal coordx, BigDecimal coordy, BigDecimal E17, BigDecimal id_inmueble) {
         this.id_UE = id_UE;
         this.origen = origen;
         this.c154 = c154;
@@ -97,7 +106,7 @@ public class cat_vw_punteo_sare_guardado {
         this.e10 = e10;
         this.e10_e = e10_e;
         this.e11 = e11;
-        this.e11_a = e11_a;
+        this.e11A = e11A;
         this.e13 = e13;
         this.e13_a = e13_a;
         this.tipo_E14 = tipo_E14;
@@ -461,12 +470,12 @@ public class cat_vw_punteo_sare_guardado {
         this.e11 = e11;
     }
 
-    public String getE11_a() {
-        return e11_a;
+    public String gete11A() {
+        return e11A;
     }
 
-    public void setE11_a(String e11_a) {
-        this.e11_a = e11_a;
+    public void sete11A(String e11A) {
+        this.e11A = e11A;
     }
 
     public String getE13() {

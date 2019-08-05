@@ -112,6 +112,20 @@ public class ServiceController {
     public cat_respuesta_services validaCP(@RequestParam(value = "codigo") String codigo,@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingValidacionesSare.validacp(codigo,cve_ent, proyecto);
     }
+    @RequestMapping(value = "validaobjForm.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services validationsobjForm(@RequestParam(value = "obj") String obj, @RequestParam(value = "objrequest") String objrequest) throws Exception {
+        //Gson gson = new Gson();
+        //cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
+        return BackingValidacionesSare.validationsobjForm(obj,objrequest);
+    }
+    @RequestMapping(value = "valida_num_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext) throws Exception {
+        return BackingValidacionesSare.valida_num_ext(numext);
+    }
+    @RequestMapping(value = "valida_letra_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services valida_letra_ext(@RequestParam(value = "letraext") String letraext) throws Exception {
+        return BackingValidacionesSare.valida_num_ext(letraext);
+    }
 
     @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_asentamientos_humanos> getCatAsentamientosHumanos(@RequestParam(value = "proyecto") Integer proyecto) throws Exception {

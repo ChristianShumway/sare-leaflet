@@ -132,5 +132,24 @@ var urlServices = {
         url: 'getDatosClasesPorFiltro.do',
         label: 'getDatosClasesPorFiltro',
         type: 'POST'
-    }
+    },
+    servicevalida_num_ext: {
+        url: 'valida_num_ext.do',
+        label: 'valida_num_ext',
+        type: 'POST'
+    },
+     servicevalida_letra_ext: {
+        url: 'valida_letra_ext.do',
+        label: 'valida_letra_ext',
+        type: 'POST'
+    },
+     
+     servicevalidaobjForm: {
+        url: 'validaobjForm.do',
+        label: 'validaobjForm',
+        type: 'POST'
+    },
+     
+    
+    
 };

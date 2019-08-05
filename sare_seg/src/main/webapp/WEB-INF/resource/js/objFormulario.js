@@ -68,7 +68,7 @@ const objForm = [
     title:'title-entre-vialidades',
   },
   {
-    id:'e10_C',
+        id:'e10_C',
     key: 'calle-posterior',
     name:'Nombre de vialidad',
     title:'title-calle-posterior',
@@ -306,7 +306,7 @@ const inputsEditables = [
     id:'e11',
   },
   {
-    id:'e11_a',
+    id:'e11A',
   },
   {
     id:'e13',
@@ -473,7 +473,7 @@ const inputsClean = [
     id:'e11',
   },
   {
-    id:'e11_a',
+    id:'e11A',
   },
   {
     id:'e13',

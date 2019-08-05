@@ -90,6 +90,17 @@ public class cat_vw_punteo_sare {
      private String tipo_e10_bn_otro;
      private String tipo_e10_cn_otro;
     private String cvevial;
+    private String navegador;
+
+    public String getNavegador() {
+        return navegador;
+    }
+
+    public void setNavegador(String navegador) {
+        this.navegador = navegador;
+    }
+    
+    
 
     public cat_vw_punteo_sare() {
     }

@@ -237,7 +237,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE03()==null?"":inmueble.getE03()).append("','")
                                 .append(inmueble.getE05()==null?"":inmueble.getE05()).append("','")
                                 .append(inmueble.getE07()==null?"":inmueble.getE07()).append("','")
-                                .append(inmueble.getE11_a()==null?"":inmueble.getE11_a()).append("','")
+                                .append(inmueble.gete11A()==null?"":inmueble.gete11A()).append("','")
                                 .append(inmueble.getTipo_E14()==null?"":inmueble.getTipo_E14()).append("','")
                                 .append(inmueble.getE12()==null?"":inmueble.getTipo_E14()).append("','")
                                 .append(inmueble.getE12p()==null?"":inmueble.getE12p()).append("','")
@@ -267,7 +267,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getTipo_e10()!=null?inmueble.getTipo_e10():"").append("','")
                                 .append(inmueble.getE10()!=null?inmueble.getE10().toUpperCase():"").append("','")
                                 .append(inmueble.getE11()!=null?inmueble.getE11():"").append("','")
-                                .append(inmueble.getE11_a()!=null?inmueble.getE11_a().toUpperCase():"").append("','")
+                                .append(inmueble.gete11A()!=null?inmueble.gete11A().toUpperCase():"").append("','")
                                 .append(inmueble.getE12()!=null?inmueble.getE12().toUpperCase():"").append("','")
                                 .append(inmueble.getE12p()!=null?inmueble.getE12p():"").append("','")
                                 .append(inmueble.getE13()!=null?inmueble.getE13():"").append("','")
@@ -294,7 +294,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getE20().toUpperCase()).append("','")
                                 .append(inmueble.getId_deftramo()).append("','")
                                 .append(inmueble.getE10_cvevial()!=null?inmueble.getE10_cvevial():"").append("','")
-                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("','").append(isAlta).append("') resultado");
+                                .append(inmueble.getE23()!=null?inmueble.getE23():"").append("','").append(isAlta).append("','").append(inmueble.getNavegador()).append("') resultado");
                         break;
                     case getE23A:
                         sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".tr_etq_val where id_ue = ").append(inmueble.getId_UE()); 
