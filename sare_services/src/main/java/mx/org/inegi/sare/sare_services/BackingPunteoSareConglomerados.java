@@ -43,7 +43,7 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
     }
 
     public cat_respuesta_services getDatabyCoords(Integer proyecto, String x, String y, String tc, Boolean isAlta, String ce, String id_ue) {
-        Respuesta = new cat_respuesta_services();
+        Respuesta = new cat_respuesta_services();       
         cat_coordenadas coordMercator;
         if (TipoCartografia.Geografica.getCodigo().equals(tc)) {
             Double cX = Double.parseDouble(x.replace(",", "."));
@@ -57,7 +57,7 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
         if (listaFrente != null && listaFrente.size() > 0) {
             Respuesta.setDatos(listaFrente);
         } else {
-            Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "La ubicación del punto esta fuera de la Coordinación Estatal asginada"));
+            Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "No se encontro el frente de la manzana"));
         }
         return Respuesta;
     }
