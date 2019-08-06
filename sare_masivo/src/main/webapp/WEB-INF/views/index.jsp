@@ -317,8 +317,8 @@
           </div>
           <div class="col s12 l2 wrap-options animated " id="wrap-options">
             <div class="items-check">
-              
-<!--              <div class="check-option">
+              <!--              
+              <div class="check-option">
                 <p class="option-title option-active" id="option-c101">Sucursales</p>
                 <div class="switch">
                   <label>
@@ -328,8 +328,8 @@
                     Activo
                   </label>
                 </div>
-              </div>-->
-  
+              </div>
+              -->
               <div class="check-option">
                 <p class="option-title option-active" id="option-wdenue">DENUE</p>
                 <div class="switch">
@@ -341,8 +341,8 @@
                   </label>
                 </div>
               </div>
-  
-<!--              <div class="check-option">
+              <!--              
+              <div class="check-option">
                 <p class="option-title" id="option-C101M">Matrices</p>
                 <div class="switch">
                   <label>
@@ -352,8 +352,8 @@
                     Activo
                   </label>
                 </div>
-              </div>-->
-  
+              </div>
+              -->
               <div class="check-option">
                 <p class="option-title" id="option-c104">Postes de Kilometraje</p>
                 <div class="switch">
@@ -364,40 +364,92 @@
                     Activo
                   </label>
               </div>
-
             </div>
-
-            <span class="options-line"></span>
-
-            <div class="items-radio">  
-
-              <div class="radio-option">
-                <input id="identificar" value="identificar" name="accion" type="radio" onchange="radioSelect('identificar')"/>
-                <label for="identificar">Identificar</label>
-              </div>
-
-              <div class="radio-option">
-                  <input  id="puntear" checked="true" value="puntear" name="accion" type="radio" onchange="radioSelect('puntear')"/>
-                <label for="puntear">Puntear</label>
-              </div>
-
-              <div class="radio-option">
-                <input id="v-calle" value="v_calle" name="accion" type="radio" onchange="radioSelect('calle')"/>
-                <label for="v-calle">Vista Calle</label>
-              </div>
-
-              <div class="radio-option">
-                <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
-                <label for="puntear-alta">Puntear Alta</label>
-              </div>
-
-            </div> 
           </div>
+          <span class="options-line"></span>
+          <div class="items-radio">  
+            <div class="radio-option">
+              <input id="identificar" value="identificar" name="accion" type="radio" onchange="radioSelect('identificar')"/>
+              <label for="identificar">Identificar</label>
+            </div>
+            <div class="radio-option">
+                <input  id="puntear" checked="true" value="puntear" name="accion" type="radio" onchange="radioSelect('puntear')"/>
+              <label for="puntear">Puntear</label>
+            </div>
+            <div class="radio-option">
+              <input id="v-calle" value="v_calle" name="accion" type="radio" onchange="radioSelect('calle')"/>
+              <label for="v-calle">Vista Calle</label>
+            </div>
+            <div class="radio-option">
+              <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
+              <label for="puntear-alta">Puntear Alta</label>
+            </div>
+          </div> 
           <!-- end opciones -->
         </div>
       </section>
       <!-- END CONTAINER MAP -->
 
+      <section class="container-referencia-ubicacion" id="container-rerefencia-ubicacion">
+        <div class="row row-referencia">
+          <div class="col s12 m6 col-referencia actual">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header">
+                  <img src="resources/images/iconos/place.png" alt="place" />
+                  Ubicación Geofráfica Actual
+                </div>
+                <div class="collapsible-body">
+                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
+                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
+                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
+                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
+                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e05">Localidad Clave</span>
+                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
+                  <p class="title-ref"> AGEB </p>
+                  <span class="desc-ref" id="e06">AGEB</span>
+                  <p class="title-ref"> Manzana </p>
+                  <span class="desc-ref" id="e07">Manzana</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="col s12 m6 col-referencia anterior">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header">
+                  <img src="resources/images/iconos/place.png" alt="place" />
+                  Ubicación Geográfica Anterior
+                </div>
+                <div class="collapsible-body">
+                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
+                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
+                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
+                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
+                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
+                  <span class="desc-ref" id="e05">Localidad Clave</span>
+                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
+                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
+                  <p class="title-ref"> AGEB </p>
+                  <span class="desc-ref" id="e06">AGEB</span>
+                  <p class="title-ref"> Manzana </p>
+                  <span class="desc-ref" id="e07">Manzana</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <!-- CONTAINER FORM -->
       <!--<section class="container-form" id="container-form">
         <form id="frmSARE">
@@ -457,7 +509,8 @@
             <!-- OPCIÓN REFERENCIA -->
 
             <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
-           <!-- <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica animated slideInUp" id="op-ugeografica">
+            <!--
+           <div class="col s12 m6 l4 wrap-form op-ubicacion-geografica animated slideInUp" id="op-ugeografica">
               <div class="title-option" data-visible="show" onclick="handleVisibleForm('ubicacion-geografica')" id="title-ubicacion-geografica">
                 <i class="material-icons" id="icon-ubicacion-geografica">add</i> 
                 <div class="titlew">
@@ -510,7 +563,8 @@
                   <a onclick="handleActionTarget('domicilio','domicilio-float-der')"  class="next-wrap"><img src="resources/images/iconos/right-arrow.png" alt="next"></a>
                 </div>
               </div>
-            </div>-->
+            </div>
+            -->
             <!-- OPCIÓN UBICACIÓN GEOGRÁFICA -->
 
             <!-- OPCIÓN DOMICILIO -->
