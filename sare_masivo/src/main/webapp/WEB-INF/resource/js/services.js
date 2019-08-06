@@ -132,5 +132,10 @@ var urlServices = {
         url: 'getDatosClasesPorFiltro.do',
         label: 'getDatosClasesPorFiltro',
         type: 'POST'
+    },
+    getListaUOxCveFrente: {
+        url: 'getListUOporFrente.do',
+        label: 'getListUOporFrente',
+        type: 'POST'
     }
 };

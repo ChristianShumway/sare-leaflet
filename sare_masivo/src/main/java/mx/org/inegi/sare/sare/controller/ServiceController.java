@@ -142,6 +142,11 @@ public class ServiceController {
     public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x, @RequestParam(value = "y") String y) throws Exception {
         return BackingPunteo.getDatabyCoords(proyecto, x, y,"",true,"","");
     }
+    
+    @RequestMapping(value = "getListUOporFrente.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "cveFrente") String cveFrente) throws Exception {
+        return BackingPunteo.getListaUO(proyecto,cveFrente);
+    }
 
     @RequestMapping(value = "liberacve.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services liberacve(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "id_ue") String id_ue) throws Exception {
