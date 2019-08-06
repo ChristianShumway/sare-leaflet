@@ -1774,7 +1774,16 @@ const validationsBack=(ObjectRequest)=>
         if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
             return true
         }else{
-            return false
+            if(validaEdif()){
+                if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
+                    return true
+                }else{
+                    return false
+                }
+            }else{
+                return false
+            }
+            
         }
       } else {
         if(punteo=='U' && mod_cat=='2') {
@@ -1821,6 +1830,28 @@ const validationsBack=(ObjectRequest)=>
         }
       }
     }
+}
+
+const validaEdif=()=>{
+    let bandera=false
+    for(var i=0;i<objFormCentrocomercial.length;i++){
+       const idWrap=document.getElementById(objFormCentrocomercial[i].id).value; 
+       if(idWrap!=null && idWrap!="" && idWrap!="Seleccione")
+       {
+                bandera= true
+                break
+        }else
+        {
+                bandera= false
+        }
+    }
+//    objFormCentrocomercial.map (wrap => 
+//    {
+//        const idWrap=document.getElementById(wrap.id).value;
+//            
+//            
+//    }) 
+    return bandera
 }
 
 
