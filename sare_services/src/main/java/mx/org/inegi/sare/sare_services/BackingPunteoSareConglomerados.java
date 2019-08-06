@@ -7,14 +7,13 @@ package mx.org.inegi.sare.sare_services;
 
 import java.util.ArrayList;
 import java.util.List;
-import mx.org.inegi.sare.Enums.TipoAreaEnum;
 import mx.org.inegi.sare.Enums.TipoCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
+import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
-import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSareConglomerado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,10 +45,6 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
     public cat_respuesta_services getDatabyCoords(Integer proyecto, String x, String y, String tc, Boolean isAlta, String ce, String id_ue) {
         Respuesta = new cat_respuesta_services();
         cat_coordenadas coordMercator;
-        cat_ubicacion_punteo ubicacion_punteo = null;
-        List<cat_vial> cat_vial = null;
-        cat_vial vial = null;
-        Boolean isCE = true;
         if (TipoCartografia.Geografica.getCodigo().equals(tc)) {
             Double cX = Double.parseDouble(x.replace(",", "."));
             Double cY = Double.parseDouble(y.replace(",", "."));
@@ -57,19 +52,24 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
         } else {
             coordMercator = new cat_coordenadas(x, y);
         }
-        if (isCE) {
-            String ta;
-            String punteoReal = InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());;
-            ta = "U";
-            String ent = InterfacePunteoSare.getEntidad(proyecto, coordMercator.getX(), coordMercator.getY());
-            String datod = InterfacePunteoSare.getGeometriaFrente(proyecto, ent, coordMercator.getX(), coordMercator.getY());
-           // List<String> listaOD= InterfacePunteoSare.getListaUO(proyecto, datod);
-            Respuesta.setDatos(datod);
 
+        List<cat_frente_geometria> listaFrente = InterfacePunteoSare.getGeometriaFrente(proyecto, coordMercator.getX(), coordMercator.getY());
+        if (listaFrente != null && listaFrente.size() > 0) {
+            Respuesta.setDatos(listaFrente);
         } else {
             Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "La ubicación del punto esta fuera de la Coordinación Estatal asginada"));
         }
+        return Respuesta;
+    }
 
+    public cat_respuesta_services getListaUO(Integer proyecto, String cveManzana) {
+        Respuesta = new cat_respuesta_services();
+        List<String> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana);
+        if (listaUO != null && listaUO.size() > 0) {
+            Respuesta.setDatos(listaUO);
+        } else {
+            Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "No se encontraron unidades para este frente "));
+        }
         return Respuesta;
     }
 
