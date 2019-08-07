@@ -2422,12 +2422,12 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
-  document.getElementById("id_UE").style.display='block';
-  document.getElementById("label_idUE").style.display='block';
-  document.getElementById("origen").style.display='block';
-  document.getElementById("c154").style.display='block';
-  document.getElementById("catorigen").style.display='none';
-  document.getElementById("catc154").style.display='none';
+//  document.getElementById("id_UE").style.display='block';
+//  document.getElementById("label_idUE").style.display='block';
+//  document.getElementById("origen").style.display='block';
+//  document.getElementById("c154").style.display='block';
+//  document.getElementById("catorigen").style.display='none';
+//  document.getElementById("catc154").style.display='none';
    id_ue=document.getElementById('id_UE').value
  // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')

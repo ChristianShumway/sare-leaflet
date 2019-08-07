@@ -29,9 +29,9 @@ import org.springframework.stereotype.Repository;
  *
  * @author LIDIA.VAZQUEZ
  */
-@Repository("DaoBusqueda")
+@Repository("DaoBusquedaConglomerados")
 @Profile("jdbc")
-public class DaoBusquedaSare extends DaoTransformaCartografia implements InterfaceBusquedaSare {
+public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia implements InterfaceBusquedaSare {
 
     @Autowired
     @Qualifier("jdbcTemplateOcl")
@@ -109,18 +109,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         cat_vw_punteo_sare fila;
                         while (rs.next()) {
                             fila = new cat_vw_punteo_sare(
-                                    rs.getString("cestatal") != null ? rs.getString("cestatal") : "",
                                     rs.getString("coorx") != null ? new BigDecimal(rs.getString("coorx").replace(",", ".")) : new BigDecimal(0),
                                     rs.getString("coory") != null ? new BigDecimal(rs.getString("coory").replace(",", ".")) : new BigDecimal(0),
-                                    rs.getString("c154") != null ? rs.getString("c154") : "",
-                                    rs.getString("descrubic") != null ? rs.getString("descrubic") : "",
                                     rs.getString("e03") != null ? rs.getString("e03") : "",
                                     rs.getString("e04") != null ? rs.getString("e04") : "",
                                     rs.getString("e05") != null ? rs.getString("e05") : "",
                                     rs.getString("e06") != null ? rs.getString("e06") : "",
                                     rs.getString("e07") != null ? rs.getString("e07") : "",
-                                    rs.getString("e08") != null ? rs.getString("e08") : "",
-                                    rs.getString("e09") != null ? rs.getString("e09") : "",
                                     rs.getString("e10") != null ? rs.getString("e10") : "",
                                     rs.getString("e10_a") != null ? rs.getString("e10_a") : "",
                                     rs.getString("e10_b") != null ? rs.getString("e10_b") : "",
@@ -132,20 +127,15 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
-                                    rs.getString("e17") != null ? new BigDecimal(rs.getString("e17")) : new BigDecimal(0),
-                                    rs.getString("codigo_scian") != null ? rs.getString("codigo_scian") : "",
                                     rs.getString("e19") != null ? rs.getString("e19") : "",
-                                    rs.getString("e20") != null ? rs.getString("e20") : "",
-                                    rs.getString("e23_a") != null ? rs.getString("e23_a") : "",
                                     rs.getString("id_ue") != null ? new BigDecimal(rs.getString("id_ue")) : new BigDecimal(0),
-                                    rs.getString("origen") != null ? new BigDecimal(rs.getString("origen")) : new BigDecimal(0),
-                                    rs.getString("estatus_punteo") != null ? Integer.valueOf(rs.getString("estatus_punteo")) : null,
                                     rs.getString("tipo_e10") != null ? rs.getString("tipo_e10") : "",
                                     rs.getString("tipo_e10_a") != null ? rs.getString("tipo_e10_a") : "",
                                     rs.getString("tipo_e10_b") != null ? rs.getString("tipo_e10_b") : "",
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
                                     rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
+                                    rs.getString("estatus_punteo") != null ? Integer.valueOf(rs.getString("estatus_punteo")) : null,
                                     rs.getString("id_inmueble") != null ? new BigDecimal(rs.getString("id_inmueble")) : new BigDecimal(0),
                                     rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
                             fila.setE12p("");
@@ -635,28 +625,26 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 //        sql.append("e17, e17||' - '||e17_desc as codigo_scian,c154");
 //        sql.append(" FROM ").append(esquemaPos).append(".VW_PUNTEO_SARE");
 
-        sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n"
-                + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n"
-                + "lpad(to_char(ue.tipo_e14),2,'0') tipo_e14, ue.e14, lpad(to_char(ue.tipo_e10_a),2,'0') tipo_e10_a, \n"
-                + "ue.e10_a,lpad(to_char(ue.tipo_e10_b),2,'0') tipo_e10_b, ue.e10_b, lpad(to_char(ue.tipo_e10_c),2,'0'),\n"
-                + "ue.tipo_e10_c, ue.e10_c, ue.x as coorx, to_char(ue.y) as coory, \n"
-                + "ue.e16 as descrubic, pre.st_sare estatus_punteo, ue.e12, ue.e19, ue.tipo_e19, ue.e20, \n"
-                + "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n"
-                + "'' origen, ue.ce as cestatal,\n"
-                + "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n"
-                + "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL ");
-        sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+        sql.append("SELECT to_char(uo.id_uo_masivo) as id_ue, uo.e03, uo.e04, \n"
+                + "uo.e05, uo.e06, uo.e07,lpad(to_char(uo.tipo_e10),2,'0') tipo_e10,uo.e10,uo.e11,lpad(to_char(uo.tipo_e14),2,'0') \n"
+                + "tipo_e14,TRIM(uo.e11a) as e11a,uo.e14,lpad(to_char(uo.tipo_e10_a),2,'0') tipo_e10_a,uo.e10_a,lpad(to_char(uo.tipo_e10_b),2,'0') tipo_e10_b,\n"
+                + "uo.e10_b,uo.tipo_e10_c,uo.e10_c,uo.x as coorx,to_char(uo.y) as coory,pre.st_sare estatus_punteo,uo.e12,uo.e19,uo.tipo_e19,uo.e13,TRIM(uo.e13a) \n"
+                + "as e13_a,uo.e14a as e14_a,'' origen,\n"
+                + "inm.id_inmueble,inm.CVEVIAL");
+        sql.append(" FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                 .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                 .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ");
+                .append("join ").append(esquemaOcl).append(".tr_uo_masivo uo on uo.id_uo_masivo=pre.id_uo_masivo ")
+                .append("left join ").append(esquemaOcl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble ")
+                .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare ");
         if (origen == 1) {
             if (ce.equals("00")) {
-                sql.append(" where st_sare='10' and ue.id_ue = ").append(id_ue);
+                sql.append(" where st_sare='10' and uo.id_uo_masivo = ").append(id_ue);
             } else {
-                sql.append(" where st_sare='10' and ue.id_ue = ").append(id_ue).append(" and cve_operativa='").append(tramo).append("'");
+                sql.append(" where st_sare='10' and uo.id_uo_masivo = ").append(id_ue).append(" and cve_operativa='").append(tramo).append("'");
             }
         } else {
-            sql.append(" where ue.id_ue = ").append(id_ue);
+            sql.append(" where uo.id_uo_masivo = ").append(id_ue);
         }
         if (!(ce == null)) {
             if (!ce.equals("00") && !ce.equals("99")) {

@@ -203,9 +203,12 @@ const findUE = id_ue => {
   }
 }
 
+
+
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
-  
+  disabledInputs()
+  document.getElementById("id_UE").disabled=true
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -1834,8 +1837,8 @@ const validationsBack=(ObjectRequest)=>
 
 const validaEdif=()=>{
     let bandera=false
-    for(var i=0;i<objFormCentrocomercial.length;i++){
-       const idWrap=document.getElementById(objFormCentrocomercial[i].id).value; 
+    for(var i=0;i<objFormCentrocomercialBackValidaEdif.length;i++){
+       const idWrap=document.getElementById(objFormCentrocomercialBackValidaEdif[i].id).value; 
        if(idWrap!=null && idWrap!="" && idWrap!="Seleccione")
        {
                 bandera= true
