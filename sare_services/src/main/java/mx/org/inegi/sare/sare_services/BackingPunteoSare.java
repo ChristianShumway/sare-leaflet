@@ -60,7 +60,11 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         if (!isAlta) {
             List<cat_vw_punteo_sare> catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2, id_ue);
             if (catBusquedaOracle.size() > 0) {
-                isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), catBusquedaOracle.get(0).getE03(), proyecto);
+                if("00".equals(ce)){
+                   isCE=true; 
+                }else{
+                  isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);  
+                }
             } else {
                 Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "La UE no tiene una Coordinación Estatal asginada"));
             }
@@ -112,6 +116,9 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                                 ubicacion_punteo.setE10_X(getVialidades(proyecto, ubicacion_punteo.getE10_X()));
                                 if (ubicacion_punteo.gettipo_e10n() != null && !ubicacion_punteo.gettipo_e10n().equals("")) {
                                     ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto, ubicacion_punteo.gettipo_e10n().toLowerCase()));
+                                    if(ubicacion_punteo.gettipo_e10()==null){
+                                       ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto, "otro (especifique)")); 
+                                    }
                                 }
                             }
                             if (ubicacion_punteo.getMod_cat() == 2) {

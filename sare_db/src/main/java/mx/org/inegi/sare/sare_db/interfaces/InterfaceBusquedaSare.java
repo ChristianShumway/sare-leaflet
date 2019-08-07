@@ -35,4 +35,6 @@ public interface InterfaceBusquedaSare {
     public boolean getValCoorGeo(Integer proyecto, String x, String y, cat_vw_punteo_sare element);
     
     public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue);
+    
+    //public boolean 
 }

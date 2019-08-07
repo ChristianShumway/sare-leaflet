@@ -212,7 +212,7 @@ public class DBConfig {
         return env.getProperty("db.prod.schema");
     }
     /* Esquemas en produccion  Oracle*/
-    @Bean(name = "schemaSareOclProd")
+    @Bean(name = "schemaSareOcl")
     @Profile({"prod", "sareOclProd"})
     public String getSchemasareOclProd() {
         return env.getProperty("db.prod.schema.ocl");

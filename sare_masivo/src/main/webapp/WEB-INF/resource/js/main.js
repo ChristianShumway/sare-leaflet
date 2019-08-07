@@ -483,7 +483,6 @@ const showModalMsgError = data => {
 
 // Función ver lista claves
 const handleViewCleeList = () => {
-  document.getElementById("filtroXclase").style.display='none';
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
@@ -610,7 +609,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     <div id='container-cleelist' class='container-cleelist row'>
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
-        <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
       // console.log(inicioClavesVista)
@@ -619,7 +617,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
-          <div class='item-list'><span>${c154}</span></div>
           <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
         </div>`
       }

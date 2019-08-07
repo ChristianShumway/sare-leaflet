@@ -40,7 +40,6 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
 //    private String schemaocl;
-
     UnidadesEconomicasEnum UnidadesEconomicasEnum;
 
     private List<cat_get_claves> resultado1;
@@ -121,6 +120,44 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
     }
 
+    @Override
+    public List<cat_get_claves> getListadoConglomerados(Integer proyecto, String ce, String tramo) throws Exception {
+        resultado1 = new ArrayList<>();
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        sql = getSql(proyectos, ce, tramo, UnidadesEconomicasEnum.CONGLOMERADOS.getCódigo());
+        switch (proyectos) {
+            case Operativo_Masivo:
+                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                    @Override
+                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        cat_get_claves fila;
+                        while (rs.next()) {
+                            fila = new cat_get_claves(rs.getString("id_uo_masivo"), rs.getString("status"));
+                            resultado1.add(fila);
+                        }
+                        return resultado1;
+                    }
+                });
+                break;
+            default:
+                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                    @Override
+                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        cat_get_claves fila;
+                        while (rs.next()) {
+                            fila = new cat_get_claves(rs.getString("id_uo_masivo"), rs.getString("status"));
+                            resultado1.add(fila);
+                        }
+                        return resultado1;
+                    }
+                });
+        }
+
+        return resultado1;
+
+    }
+
     private StringBuilder getSql(ProyectosEnum proyecto, String ce, String tramo, String ue) {
         StringBuilder sql = new StringBuilder();
         String esquemaPos, esquemaOcl;
@@ -129,7 +166,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         switch (proyecto) {
             case Operativo_Masivo:
                 //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
-                sql = getFiltroSql(ce,esquemaPos, esquemaOcl, tramo, ue);
+                sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
@@ -138,31 +175,31 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
-                sql = getFiltroSql(ce,esquemaPos, esquemaOcl, tramo, ue);
+                sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
         }
         return sql;
     }
 
-    private StringBuilder getFiltroSql(String ce,String esquemaPos, String esquemaOcl, String tramo, String ue) {
+    private StringBuilder getFiltroSql(String ce, String esquemaPos, String esquemaOcl, String tramo, String ue) {
         StringBuilder sql = new StringBuilder();
         if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo().equals(ue)) {
             if (ce.equals("00")) {
                 //sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
                 sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
-                   .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
-                   .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
-                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and inm.id_ue is not null ");
+                        .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                        .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                        .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
+                        .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and inm.id_ue is not null ");
 
             } else {
                 sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
-                   .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
-                   .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
-                   .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ") 
-                   .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null  ")
-                   //.append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null AND locs.TIPO='U' ")
-                   .append("and cve_operativa=").append(tramo);
+                        .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                        .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                        .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
+                        .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null  ")
+                        //.append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null AND locs.TIPO='U' ")
+                        .append("and cve_operativa=").append(tramo);
 //                sql.append("SELECT id_ue,c154 FROM ").append(esquemaOcl).append(".VW_PUNTEO_SARE where sare_st='10' ");
 //                sql.append(" and cestatal='").append(ce).append("' and tramo_control='").append(tramo).append("' order by 1");
             }
@@ -182,7 +219,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaPos)
                                 .append(".tr_ue_complemento where ").
                                 append(" st_sare='20' and (current_timestamp-sare_st_time)"
-                                + ">'00 01:00:00') query1) query2) query3 order by time_lock desc");
+                                        + ">'00 01:00:00') query1) query2) query3 order by time_lock desc");
                     } else {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
@@ -226,6 +263,13 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
             }
 
+        } else if (UnidadesEconomicasEnum.CONGLOMERADOS.getCódigo().equals(ue)) {
+                        sql.append("select uo.id_uo_masivo,  st.descripcion status  FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                        .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                        .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                        .append("join ").append(esquemaOcl).append(".tr_uo_masivo uo on uo.id_uo_masivo=pre.id_uo_masivo ")
+                        .append("left join ").append(esquemaOcl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble "
+                                + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null ");
         }
         return sql;
     }

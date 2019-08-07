@@ -1845,12 +1845,6 @@ const validaEdif=()=>{
                 bandera= false
         }
     }
-//    objFormCentrocomercial.map (wrap => 
-//    {
-//        const idWrap=document.getElementById(wrap.id).value;
-//            
-//            
-//    }) 
     return bandera
 }
 

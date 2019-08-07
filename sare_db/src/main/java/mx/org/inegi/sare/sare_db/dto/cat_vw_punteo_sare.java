@@ -159,6 +159,39 @@ public class cat_vw_punteo_sare {
         this.Id_inmueble = Id_inmueble;
         this.Id_deftramo = Id_deftramo;
     }
+
+    public cat_vw_punteo_sare(BigDecimal COORD_X, BigDecimal COORD_Y, String E03, String E04, String E05, String E06, String E07, String E10, String E10_A, String E10_B, String E10_C, String E11, String E11A, String E12, String E13, String E13A, String E14, String E14_A, String E19, BigDecimal ID_UE, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, String TIPO_E14, String TIPO_E19, Integer estatus_punteo, BigDecimal Id_inmueble, String cvevial) {
+        this.COORD_X = COORD_X;
+        this.COORD_Y = COORD_Y;
+        this.E03 = E03;
+        this.E04 = E04;
+        this.E05 = E05;
+        this.E06 = E06;
+        this.E07 = E07;
+        this.E10 = E10;
+        this.E10_A = E10_A;
+        this.E10_B = E10_B;
+        this.E10_C = E10_C;
+        this.E11 = E11;
+        this.E11A = E11A;
+        this.E12 = E12;
+        this.E13 = E13;
+        this.E13A = E13A;
+        this.E14 = E14;
+        this.E14_A = E14_A;
+        this.E19 = E19;
+        this.ID_UE = ID_UE;
+        this.TIPO_E10 = TIPO_E10;
+        this.TIPO_E10_A = TIPO_E10_A;
+        this.TIPO_E10_B = TIPO_E10_B;
+        this.TIPO_E10_C = TIPO_E10_C;
+        this.TIPO_E14 = TIPO_E14;
+        this.TIPO_E19 = TIPO_E19;
+        this.estatus_punteo = estatus_punteo;
+        this.Id_inmueble = Id_inmueble;
+        this.cvevial = cvevial;
+    }
+    
     
     
 

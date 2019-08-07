@@ -18,4 +18,6 @@ public interface InterfaceClavesSare {
     
     public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas(Integer proyecto, String tramo, String ce) throws Exception;
     
+    public List<cat_get_claves> getListadoConglomerados(Integer proyecto, String tramo, String ce) throws Exception;
+    
 }

@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
@@ -27,9 +26,8 @@ import org.springframework.stereotype.Service;
  *
  * @author LIDIA.VAZQUEZ
  */
-@Service("BackingBusqueda")
-public class BackingBusquedaSare {
-
+@Service("BackingBusquedaConglomerados")
+public class BackingBusquedaSareConglomerados {
     @Autowired
     @Qualifier("DaoBusqueda")
     InterfaceBusquedaSare InterfaceBusquedaSare;
@@ -366,8 +364,6 @@ public class BackingBusquedaSare {
         return params;
     }
     
-    
-    
     public cat_respuesta_services liberacve(Integer proyecto,String id_ue)
     {
         cat_respuesta_services Regresar = new cat_respuesta_services();
@@ -381,7 +377,9 @@ public class BackingBusquedaSare {
         }
         return Regresar;
     }
-    
-    
 
+   
+    
+    
+    
 }
