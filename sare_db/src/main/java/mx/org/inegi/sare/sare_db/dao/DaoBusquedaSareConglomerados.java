@@ -17,6 +17,7 @@ import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSareConglomerado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -31,7 +32,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository("DaoBusquedaConglomerados")
 @Profile("jdbc")
-public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia implements InterfaceBusquedaSare {
+public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia implements InterfaceBusquedaSareConglomerado {
 
     @Autowired
     @Qualifier("jdbcTemplateOcl")

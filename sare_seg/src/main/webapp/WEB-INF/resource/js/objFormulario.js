@@ -292,6 +292,7 @@ const objFormCentrocomercial=[
 ]
 
 const inputsEditables = [
+  
   {
     id:'tipo_e10n',
   },

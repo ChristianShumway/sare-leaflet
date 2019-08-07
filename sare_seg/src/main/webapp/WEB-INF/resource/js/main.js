@@ -1732,6 +1732,7 @@ const showelementwithmistakeform=(message, id, name, title, key )=>{
 
 const validationsBack=(ObjectRequest)=>
 {
+  document.getElementById("id_UE").disabled=true;
   let totalInputs
   let vialidad=document.getElementById('tipo_e10').value;
   let vialidad1=document.getElementById('tipo_e10_a').value;
@@ -2074,6 +2075,7 @@ const modalViewPreliminar = () => {
 }
 
 const showViewPreliminar = d => {
+  
   loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
     () => {
       d = d.replace(/Seleccione/g, '')
@@ -2138,6 +2140,7 @@ const showViewPreliminar = d => {
       ObjectRequest['navegador'] = versionnavegador
     }
   )
+  document.getElementById("id_UE").disabled=true;
 }
 
 const handleShowResult = result => {

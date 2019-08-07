@@ -30,7 +30,7 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_ue;
+var id_uo_masivo;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -39,7 +39,7 @@ var E10_g,E10a_g,E10b_g,E10c_g;
 
 const init = () => 
 {
-    id_ue=document.getElementById("id_UE").value;
+   // id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
 }
 
@@ -157,7 +157,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
     claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
@@ -178,7 +178,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
-  id_ue=id_ue;
+  id_uo_masivo=id_ue;
   xycoorsx=''
   xycoorsy=''
   document.getElementById("origen").style.display='block';
@@ -205,7 +205,7 @@ const findUE = id_ue => {
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
-  
+  id_uo_masivo=id_ue
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -975,11 +975,11 @@ const handleActiveVisibleSearch = () => {
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    id_ue=document.getElementById('id_UE').value
+    //id_uo_masivo=document.getElementById('id_UE').value
     let ce=dataUserFromLoginLocalStorage.ce
     let tr=dataUserFromLoginLocalStorage.tramo_control
     let u=dataUserFromLoginLocalStorage.nombre
-    callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
+    callServicePunteo(x,y,tc,r,id_uo_masivo,ce,tr,u)
 }
 
 //Función que llama al servicio para el punteo de unidades economicas
@@ -1245,8 +1245,8 @@ const handleFillTipoDeVialidades = selectId =>
 
 const ejecutar =() => 
 {
-    id_ue = document.getElementById('id_UE').value
-    callServiceLiberaClave(id_ue)  
+    //id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_uo_masivo)  
 }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
@@ -2428,27 +2428,27 @@ const handleCancelClick = () => {
 //  document.getElementById("c154").style.display='block';
 //  document.getElementById("catorigen").style.display='none';
 //  document.getElementById("catc154").style.display='none';
-   id_ue=document.getElementById('id_UE').value
+   //id_uo_masivo=document.getElementById('id_UE').value
  // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
-  disabledInputs()
+  //disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
-  handleTipoPunteo()
-  handleActionButtons('disabled')
-  handleActionPunteoAlta('on')
-  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
-  //handleActiveVisibleSearch()
-  eliminaFuncionEliminiarDuplicadosSelects()
+//  handleTipoPunteo()
+//  handleActionButtons('disabled')
+//  handleActionPunteoAlta('on')
+//  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
+//  //handleActiveVisibleSearch()
+//  eliminaFuncionEliminiarDuplicadosSelects()
   bandera_ratificar=false
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
-  id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
+  id_uo_masivo != '' ? callServiceLiberaClave(id_uo_masivo) : cleanForm()
 
-  objForm.map(obj => {
-    const wrapTitle = document.getElementById(obj.title)
-    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
-  })
+//  objForm.map(obj => {
+//    const wrapTitle = document.getElementById(obj.title)
+//    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+//  })
 
   if(nameContainerFloating){
     let containerFloat = nameContainerFloating.slice(3)
@@ -2464,7 +2464,7 @@ const handleCancelClick = () => {
 
     handleReturnContainerForm(nameContainerFloating)
   } 
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
 
 }
 
@@ -2497,7 +2497,7 @@ const callServiceLiberaClave=(id_ue)=>{
 const cleanForm = () => {
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   //limpia formularios
-  handleCleanForms()
+  //handleCleanForms()
   //posicion el mapa en su posicion inicial
   MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995)
   //oculta el marcador azul
@@ -2505,9 +2505,9 @@ const cleanForm = () => {
   //oculta el marcador naranja
   MDM6('hideMarkers', 'routen')
   //contrae la tarjeta de referencia
-  handleVisibleForm('referencia')
+  //handleVisibleForm('referencia')
   //deshabilita botones limpiar y guardar
-  handleActionButtons('disabled')
+  //handleActionButtons('disabled')
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
@@ -2516,7 +2516,7 @@ const cleanForm = () => {
   //oculta mensaje 
   handleHideAlertPickMap()
   
-  id_ue=document.getElementById('id_UE').value;
+ // id_ue=document.getElementById('id_UE').value;
   
   
 }
