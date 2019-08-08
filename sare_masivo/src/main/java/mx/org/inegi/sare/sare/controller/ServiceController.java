@@ -24,6 +24,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
+import mx.org.inegi.sare.sare_services.BackingBusquedaSareConglomerados;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
 import mx.org.inegi.sare.sare_services.BackingDesbloqueo;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
@@ -66,6 +67,10 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingBusqueda")
     private BackingBusquedaSare BackingBusqueda;
+    
+     @Autowired
+    @Qualifier("BackingBusquedaConglomerados")
+    private BackingBusquedaSareConglomerados BackingBusquedaConglomerados;
 
     @Autowired
     @Qualifier("BackingPunteoConglomerados")
@@ -120,7 +125,7 @@ public class ServiceController {
 
     @RequestMapping(value = "getListadoUnidadesEconomicas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_get_claves> getListadoUnidadesEconomicas(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "tramo") String tramo, @RequestParam(value = "id_ue") String id_ue) throws Exception {
-        return BackingGetClaves.getListadoUnidadesEconomicas(proyecto, id_ue, tramo);
+        return BackingGetClaves.getListadoConglomerados(proyecto, id_ue, tramo);
     }
 
     @RequestMapping(value = "getListadoUnidadesEconomicasBloqueadas.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -135,7 +140,7 @@ public class ServiceController {
         if (p != null) {
             t = Integer.parseInt(p);
         }
-        return BackingBusqueda.getBusqueda(proyecto, t, tramo, ce, usuario, id_ue, consulta);
+        return BackingBusquedaConglomerados.getBusqueda(proyecto, t, tramo, ce, usuario, id_ue, consulta);
     }
 
     @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

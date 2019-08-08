@@ -203,9 +203,12 @@ const findUE = id_ue => {
   }
 }
 
+
+
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
-  
+  disabledInputs()
+  document.getElementById("id_UE").disabled=true
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -1729,6 +1732,7 @@ const showelementwithmistakeform=(message, id, name, title, key )=>{
 
 const validationsBack=(ObjectRequest)=>
 {
+  document.getElementById("id_UE").disabled=true;
   let totalInputs
   let vialidad=document.getElementById('tipo_e10').value;
   let vialidad1=document.getElementById('tipo_e10_a').value;
@@ -1834,8 +1838,8 @@ const validationsBack=(ObjectRequest)=>
 
 const validaEdif=()=>{
     let bandera=false
-    for(var i=0;i<objFormCentrocomercial.length;i++){
-       const idWrap=document.getElementById(objFormCentrocomercial[i].id).value; 
+    for(var i=0;i<objFormCentrocomercialBackValidaEdif.length;i++){
+       const idWrap=document.getElementById(objFormCentrocomercialBackValidaEdif[i].id).value; 
        if(idWrap!=null && idWrap!="" && idWrap!="Seleccione")
        {
                 bandera= true
@@ -1845,12 +1849,6 @@ const validaEdif=()=>{
                 bandera= false
         }
     }
-//    objFormCentrocomercial.map (wrap => 
-//    {
-//        const idWrap=document.getElementById(wrap.id).value;
-//            
-//            
-//    }) 
     return bandera
 }
 
@@ -2077,6 +2075,7 @@ const modalViewPreliminar = () => {
 }
 
 const showViewPreliminar = d => {
+  
   loadTemplate('vista', "resources/templates/preview.html?frm=" + Math.random(),
     () => {
       d = d.replace(/Seleccione/g, '')
@@ -2141,6 +2140,7 @@ const showViewPreliminar = d => {
       ObjectRequest['navegador'] = versionnavegador
     }
   )
+  document.getElementById("id_UE").disabled=true;
 }
 
 const handleShowResult = result => {

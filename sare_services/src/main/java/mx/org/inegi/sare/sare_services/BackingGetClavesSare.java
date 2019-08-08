@@ -37,4 +37,10 @@ public class BackingGetClavesSare
         return ListadoUnidadesEconomicas;
     }
     
+    public List<cat_get_claves> getListadoConglomerados (Integer proyecto, String ce, String tramo) throws Exception 
+    {
+        List<cat_get_claves> ListadoUnidadesEconomicas = InterfaceClavesSare.getListadoConglomerados(proyecto, ce, tramo);
+        return ListadoUnidadesEconomicas;
+    }
+    
 }

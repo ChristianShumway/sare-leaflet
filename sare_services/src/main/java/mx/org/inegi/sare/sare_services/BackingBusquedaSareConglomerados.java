@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSareConglomerado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,11 @@ import org.springframework.stereotype.Service;
  *
  * @author LIDIA.VAZQUEZ
  */
-@Service("BackingBusqueda")
-public class BackingBusquedaSare {
-
+@Service("BackingBusquedaConglomerados")
+public class BackingBusquedaSareConglomerados {
     @Autowired
-    @Qualifier("DaoBusqueda")
-    InterfaceBusquedaSare InterfaceBusquedaSare;
+    @Qualifier("DaoBusquedaConglomerados")
+    InterfaceBusquedaSareConglomerado InterfaceBusquedaSare;
     
      @Autowired
     @Qualifier("DaoDesbloqueo")
@@ -212,10 +211,6 @@ public class BackingBusquedaSare {
                                                }
                                                else
                                                {
-                                                   System.out.println(" el interface trae "+InterfaceBusquedaSare);
-                                                   System.out.println(" el cx que trae "+cX);
-                                                   System.out.println(" el cy que trae "+cY);
-                                                   System.out.println("el element es "+element);
                                                 if(!InterfaceBusquedaSare.getValCoorGeo(proyecto,cX.toString(), cY.toString(), element))
                                                 {
                                                     element.setCOORD_X(null);
@@ -225,15 +220,18 @@ public class BackingBusquedaSare {
                                           }
                                           if(element.getCOORD_X()!=null && !String.valueOf(element.getCOORD_X()).equals("") && element.getCOORD_Y()!=null && !String.valueOf(element.getCOORD_Y()).equals(""))
                                           {
-                                                extent=InterfaceBusquedaSare.getExtentBusquedaCvegeo(element,proyecto, 0, null, mza800, null);
-                                                cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
-                                                cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
-                                                coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto,"geo",String.valueOf(cX),String.valueOf(cY));
-                                                if(coord_merc!=null)
-                                                {
-                                                    element.setCOORD_X(new BigDecimal(coord_merc.getX()));
-                                                    element.setCOORD_Y(new BigDecimal(coord_merc.getY()));
-                                                }
+                                                //extent=InterfaceBusquedaSare.getExtentBusquedaCvegeo(element,proyecto, 0, null, mza800, null);
+                                                
+//                                                cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
+//                                                cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
+//                                                coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto,"geo",String.valueOf(cX),String.valueOf(cY));
+//                                                if(coord_merc!=null)
+//                                                {
+//                                                    element.setCOORD_X(new BigDecimal(coord_merc.getX()));
+//                                                    element.setCOORD_Y(new BigDecimal(coord_merc.getY()));
+//                                                }
+                                                params=returnParams(element);
+                                                extent=InterfaceBusquedaSare.getExtentBusquedaCvegeo2(element,proyecto,params, tabla[params - 1], mza800, tabla_rural);
                                           }
                                           else
                                           {
@@ -366,8 +364,6 @@ public class BackingBusquedaSare {
         return params;
     }
     
-    
-    
     public cat_respuesta_services liberacve(Integer proyecto,String id_ue)
     {
         cat_respuesta_services Regresar = new cat_respuesta_services();
@@ -381,7 +377,9 @@ public class BackingBusquedaSare {
         }
         return Regresar;
     }
-    
-    
 
+   
+    
+    
+    
 }

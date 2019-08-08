@@ -721,7 +721,8 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     //sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cveft<>?  group by 1,2");
                 break;
                 case GET_TIPO_VIAL:
-                    sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ?");
+                    sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ? union all \n" +
+                               "SELECT '99' tipo_e10 limit 1 ");
                 break;
                 case GET_CAT_TIPO_VIAL:
                     sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(esquemaPos).append(".cat_tipovialidad order by descripcion");

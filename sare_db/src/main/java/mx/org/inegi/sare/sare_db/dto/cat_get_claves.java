@@ -35,6 +35,12 @@ public class cat_get_claves {
         this.TIME_LOCK = TIME_LOCK;
     }
 
+    public cat_get_claves(String idue, String status) {
+        this.idue = idue;
+        this.status = status;
+    }
+    
+
     public String getStatus() {
         return status;
     }

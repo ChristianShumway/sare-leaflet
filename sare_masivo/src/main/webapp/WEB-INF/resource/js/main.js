@@ -30,7 +30,7 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_ue;
+var id_uo_masivo;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -42,7 +42,7 @@ let conglomeradosOrigen
 
 const init = () => 
 {
-    id_ue=document.getElementById("id_UE").value;
+   // id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
 }
 
@@ -160,7 +160,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
     claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
@@ -181,7 +181,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
-  id_ue=id_ue;
+  id_uo_masivo=id_ue;
   xycoorsx=''
   xycoorsy=''
   document.getElementById("origen").style.display='block';
@@ -208,7 +208,7 @@ const findUE = id_ue => {
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
-  
+  id_uo_masivo=id_ue
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -230,7 +230,7 @@ const callServiceFindUE=(id_ue)=>{
       acercarWithExtent(data)
       cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
-      showDataInterfaz(data)
+      //showDataInterfaz(data)
       id_ue=id_ue;
       id_inmueble=data[0].datos.datos[0].id_inmueble;
 
@@ -486,7 +486,6 @@ const showModalMsgError = data => {
 
 // Función ver lista claves
 const handleViewCleeList = () => {
-  document.getElementById("filtroXclase").style.display='none';
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
@@ -613,7 +612,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     <div id='container-cleelist' class='container-cleelist row'>
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
-        <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
       // console.log(inicioClavesVista)
@@ -622,7 +620,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
-          <div class='item-list'><span>${c154}</span></div>
           <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
         </div>`
       }
@@ -946,11 +943,11 @@ const ratificar = request => {
   isAlta=false;
   handleVisibleRatifica()
   if (request == 'si') {
-    enabledInputs()
-    handleActionTargetRef()
-    handleActionButtons('enabled')
-    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+//    enabledInputs()
+//    handleActionTargetRef()
+//    handleActionButtons('enabled')
+//    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
+//    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
   else if(request=='no') {
@@ -960,8 +957,8 @@ const ratificar = request => {
 
 const funcionesNoRatificado = () => {
   handleShowAlertPickMap()
-  enabledInputs()
-  handleActionTargetRef()
+  //enabledInputs()
+  //handleActionTargetRef()
   xycoorsx = ''
   xycoorsy = ''
   MDM6('hideMarkers', 'identify')      
@@ -1364,8 +1361,8 @@ const handleFillTipoDeVialidades = selectId =>
 
 const ejecutar =() => 
 {
-    id_ue = document.getElementById('id_UE').value
-    callServiceLiberaClave(id_ue)  
+    //id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_uo_masivo)  
 }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
@@ -2528,33 +2525,33 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
-  document.getElementById("id_UE").style.display='block';
-  document.getElementById("label_idUE").style.display='block';
-  document.getElementById("origen").style.display='block';
-  document.getElementById("c154").style.display='block';
-  document.getElementById("catorigen").style.display='none';
-  document.getElementById("catc154").style.display='none';
-   id_ue=document.getElementById('id_UE').value
+//  document.getElementById("id_UE").style.display='block';
+//  document.getElementById("label_idUE").style.display='block';
+//  document.getElementById("origen").style.display='block';
+//  document.getElementById("c154").style.display='block';
+//  document.getElementById("catorigen").style.display='none';
+//  document.getElementById("catc154").style.display='none';
+   //id_uo_masivo=document.getElementById('id_UE').value
  // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
-  disabledInputs()
+  //disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
-  handleTipoPunteo()
-  handleActionButtons('disabled')
-  handleActionPunteoAlta('on')
-  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
-  //handleActiveVisibleSearch()
-  eliminaFuncionEliminiarDuplicadosSelects()
+//  handleTipoPunteo()
+//  handleActionButtons('disabled')
+//  handleActionPunteoAlta('on')
+//  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
+//  //handleActiveVisibleSearch()
+//  eliminaFuncionEliminiarDuplicadosSelects()
   bandera_ratificar=false
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
-  id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
+  id_uo_masivo != '' ? callServiceLiberaClave(id_uo_masivo) : cleanForm()
 
-  objForm.map(obj => {
-    const wrapTitle = document.getElementById(obj.title)
-    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
-  })
+//  objForm.map(obj => {
+//    const wrapTitle = document.getElementById(obj.title)
+//    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+//  })
 
   if(nameContainerFloating){
     let containerFloat = nameContainerFloating.slice(3)
@@ -2570,7 +2567,7 @@ const handleCancelClick = () => {
 
     handleReturnContainerForm(nameContainerFloating)
   } 
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
 
 }
 
@@ -2603,7 +2600,7 @@ const callServiceLiberaClave=(id_ue)=>{
 const cleanForm = () => {
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   //limpia formularios
-  handleCleanForms()
+  //handleCleanForms()
   //posicion el mapa en su posicion inicial
   MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995)
   //oculta el marcador azul
@@ -2611,9 +2608,9 @@ const cleanForm = () => {
   //oculta el marcador naranja
   MDM6('hideMarkers', 'routen')
   //contrae la tarjeta de referencia
-  handleVisibleForm('referencia')
+  //handleVisibleForm('referencia')
   //deshabilita botones limpiar y guardar
-  handleActionButtons('disabled')
+  //handleActionButtons('disabled')
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
@@ -2622,7 +2619,7 @@ const cleanForm = () => {
   //oculta mensaje 
   handleHideAlertPickMap()
   
-  id_ue=document.getElementById('id_UE').value;
+ // id_ue=document.getElementById('id_UE').value;
   
   
 }

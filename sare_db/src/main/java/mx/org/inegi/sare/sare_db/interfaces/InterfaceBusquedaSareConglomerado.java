@@ -14,7 +14,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
  *
  * @author LIDIA.VAZQUEZ
  */
-public interface InterfaceBusquedaSare {
+public interface InterfaceBusquedaSareConglomerado {
     
     public List<cat_vw_punteo_sare> busqueda(Integer proyecto,String tramo, String ce, String usuario, int origen,String id_ue);
     

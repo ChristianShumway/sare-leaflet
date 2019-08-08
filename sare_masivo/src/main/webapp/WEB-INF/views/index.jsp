@@ -182,7 +182,7 @@
                    if (event.originalEvent.altKey) {
                        event.returnValue = false;
                    }
-                   if(navegador=='Chrome 75')
+                   if(navegador.includes('Chrome'))
                    {
                         event.preventDefault();
                    }
@@ -288,10 +288,10 @@
             <div class="wrap-btns-ratifica">
               <div onclick="ratificar('si')" class="btn-ratifica si-ratifica" id="wrap-si-ratifica">
                 <div class="icon-si-ratifica"> <i class="material-icons">check</i></div>
-                <div class="text-si-ratifica">Ratificar</div>
+                <div class="text-si-ratifica">No Reubicar</div>
               </div>
               <div onclick="ratificar('no')" class="btn-ratifica no-ratifica" id="wrap-no-ratifica">
-                <div class="text-no-ratifica">No Ratificar</div>
+                <div class="text-no-ratifica">Reubicar</div>
                 <div class="icon-no-ratifica"> <i class="material-icons">close</i></div>
               </div>
             </div>
@@ -308,7 +308,7 @@
             <div id="mapa"></div>
             <div class="wrap-alert alert-pick" id="wrap-alert-pick">
               <div class="icon-warning"><img src="resources/images/iconos/warning.png" alt="warning"></div>
-              <div class="text-warning">Realice el punteo por favor</div>
+              <div class="text-warning">Seleccione frente destino por favor</div>
             </div>
           </div>
           <!-- end mapa -->
@@ -381,10 +381,10 @@
               <input id="v-calle" value="v_calle" name="accion" type="radio" onchange="radioSelect('calle')"/>
               <label for="v-calle">Vista Calle</label>
             </div>
-            <div class="radio-option">
+<!--            <div class="radio-option">
               <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
               <label for="puntear-alta">Puntear Alta</label>
-            </div>
+            </div>-->
           </div> 
           <!-- end opciones -->
         </div>
