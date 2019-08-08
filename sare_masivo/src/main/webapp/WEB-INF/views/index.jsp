@@ -112,6 +112,7 @@
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
     
+    <script src="resources/js/variablesGlobales.js" type="text/javascript"></script>
     <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
     
@@ -392,62 +393,55 @@
 
       <section class="container-referencia-ubicacion" id="container-rerefencia-ubicacion">
         <div class="row row-referencia">
-          <div class="col s12 m6 col-referencia actual">
+          <div class="col s12 col-referencia actual">
             <ul class="collapsible">
-              <li>
-                <div class="collapsible-header">
-                  <img src="resources/images/iconos/place.png" alt="place" />
-                  Ubicación Geofráfica Actual
+              <li class="active">
+                <div class="collapsible-header active">
+                  <img src="resources/images/iconos/map.png" alt="place" />
+                  <span class="title-header">Ubicación Geofráfica Actual</span>
                 </div>
                 <div class="collapsible-body">
-                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
-                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
-                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e05">Localidad Clave</span>
-                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
-                  <p class="title-ref"> AGEB </p>
-                  <span class="desc-ref" id="e06">AGEB</span>
-                  <p class="title-ref"> Manzana </p>
-                  <span class="desc-ref" id="e07">Manzana</span>
+                  <div class="row row-origen">
+                    <div class="col s12 l6 col-origen">
+                      <p class="title-ref"> Clave Frente <span> (Origen) </span></p>
+                      <span class="desc-ref" id="cve-frente-origen">Clave Origen</span>
+
+                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <div class="wrap-list-conglomerados">
+                        <ul class="list-conglomerados" id="list-conglomerados">
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="col s12 l6 col-origen">
+                      <p class="title-ref"> Clave Frente <span> (Destino) </span></p>
+                      <span class="desc-ref" id="cve-frente-destino">Clave Destino</span>
+
+                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <div class="wrap-list-conglomerados">
+                        <ul class="list-conglomerados" id="list-conglomerados-destino">
+                          <!--
+                          <li class="item-conglomerado">
+                            <div class="wrap-icon-conglomerado">
+                              <img src="resources/images/iconos/online-store.png" alt="store" />
+                            </div>
+                            <div class="wrap-info-conglomerado">
+                              <span> 000000000 </span>
+                            </div>
+                          </li>
+                          -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wrap-mover-conglomerados" id="wrap-mover-conglomerados">
+                    <a class="btn  waves-light btn-small green darken-2" onclick="mueveConglomerados()">Mover</a>
+                  </div>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="col s12 m6 col-referencia anterior">
-            <ul class="collapsible">
-              <li>
-                <div class="collapsible-header">
-                  <img src="resources/images/iconos/place.png" alt="place" />
-                  Ubicación Geográfica Anterior
-                </div>
-                <div class="collapsible-body">
-                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
-                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
-                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e05">Localidad Clave</span>
-                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
-                  <p class="title-ref"> AGEB </p>
-                  <span class="desc-ref" id="e06">AGEB</span>
-                  <p class="title-ref"> Manzana </p>
-                  <span class="desc-ref" id="e07">Manzana</span>
-                </div>
-              </li>
-            </ul>
-          </div>
+        
         </div>
       </section>
       <!-- CONTAINER FORM -->
