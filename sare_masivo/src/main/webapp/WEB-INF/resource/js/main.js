@@ -227,7 +227,7 @@ const callServiceFindUE=(id_ue)=>{
       acercarWithExtent(data)
       cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
-      showDataInterfaz(data)
+      //showDataInterfaz(data)
       id_ue=id_ue;
       id_inmueble=data[0].datos.datos[0].id_inmueble;
 
@@ -940,11 +940,11 @@ const ratificar = request => {
   isAlta=false;
   handleVisibleRatifica()
   if (request == 'si') {
-    enabledInputs()
-    handleActionTargetRef()
-    handleActionButtons('enabled')
-    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+//    enabledInputs()
+//    handleActionTargetRef()
+//    handleActionButtons('enabled')
+//    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
+//    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
   else if(request=='no') {
@@ -954,8 +954,8 @@ const ratificar = request => {
 
 const funcionesNoRatificado = () => {
   handleShowAlertPickMap()
-  enabledInputs()
-  handleActionTargetRef()
+  //enabledInputs()
+  //handleActionTargetRef()
   xycoorsx = ''
   xycoorsy = ''
   MDM6('hideMarkers', 'identify')      
