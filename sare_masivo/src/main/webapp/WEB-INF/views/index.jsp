@@ -181,7 +181,7 @@
                    if (event.originalEvent.altKey) {
                        event.returnValue = false;
                    }
-                   if(navegador=='Chrome 75')
+                   if(navegador.includes('Chrome'))
                    {
                         event.preventDefault();
                    }
