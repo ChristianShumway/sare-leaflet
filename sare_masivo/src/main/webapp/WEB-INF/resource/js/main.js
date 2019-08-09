@@ -1025,7 +1025,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         urlServices['getListaUOxCveFrente'].type,  
         data => {                          
           swal.close();
-          console.log(data)
           let datamessageLista = data[0].datos.mensaje
           if (datamessageLista.type === 'error') {
             handleShowAlert('error', datamessageLista.messages )
@@ -1127,6 +1126,7 @@ const muestraInfoFrente = data => {
 }
 
 const muestraConglomerados = (data, nuevo = '') => {
+  alert(" entro aqui");
   const listConglomerados = document.getElementById('list-conglomerados')
   const listConglomeradosDestino = document.getElementById('list-conglomerados-destino')
   if(nuevo === 'nuevo-frente'){
@@ -1144,6 +1144,18 @@ const muestraConglomerados = (data, nuevo = '') => {
     listConglomerados.innerHTML = ''
   } else {
     data.map( conglomerado => {
+      var poligono=conglomerado.geometria;
+      var parametros={
+          action:'add',
+          wkt:poligono,
+          params:{
+              fColor:'#000000',
+              lSize:15,
+              lColor:'#000000'
+          }
+      };
+      MDM6('customPolygon',parametros);
+      
       listConglomerados.innerHTML += `
         <li class="item-conglomerado">
           <div class="wrap-icon-conglomerado">
