@@ -11,7 +11,7 @@ let inicioClavesVistaLock = 0
 let finClavesVistaLock = 9
 let dataCleeListNew = {}
 let dataCleeListNewLock = {}
-let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
+let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo, cveFrenteOrigen, cveFrenteDestino
 screen.width <= '480' 
 let layersSARE = ['c100', 'c101a', 'wdenue']
 let dataResultSearchClee = {}
@@ -30,16 +30,19 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_ue;
+var id_uo_masivo;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 var tipoE10_g,tipoE10a_g,tipoE10b_g,tipoE10c_g;
 var E10_g,E10a_g,E10b_g,E10c_g;
+let frenteExistente = false
+let conglomeradosOrigen
+
 
 const init = () => 
 {
-    id_ue=document.getElementById("id_UE").value;
+   // id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
 }
 
@@ -157,7 +160,7 @@ const eventoMoveZoom = () => {
 
 // Función buscar clave
 const buscarUE = () => {
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
   const claveBusqueda = document.getElementById('clave-busqueda')
   if (claveBusqueda.value == '') {
     claveBusqueda.classList.add('animated', 'shake', 'wrap-input-empty')
@@ -178,7 +181,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
-  id_ue=id_ue;
+  id_uo_masivo=id_ue;
   xycoorsx=''
   xycoorsy=''
   document.getElementById("origen").style.display='block';
@@ -205,7 +208,7 @@ const findUE = id_ue => {
 
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
-  
+  id_uo_masivo=id_ue
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
   {
@@ -227,7 +230,7 @@ const callServiceFindUE=(id_ue)=>{
       acercarWithExtent(data)
       cancelOption.removeAttribute('disabled')
       //comienza a mostrar datos en la interfaz
-      showDataInterfaz(data)
+      //showDataInterfaz(data)
       id_ue=id_ue;
       id_inmueble=data[0].datos.datos[0].id_inmueble;
 
@@ -483,7 +486,6 @@ const showModalMsgError = data => {
 
 // Función ver lista claves
 const handleViewCleeList = () => {
-  document.getElementById("filtroXclase").style.display='none';
   sendAJAX(
     urlServices['getListadoUnidadesEconomicas'].url, 
     {
@@ -610,7 +612,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     <div id='container-cleelist' class='container-cleelist row'>
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
-        <div class='title-column'>Código</div>
         <div class='title-column'>Status</div>
       </div>`
       // console.log(inicioClavesVista)
@@ -619,7 +620,6 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
         let {idue, c154, status} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
-          <div class='item-list'><span>${c154}</span></div>
           <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
         </div>`
       }
@@ -943,11 +943,11 @@ const ratificar = request => {
   isAlta=false;
   handleVisibleRatifica()
   if (request == 'si') {
-    enabledInputs()
-    handleActionTargetRef()
-    handleActionButtons('enabled')
-    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+//    enabledInputs()
+//    handleActionTargetRef()
+//    handleActionButtons('enabled')
+//    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
+//    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
   else if(request=='no') {
@@ -957,8 +957,8 @@ const ratificar = request => {
 
 const funcionesNoRatificado = () => {
   handleShowAlertPickMap()
-  enabledInputs()
-  handleActionTargetRef()
+  //enabledInputs()
+  //handleActionTargetRef()
   xycoorsx = ''
   xycoorsy = ''
   MDM6('hideMarkers', 'identify')      
@@ -978,59 +978,105 @@ const handleActiveVisibleSearch = () => {
 const handlePunteo=(x,y,tc,r)=>{
     xycoorsx=''
     xycoorsy=''
-    id_ue=document.getElementById('id_UE').value
-    let ce=dataUserFromLoginLocalStorage.ce
-    let tr=dataUserFromLoginLocalStorage.tramo_control
-    let u=dataUserFromLoginLocalStorage.nombre
-    callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
+  
+    callServicePunteo(x,y)
 }
 
 //Función que llama al servicio para el punteo de unidades economicas
 
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
-     bandera=true;
+  bandera=true;
   //showalertpunteoloading();
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyecto,
     'x': x, 
-    'y': y, 
-    'tc': tc, 
-    'r': isAlta, 
-    'ce': ce, 
-    'id_ue': id_ue
-  }, urlServices['serviceIdentify'].type,  data => {
-    
-    
+    'y': y    
+  }, urlServices['serviceIdentify'].type,  
+  data => {
     if (data[0].operation) {
-        swal.close();
-        bandera=false;
-        if( data[0].datos.datos != null)
+      swal.close();
+      bandera=false;
+      console.log(data)
+      let dataFrente = data[0].datos.datos[0]
+      let datamessage = data[0].datos.mensaje
+
+      if (datamessage.type === 'error') {
+        handleShowAlert('error', datamessage.messages )
+      } else {
+
+        var poligono=dataFrente.geometria;
+        var parametros = {
+          action: 'add',
+          wkt: poligono,
+          params: {
+            fColr: '#ff7e00',
+            lSize: 10,
+            lColor: '#ff7e00'
+          }
+        };
+        muestraInfoFrente(dataFrente)
+  
+        sendAJAX(urlServices['getListaUOxCveFrente'].url, 
         {
-            const {catVial} = data[0].datos.datos
-            catalogoCatVial = catVial
-        }
-       // showalertpunteoloading();
+          'proyecto':dataUserFromLoginLocalStorage.proyecto,
+          'cveFrente': dataFrente.cveFrente                
+        }, 
+        urlServices['getListaUOxCveFrente'].type,  
+        data => {                          
+          swal.close();
+          console.log(data)
+          let datamessageLista = data[0].datos.mensaje
+          if (datamessageLista.type === 'error') {
+            handleShowAlert('error', datamessageLista.messages )
+          } else {
+            let dataListaUO = data[0].datos.datos
+            conglomeradosOrigen = data[0].datos.datos
+            muestraConglomerados(dataListaUO)
+            Swal.fire({
+              text: "Deséas seleccionar un nuevo frente?",
+              showCancelButton: true,
+              confirmButtonColor: '#4caf50',
+              cancelButtonColor: '#424242',
+              confirmButtonText: 'Seleccionar'
+            }).then((result) => {
+              if (result.value) {
+                seleccionarNuevoFrente()
+              }
+            })
+          }
+        }, 
+        () => {
+          swal ({
+            title: '<span style="width:100%;">Buscando información de punteo!</span>',
+            text: 'Por favor espere un momento',                        
+            onOpen: () => swal.showLoading()
+          })
+            .then( () => { },
+            dismiss => { }
+            )
+        })  
+        
+        MDM6('customPolygon',parametros);
+      }
+
+      // showalertpunteoloading();
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
         agregaFuncionEliminarDuplicadosSelects()
         handleTipoPunteo()
-      }
-      else {
+      } else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
-          if (data[0].datos.mensaje.type === 'confirmar') {
-              
+          if (data[0].datos.mensaje.type === 'confirmar') {  
             showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-          }
-          else {
+          } else {
             if (data[0].datos.mensaje.type === 'error') {
               showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
               MDM6('hideMarkers', 'identify')
               xycoorsx = ''
               xycoorsy = '' 
-            }
-            else {
+            } else {
               handleActionButtons('disabled')
               confirmacionPunteo = false
               bandera_ratificar=false;
@@ -1044,28 +1090,95 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         }
       }
-    }
-    else {
+      
+    } else {
       MDM6('hideMarkers', 'identify')
       showAlertPunteo(`Punteo no realizado ${data[0].messages}`)    
     }     
-        
-  }, () => {
+     
+  }, 
+  () => {
     swal ({
       title: '<span style="width:100%;">Buscando información de punteo!</span>',
       text: 'Por favor espere un momento',
       //timer: 4000,
       onOpen: () => swal.showLoading()
     })
-    .then(
-      () => { },
-       dismiss => {
-           
-      }
-    )
-        
+      .then( () => { },
+      dismiss => { }
+      )
+     
   })
 }
+
+const muestraInfoFrente = data => {
+  const cveFrenteOrigenId = document.getElementById('cve-frente-origen')
+  const cveFrenteDestinoId = document.getElementById('cve-frente-destino')
+  const wrapMoverConglomerados = document.getElementById('wrap-mover-conglomerados')
+  if (!frenteExistente) {
+    cveFrenteOrigen = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza}`
+    cveFrenteOrigenId.innerHTML = cveFrenteOrigen
+    cveFrenteDestinoId.innerHTML = 'Clave Destino'  
+  } else {
+    cveFrenteDestino = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza}`
+    wrapMoverConglomerados.style.display = 'block'
+    cveFrenteDestinoId.innerHTML = cveFrenteDestino
+  }
+}
+
+const muestraConglomerados = (data, nuevo = '') => {
+  const listConglomerados = document.getElementById('list-conglomerados')
+  const listConglomeradosDestino = document.getElementById('list-conglomerados-destino')
+  if(nuevo === 'nuevo-frente'){
+    data.map( conglomerado => {
+      listConglomeradosDestino.innerHTML += `
+        <li class="item-conglomerado">
+          <div class="wrap-icon-conglomerado">
+            <img src="resources/images/iconos/online-store.png" alt="store" />
+          </div>
+          <div class="wrap-info-conglomerado">
+            <span> ${conglomerado} </span>
+          </div>
+        </li> `
+    })
+    listConglomerados.innerHTML = ''
+  } else {
+    data.map( conglomerado => {
+      listConglomerados.innerHTML += `
+        <li class="item-conglomerado">
+          <div class="wrap-icon-conglomerado">
+            <img src="resources/images/iconos/online-store.png" alt="store" />
+          </div>
+          <div class="wrap-info-conglomerado">
+            <span> ${conglomerado} </span>
+          </div>
+        </li> `
+    })
+  }
+}
+
+const seleccionarNuevoFrente = () => {
+  frenteExistente = true
+  //console.log(conglomeradosOrigen)
+}
+
+const mueveConglomerados = () => {
+  const wrapMoverConglomerados = document.getElementById('wrap-mover-conglomerados')
+  muestraConglomerados(conglomeradosOrigen, 'nuevo-frente')
+  wrapMoverConglomerados.style.display = 'none'
+  alertToastForm('Conglomerados movidos a destino', 'success')
+}
+
+const handleShowAlert = (type, title) =>{
+  Swal.fire({
+    position: 'top-end',
+    type,
+    title,
+    showConfirmButton: false,
+    timer: 2000
+  })
+}
+
 
 const showalertpunteoloading = (bandera) => 
 {
@@ -1248,8 +1361,8 @@ const handleFillTipoDeVialidades = selectId =>
 
 const ejecutar =() => 
 {
-    id_ue = document.getElementById('id_UE').value
-    callServiceLiberaClave(id_ue)  
+    //id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_uo_masivo)  
 }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
@@ -2034,33 +2147,33 @@ const HandleWhatDoYouWantToDo = (coor) => {
       break
     case 'puntear':
         
-      document.getElementById("id_UE").style.display='block';
-      document.getElementById("label_idUE").style.display='block';
-      document.getElementById("origen").style.display='block';
-      document.getElementById("c154").style.display='block';
-      document.getElementById("catc154").style.display='none';
-      document.getElementById("catorigen").style.display='none';
-      document.getElementById("filtroXclase").style.display='none';
-      isAlta=false;
-      validaAltas=false;
-      combosc154yOrigen=false;
-      id_ue=document.getElementById('id_UE').value;
-      let clee_est=document.getElementById('id_UE').value;
-      if(clee_est!='' || clee_est==null)    
-      {
-        identificar(coor);
-        handleActionButtons('enabled')
-      }
-      else{
-        MDM6('hideMarkers', 'identify') 
-        Swal.fire ({
-          position: 'bottom-end',
-          type: 'warning',
-          title: 'Debe seleccionar una unidad económica a puntear',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
+      // document.getElementById("id_UE").style.display='block';
+      // document.getElementById("label_idUE").style.display='block';
+      // document.getElementById("origen").style.display='block';
+      // document.getElementById("c154").style.display='block';
+      // document.getElementById("catc154").style.display='none';
+      // document.getElementById("catorigen").style.display='none';
+      // document.getElementById("filtroXclase").style.display='none';
+      // isAlta=false;
+      // validaAltas=false;
+      // combosc154yOrigen=false;
+      // id_ue=document.getElementById('id_UE').value;
+      // let clee_est=document.getElementById('id_UE').value;
+      // if(clee_est!='' || clee_est==null) 
+      // {
+           identificar(coor);
+      //   handleActionButtons('enabled')
+      // }
+      // else{
+      //   MDM6('hideMarkers', 'identify') 
+      //   Swal.fire ({
+      //     position: 'bottom-end',
+      //     type: 'warning',
+      //     title: 'Debe seleccionar una unidad económica a puntear',
+      //     showConfirmButton: false,
+      //     timer: 2000
+      //   })
+      // }
       break
     case 'v_calle':
       if(level>=13) {
@@ -2169,18 +2282,7 @@ const HandleActionsSaveNewPoint = option =>{
 const identificar = coor => {
   MDM6('hideMarkers', 'identify')
   let level = MDM6('getZoomLevel')
- id_ue = document.getElementById('id_UE').value
-  let visible = document.getElementById('container-ratifica').dataset.visible
-     
-  if(id_ue != '')
-  {
-    if(visible=='show')
-    {
-      showAlertIdentify('error', 'Debe definir si la posición es correcta o incorrecta en el formulario')
-    } else {
-      if(bandera_ratificar){
-        showAlertIdentify('error', 'El punto ha sido ratificado y no se puede mover', 'si desea repuntear porfavor presione el botón con el simbolo X')
-      } else {
+
         if (level<=13) {
           showAlertIdentify('warning', `${14-level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
           MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
@@ -2191,9 +2293,7 @@ const identificar = coor => {
           handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
           handleHideAlertPickMap()
         }
-      }    
-    }
-  }
+     
 }
 
 const showAlertIdentify = (type, title, text='') => {
@@ -2425,33 +2525,33 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
-  document.getElementById("id_UE").style.display='block';
-  document.getElementById("label_idUE").style.display='block';
-  document.getElementById("origen").style.display='block';
-  document.getElementById("c154").style.display='block';
-  document.getElementById("catorigen").style.display='none';
-  document.getElementById("catc154").style.display='none';
-   id_ue=document.getElementById('id_UE').value
+//  document.getElementById("id_UE").style.display='block';
+//  document.getElementById("label_idUE").style.display='block';
+//  document.getElementById("origen").style.display='block';
+//  document.getElementById("c154").style.display='block';
+//  document.getElementById("catorigen").style.display='none';
+//  document.getElementById("catc154").style.display='none';
+   //id_uo_masivo=document.getElementById('id_UE').value
  // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
-  disabledInputs()
+  //disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
-  handleTipoPunteo()
-  handleActionButtons('disabled')
-  handleActionPunteoAlta('on')
-  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
-  //handleActiveVisibleSearch()
-  eliminaFuncionEliminiarDuplicadosSelects()
+//  handleTipoPunteo()
+//  handleActionButtons('disabled')
+//  handleActionPunteoAlta('on')
+//  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
+//  //handleActiveVisibleSearch()
+//  eliminaFuncionEliminiarDuplicadosSelects()
   bandera_ratificar=false
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
-  id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
+  id_uo_masivo != '' ? callServiceLiberaClave(id_uo_masivo) : cleanForm()
 
-  objForm.map(obj => {
-    const wrapTitle = document.getElementById(obj.title)
-    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
-  })
+//  objForm.map(obj => {
+//    const wrapTitle = document.getElementById(obj.title)
+//    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+//  })
 
   if(nameContainerFloating){
     let containerFloat = nameContainerFloating.slice(3)
@@ -2467,7 +2567,7 @@ const handleCancelClick = () => {
 
     handleReturnContainerForm(nameContainerFloating)
   } 
-  id_ue=document.getElementById('id_UE').value;
+  //id_ue=document.getElementById('id_UE').value;
 
 }
 
@@ -2500,7 +2600,7 @@ const callServiceLiberaClave=(id_ue)=>{
 const cleanForm = () => {
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   //limpia formularios
-  handleCleanForms()
+  //handleCleanForms()
   //posicion el mapa en su posicion inicial
   MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995)
   //oculta el marcador azul
@@ -2508,9 +2608,9 @@ const cleanForm = () => {
   //oculta el marcador naranja
   MDM6('hideMarkers', 'routen')
   //contrae la tarjeta de referencia
-  handleVisibleForm('referencia')
+  //handleVisibleForm('referencia')
   //deshabilita botones limpiar y guardar
-  handleActionButtons('disabled')
+  //handleActionButtons('disabled')
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
@@ -2519,7 +2619,7 @@ const cleanForm = () => {
   //oculta mensaje 
   handleHideAlertPickMap()
   
-  id_ue=document.getElementById('id_UE').value;
+ // id_ue=document.getElementById('id_UE').value;
   
   
 }

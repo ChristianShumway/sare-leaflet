@@ -12,7 +12,8 @@ package mx.org.inegi.sare.Enums;
 public enum UnidadesEconomicasEnum {
     
     UNIDADES_ECONOMICAS("ue"),
-    UNIDADES_ECONOMICAS_BLOQUEADAS("uebloq");
+    UNIDADES_ECONOMICAS_BLOQUEADAS("uebloq"),
+    CONGLOMERADOS("conglomerados");
     
     private  String código;
 

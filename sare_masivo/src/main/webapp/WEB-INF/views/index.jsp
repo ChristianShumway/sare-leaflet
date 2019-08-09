@@ -112,6 +112,7 @@
     <script src="resources/config/tree.js" type="text/javascript"></script>
     <script src="resources/config/interface.js" type="text/javascript"></script>
     
+    <script src="resources/js/variablesGlobales.js" type="text/javascript"></script>
     <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
     
     
@@ -181,7 +182,7 @@
                    if (event.originalEvent.altKey) {
                        event.returnValue = false;
                    }
-                   if(navegador=='Chrome 75')
+                   if(navegador.includes('Chrome'))
                    {
                         event.preventDefault();
                    }
@@ -287,10 +288,10 @@
             <div class="wrap-btns-ratifica">
               <div onclick="ratificar('si')" class="btn-ratifica si-ratifica" id="wrap-si-ratifica">
                 <div class="icon-si-ratifica"> <i class="material-icons">check</i></div>
-                <div class="text-si-ratifica">Ratificar</div>
+                <div class="text-si-ratifica">No Reubicar</div>
               </div>
               <div onclick="ratificar('no')" class="btn-ratifica no-ratifica" id="wrap-no-ratifica">
-                <div class="text-no-ratifica">No Ratificar</div>
+                <div class="text-no-ratifica">Reubicar</div>
                 <div class="icon-no-ratifica"> <i class="material-icons">close</i></div>
               </div>
             </div>
@@ -307,7 +308,7 @@
             <div id="mapa"></div>
             <div class="wrap-alert alert-pick" id="wrap-alert-pick">
               <div class="icon-warning"><img src="resources/images/iconos/warning.png" alt="warning"></div>
-              <div class="text-warning">Realice el punteo por favor</div>
+              <div class="text-warning">Seleccione frente destino por favor</div>
             </div>
           </div>
           <!-- end mapa -->
@@ -380,10 +381,10 @@
               <input id="v-calle" value="v_calle" name="accion" type="radio" onchange="radioSelect('calle')"/>
               <label for="v-calle">Vista Calle</label>
             </div>
-            <div class="radio-option">
+<!--            <div class="radio-option">
               <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
               <label for="puntear-alta">Puntear Alta</label>
-            </div>
+            </div>-->
           </div> 
           <!-- end opciones -->
         </div>
@@ -392,62 +393,55 @@
 
       <section class="container-referencia-ubicacion" id="container-rerefencia-ubicacion">
         <div class="row row-referencia">
-          <div class="col s12 m6 col-referencia actual">
+          <div class="col s12 col-referencia actual">
             <ul class="collapsible">
-              <li>
-                <div class="collapsible-header">
-                  <img src="resources/images/iconos/place.png" alt="place" />
-                  Ubicación Geofráfica Actual
+              <li class="active">
+                <div class="collapsible-header active">
+                  <img src="resources/images/iconos/map.png" alt="place" />
+                  <span class="title-header">Ubicación Geofráfica Actual</span>
                 </div>
                 <div class="collapsible-body">
-                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
-                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
-                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e05">Localidad Clave</span>
-                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
-                  <p class="title-ref"> AGEB </p>
-                  <span class="desc-ref" id="e06">AGEB</span>
-                  <p class="title-ref"> Manzana </p>
-                  <span class="desc-ref" id="e07">Manzana</span>
+                  <div class="row row-origen">
+                    <div class="col s12 l6 col-origen">
+                      <p class="title-ref"> Clave Frente <span> (Origen) </span></p>
+                      <span class="desc-ref" id="cve-frente-origen">Clave Origen</span>
+
+                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <div class="wrap-list-conglomerados">
+                        <ul class="list-conglomerados" id="list-conglomerados">
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div class="col s12 l6 col-origen">
+                      <p class="title-ref"> Clave Frente <span> (Destino) </span></p>
+                      <span class="desc-ref" id="cve-frente-destino">Clave Destino</span>
+
+                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <div class="wrap-list-conglomerados">
+                        <ul class="list-conglomerados" id="list-conglomerados-destino">
+                          <!--
+                          <li class="item-conglomerado">
+                            <div class="wrap-icon-conglomerado">
+                              <img src="resources/images/iconos/online-store.png" alt="store" />
+                            </div>
+                            <div class="wrap-info-conglomerado">
+                              <span> 000000000 </span>
+                            </div>
+                          </li>
+                          -->
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="wrap-mover-conglomerados" id="wrap-mover-conglomerados">
+                    <a class="btn  waves-light btn-small green darken-2" onclick="mueveConglomerados()">Mover</a>
+                  </div>
                 </div>
               </li>
             </ul>
           </div>
-          <div class="col s12 m6 col-referencia anterior">
-            <ul class="collapsible">
-              <li>
-                <div class="collapsible-header">
-                  <img src="resources/images/iconos/place.png" alt="place" />
-                  Ubicación Geográfica Anterior
-                </div>
-                <div class="collapsible-body">
-                  <p class="title-ref"> Entidad Federativa <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e03">Clave Entidad Federativa</span>
-                  <p class="title-ref"> Entidad Federativa <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="eo3N">Nombre Clave Federativa</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e04">Municipio o Delegación Clave</span>
-                  <p class="title-ref"> Municipio o Delegación <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e04N">Municipio o Delegación Nombre</span>
-                  <p class="title-ref"> Localidad <span> (Clave) </span></p>
-                  <span class="desc-ref" id="e05">Localidad Clave</span>
-                  <p class="title-ref"> Localidad <span> (Nombre) </span></p>
-                  <span class="desc-ref" id="e05N">Localidad Nombre</span>
-                  <p class="title-ref"> AGEB </p>
-                  <span class="desc-ref" id="e06">AGEB</span>
-                  <p class="title-ref"> Manzana </p>
-                  <span class="desc-ref" id="e07">Manzana</span>
-                </div>
-              </li>
-            </ul>
-          </div>
+        
         </div>
       </section>
       <!-- CONTAINER FORM -->
