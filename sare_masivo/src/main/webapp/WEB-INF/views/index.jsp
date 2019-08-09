@@ -288,10 +288,10 @@
             <div class="wrap-btns-ratifica">
               <div onclick="ratificar('si')" class="btn-ratifica si-ratifica" id="wrap-si-ratifica">
                 <div class="icon-si-ratifica"> <i class="material-icons">check</i></div>
-                <div class="text-si-ratifica">No Reubicar</div>
+                <div class="text-si-ratifica">Reubicar</div>
               </div>
               <div onclick="ratificar('no')" class="btn-ratifica no-ratifica" id="wrap-no-ratifica">
-                <div class="text-no-ratifica">Reubicar</div>
+                <div class="text-no-ratifica">No Reubicar</div>
                 <div class="icon-no-ratifica"> <i class="material-icons">close</i></div>
               </div>
             </div>

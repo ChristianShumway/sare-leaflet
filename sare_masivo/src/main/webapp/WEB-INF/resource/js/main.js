@@ -482,7 +482,7 @@ const showModalMsgError = data => {
         timer: 2000
       })
   } else {
-    handleShowRaticaHideSearch()
+    // handleShowRaticaHideSearch()
   }
 }
 
@@ -950,11 +950,11 @@ const ratificar = request => {
 //    handleActionButtons('enabled')
 //    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
    // handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
-    bandera_ratificar=true
-  }
-  else if(request=='no') {
     seleccionarNuevoFrente()
     funcionesNoRatificado()
+  }
+  else if(request=='no') {
+    bandera_ratificar=true
   } 
 }
 
@@ -1019,47 +1019,39 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
-  
-        sendAJAX(urlServices['getListaUOxCveFrente'].url, 
-        {
-          'proyecto':dataUserFromLoginLocalStorage.proyecto,
-          'cveFrente': dataFrente.cveFrente                
-        }, 
-        urlServices['getListaUOxCveFrente'].type,  
-        data => {                          
-          swal.close();
-          let datamessageLista = data[0].datos.mensaje
-          if (datamessageLista.type === 'error') {
-            handleShowAlert('error', datamessageLista.messages )
-          } else {
-            let dataListaUO = data[0].datos.datos
-            conglomeradosOrigen = data[0].datos.datos
-            muestraConglomerados(dataListaUO)
-//            Swal.fire({
-//              text: "Deséas seleccionar un nuevo frente?",
-//              showCancelButton: true,
-//              confirmButtonColor: '#4caf50',
-//              cancelButtonColor: '#424242',
-//              confirmButtonText: 'Seleccionar'
-//            }).then((result) => {
-//              if (result.value) {
-//                seleccionarNuevoFrente()
-//              }
-//            })
-          }
-        }, 
-        () => {
-          swal ({
-            title: '<span style="width:100%;">Buscando información de punteo!</span>',
-            text: 'Por favor espere un momento',                        
-            onOpen: () => swal.showLoading()
-          })
-            .then( () => { },
-            dismiss => { }
-            )
-        })  
-        
-        MDM6('customPolygon',parametros);
+        if (!frenteExistente){
+
+          sendAJAX(urlServices['getListaUOxCveFrente'].url, 
+          {
+            'proyecto':dataUserFromLoginLocalStorage.proyecto,
+            'cveFrente': dataFrente.cveFrente                
+          }, 
+          urlServices['getListaUOxCveFrente'].type,  
+          data => {                          
+            swal.close();
+            let datamessageLista = data[0].datos.mensaje
+            if (datamessageLista.type === 'error') {
+              handleShowAlert('error', datamessageLista.messages )
+            } else {
+              let dataListaUO = data[0].datos.datos
+              conglomeradosOrigen = data[0].datos.datos
+              muestraConglomerados(dataListaUO)
+              handleShowRaticaHideSearch()
+            }
+          }, 
+          () => {
+            swal ({
+              title: '<span style="width:100%;">Buscando información de punteo!</span>',
+              text: 'Por favor espere un momento',                        
+              onOpen: () => swal.showLoading()
+            })
+              .then( () => { },
+              dismiss => { }
+              )
+          })  
+          
+          MDM6('customPolygon',parametros);
+        }
       }
 
       // showalertpunteoloading();
@@ -1129,7 +1121,6 @@ const muestraInfoFrente = data => {
 }
 
 const muestraConglomerados = (data, nuevo = '') => {
-  alert(" entro aqui");
   const listConglomerados = document.getElementById('list-conglomerados')
   const listConglomeradosDestino = document.getElementById('list-conglomerados-destino')
   if(nuevo === 'nuevo-frente'){
@@ -1140,7 +1131,7 @@ const muestraConglomerados = (data, nuevo = '') => {
             <img src="resources/images/iconos/online-store.png" alt="store" />
           </div>
           <div class="wrap-info-conglomerado">
-            <span> ${conglomerado} </span>
+            <span> ${conglomerado.idUoMasivo} </span>
           </div>
         </li> `
     })
@@ -1157,7 +1148,6 @@ const muestraConglomerados = (data, nuevo = '') => {
               lColor:'#000000'
           }
       };
-      MDM6('customPolygon',parametros);
       
       listConglomerados.innerHTML += `
         <li class="item-conglomerado">
@@ -1165,16 +1155,17 @@ const muestraConglomerados = (data, nuevo = '') => {
             <img src="resources/images/iconos/online-store.png" alt="store" />
           </div>
           <div class="wrap-info-conglomerado">
-            <span> ${conglomerado} </span>
+            <span> ${conglomerado.idUoMasivo} </span>
           </div>
         </li> `
+      
+      // MDM6('customPolygon',parametros);
     })
   }
 }
 
 const seleccionarNuevoFrente = () => {
   frenteExistente = true
-  //console.log(conglomeradosOrigen)
 }
 
 const mueveConglomerados = () => {
