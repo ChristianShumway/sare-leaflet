@@ -1185,6 +1185,17 @@ const handleShowAlert = (type, title) =>{
   })
 }
 
+const handleCleanContainerUGA = () => {
+  const cveFrenteOrigen = document.getElementById('cve-frente-origen')
+  const cveFrenteDestino = document.getElementById('cve-frente-destino')
+  const listaConglomerados = document.getElementById('list-conglomerados')
+  const listaConglomeradosDestino = document.getElementById('list-conglomerados-destino')
+  cveFrenteOrigen.innerHTML = 'Clave Origen'
+  cveFrenteDestino.innerHTML = 'Clave Destino'
+  listaConglomerados.innerHTML = ''
+  listaConglomeradosDestino.innerHTML = ''
+}
+
 
 const showalertpunteoloading = (bandera) => 
 {
@@ -2531,6 +2542,7 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
+  handleCleanContainerUGA()
 //  document.getElementById("id_UE").style.display='block';
 //  document.getElementById("label_idUE").style.display='block';
 //  document.getElementById("origen").style.display='block';
