@@ -73,6 +73,7 @@ public class cat_vw_punteo_sare_guardado {
      private String tipo_e10_cn_otro;
      private BigDecimal id_inmueble;
      private String navegador;
+     
 
     public String getNavegador() {
         return navegador;
