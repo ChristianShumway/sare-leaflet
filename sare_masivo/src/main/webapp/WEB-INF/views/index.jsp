@@ -240,7 +240,7 @@
             <li><a class="waves-effect" onclick='handleModuleScroll(event)' id="ancla-form-movil" href="#container-form"><i class="material-icons">storage</i>Formulario</a></li>-->
             <li><div class="divider"></div></li>
             <li><a class="subheader">Opciones</a></li>
-            <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>
+<!--            <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>-->
             <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
             <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
             <li onclick="imprimir()"><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>

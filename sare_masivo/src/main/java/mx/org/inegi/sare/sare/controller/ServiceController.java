@@ -182,6 +182,16 @@ public class ServiceController {
         return BackingGuardar.SaveUE(proyecto, inmueble, usuario, ip, isAlta);
     }
     
+     @RequestMapping(value = "guardarUEFrentes.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services guardarUEFrentes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "capa") String capa, @RequestParam(value = "frente_origen") String frente_origen,
+            @RequestParam(value = "frente_destino") String frente_destino,@RequestParam(value = "manzana_origen") String manzana_origen,
+            @RequestParam(value = "manzana_destino") String manzana_destino,@RequestParam(value = "claves") String claves,@RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
+        //Gson gson = new Gson();
+        //cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
+        String ip = request.getRemoteAddr();
+        return BackingGuardar.SaveUEFrentes(proyecto, capa, usuario, ip,manzana_destino,manzana_origen, frente_destino,frente_origen,claves);
+    }
+    
     @RequestMapping(value = "login.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services login(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "usuario") String usuario,@RequestParam(value = "password") String password,@RequestParam(value = "acceso") String acceso,@RequestParam(value = "clave_operativa") String clave_operativa,@RequestParam(value = "id_deftramo") String id_deftramo,@RequestParam(value = "nombre") String nombre,@RequestParam(value = "ce") String ce,@RequestParam(value = "id_ue") String id_ue,@RequestParam(value = "consulta") String consulta, HttpServletRequest request, HttpServletResponse response) throws Exception {
         return BackingLogin.login(proyecto, usuario, password, acceso,clave_operativa,id_deftramo,nombre,ce,id_ue,consulta, request, response);
