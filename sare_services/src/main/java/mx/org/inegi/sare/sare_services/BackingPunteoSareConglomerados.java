@@ -13,6 +13,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
+import mx.org.inegi.sare.sare_db.dto.cat_uo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSareConglomerado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
@@ -43,7 +44,7 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
     }
 
     public cat_respuesta_services getDatabyCoords(Integer proyecto, String x, String y, String tc, Boolean isAlta, String ce, String id_ue) {
-        Respuesta = new cat_respuesta_services();       
+        Respuesta = new cat_respuesta_services();
         cat_coordenadas coordMercator;
         if (TipoCartografia.Geografica.getCodigo().equals(tc)) {
             Double cX = Double.parseDouble(x.replace(",", "."));
@@ -64,8 +65,11 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
 
     public cat_respuesta_services getListaUO(Integer proyecto, String cveManzana) {
         Respuesta = new cat_respuesta_services();
-        List<String> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana);
+        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana);
         if (listaUO != null && listaUO.size() > 0) {
+            for (cat_uo listaUO1 : listaUO) {
+                listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
+            }
             Respuesta.setDatos(listaUO);
         } else {
             Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "No se encontraron unidades para este frente "));

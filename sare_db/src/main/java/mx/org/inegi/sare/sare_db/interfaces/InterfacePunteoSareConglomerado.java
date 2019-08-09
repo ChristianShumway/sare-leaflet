@@ -8,6 +8,7 @@ package mx.org.inegi.sare.sare_db.interfaces;
 import java.util.List;
 import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
+import mx.org.inegi.sare.sare_db.dto.cat_uo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
 
 /**
@@ -25,7 +26,8 @@ public interface InterfacePunteoSareConglomerado {
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto,String ce, String x, String y);
     
    public List<cat_frente_geometria> getGeometriaFrente(Integer proyecto, String x, String y);
-   public List<String> getListaUO(Integer proyecto, String cveManzanaParam) ;
+   public List<cat_uo> getListaUO(Integer proyecto, String cveManzanaParam) ;
+    public String getConversionPuntosAMercator(String x, String y) ;
     
     public List<cat_vial> validaInfoPunteoUrbano(String ent, String cve_geo, String cve_ft,Integer proyecto,String ce, String x, String y);
     
