@@ -137,5 +137,10 @@ var urlServices = {
         url: 'getListUOporFrente.do',
         label: 'getListUOporFrente',
         type: 'POST'
+    },
+     getSaveUOxCveFrente: {
+        url: 'guardarUEFrentes.do',
+        label: 'guardarUEFrentes',
+        type: 'POST'
     }
 };

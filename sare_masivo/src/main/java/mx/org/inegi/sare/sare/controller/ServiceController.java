@@ -182,8 +182,9 @@ public class ServiceController {
         return BackingGuardar.SaveUE(proyecto, inmueble, usuario, ip, isAlta);
     }
     
-     @RequestMapping(value = "guardarUEFrentes.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services guardarUEFrentes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "capa") String capa, @RequestParam(value = "frente_origen") String frente_origen,
+     @RequestMapping(value = "guardarUEFrentes.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services guardarUEFrentes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "capa") String capa,
+            @RequestParam(value = "frente_origen") String frente_origen,
             @RequestParam(value = "frente_destino") String frente_destino,@RequestParam(value = "manzana_origen") String manzana_origen,
             @RequestParam(value = "manzana_destino") String manzana_destino,@RequestParam(value = "claves") String claves,@RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
         //Gson gson = new Gson();

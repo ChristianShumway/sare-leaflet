@@ -30,7 +30,7 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_uo_masivo;
+var id_uo_masivo,frente_origen,frente_destino,manzana_origen,manzana_destino,claves;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -257,6 +257,11 @@ const callServiceFindUE=(id_ue)=>{
       }
      // handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
       handlePunteo(data[0].datos.datos[0].coord_X,data[0].datos.datos[0].coord_Y,'geografica')
+      frente_origen=''
+      frente_destino=''
+      manzana_origen=''
+      manzana_destino=''
+      claves=''
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -1003,11 +1008,11 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       console.log(data)
       let dataFrente = data[0].datos.datos[0]
       let datamessage = data[0].datos.mensaje
-
+      
       if (datamessage.type === 'error') {
         handleShowAlert('error', datamessage.messages )
       } else {
-
+          
         var poligono=dataFrente.geometria;
         var parametros = {
           action: 'add',
@@ -1019,24 +1024,33 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
+        frente_destino=dataFrente.cvefte
+        manzana_destino=dataFrente.cve_ent+dataFrente.cve_loc+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
         if (!frenteExistente){
-
+            frente_origen=dataFrente.cveft
+            manzana_origen=dataFrente.cve_ent+dataFrente.cve_loc+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
           sendAJAX(urlServices['getListaUOxCveFrente'].url, 
           {
             'proyecto':dataUserFromLoginLocalStorage.proyecto,
             'cveFrente': dataFrente.cveFrente                
           }, 
+          
           urlServices['getListaUOxCveFrente'].type,  
           data => {                          
             swal.close();
             let datamessageLista = data[0].datos.mensaje
             if (datamessageLista.type === 'error') {
               handleShowAlert('error', datamessageLista.messages )
-            } else {
+            } else 
+            {
               let dataListaUO = data[0].datos.datos
               conglomeradosOrigen = data[0].datos.datos
               muestraConglomerados(dataListaUO)
               handleShowRaticaHideSearch()
+              dataListaUO.map( conglomerado => 
+              {
+                claves!=undefined?claves=conglomerado.idUoMasivo+","+claves:claves=conglomerado.idUoMasivo
+              })
             }
           }, 
           () => {
@@ -2660,26 +2674,26 @@ const disabledInputs = () => inputsEditables.map(input => document.getElementByI
 
 // función activa btns guardar y cancelar cuando se ratifica y desactiva cuando se cancela
 const handleActionButtons = res => {
-  const saveOption = document.getElementById('item-save-option')
-  const cancelOption = document.getElementById('item-cancel-option')
-  const saveMovilOption = document.getElementById('save-movil-option')
-  const cancelMovilOption = document.getElementById('cancel-movil-option')
-
-  if (res == 'enabled') {
-    saveOption.removeAttribute('disabled')
-    cancelOption.removeAttribute('disabled')
-    saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
-    saveMovilOption.classList.remove('option-disabled')
-    cancelMovilOption.setAttribute('onclick', 'handleCancelClick()')
-    cancelMovilOption.classList.remove('option-disabled')
-  } else if (res == 'disabled') {
-    saveOption.setAttribute('disabled', 'true')
-    cancelOption.setAttribute('disabled', 'true')
-    saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
-    saveMovilOption.classList.add('option-disabled')
-    cancelMovilOption.removeAttribute('onclick', 'handleCancelClick()')
-    cancelMovilOption.classList.add('option-disabled')
-  }
+//  const saveOption = document.getElementById('item-save-option')
+//  const cancelOption = document.getElementById('item-cancel-option')
+//  const saveMovilOption = document.getElementById('save-movil-option')
+//  const cancelMovilOption = document.getElementById('cancel-movil-option')
+//
+//  if (res == 'enabled') {
+//    saveOption.removeAttribute('disabled')
+//    cancelOption.removeAttribute('disabled')
+//    //saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
+//    saveMovilOption.classList.remove('option-disabled')
+//    cancelMovilOption.setAttribute('onclick', 'handleCancelClick()')
+//    cancelMovilOption.classList.remove('option-disabled')
+//  } else if (res == 'disabled') {
+//    saveOption.setAttribute('disabled', 'true')
+//    cancelOption.setAttribute('disabled', 'true')
+//    saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
+//    saveMovilOption.classList.add('option-disabled')
+//    cancelMovilOption.removeAttribute('onclick', 'handleCancelClick()')
+//    cancelMovilOption.classList.add('option-disabled')
+//  }
 }
 
 const handleSearchCleeValidation = e => {
@@ -3301,6 +3315,49 @@ const alertPreviewSave = () => {
       handleCleanContainerUGA()
       // handleFormValidations()
     }
+  })
+}
+
+const callServiceSaveUXFrentes=()=>{
+  id_uo_masivo=id_ue
+  const cancelOption = document.getElementById('item-cancel-option')
+  sendAJAX(urlServices['getSaveUOxCveFrente'].url, 
+  {
+    'proyecto':dataUserFromLoginLocalStorage.proyecto,
+    'capa':'Frentes',
+    'frente_origen':frente_origen,
+    'frente_destino': frente_destino, 
+    'manzana_origen': manzana_origen,
+    'manzana_destino': manzana_destino,
+    'claves':claves,
+    'usuario':dataUserFromLoginLocalStorage.nombre
+  },
+  urlServices['getSaveUOxCveFrente'].type, 
+  data => {
+    if(data[0].operation){
+      //muestra mensaje si hay error
+      showModalMsgError(data)
+    } else {
+      Swal.fire({
+        position: 'bottom-end',
+        type: 'warning',
+        title: data[0].messages[0] + "! Porfavor intente nuevamente",
+        showConfirmButton: false,
+        timer: 2000
+      })  
+    }    
+  }, () => {
+    swal({
+      title: 'Buscando información de la clave:' +id_ue,
+      text: 'Por favor espere un momento',
+      //timer: 2000,
+      onOpen:  () => swal.showLoading() 
+    })
+    .then( () => { },
+        dismiss => {
+           
+      }
+    )
   })
 }
  
