@@ -311,7 +311,7 @@ public class DaoPunteoSareConglomerado extends DaoBusquedaSare implements Interf
                 cat_frente_geometria fila = null;
                 List<cat_frente_geometria> resultado = new ArrayList<cat_frente_geometria>();
                 while (rs.next()) {
-                    fila = new cat_frente_geometria(rs.getString("clave"), rs.getString("the_geom"), rs.getString("cve_ent"), rs.getString("cve_mun"), rs.getString("cve_loc"), rs.getString("cve_ageb"), rs.getString("cve_mza"), rs.getString("nom_ent"), rs.getString("nom_mun"), rs.getString("nom_loc"));
+                    fila = new cat_frente_geometria(rs.getString("clave"), rs.getString("the_geom"), rs.getString("cve_ent"), rs.getString("cve_mun"), rs.getString("cve_loc"), rs.getString("cve_ageb"), rs.getString("cve_mza"), rs.getString("nom_ent"), rs.getString("nom_mun"), rs.getString("nom_loc"),rs.getString("cveft"));
                     resultado.add(fila);
                 }
                 return resultado;
@@ -351,8 +351,8 @@ public class DaoPunteoSareConglomerado extends DaoBusquedaSare implements Interf
         String cveManzana = null;
         StringBuilder sql;
         sql = new StringBuilder();
-        sql = sql.append(" select astext(ST_Transform((ST_SetSRID(ST_MakePoint('").append(x).append("','").append(y).append("'),6372)),900913))  as geometria");             
-       //sql.append("select st_astext(st_transform(st_buffer(ST_GeomFromText(' point(").append(x).append(" ").append(y).append(" )',6372),3),900913)) as geometria ");
+        //sql = sql.append(" select astext(ST_Transform((ST_SetSRID(ST_MakePoint('").append(x).append("','").append(y).append("'),6372)),900913))  as geometria");             
+        sql.append("select st_astext(st_transform(st_buffer(ST_GeomFromText(' point(").append(x).append(" ").append(y).append(" )',6372),3),900913)) as geometria ");
         cveManzana = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -764,7 +764,7 @@ public class DaoPunteoSareConglomerado extends DaoBusquedaSare implements Interf
                         sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),20)))");
                         break;
                     case CVEMANZANA:
-                        sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nomgeo nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc from ");
+                        sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nomgeo nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc,cveft from ");
                         //sql.append(schemapg).append(".vw_frentesmgn2019 frente ");
                         sql.append(schemapg).append(".td_frentes  frente");
                         sql.append(" left join ").append(schemapg).append(".td_entidad ent on frente.cve_ent=ent.cve_ent ");

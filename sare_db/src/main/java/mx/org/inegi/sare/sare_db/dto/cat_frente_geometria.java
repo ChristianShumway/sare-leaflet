@@ -20,11 +20,12 @@ public class cat_frente_geometria {
     private String nom_ent;
     private String nom_mun;
     private String nom_loc;
+    private String cveft;
 
     public cat_frente_geometria() {
     }
 
-    public cat_frente_geometria(String cveFrente, String geometria, String cve_ent, String cve_mun, String cve_loc, String cve_ageb, String cve_mza, String nom_ent, String nom_mun, String nom_loc) {
+    public cat_frente_geometria(String cveFrente, String geometria, String cve_ent, String cve_mun, String cve_loc, String cve_ageb, String cve_mza, String nom_ent, String nom_mun, String nom_loc,String cveft) {
         this.cveFrente = cveFrente;
         this.geometria = geometria;
         this.cve_ent = cve_ent;
@@ -35,6 +36,7 @@ public class cat_frente_geometria {
         this.nom_ent = nom_ent;
         this.nom_mun = nom_mun;
         this.nom_loc = nom_loc;
+        this.cveft=cveft;
     }
 
    
@@ -116,6 +118,14 @@ public class cat_frente_geometria {
 
     public void setNom_loc(String nom_loc) {
         this.nom_loc = nom_loc;
+    }
+
+    public String getCveft() {
+        return cveft;
+    }
+
+    public void setCveft(String cveft) {
+        this.cveft = cveft;
     }
     
     

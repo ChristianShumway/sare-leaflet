@@ -1057,14 +1057,18 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         })  
         
         MDM6('customPolygon',parametros);
+        console.log("el pligono de la linea es ");
+        console.log(poligono);
+        //var parametrosLinea={fColor:"red",lSize:2,lColor:"red",lType:"line",type:'buffer'}; 
+        //MDM6('addPolygon',poligono,parametrosLinea); 
       }
 
       // showalertpunteoloading();
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
-        confirmacionPunteo = false
+        /*confirmacionPunteo = false
         actualizaForm(data[0].datos.datos)
         agregaFuncionEliminarDuplicadosSelects()
-        handleTipoPunteo()
+        handleTipoPunteo()*/
       } else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {  
@@ -1126,7 +1130,6 @@ const muestraInfoFrente = data => {
 }
 
 const muestraConglomerados = (data, nuevo = '') => {
-  alert(" entro aqui");
   const listConglomerados = document.getElementById('list-conglomerados')
   const listConglomeradosDestino = document.getElementById('list-conglomerados-destino')
   if(nuevo === 'nuevo-frente'){
@@ -1143,6 +1146,7 @@ const muestraConglomerados = (data, nuevo = '') => {
     })
     listConglomerados.innerHTML = ''
   } else {
+      var contador=0;
     data.map( conglomerado => {
       var poligono=conglomerado.geometria;
       var parametros={
@@ -1150,12 +1154,12 @@ const muestraConglomerados = (data, nuevo = '') => {
           wkt:poligono,
           params:{
               fColor:'#000000',
-              lSize:15,
+              lSize:10,
               lColor:'#000000'
           }
       };
-      MDM6('customPolygon',parametros);
-      
+     
+      contador++;
       listConglomerados.innerHTML += `
         <li class="item-conglomerado">
           <div class="wrap-icon-conglomerado">
@@ -1165,6 +1169,13 @@ const muestraConglomerados = (data, nuevo = '') => {
             <span> ${conglomerado} </span>
           </div>
         </li> `
+        console.log(" el poligono que va a pintar es ");
+        console.log(poligono);
+         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'buffer'}; 
+        
+
+          MDM6('addPolygon',poligono,paramsNew); 
+        
     })
   }
 }
