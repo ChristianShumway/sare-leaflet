@@ -31,7 +31,7 @@ import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
 import mx.org.inegi.sare.sare_services.BackingGuardar;
 import mx.org.inegi.sare.sare_services.BackingListUEbyXY;
 import mx.org.inegi.sare.sare_services.BackingLogin;
-import mx.org.inegi.sare.sare_services.BackingPunteoSareConglomerados;
+import mx.org.inegi.sare.sare_services.BackingPunteoSare;
 import mx.org.inegi.sare.sare_services.BackingReportes;
 import mx.org.inegi.sare.sare_services.BackingSincroniza;
 import mx.org.inegi.sare.sare_services.BackingTransformCoordtoGeo;
@@ -73,8 +73,8 @@ public class ServiceController {
     private BackingBusquedaSareConglomerados BackingBusquedaConglomerados;
 
     @Autowired
-    @Qualifier("BackingPunteoConglomerados")
-    private BackingPunteoSareConglomerados BackingPunteo;
+    @Qualifier("BackingPunteo")
+    private BackingPunteoSare BackingPunteo;
 
     @Autowired
     @Qualifier("BackingActivacion")
@@ -145,7 +145,7 @@ public class ServiceController {
 
     @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services getDatabyCoords(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "x") String x, @RequestParam(value = "y") String y) throws Exception {
-        return BackingPunteo.getDatabyCoords(proyecto, x, y,"",true,"","");
+        return BackingPunteo.getDatabyCoordsConglomerado(proyecto, x, y,"",true,"","");
     }
     
     @RequestMapping(value = "getListUOporFrente.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
