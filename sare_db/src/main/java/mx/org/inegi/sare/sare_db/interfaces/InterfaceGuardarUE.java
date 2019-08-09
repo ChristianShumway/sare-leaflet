@@ -7,6 +7,7 @@ package mx.org.inegi.sare.sare_db.interfaces;
 
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardadoUXFrente;
 
 /**
  *
@@ -27,5 +28,7 @@ public interface InterfaceGuardarUE {
     public Integer getidDeftramo(Integer proyecto,cat_vw_punteo_sare_guardado inmueble);
     
     public boolean UpdateOclStatusOcupado(Integer proyecto, cat_vw_punteo_sare_guardado object, String id_ue, boolean isAlta) ;
+    
+    public boolean GuardarUEFrentes(Integer proyecto,cat_vw_punteo_sare_guardadoUXFrente object);
     
 }

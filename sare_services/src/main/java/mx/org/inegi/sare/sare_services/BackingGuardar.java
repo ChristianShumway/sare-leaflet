@@ -12,6 +12,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
+import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardadoUXFrente;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceGuardarUE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -255,6 +256,46 @@ public class BackingGuardar extends BackingSincroniza {
             }
         }
         return regresar;
+    }
+    
+    public cat_respuesta_services SaveUEFrentes(Integer proyecto, String capa, String usuario, String ip,
+            String manzana_destino, String manzana_origen,String frente_destino, String frente_origen, String claves) {
+        cat_respuesta_services Respuesta = new cat_respuesta_services();
+        cat_vw_punteo_sare_guardadoUXFrente object=new cat_vw_punteo_sare_guardadoUXFrente();
+        object.setCapa(capa);
+        object.setClaves(claves);
+        object.setFrente_destino(frente_destino);
+        object.setFrente_origen(frente_origen);
+        object.setManzana_destino(manzana_destino);
+        object.setManzana_origen(manzana_origen);
+        object.setIp(ip);
+        object.setUsuario(usuario);
+        
+        try{
+            if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
+            {
+               switch(object.getResultado()){
+                   case "0":
+                       Respuesta.setMensaje(new cat_mensaje("false", "Ocurrio una exception")); 
+                       break;
+                   case "1":
+                       Respuesta.setMensaje(new cat_mensaje("true", "Se movieron los registros correctamente"));
+                       break;
+                   case "98":
+                       Respuesta.setMensaje(new cat_mensaje("false", "NO SE PUEDEN MOVER A LA MISMA UBICACION GEOGRAFICA!"));
+                       break;
+                   case "99":
+                       Respuesta.setMensaje(new cat_mensaje("false", "NO EXISTE EL FRENTE!"));
+                       break;
+               }
+               
+            }
+        }catch(Exception e){
+                    Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, e);
+                    Respuesta.setDatos(false);
+                    Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Reporte este error con su administrador"));   
+         }
+        return Respuesta;
     }
 
 }

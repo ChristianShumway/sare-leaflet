@@ -255,6 +255,8 @@ const callServiceFindUE=(id_ue)=>{
       {
       tipoE10c_g=data[0].datos.datos[0].tipo_E10_C;
       }
+     // handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+      handlePunteo(data[0].datos.datos[0].coord_X,data[0].datos.datos[0].coord_Y,'geografica')
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -480,7 +482,7 @@ const showModalMsgError = data => {
         timer: 2000
       })
   } else {
-    handleShowRaticaHideSearch()
+    // handleShowRaticaHideSearch()
   }
 }
 
@@ -945,13 +947,14 @@ const ratificar = request => {
   if (request == 'si') {
 //    enabledInputs()
 //    handleActionTargetRef()
-//    handleActionButtons('enabled')
 //    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-//    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+// handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+seleccionarNuevoFrente()
+funcionesNoRatificado()
+}
+else if(request=='no') {
+    handleActionButtons('enabled')
     bandera_ratificar=true
-  }
-  else if(request=='no') {
-    funcionesNoRatificado()
   } 
 }
 
@@ -1016,51 +1019,39 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
-  
-        sendAJAX(urlServices['getListaUOxCveFrente'].url, 
-        {
-          'proyecto':dataUserFromLoginLocalStorage.proyecto,
-          'cveFrente': dataFrente.cveFrente                
-        }, 
-        urlServices['getListaUOxCveFrente'].type,  
-        data => {                          
-          swal.close();
-          let datamessageLista = data[0].datos.mensaje
-          if (datamessageLista.type === 'error') {
-            handleShowAlert('error', datamessageLista.messages )
-          } else {
-            let dataListaUO = data[0].datos.datos
-            conglomeradosOrigen = data[0].datos.datos
-            muestraConglomerados(dataListaUO)
-            Swal.fire({
-              text: "Deséas seleccionar un nuevo frente?",
-              showCancelButton: true,
-              confirmButtonColor: '#4caf50',
-              cancelButtonColor: '#424242',
-              confirmButtonText: 'Seleccionar'
-            }).then((result) => {
-              if (result.value) {
-                seleccionarNuevoFrente()
-              }
+        if (!frenteExistente){
+
+          sendAJAX(urlServices['getListaUOxCveFrente'].url, 
+          {
+            'proyecto':dataUserFromLoginLocalStorage.proyecto,
+            'cveFrente': dataFrente.cveFrente                
+          }, 
+          urlServices['getListaUOxCveFrente'].type,  
+          data => {                          
+            swal.close();
+            let datamessageLista = data[0].datos.mensaje
+            if (datamessageLista.type === 'error') {
+              handleShowAlert('error', datamessageLista.messages )
+            } else {
+              let dataListaUO = data[0].datos.datos
+              conglomeradosOrigen = data[0].datos.datos
+              muestraConglomerados(dataListaUO)
+              handleShowRaticaHideSearch()
+            }
+          }, 
+          () => {
+            swal ({
+              title: '<span style="width:100%;">Buscando información de punteo!</span>',
+              text: 'Por favor espere un momento',                        
+              onOpen: () => swal.showLoading()
             })
-          }
-        }, 
-        () => {
-          swal ({
-            title: '<span style="width:100%;">Buscando información de punteo!</span>',
-            text: 'Por favor espere un momento',                        
-            onOpen: () => swal.showLoading()
-          })
-            .then( () => { },
-            dismiss => { }
-            )
-        })  
-        
-        MDM6('customPolygon',parametros);
-        console.log("el pligono de la linea es ");
-        console.log(poligono);
-        //var parametrosLinea={fColor:"red",lSize:2,lColor:"red",lType:"line",type:'buffer'}; 
-        //MDM6('addPolygon',poligono,parametrosLinea); 
+              .then( () => { },
+              dismiss => { }
+              )
+          })  
+          
+          MDM6('customPolygon',parametros);
+        }
       }
 
       // showalertpunteoloading();
@@ -1140,7 +1131,7 @@ const muestraConglomerados = (data, nuevo = '') => {
             <img src="resources/images/iconos/online-store.png" alt="store" />
           </div>
           <div class="wrap-info-conglomerado">
-            <span> ${conglomerado} </span>
+            <span> ${conglomerado.idUoMasivo} </span>
           </div>
         </li> `
     })
@@ -1158,15 +1149,14 @@ const muestraConglomerados = (data, nuevo = '') => {
               lColor:'#000000'
           }
       };
-     
-      contador++;
+      
       listConglomerados.innerHTML += `
         <li class="item-conglomerado">
           <div class="wrap-icon-conglomerado">
             <img src="resources/images/iconos/online-store.png" alt="store" />
           </div>
           <div class="wrap-info-conglomerado">
-            <span> ${conglomerado} </span>
+            <span> ${conglomerado.idUoMasivo} </span>
           </div>
         </li> `
         console.log(" el poligono que va a pintar es ");
@@ -1182,7 +1172,6 @@ const muestraConglomerados = (data, nuevo = '') => {
 
 const seleccionarNuevoFrente = () => {
   frenteExistente = true
-  //console.log(conglomeradosOrigen)
 }
 
 const mueveConglomerados = () => {
@@ -1190,6 +1179,7 @@ const mueveConglomerados = () => {
   muestraConglomerados(conglomeradosOrigen, 'nuevo-frente')
   wrapMoverConglomerados.style.display = 'none'
   alertToastForm('Conglomerados movidos a destino', 'success')
+  handleActionButtons('enabled')
 }
 
 const handleShowAlert = (type, title) =>{
@@ -1200,6 +1190,17 @@ const handleShowAlert = (type, title) =>{
     showConfirmButton: false,
     timer: 2000
   })
+}
+
+const handleCleanContainerUGA = () => {
+  const cveFrenteOrigen = document.getElementById('cve-frente-origen')
+  const cveFrenteDestino = document.getElementById('cve-frente-destino')
+  const listaConglomerados = document.getElementById('list-conglomerados')
+  const listaConglomeradosDestino = document.getElementById('list-conglomerados-destino')
+  cveFrenteOrigen.innerHTML = 'Clave Origen'
+  cveFrenteDestino.innerHTML = 'Clave Destino'
+  listaConglomerados.innerHTML = ''
+  listaConglomeradosDestino.innerHTML = ''
 }
 
 
@@ -2548,6 +2549,7 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
+  handleCleanContainerUGA()
 //  document.getElementById("id_UE").style.display='block';
 //  document.getElementById("label_idUE").style.display='block';
 //  document.getElementById("origen").style.display='block';
@@ -2560,6 +2562,9 @@ const handleCancelClick = () => {
   //disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
+  document.getElementById('list-conglomerados').innerHTML="";
+  document.getElementById('list-conglomerados-destino').innerHTML="";
+  
 //  handleTipoPunteo()
 //  handleActionButtons('disabled')
 //  handleActionPunteoAlta('on')
@@ -2637,8 +2642,8 @@ const cleanForm = () => {
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
-  !checkboxPuntearAlta.checked ? handleVisibleSearch() : false
-  //handleVisibleSearch() 
+  //!checkboxPuntearAlta.checked ? handleVisibleSearch() : false
+  handleVisibleSearch() 
   //oculta mensaje 
   handleHideAlertPickMap()
   
@@ -3279,5 +3284,23 @@ function abrirAyuda(){
 function soloNumeros(e){
 	var key = window.Event ? e.which : e.keyCode
 	return (key >= 48 && key <= 57)
+}
+
+const alertPreviewSave = () => {
+  Swal.fire({
+    title: '¿Estás Seguro?',
+    text: "Guardar Cambios",
+    // type: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#5562eb',
+    cancelButtonColor: '#424242',
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.value) {
+      handleCleanContainerUGA()
+      // handleFormValidations()
+    }
+  })
 }
  
