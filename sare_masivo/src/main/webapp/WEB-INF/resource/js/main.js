@@ -947,13 +947,13 @@ const ratificar = request => {
   if (request == 'si') {
 //    enabledInputs()
 //    handleActionTargetRef()
-//    handleActionButtons('enabled')
 //    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-   // handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
-    seleccionarNuevoFrente()
-    funcionesNoRatificado()
-  }
-  else if(request=='no') {
+// handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+seleccionarNuevoFrente()
+funcionesNoRatificado()
+}
+else if(request=='no') {
+    handleActionButtons('enabled')
     bandera_ratificar=true
   } 
 }
@@ -1173,6 +1173,7 @@ const mueveConglomerados = () => {
   muestraConglomerados(conglomeradosOrigen, 'nuevo-frente')
   wrapMoverConglomerados.style.display = 'none'
   alertToastForm('Conglomerados movidos a destino', 'success')
+  handleActionButtons('enabled')
 }
 
 const handleShowAlert = (type, title) =>{
@@ -3277,5 +3278,23 @@ function abrirAyuda(){
 function soloNumeros(e){
 	var key = window.Event ? e.which : e.keyCode
 	return (key >= 48 && key <= 57)
+}
+
+const alertPreviewSave = () => {
+  Swal.fire({
+    title: '¿Estás Seguro?',
+    text: "Guardar Cambios",
+    // type: 'question',
+    showCancelButton: true,
+    confirmButtonColor: '#5562eb',
+    cancelButtonColor: '#424242',
+    confirmButtonText: 'Guardar',
+    cancelButtonText: 'Cancelar'
+  }).then((result) => {
+    if (result.value) {
+      handleCleanContainerUGA()
+      // handleFormValidations()
+    }
+  })
 }
  
