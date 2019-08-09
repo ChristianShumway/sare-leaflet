@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Objects;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.Enums.TipoAreaEnum;
+import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
+import mx.org.inegi.sare.sare_db.dto.cat_uo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,18 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Qualifier("schemaSarePG")
     private String schemapg;
     
+    @Autowired
+    @Qualifier("schemaSareOcl")
+    private String schemaocl;
+    
     @Autowired    
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    
+    
+    @Autowired
+    @Qualifier("jdbcTemplateOcl")
+    private JdbcTemplate jdbcTemplateocl;
 
     String resultado;
     boolean isMza;
@@ -80,7 +91,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     
     public enum Metodo 
     {
-        TIPOAREA, ISMANZANA, GETENTIDAD, GETPUNTEO, VALPUNTEO, GET_TIPO_VIAL, GET_CAT_TIPO_VIAL, GETPUNTEORURAL, FRENTES_PROXIMOS
+        TIPOAREA, ISMANZANA, GETENTIDAD, GETPUNTEO, VALPUNTEO, GET_TIPO_VIAL, GET_CAT_TIPO_VIAL, GETPUNTEORURAL, FRENTES_PROXIMOS,CVEMANZANA
     }
     public class EnumTest
     {
@@ -275,6 +286,73 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             }
         });
         return entidad;
+    }
+    
+    @Override
+    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente) {
+        List<cat_uo> cveManzana = null;
+        StringBuilder sql;
+        super.proyectos = super.getProyecto(proyecto);
+        sql = new StringBuilder();
+        sql = sql.append(" select uo.id_uo_masivo,uo.x,uo.y,pre.ID_PREDIO,pre.ID_INMUEBLE from ").append(schemaocl).append(".tr_plan_oper po");
+        sql.append(" join ").append(schemaocl).append(".tr_predios pre on pre.id_cop=po.id_cop");
+        sql.append(" join ").append(schemaocl).append(".tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo");
+        sql.append(" join ").append(schemaocl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble");
+        sql.append(" join ").append(schemaocl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble ");
+        sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("'");
+        cveManzana = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_uo>>() {
+            @Override
+            public List<cat_uo> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                List<cat_uo> fila = new ArrayList<>();
+
+                while (rs.next()) {
+                    fila.add(new cat_uo(rs.getString("id_uo_masivo"), rs.getString("x"), rs.getString("y"), null,rs.getString("id_predio"),rs.getString("id_inmueble")));
+                }
+                return fila;
+            }
+        });
+        return cveManzana;
+    }
+    
+     @Override
+    public String getConversionPuntosAMercator(String x, String y) {
+        String cveManzana = null;
+        StringBuilder sql;
+        sql = new StringBuilder();
+        //sql = sql.append(" select astext(ST_Transform((ST_SetSRID(ST_MakePoint('").append(x).append("','").append(y).append("'),6372)),900913))  as geometria");             
+        sql.append("select st_astext(st_transform(st_buffer(ST_GeomFromText(' point(").append(x).append(" ").append(y).append(" )',6372),3),900913)) as geometria ");
+        cveManzana = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String fila = "";
+                while (rs.next()) {
+                    fila = rs.getString("geometria");
+                }
+                return fila;
+            }
+        });
+        return cveManzana;
+    }
+    
+      @Override
+    public List<cat_frente_geometria> getGeometriaFrente(Integer proyecto, String x, String y) {
+        List<cat_frente_geometria> cveManzana = null;
+        StringBuilder sql;
+        super.proyectos = super.getProyecto(proyecto);
+        sql = getSql(super.proyectos, "", x, y, Metodo.CVEMANZANA);
+        cveManzana = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_frente_geometria>>() {
+            @Override
+            public List<cat_frente_geometria> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_frente_geometria fila = null;
+                List<cat_frente_geometria> resultado = new ArrayList<cat_frente_geometria>();
+                while (rs.next()) {
+                    fila = new cat_frente_geometria(rs.getString("clave"), rs.getString("the_geom"), rs.getString("cve_ent"), rs.getString("cve_mun"), rs.getString("cve_loc"), rs.getString("cve_ageb"), rs.getString("cve_mza"), rs.getString("nom_ent"), rs.getString("nom_mun"), rs.getString("nom_loc"),rs.getString("cveft"));
+                    resultado.add(fila);
+                }
+                return resultado;
+            }
+        });
+        return cveManzana;
     }
     
      private String execSqlEntidadPg(StringBuilder sql, String point){

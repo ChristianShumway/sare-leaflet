@@ -5,6 +5,7 @@
  */
 package mx.org.inegi.sare.sare_db.interfaces;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import mx.org.inegi.sare.Enums.ProyectosEnum;

@@ -12,26 +12,30 @@ import java.math.BigDecimal;
  * @author FABIOLA.RUIZ
  */
 public class cat_uo {
-    private BigDecimal idUoMasivo;
+    private String idUoMasivo;
     private String x;
     private String y;
     private String geometria;
+    private String idPredio;
+    private String idInmueble;    
 
     public cat_uo() {
     }
 
-    public cat_uo(BigDecimal idUoMasivo, String x, String y,String geometria) {
+    public cat_uo(String idUoMasivo, String x, String y,String geometria,String idPredio,String idInmueble) {
         this.idUoMasivo = idUoMasivo;
         this.x = x;
         this.y = y;
         this.geometria=geometria;
+        this.idPredio=idPredio;
+        this.idInmueble=idInmueble;
     }
 
-    public BigDecimal getIdUoMasivo() {
+    public String getIdUoMasivo() {
         return idUoMasivo;
     }
 
-    public void setIdUoMasivo(BigDecimal idUoMasivo) {
+    public void setIdUoMasivo(String idUoMasivo) {
         this.idUoMasivo = idUoMasivo;
     }
 
@@ -57,6 +61,22 @@ public class cat_uo {
 
     public void setGeometria(String geometria) {
         this.geometria = geometria;
+    }
+
+    public String getIdPredio() {
+        return idPredio;
+    }
+
+    public void setIdPredio(String idPredio) {
+        this.idPredio = idPredio;
+    }
+
+    public String getIdInmueble() {
+        return idInmueble;
+    }
+
+    public void setIdInmueble(String idInmueble) {
+        this.idInmueble = idInmueble;
     }
     
     

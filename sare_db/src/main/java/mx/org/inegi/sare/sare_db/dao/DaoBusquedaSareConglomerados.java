@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package mx.org.inegi.sare.sare_db.dao;
-
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +24,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author LIDIA.VAZQUEZ
+ * @author FABIOLA.RUIZ
  */
 @Repository("DaoBusquedaConglomerados")
 @Profile("jdbc")
@@ -47,7 +46,7 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
     private JdbcTemplate jdbcTemplatemdm;
 
     @Autowired
-    @Qualifier("schemaSaremdm")
+   @Qualifier("schemaSaremdm")
     private String schemamdm;
 
     @Autowired
@@ -166,7 +165,7 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
                                     rs.getString("e10") != null ? rs.getString("e10") : "",
                                     rs.getString("e10_a") != null ? rs.getString("e10_a") : "",
                                     rs.getString("e10_b") != null ? rs.getString("e10_b") : "",
-                                    rs.getString("e10_c") != null ? rs.getString("e10_c") : "",
+                                   rs.getString("e10_c") != null ? rs.getString("e10_c") : "",
                                     rs.getString("e11") != null ? rs.getString("e11") : "",
                                     rs.getString("e11a") != null ? rs.getString("e11a") : "",
                                     rs.getString("e12") != null ? rs.getString("e12") : "",
@@ -594,7 +593,7 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
                         if (params >= 2) {
                             sql.append("and cve_mun= '").append(cat_vw_punteo_sare.getE04()).append("'");
                         }
-                        if (params == 3) {
+                       if (params == 3) {
                             sql.append("and cve_loc= '").append(cat_vw_punteo_sare.getE05()).append("'");
                         }
                         break;

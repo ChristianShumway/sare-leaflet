@@ -10,11 +10,14 @@ import java.util.List;
 import mx.org.inegi.sare.Enums.TipoAreaEnum;
 import mx.org.inegi.sare.Enums.TipoCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
+import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
+import mx.org.inegi.sare.sare_db.dto.cat_uo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSareConglomerado;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,10 @@ public class BackingPunteoSare extends BackingBusquedaSare {
     @Qualifier("DaoPunteoSare")
     InterfacePunteoSare InterfacePunteoSare;
 
+    @Autowired
+    @Qualifier("DaoBusquedaConglomerados")
+    InterfaceBusquedaSareConglomerado interfaceBusquedaSareConglomerado;
+    
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas InterfaceTransformaCoordenadas;
@@ -189,6 +196,43 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         return Respuesta;
     }
 
+    public cat_respuesta_services getDatabyCoordsConglomerado(Integer proyecto, String x, String y, String tc, Boolean isAlta, String ce, String id_ue) {
+        Respuesta = new cat_respuesta_services();
+        cat_coordenadas coordMercator;
+        if (TipoCartografia.Geografica.getCodigo().equals(tc)) {
+            Double cX = Double.parseDouble(x.replace(",", "."));
+            Double cY = Double.parseDouble(y.replace(",", "."));
+            coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, x, y, tc);
+        } else {
+//            Double cX = Double.parseDouble(x.replace(",", "."));
+//            Double cY = Double.parseDouble(y.replace(",", "."));
+//            coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto,"geo", x, y);
+            coordMercator = new cat_coordenadas(x, y);
+        }
+
+        List<cat_frente_geometria> listaFrente = InterfacePunteoSare.getGeometriaFrente(proyecto, coordMercator.getX(), coordMercator.getY());
+        if (listaFrente != null && listaFrente.size() > 0) {
+            Respuesta.setDatos(listaFrente);
+        } else {
+            Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "No se encontro el frente de la manzana"));
+        }
+        return Respuesta;
+    }
+
+    public cat_respuesta_services getListaUO(Integer proyecto, String cveManzana) {
+        Respuesta = new cat_respuesta_services();
+        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana);
+        if (listaUO != null && listaUO.size() > 0) {
+            for (cat_uo listaUO1 : listaUO) {
+                listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
+                interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
+            }
+            Respuesta.setDatos(listaUO);
+        } else {
+            Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "No se encontraron unidades para este frente "));
+        }
+        return Respuesta;
+    }
     public List<cat_vial> getVialidades(Integer proyecto, List<cat_vial> vialidades) {
         List<cat_vial> returnVialidades = new ArrayList<>();
         String tipo_vial = null;
