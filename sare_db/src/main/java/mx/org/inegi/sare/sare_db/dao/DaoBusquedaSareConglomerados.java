@@ -551,14 +551,14 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
                         break;
                     case LIBERACLAVEUNICAORACLE:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where ID_UO_MASIVO='").append(id_ue).append("' and st_sare<>'01'");
                         break;
                     case GETVALCOORGEO:
                         sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
                         break;
                     case OCUPACVEUNICA:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
                         break;
                 }
                 break;

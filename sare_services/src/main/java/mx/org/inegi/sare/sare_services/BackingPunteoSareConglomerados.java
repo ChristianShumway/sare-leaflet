@@ -20,6 +20,7 @@ import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSareConglomerado;
 
 /**
  *
@@ -35,7 +36,12 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas InterfaceTransformaCoordenadas;
-
+    
+    @Autowired
+    @Qualifier("DaoBusquedaConglomerados")
+    InterfaceBusquedaSareConglomerado interfaceBusquedaSareConglomerado;
+    
+    
     cat_respuesta_services Respuesta = new cat_respuesta_services();
 
     public String getTipoArea(Integer proyecto, String x, String y) throws Exception {
@@ -72,6 +78,7 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
         if (listaUO != null && listaUO.size() > 0) {
             for (cat_uo listaUO1 : listaUO) {
                 listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
+                interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
             }
             Respuesta.setDatos(listaUO);
         } else {

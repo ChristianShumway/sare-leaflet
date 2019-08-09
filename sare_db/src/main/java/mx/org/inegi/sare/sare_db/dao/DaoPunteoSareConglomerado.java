@@ -326,7 +326,7 @@ public class DaoPunteoSareConglomerado extends DaoBusquedaSare implements Interf
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
         sql = new StringBuilder();
-        sql = sql.append(" select uo.id_uo_masivo,uo.x,uo.y from ").append(schemaocl).append(".tr_plan_oper po");
+        sql = sql.append(" select uo.id_uo_masivo,uo.x,uo.y,pre.ID_PREDIO,pre.ID_INMUEBLE from ").append(schemaocl).append(".tr_plan_oper po");
         sql.append(" join ").append(schemaocl).append(".tr_predios pre on pre.id_cop=po.id_cop");
         sql.append(" join ").append(schemaocl).append(".tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo");
         sql.append(" join ").append(schemaocl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble");
@@ -338,7 +338,7 @@ public class DaoPunteoSareConglomerado extends DaoBusquedaSare implements Interf
                 List<cat_uo> fila = new ArrayList<>();
 
                 while (rs.next()) {
-                    fila.add(new cat_uo(rs.getBigDecimal("id_uo_masivo"), rs.getString("x"), rs.getString("y"), null));
+                    fila.add(new cat_uo(rs.getString("id_uo_masivo"), rs.getString("x"), rs.getString("y"), null,rs.getString("id_predio"),rs.getString("id_inmueble")));
                 }
                 return fila;
             }
