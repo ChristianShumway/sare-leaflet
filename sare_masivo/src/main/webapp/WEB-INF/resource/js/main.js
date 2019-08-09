@@ -255,6 +255,8 @@ const callServiceFindUE=(id_ue)=>{
       {
       tipoE10c_g=data[0].datos.datos[0].tipo_E10_C;
       }
+     // handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+      handlePunteo(data[0].datos.datos[0].coord_X,data[0].datos.datos[0].coord_Y,'geografica')
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -947,10 +949,11 @@ const ratificar = request => {
 //    handleActionTargetRef()
 //    handleActionButtons('enabled')
 //    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-//    handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+   // handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
     bandera_ratificar=true
   }
   else if(request=='no') {
+    seleccionarNuevoFrente()
     funcionesNoRatificado()
   } 
 }
@@ -1033,17 +1036,17 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
             let dataListaUO = data[0].datos.datos
             conglomeradosOrigen = data[0].datos.datos
             muestraConglomerados(dataListaUO)
-            Swal.fire({
-              text: "Deséas seleccionar un nuevo frente?",
-              showCancelButton: true,
-              confirmButtonColor: '#4caf50',
-              cancelButtonColor: '#424242',
-              confirmButtonText: 'Seleccionar'
-            }).then((result) => {
-              if (result.value) {
-                seleccionarNuevoFrente()
-              }
-            })
+//            Swal.fire({
+//              text: "Deséas seleccionar un nuevo frente?",
+//              showCancelButton: true,
+//              confirmButtonColor: '#4caf50',
+//              cancelButtonColor: '#424242',
+//              confirmButtonText: 'Seleccionar'
+//            }).then((result) => {
+//              if (result.value) {
+//                seleccionarNuevoFrente()
+//              }
+//            })
           }
         }, 
         () => {
@@ -2537,6 +2540,9 @@ const handleCancelClick = () => {
   //disabledInputs()
   punteo = 'U'
   confirmacionPunteo = false
+  document.getElementById('list-conglomerados').innerHTML="";
+  document.getElementById('list-conglomerados-destino').innerHTML="";
+  
 //  handleTipoPunteo()
 //  handleActionButtons('disabled')
 //  handleActionPunteoAlta('on')
@@ -2614,8 +2620,8 @@ const cleanForm = () => {
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
-  !checkboxPuntearAlta.checked ? handleVisibleSearch() : false
-  //handleVisibleSearch() 
+  //!checkboxPuntearAlta.checked ? handleVisibleSearch() : false
+  handleVisibleSearch() 
   //oculta mensaje 
   handleHideAlertPickMap()
   

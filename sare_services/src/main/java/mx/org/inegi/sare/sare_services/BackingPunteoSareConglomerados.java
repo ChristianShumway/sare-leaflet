@@ -51,6 +51,9 @@ public class BackingPunteoSareConglomerados extends BackingBusquedaSare {
             Double cY = Double.parseDouble(y.replace(",", "."));
             coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, x, y, tc);
         } else {
+//            Double cX = Double.parseDouble(x.replace(",", "."));
+//            Double cY = Double.parseDouble(y.replace(",", "."));
+//            coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto,"geo", x, y);
             coordMercator = new cat_coordenadas(x, y);
         }
 
