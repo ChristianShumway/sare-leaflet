@@ -66,7 +66,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     public enum MetodosBusqueda {
         BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
-        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO, BUSQUEDAMASIVOOTROS, OCUPACVEUNICACONGLOMERADO
+        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO, BUSQUEDAMASIVOOTROS, OCUPACVEUNICACONGLOMERADO, LIBERACLAVEUNICAORACLEOTROS
     }
 
     public class MetodosBusquedaClass {
@@ -504,6 +504,12 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         regresa = true;
                     }
                     break;
+                case MasivoOtros:
+                    sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLEOTROS, null);
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                        regresa = true;
+                    }
+                    break;
                 default:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
                         regresa = true;
@@ -615,6 +621,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     case LIBERACLAVEUNICAORACLE:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
+                        break;
+                    case LIBERACLAVEUNICAORACLEOTROS:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_uo_masivo='").append(id_ue).append("' and st_sare<>'01'");
                         break;
                     case GETVALCOORGEO:
                         sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
@@ -840,6 +849,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         switch (proyecto) {
 
             case Operativo_Masivo:
+            case MasivoOtros:
                 esquema = schemapgEge;
                 campo_geo = "the_geom_merc";
                 break;
