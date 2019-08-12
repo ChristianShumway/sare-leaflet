@@ -292,8 +292,7 @@ SELECT '0' ce, 'NAC' cestatal, 1 orden,
             FROM  ce2019_MASRENCAL.tr_predios pre
             join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
             join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7') $P!{where1}
-
+            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7')
 union all
 SELECT inm.CVE_CE , CASE
             WHEN  inm.CVE_CE  ='01' THEN 'AGS'
@@ -459,8 +458,7 @@ SELECT '0' ce, 'NAC' cestatal, 1 orden,
             FROM  ce2019_MASRENCAL.tr_predios pre
             join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
             join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7') and 1=1
-
+            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7')
 union all
 SELECT inm.CVE_CE , CASE
             WHEN  inm.CVE_CE  ='01' THEN 'AGS'
@@ -519,7 +517,7 @@ end cestatal, 2 orden,
             WHERE  pre.id_cgo IN ('1','2','3','4','5','6','7') and 1=1
             GROUP BY inm.CVE_CE
 
-) dd  order by ce]]>
+) dd  where rownum<2 order by ce ]]>
 	</queryString>
 	<field name="CE" class="java.lang.String"/>
 	<field name="CESTATAL" class="java.lang.String"/>

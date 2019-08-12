@@ -75,7 +75,7 @@ public class BackingReportes extends DaoTransformaCartografia {
 
             }
             switch (proyectos) {
-                case Conglomerados:
+                case MasivoOtros:
                     if (ce.equals("00")) {
                         whereReporte = " and 1=1";
                     } else {
