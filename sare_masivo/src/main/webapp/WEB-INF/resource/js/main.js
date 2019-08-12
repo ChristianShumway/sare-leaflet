@@ -2614,29 +2614,29 @@ const handleCancelClick = () => {
 }
 
 const callServiceLiberaClave=(id_ue)=>{
-//  sendAJAX(urlServices['serviceLiberaClave'].url, 
-//    {
-//      'proyecto':dataUserFromLoginLocalStorage.proyecto,
-//      'id_ue': id_ue
-//    }, urlServices['serviceLiberaClave'].type, 
-//    data => {
-//      if (data[0].operation) {
+  sendAJAX(urlServices['serviceLiberaClave'].url, 
+    {
+      'proyecto':dataUserFromLoginLocalStorage.proyecto,
+      'claves': claves
+    }, urlServices['serviceLiberaClave'].type, 
+    data => {
+      if (data[0].operation) {
       //limpia la forma sin avisarle al usuario
       cleanForm()
-//      } else {
-//        swal({
-//          title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
-//          text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
-//          showConfirmButton: true,
-//          confirmButtonColor: "#DD6B55",
-//          allowEscapeKey: true,
-//          allowOutsideClick: true,
-//          html: true,
-//          animation: true
-//        })
-//      }
-//    },  () => {}
-//  ) 
+      } else {
+        swal({
+          title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
+          text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
+          showConfirmButton: true,
+          confirmButtonColor: "#DD6B55",
+          allowEscapeKey: true,
+          allowOutsideClick: true,
+          html: true,
+          animation: true
+        })
+      }
+    },  () => {}
+  ) 
 }
 
 const cleanForm = () => {

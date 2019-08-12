@@ -149,8 +149,8 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "liberacve.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services liberacve(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "id_ue") String id_ue) throws Exception {
-        return BackingBusqueda.liberacve(proyecto, id_ue);
+    public cat_respuesta_services liberacve(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "claves") String claves) throws Exception {
+        return BackingBusqueda.liberacve(proyecto, claves);
     }
 
     @RequestMapping(value = "sincronizaBDs.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
