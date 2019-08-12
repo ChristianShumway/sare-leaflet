@@ -73,6 +73,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                 case Organismos_Operadores_De_Agua:
                 case Pesca_Mineria:
                 case Transportes:
+                case MasivoOtros:
                     if (TipoCartografia.Geografica.getCodigo().equals(tipo)) 
                 {
                     sql.append("select x(astext(st_transform(ST_PointFromText(?, 4326),900913))), y(astext(st_transform(ST_PointFromText(?, 4326),900913)))");
@@ -114,6 +115,9 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
               case 8:
                   ProyectosEnume=ProyectosEnum.Transportes;
                   break;
+              case 9:
+                  ProyectosEnume=ProyectosEnum.MasivoOtros;
+                  break;
               default:
                   ProyectosEnume=ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
                   break;
@@ -151,6 +155,9 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
             case Transportes:
                  esquema="sare_mas2019_act";
               break;
+            case MasivoOtros:
+                esquema="sare_mas2019_act";
+                break;
             default:
                 esquema="sare_mas2019_act";
           }
@@ -185,6 +192,9 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
               break;
             case Transportes:
                 esquema="";
+              break;
+            case MasivoOtros:
+                esquema="ce2019_masrencal";
               break;
           }
         return esquema;

@@ -36,5 +36,6 @@ public interface InterfaceBusquedaSare {
     
     public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue);
     
+    
     //public boolean 
 }

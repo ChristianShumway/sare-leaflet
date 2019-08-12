@@ -240,6 +240,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
+            case MasivoOtros:
                 esquemaPos = getEsquemaPostgres(proyecto);
                 esquemaOcl = getEsquemaOracle(proyecto);
                 switch (metodo) {

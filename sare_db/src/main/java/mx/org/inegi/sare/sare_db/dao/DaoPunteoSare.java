@@ -691,6 +691,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyecto) {
 
             case Operativo_Masivo:
+            case MasivoOtros:
                 switch (metodo) {
                     case TIPOAREA:
                         sql = new StringBuilder();
