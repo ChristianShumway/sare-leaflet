@@ -149,79 +149,83 @@
 	<parameter name="esquema" class="java.lang.String"/>
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[select ST_SARE,CASE
-            WHEN  ue.ce ='01' THEN 'AGS'
-            WHEN  ue.ce ='02' THEN 'BCN'
-            WHEN  ue.ce ='03' THEN 'BCS'
-            WHEN  ue.ce ='04' THEN 'CAM'
-            WHEN  ue.ce ='05' THEN 'COA'
-            WHEN  ue.ce ='06' THEN 'COL'
-            WHEN  ue.ce ='07' THEN 'CHS'
-            WHEN  ue.ce ='08' THEN 'CHI'
-            WHEN  ue.ce ='09' THEN 'DFN'
-            WHEN  ue.ce ='10' THEN 'DGO'
-            WHEN  ue.ce ='11' THEN 'GTO'
-            WHEN  ue.ce ='12' THEN 'GRO'
-            WHEN  ue.ce ='13' THEN 'HGO'
-            WHEN  ue.ce ='14' THEN 'JAL'
-            WHEN  ue.ce ='15' THEN 'MEO'
-            WHEN  ue.ce ='16' THEN 'MIC'
-            WHEN  ue.ce ='17' THEN 'MOR'
-            WHEN  ue.ce ='18' THEN 'NAY'
-            WHEN  ue.ce ='19' THEN 'NLN'
-            WHEN  ue.ce ='20' THEN 'OAX'
-            WHEN  ue.ce ='21' THEN 'PUE'
-            WHEN  ue.ce ='22' THEN 'QRO'
-            WHEN  ue.ce ='23' THEN 'QTR'
-            WHEN  ue.ce ='24' THEN 'SLP'
-            WHEN  ue.ce ='25' THEN 'SIN'
-            WHEN  ue.ce ='26' THEN 'SON'
-            WHEN  ue.ce ='27' THEN 'TAB'
-            WHEN  ue.ce ='28' THEN 'TAM'
-            WHEN  ue.ce ='29' THEN 'TLA'
-            WHEN  ue.ce ='30' THEN 'VER'
-            WHEN  ue.ce ='31' THEN 'YUC'
-            WHEN  ue.ce ='32' THEN 'ZAC'
-            WHEN  ue.ce ='33' THEN 'DFS'
-            WHEN  ue.ce ='34' THEN 'MEP'
+		<![CDATA[select pre.ST_SARE,CASE
+            WHEN  inm.cve_ce ='01' THEN 'AGS'
+            WHEN  inm.cve_ce ='02' THEN 'BCN'
+            WHEN  inm.cve_ce ='03' THEN 'BCS'
+            WHEN  inm.cve_ce ='04' THEN 'CAM'
+            WHEN  inm.cve_ce ='05' THEN 'COA'
+            WHEN  inm.cve_ce ='06' THEN 'COL'
+            WHEN  inm.cve_ce ='07' THEN 'CHS'
+            WHEN  inm.cve_ce ='08' THEN 'CHI'
+            WHEN  inm.cve_ce ='09' THEN 'DFN'
+            WHEN  inm.cve_ce ='10' THEN 'DGO'
+            WHEN  inm.cve_ce ='11' THEN 'GTO'
+            WHEN  inm.cve_ce ='12' THEN 'GRO'
+            WHEN  inm.cve_ce ='13' THEN 'HGO'
+            WHEN  inm.cve_ce ='14' THEN 'JAL'
+            WHEN  inm.cve_ce ='15' THEN 'MEO'
+            WHEN  inm.cve_ce ='16' THEN 'MIC'
+            WHEN  inm.cve_ce ='17' THEN 'MOR'
+            WHEN  inm.cve_ce ='18' THEN 'NAY'
+            WHEN  inm.cve_ce ='19' THEN 'NLN'
+            WHEN  inm.cve_ce ='20' THEN 'OAX'
+            WHEN  inm.cve_ce ='21' THEN 'PUE'
+            WHEN  inm.cve_ce ='22' THEN 'QRO'
+            WHEN  inm.cve_ce ='23' THEN 'QTR'
+            WHEN  inm.cve_ce ='24' THEN 'SLP'
+            WHEN  inm.cve_ce ='25' THEN 'SIN'
+            WHEN  inm.cve_ce ='26' THEN 'SON'
+            WHEN  inm.cve_ce ='27' THEN 'TAB'
+            WHEN  inm.cve_ce ='28' THEN 'TAM'
+            WHEN  inm.cve_ce ='29' THEN 'TLA'
+            WHEN  inm.cve_ce ='30' THEN 'VER'
+            WHEN  inm.cve_ce ='31' THEN 'YUC'
+            WHEN  inm.cve_ce ='32' THEN 'ZAC'
+            WHEN  inm.cve_ce ='33' THEN 'DFS'
+            WHEN  inm.cve_ce ='34' THEN 'MEP'
 
-end ce,ue.ce cve_ce,po.cve_operativa tramo_control,cgo.descripcion cgo,ue.ID_UE,st.descripcion status,ue.e08,ue.e09,ue.E23A,ue.c154,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
-ue.e07 cve_mza,ue.tipo_e10,ue.e10 nomvial,ue.e11 numext,ue.e11a numextalf,ue.tipo_e14,ue.e14,ue.e12,ue.e19,ue.e20
+end
+AS ce,inm.cve_ce cve_ce,po.cve_operativa tramo_control,uo.ID_UO_MASIVO,  cgo.descripcion cgo,
+st.descripcion status,
+
+inm.id_tipo_inmueble,tinm.descripcion,
+uo.e03 cve_ent,uo.e04 cve_mun,uo.e05 cve_loc,uo.e06 cve_ageb, uo.e07 cve_mza,inm.CVEFT cve_ft, e10 vialidad,uo.TIPO_E10, CASE WHEN TO_CHAR(inm.NUMEXT) IS NULL THEN inm.NUMEXTALF ELSE 'Sin dato' END no_exterior,
+inm.NUMEXTALF,inm.TIPOVIAL,inm.E19
+
+
 from
 ce2019_masrencal.tr_plan_oper po
 join ce2019_masrencal.tr_predios pre on pre.id_cop=po.id_cop
+join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
 join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
 join ce2019_MASRENCAL.tc_st_sare st on pre.status_sare=st.status_sare
 join ce2019_MASRENCAL.tc_cgo cgo on pre.id_cgo=cgo.id_cgo
-where inm.id_ue is not null and ST_sare in ('10','20') $P!{where}
- order by tramo_control,origen,e23a,clee_emp,id_ue,cgo.id_cgo]]>
+LEFT JOIN CE2019_MASRENCAL.TC_TIPO_INMUEBLE tinm ON tinm.ID_TIPO_INMUEBLE=inm.ID_TIPO_INMUEBLE
+where ST_sare in ('10','20') and inm.cve_ce ='01'
+order by cve_operativa,inm.origen,uo.ID_UO_MASIVO,cgo.id_cgo]]>
 	</queryString>
 	<field name="ST_SARE" class="java.lang.String"/>
 	<field name="CE" class="java.lang.String"/>
-	<field name="CVE_CE" class="java.math.BigDecimal"/>
+	<field name="CVE_CE" class="java.lang.String"/>
 	<field name="TRAMO_CONTROL" class="java.lang.String"/>
+	<field name="ID_UO_MASIVO" class="java.math.BigDecimal"/>
 	<field name="CGO" class="java.lang.String"/>
-	<field name="ID_UE" class="java.math.BigDecimal"/>
 	<field name="STATUS" class="java.lang.String"/>
-	<field name="E08" class="java.lang.String"/>
-	<field name="E09" class="java.lang.String"/>
-	<field name="E23A" class="java.lang.String"/>
-	<field name="C154" class="java.lang.String"/>
+	<field name="ID_TIPO_INMUEBLE" class="java.math.BigDecimal"/>
+	<field name="DESCRIPCION" class="java.lang.String"/>
 	<field name="CVE_ENT" class="java.lang.String"/>
 	<field name="CVE_MUN" class="java.lang.String"/>
 	<field name="CVE_LOC" class="java.lang.String"/>
 	<field name="CVE_AGEB" class="java.lang.String"/>
 	<field name="CVE_MZA" class="java.lang.String"/>
-	<field name="TIPO_E10" class="java.math.BigDecimal"/>
-	<field name="NOMVIAL" class="java.lang.String"/>
-	<field name="NUMEXT" class="java.math.BigDecimal"/>
+	<field name="CVE_FT" class="java.math.BigDecimal"/>
+	<field name="VIALIDAD" class="java.lang.String"/>
+	<field name="TIPO_E10" class="java.lang.String"/>
+	<field name="NO_EXTERIOR" class="java.lang.String"/>
 	<field name="NUMEXTALF" class="java.lang.String"/>
-	<field name="TIPO_E14" class="java.math.BigDecimal"/>
-	<field name="E14" class="java.lang.String"/>
-	<field name="E12" class="java.lang.String"/>
+	<field name="TIPOVIAL" class="java.math.BigDecimal"/>
 	<field name="E19" class="java.lang.String"/>
-	<field name="E20" class="java.lang.String"/>
 	<variable name="variable1" class="java.lang.String" resetType="None">
 		<variableExpression><![CDATA[]]></variableExpression>
 	</variable>
@@ -619,36 +623,6 @@ CONTROL	]]></text>
 				<textFieldExpression><![CDATA[$F{CE}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="201" y="0" width="85" height="28" uuid="c4cda812-c29f-4dcd-960b-a977a13f1ea1"/>
-				<box>
-					<pen lineWidth="0.0"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.0"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph leftIndent="4" rightIndent="4" tabStopWidth="45"/>
-				</textElement>
-				<textFieldExpression><![CDATA[" "+$F{E08}+" "]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="286" y="0" width="90" height="28" uuid="38cfd10f-37fa-4ecb-92ad-cc9f4d1cc134"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.0"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph leftIndent="4" rightIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{E09}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="452" y="0" width="20" height="28" uuid="7518531e-a3b0-4ede-ade5-fc51c13f31c1"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -691,21 +665,6 @@ CONTROL	]]></text>
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{STATUS}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="376" y="0" width="20" height="28" uuid="0b173181-dbbd-48d3-8e6c-1b8d44e2ab43"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{E23A}.toLowerCase()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="432" y="0" width="20" height="28" uuid="ab05065c-d26a-4502-a6ce-7fb9f0683ca1"/>
@@ -779,7 +738,7 @@ CONTROL	]]></text>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{ID_UE}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{ID_UO_MASIVO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="60" y="0" width="40" height="28" uuid="a5538b80-af77-41f1-b1e6-99684a1bf373"/>
@@ -823,7 +782,7 @@ CONTROL	]]></text>
 					<font fontName="Arial" size="5"/>
 					<paragraph leftIndent="4" rightIndent="4" spacingBefore="4" spacingAfter="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{NOMVIAL}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{VIALIDAD}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="572" y="0" width="20" height="28" uuid="b108a6c4-a5fb-4004-9d7b-883050dbc199"/>
@@ -838,7 +797,7 @@ CONTROL	]]></text>
 					<font size="6"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{NUMEXT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NO_EXTERIOR}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="592" y="0" width="20" height="28" uuid="f08566d0-ed32-4384-bd60-a80b2fa6d74b"/>
@@ -856,51 +815,6 @@ CONTROL	]]></text>
 				<textFieldExpression><![CDATA[$F{NUMEXTALF}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="612" y="0" width="20" height="28" uuid="770f5d8a-8f45-401e-89f0-dea0d85606e8"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="6"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{TIPO_E14}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="632" y="0" width="55" height="28" uuid="9a1a853d-5cdb-44a4-8f80-35d670d77587"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Arial" size="5"/>
-					<paragraph leftIndent="4" rightIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{E14}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="687" y="0" width="30" height="28" uuid="6dae58d2-4d19-4302-b42b-82d810aab142"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="5"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{E12}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="717" y="0" width="55" height="28" uuid="df927723-6eb0-4143-b415-ccfe458dd3a1"/>
 				<box>
 					<pen lineWidth="0.5"/>
@@ -914,21 +828,6 @@ CONTROL	]]></text>
 					<paragraph leftIndent="4" rightIndent="4"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{E19}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="772" y="0" width="30" height="28" uuid="9a8d6cc9-eecb-41f0-9f35-3e0114c1c91f"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="5"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{E20}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
