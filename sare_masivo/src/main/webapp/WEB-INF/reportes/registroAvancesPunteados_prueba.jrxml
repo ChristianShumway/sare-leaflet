@@ -273,7 +273,7 @@
 			<![CDATA[SELECT ce,cestatal,  carga_1, realizado_1, carga_2, realizado_2, carga_3, realizado_3,carga_4,realizado_4,carga_5,realizado_5,carga_6,realizado_6,carga_7,realizado_7,
 (carga_1 +  carga_2 + carga_3+carga_4+carga_5+carga_6+carga_7) carga ,
 (realizado_1 + realizado_2 +realizado_3+realizado_4+realizado_5+realizado_6+realizado_7)realizado FROM (
-SELECT 0 ce, 'NAC' cestatal, 1 orden,
+SELECT '0' ce, 'NAC' cestatal, 1 orden,
 
             sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
             sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
@@ -290,46 +290,46 @@ SELECT 0 ce, 'NAC' cestatal, 1 orden,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01','20', '01') THEN 1 ELSE 0 END) carga_7,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
             FROM  ce2019_MASRENCAL.tr_predios pre
-            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE  inm.id_ue is not null and  pre.id_cgo IN ('1','2','3','4','5','6','7') $P!{where1}
+            join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
+            join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7') $P!{where1}
 
 union all
-SELECT ue.ce, CASE
-            WHEN  ue.ce ='01' THEN 'AGS'
-            WHEN  ue.ce ='02' THEN 'BCN'
-            WHEN  ue.ce ='03' THEN 'BCS'
-            WHEN  ue.ce ='04' THEN 'CAM'
-            WHEN  ue.ce ='05' THEN 'COA'
-            WHEN  ue.ce ='06' THEN 'COL'
-            WHEN  ue.ce ='07' THEN 'CHS'
-            WHEN  ue.ce ='08' THEN 'CHI'
-            WHEN  ue.ce ='09' THEN 'DFN'
-            WHEN  ue.ce ='10' THEN 'DGO'
-            WHEN  ue.ce ='11' THEN 'GTO'
-            WHEN  ue.ce ='12' THEN 'GRO'
-            WHEN  ue.ce ='13' THEN 'HGO'
-            WHEN  ue.ce ='14' THEN 'JAL'
-            WHEN  ue.ce ='15' THEN 'MEO'
-            WHEN  ue.ce ='16' THEN 'MIC'
-            WHEN  ue.ce ='17' THEN 'MOR'
-            WHEN  ue.ce ='18' THEN 'NAY'
-            WHEN  ue.ce ='19' THEN 'NLN'
-            WHEN  ue.ce ='20' THEN 'OAX'
-            WHEN  ue.ce ='21' THEN 'PUE'
-            WHEN  ue.ce ='22' THEN 'QRO'
-            WHEN  ue.ce ='23' THEN 'QTR'
-            WHEN  ue.ce ='24' THEN 'SLP'
-            WHEN  ue.ce ='25' THEN 'SIN'
-            WHEN  ue.ce ='26' THEN 'SON'
-            WHEN  ue.ce ='27' THEN 'TAB'
-            WHEN  ue.ce ='28' THEN 'TAM'
-            WHEN  ue.ce ='29' THEN 'TLA'
-            WHEN  ue.ce ='30' THEN 'VER'
-            WHEN  ue.ce ='31' THEN 'YUC'
-            WHEN  ue.ce ='32' THEN 'ZAC'
-            WHEN  ue.ce ='33' THEN 'DFS'
-            WHEN  ue.ce ='34' THEN 'MEP'
+SELECT inm.CVE_CE , CASE
+            WHEN  inm.CVE_CE  ='01' THEN 'AGS'
+            WHEN  inm.CVE_CE  ='02' THEN 'BCN'
+            WHEN  inm.CVE_CE  ='03' THEN 'BCS'
+            WHEN  inm.CVE_CE  ='04' THEN 'CAM'
+            WHEN  inm.CVE_CE  ='05' THEN 'COA'
+            WHEN  inm.CVE_CE  ='06' THEN 'COL'
+            WHEN  inm.CVE_CE  ='07' THEN 'CHS'
+            WHEN  inm.CVE_CE  ='08' THEN 'CHI'
+            WHEN  inm.CVE_CE  ='09' THEN 'DFN'
+            WHEN  inm.CVE_CE  ='10' THEN 'DGO'
+            WHEN  inm.CVE_CE  ='11' THEN 'GTO'
+            WHEN  inm.CVE_CE  ='12' THEN 'GRO'
+            WHEN  inm.CVE_CE  ='13' THEN 'HGO'
+            WHEN  inm.CVE_CE  ='14' THEN 'JAL'
+            WHEN  inm.CVE_CE  ='15' THEN 'MEO'
+            WHEN  inm.CVE_CE  ='16' THEN 'MIC'
+            WHEN  inm.CVE_CE  ='17' THEN 'MOR'
+            WHEN  inm.CVE_CE  ='18' THEN 'NAY'
+            WHEN  inm.CVE_CE  ='19' THEN 'NLN'
+            WHEN  inm.CVE_CE  ='20' THEN 'OAX'
+            WHEN  inm.CVE_CE  ='21' THEN 'PUE'
+            WHEN  inm.CVE_CE  ='22' THEN 'QRO'
+            WHEN  inm.CVE_CE  ='23' THEN 'QTR'
+            WHEN  inm.CVE_CE  ='24' THEN 'SLP'
+            WHEN  inm.CVE_CE  ='25' THEN 'SIN'
+            WHEN  inm.CVE_CE  ='26' THEN 'SON'
+            WHEN  inm.CVE_CE  ='27' THEN 'TAB'
+            WHEN  inm.CVE_CE  ='28' THEN 'TAM'
+            WHEN  inm.CVE_CE  ='29' THEN 'TLA'
+            WHEN  inm.CVE_CE  ='30' THEN 'VER'
+            WHEN  inm.CVE_CE  ='31' THEN 'YUC'
+            WHEN  inm.CVE_CE  ='32' THEN 'ZAC'
+            WHEN  inm.CVE_CE  ='33' THEN 'DFS'
+            WHEN  inm.CVE_CE  ='34' THEN 'MEP'
 
 end cestatal, 2 orden,
           sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
@@ -347,15 +347,14 @@ end cestatal, 2 orden,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_7,
             sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
             FROM  ce2019_MASRENCAL.tr_predios pre
-            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE inm.id_ue is not null and   pre.id_cgo IN ('1','2','3','4','5','6','7')
-$P!{where1}
-            GROUP BY ue.ce
+            join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
+            join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            WHERE  pre.id_cgo IN ('1','2','3','4','5','6','7') $P!{where1}
+            GROUP BY inm.CVE_CE
 
 ) dd  order by ce]]>
 		</queryString>
-		<field name="CE" class="java.math.BigDecimal"/>
+		<field name="CE" class="java.lang.String"/>
 		<field name="CESTATAL" class="java.lang.String"/>
 		<field name="CARGA_1" class="java.math.BigDecimal"/>
 		<field name="REALIZADO_1" class="java.math.BigDecimal"/>
@@ -438,103 +437,106 @@ $P!{where1}
 	<parameter name="where" class="java.lang.String"/>
 	<parameter name="URL" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT ce,cestatal, carga_01, realizado_01, carga_01A, realizado_01A, carga_A1, realizado_A1,carga_01C,realizado_01C,carga_05,realizado_05,carga_06,realizado_06,
-(carga_01 +  carga_01A + carga_A1+carga_01C+carga_05+carga_06) carga ,
-(realizado_01 + realizado_01A +realizado_A1+realizado_01C+realizado_05+realizado_06 )realizado FROM (
-SELECT 0 ce, 'NAC' cestatal, 1 orden,
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+		<![CDATA[SELECT ce,cestatal,  carga_1, realizado_1, carga_2, realizado_2, carga_3, realizado_3,carga_4,realizado_4,carga_5,realizado_5,carga_6,realizado_6,carga_7,realizado_7,
+(carga_1 +  carga_2 + carga_3+carga_4+carga_5+carga_6+carga_7) carga ,
+(realizado_1 + realizado_2 +realizado_3+realizado_4+realizado_5+realizado_6+realizado_7)realizado FROM (
+SELECT '0' ce, 'NAC' cestatal, 1 orden,
+
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_2,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_2,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_3,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_3,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_4,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_4,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_5,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_5,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_6,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6,
+            sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01','20', '01') THEN 1 ELSE 0 END) carga_7,
+            sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
             FROM  ce2019_MASRENCAL.tr_predios pre
-            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE   ue.c154 IN ('01','01A','A1','01C','05','06') and 1=1
-            GROUP BY  ue.c154
+            join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
+            join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            WHERE   pre.id_cgo IN ('1','2','3','4','5','6','7') and 1=1
 
 union all
-SELECT ue.ce, CASE
-            WHEN  ue.ce ='01' THEN 'AGS'
-            WHEN  ue.ce ='02' THEN 'BCN'
-            WHEN  ue.ce ='03' THEN 'BCS'
-            WHEN  ue.ce ='04' THEN 'CAM'
-            WHEN  ue.ce ='05' THEN 'COA'
-            WHEN  ue.ce ='06' THEN 'COL'
-            WHEN  ue.ce ='07' THEN 'CHS'
-            WHEN  ue.ce ='08' THEN 'CHI'
-            WHEN  ue.ce ='09' THEN 'DFN'
-            WHEN  ue.ce ='10' THEN 'DGO'
-            WHEN  ue.ce ='11' THEN 'GTO'
-            WHEN  ue.ce ='12' THEN 'GRO'
-            WHEN  ue.ce ='13' THEN 'HGO'
-            WHEN  ue.ce ='14' THEN 'JAL'
-            WHEN  ue.ce ='15' THEN 'MEO'
-            WHEN  ue.ce ='16' THEN 'MIC'
-            WHEN  ue.ce ='17' THEN 'MOR'
-            WHEN  ue.ce ='18' THEN 'NAY'
-            WHEN  ue.ce ='19' THEN 'NLN'
-            WHEN  ue.ce ='20' THEN 'OAX'
-            WHEN  ue.ce ='21' THEN 'PUE'
-            WHEN  ue.ce ='22' THEN 'QRO'
-            WHEN  ue.ce ='23' THEN 'QTR'
-            WHEN  ue.ce ='24' THEN 'SLP'
-            WHEN  ue.ce ='25' THEN 'SIN'
-            WHEN  ue.ce ='26' THEN 'SON'
-            WHEN  ue.ce ='27' THEN 'TAB'
-            WHEN  ue.ce ='28' THEN 'TAM'
-            WHEN  ue.ce ='29' THEN 'TLA'
-            WHEN  ue.ce ='30' THEN 'VER'
-            WHEN  ue.ce ='31' THEN 'YUC'
-            WHEN  ue.ce ='32' THEN 'ZAC'
-            WHEN  ue.ce ='33' THEN 'DFS'
-            WHEN  ue.ce ='34' THEN 'MEP'
+SELECT inm.CVE_CE , CASE
+            WHEN  inm.CVE_CE  ='01' THEN 'AGS'
+            WHEN  inm.CVE_CE  ='02' THEN 'BCN'
+            WHEN  inm.CVE_CE  ='03' THEN 'BCS'
+            WHEN  inm.CVE_CE  ='04' THEN 'CAM'
+            WHEN  inm.CVE_CE  ='05' THEN 'COA'
+            WHEN  inm.CVE_CE  ='06' THEN 'COL'
+            WHEN  inm.CVE_CE  ='07' THEN 'CHS'
+            WHEN  inm.CVE_CE  ='08' THEN 'CHI'
+            WHEN  inm.CVE_CE  ='09' THEN 'DFN'
+            WHEN  inm.CVE_CE  ='10' THEN 'DGO'
+            WHEN  inm.CVE_CE  ='11' THEN 'GTO'
+            WHEN  inm.CVE_CE  ='12' THEN 'GRO'
+            WHEN  inm.CVE_CE  ='13' THEN 'HGO'
+            WHEN  inm.CVE_CE  ='14' THEN 'JAL'
+            WHEN  inm.CVE_CE  ='15' THEN 'MEO'
+            WHEN  inm.CVE_CE  ='16' THEN 'MIC'
+            WHEN  inm.CVE_CE  ='17' THEN 'MOR'
+            WHEN  inm.CVE_CE  ='18' THEN 'NAY'
+            WHEN  inm.CVE_CE  ='19' THEN 'NLN'
+            WHEN  inm.CVE_CE  ='20' THEN 'OAX'
+            WHEN  inm.CVE_CE  ='21' THEN 'PUE'
+            WHEN  inm.CVE_CE  ='22' THEN 'QRO'
+            WHEN  inm.CVE_CE  ='23' THEN 'QTR'
+            WHEN  inm.CVE_CE  ='24' THEN 'SLP'
+            WHEN  inm.CVE_CE  ='25' THEN 'SIN'
+            WHEN  inm.CVE_CE  ='26' THEN 'SON'
+            WHEN  inm.CVE_CE  ='27' THEN 'TAB'
+            WHEN  inm.CVE_CE  ='28' THEN 'TAM'
+            WHEN  inm.CVE_CE  ='29' THEN 'TLA'
+            WHEN  inm.CVE_CE  ='30' THEN 'VER'
+            WHEN  inm.CVE_CE  ='31' THEN 'YUC'
+            WHEN  inm.CVE_CE  ='32' THEN 'ZAC'
+            WHEN  inm.CVE_CE  ='33' THEN 'DFS'
+            WHEN  inm.CVE_CE  ='34' THEN 'MEP'
 
 end cestatal, 2 orden,
-
-          sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01,
-            sum(CASE WHEN ue.c154 IN ('01') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01A,
-            sum(CASE WHEN ue.c154 IN ('01A') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01A,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_A1,
-            sum(CASE WHEN ue.c154 IN ('A1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_A1,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_01C,
-            sum(CASE WHEN ue.c154 IN ('01C') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_01C,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_05,
-            sum(CASE WHEN ue.c154 IN ('05') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_05,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_06,
-            sum(CASE WHEN ue.c154 IN ('06') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_06
+          sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN pre.id_cgo IN ('1') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_1,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_2,
+            sum(CASE WHEN pre.id_cgo IN ('2') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_2,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_3,
+            sum(CASE WHEN pre.id_cgo IN ('3') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_3,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_4,
+            sum(CASE WHEN pre.id_cgo IN ('4') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_4,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_5,
+            sum(CASE WHEN pre.id_cgo IN ('5') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_5,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_6,
+            sum(CASE WHEN pre.id_cgo IN ('6') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_6,
+            sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_7,
+            sum(CASE WHEN pre.id_cgo IN ('7') and st_sare in ('01') THEN 1 ELSE 0 END) realizado_7
             FROM  ce2019_MASRENCAL.tr_predios pre
-            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
-            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE
-ue.c154 IN ('01','01A','A1','01C','05','06') AND 1=1
+            join ce2019_masrencal.tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo
+            join ce2019_masrencal.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            WHERE  pre.id_cgo IN ('1','2','3','4','5','6','7') and 1=1
+            GROUP BY inm.CVE_CE
 
-            GROUP BY ue.ce, ue.c154
-
-) dd  where ROWNUM <2 order by ce]]>
+) dd  order by ce]]>
 	</queryString>
-	<field name="CE" class="java.math.BigDecimal"/>
+	<field name="CE" class="java.lang.String"/>
 	<field name="CESTATAL" class="java.lang.String"/>
-	<field name="CARGA_01" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_01" class="java.math.BigDecimal"/>
-	<field name="CARGA_01A" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_01A" class="java.math.BigDecimal"/>
-	<field name="CARGA_A1" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_A1" class="java.math.BigDecimal"/>
-	<field name="CARGA_01C" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_01C" class="java.math.BigDecimal"/>
-	<field name="CARGA_05" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_05" class="java.math.BigDecimal"/>
-	<field name="CARGA_06" class="java.math.BigDecimal"/>
-	<field name="REALIZADO_06" class="java.math.BigDecimal"/>
+	<field name="CARGA_1" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_1" class="java.math.BigDecimal"/>
+	<field name="CARGA_2" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_2" class="java.math.BigDecimal"/>
+	<field name="CARGA_3" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_3" class="java.math.BigDecimal"/>
+	<field name="CARGA_4" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_4" class="java.math.BigDecimal"/>
+	<field name="CARGA_5" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_5" class="java.math.BigDecimal"/>
+	<field name="CARGA_6" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_6" class="java.math.BigDecimal"/>
+	<field name="CARGA_7" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_7" class="java.math.BigDecimal"/>
 	<field name="CARGA" class="java.math.BigDecimal"/>
 	<field name="REALIZADO" class="java.math.BigDecimal"/>
 	<variable name="titulo" class="java.lang.String">

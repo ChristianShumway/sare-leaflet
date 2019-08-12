@@ -39,13 +39,15 @@ import org.springframework.stereotype.Service;
  */
 @Service("BackingReportes")
 public class BackingReportes extends DaoTransformaCartografia {
-    
+
     @Autowired
     @Qualifier("datosConexionDao")
     private InterfaceReportes InterfaceReportes;
-   
-    
-    public cat_respuesta_services getReporte(Integer proyecto,String tipo, String report, String coordinacion, HttpServletRequest request, HttpServletResponse response){
+
+    ProyectosEnum proyectos;
+
+    public cat_respuesta_services getReporte(Integer proyecto, String tipo, String report, String coordinacion, HttpServletRequest request, HttpServletResponse response) {
+        proyectos = getProyecto(proyecto);
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         String nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
         String nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
@@ -59,56 +61,67 @@ public class BackingReportes extends DaoTransformaCartografia {
         String URLImagen = "";
         Map params = new HashMap();
         URLImagen = request.getServletContext().getRealPath("/WEB-INF/reportes/imagenes/");
-         try {
+        try {
 
             if (reporte.equals("2")) {
                 nombreArchivo = nombreArchivoJRXMLtecnico;
                 nombreArchivoAdescargar = "EstablecimientosPendientesPunteo";
                 conne = InterfaceReportes.getDs().getConnection();
-                if (ce.equals("00")) {
-                    whereReporte = "and 1=1";
-                } else {
-                    whereReporte = " and ue.ce=" + ce + "";
-                }
+
             } else if (reporte.equals("1")) {
                 nombreArchivo = nombreArchivoJRXMLavanceGabinete;
                 nombreArchivoAdescargar = "AvanceRegistrosPunteados";
                 conne = InterfaceReportes.getDs().getConnection();
-                if (ce.equals("00")) {
-                    whereReporte = " and 1=1";
-                } else {
-                    whereReporte = " and ue.ce=" + ce + "";
-                }
+
             }
+            switch (proyectos) {
+                case Conglomerados:
+                    if (ce.equals("00")) {
+                        whereReporte = " and 1=1";
+                    } else {
+                        whereReporte = " and inm.CVE_CE=" + ce + "";
+                    }
+                    break;
+                case Operativo_Masivo:
+                    if (ce.equals("00")) {
+                        whereReporte = "and 1=1";
+                        
+                    } else {
+                        whereReporte = " and ue.ce=" + ce + "";
+                    }
+                    break;
+
+            }
+
             params.put("where", whereReporte);
             ProyectosEnum proyectos;
-            proyectos=getProyecto(proyecto);
+            proyectos = getProyecto(proyecto);
             params.put("esquema", getEsquemaPostgres(proyectos));
-            params.put("DIR",request.getServletContext().getRealPath("/WEB-INF/"));
+            params.put("DIR", request.getServletContext().getRealPath("/WEB-INF/"));
             params.put("URL", URLImagen);
             if (tipoArchivo.equals("EXCEL")) {
                 exportaExcel(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
-            } else if (tipoArchivo.equals("PDF") && (conne!=null)) {
+            } else if (tipoArchivo.equals("PDF") && (conne != null)) {
                 exportaPDF(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
             } else if (tipoArchivo.equals("CSV")) {
                 exportaCSV(response, nombreArchivo, conne, params, nombreArchivoAdescargar);
-            }else{
-                Respuesta.setMensaje(new cat_mensaje("false","No selecciono ningun reporte"));
+            } else {
+                Respuesta.setMensaje(new cat_mensaje("false", "No selecciono ningun reporte"));
             }
         } catch (Exception es) {
             es.printStackTrace();
         } finally {
             try {
-                if(conne!=null){
+                if (conne != null) {
                     conne.close();
                 }
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
         }
-       return Respuesta;
+        return Respuesta;
     }
-    
+
     private void exportaPDF(HttpServletResponse response, String nombreArchivo, Connection conne, Map params, String nombreArchivoAdescargar) throws JRException {
         response.setContentType("application/pdf");
         JasperReport js;
@@ -125,7 +138,7 @@ public class BackingReportes extends DaoTransformaCartografia {
             out.flush();
             out.close();
         } catch (IOException | JRException e) {
-        } 
+        }
     }
 
     private void exportaExcel(HttpServletResponse response, String nombreArchivo, Connection conne, Map params, String nombreArchivoAdescargar) {
@@ -145,8 +158,8 @@ public class BackingReportes extends DaoTransformaCartografia {
         } catch (IOException | JRException e) {
         }
     }
-    
-     private void exportaCSV(HttpServletResponse response, String nombreArchivo, Connection conne, Map params, String nombreArchivoAdescargar) {
+
+    private void exportaCSV(HttpServletResponse response, String nombreArchivo, Connection conne, Map params, String nombreArchivoAdescargar) {
         response.setContentType("text/csv");
         ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
         JRCsvExporter exporterXLS = new JRCsvExporter();
@@ -163,8 +176,6 @@ public class BackingReportes extends DaoTransformaCartografia {
             out.flush();
         } catch (IOException | JRException e) {
         }
-     }
-     
-     
-    
+    }
+
 }
