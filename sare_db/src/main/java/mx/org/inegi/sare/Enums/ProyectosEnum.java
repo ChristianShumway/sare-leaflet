@@ -21,7 +21,8 @@ public enum ProyectosEnum {
     Operativo_Masivo(5,"schemapgEge"),
     Muestra_Rural(6,"schemapgEge"),
     Convenios(7,"schemapgEge"),
-    Organismos_Operadores_De_Agua(8);
+    Organismos_Operadores_De_Agua(8),
+    MasivoOtros(9);
     
     private final Integer código;
     private String esquema;

@@ -30,7 +30,7 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_uo_masivo,frente_origen,frente_destino,manzana_origen,manzana_destino,claves;
+var id_uo_masivo,frente_origen,frente_destino,manzana_origen,manzana_destino,claves,capa;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -1024,11 +1024,11 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
-        frente_destino=dataFrente.cvefte
-        manzana_destino=dataFrente.cve_ent+dataFrente.cve_loc+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
+        frente_destino=dataFrente.cveft
+        manzana_destino=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
         if (!frenteExistente){
             frente_origen=dataFrente.cveft
-            manzana_origen=dataFrente.cve_ent+dataFrente.cve_loc+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
+            manzana_origen=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
           sendAJAX(urlServices['getListaUOxCveFrente'].url, 
           {
             'proyecto':dataUserFromLoginLocalStorage.proyecto,
@@ -2580,7 +2580,7 @@ const handleCancelClick = () => {
   document.getElementById('list-conglomerados-destino').innerHTML="";
   
 //  handleTipoPunteo()
-//  handleActionButtons('disabled')
+ handleActionButtons('disabled')
 //  handleActionPunteoAlta('on')
 //  !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
 //  //handleActiveVisibleSearch()
@@ -2614,29 +2614,29 @@ const handleCancelClick = () => {
 }
 
 const callServiceLiberaClave=(id_ue)=>{
-  sendAJAX(urlServices['serviceLiberaClave'].url, 
-    {
-      'proyecto':dataUserFromLoginLocalStorage.proyecto,
-      'id_ue': id_ue
-    }, urlServices['serviceLiberaClave'].type, 
-    data => {
-      if (data[0].operation) {
+//  sendAJAX(urlServices['serviceLiberaClave'].url, 
+//    {
+//      'proyecto':dataUserFromLoginLocalStorage.proyecto,
+//      'id_ue': id_ue
+//    }, urlServices['serviceLiberaClave'].type, 
+//    data => {
+//      if (data[0].operation) {
       //limpia la forma sin avisarle al usuario
       cleanForm()
-      } else {
-        swal({
-          title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
-          text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
-          showConfirmButton: true,
-          confirmButtonColor: "#DD6B55",
-          allowEscapeKey: true,
-          allowOutsideClick: true,
-          html: true,
-          animation: true
-        })
-      }
-    },  () => {}
-  ) 
+//      } else {
+//        swal({
+//          title: '<i class="fa fa-exclamation-triangle"></i> Aviso',
+//          text: '<i class="fa fa-info"></i>  Ha ocurrido un error durante el proceso de cancelación, por favor intente nuevamente',
+//          showConfirmButton: true,
+//          confirmButtonColor: "#DD6B55",
+//          allowEscapeKey: true,
+//          allowOutsideClick: true,
+//          html: true,
+//          animation: true
+//        })
+//      }
+//    },  () => {}
+//  ) 
 }
 
 const cleanForm = () => {
@@ -2674,26 +2674,26 @@ const disabledInputs = () => inputsEditables.map(input => document.getElementByI
 
 // función activa btns guardar y cancelar cuando se ratifica y desactiva cuando se cancela
 const handleActionButtons = res => {
-//  const saveOption = document.getElementById('item-save-option')
-//  const cancelOption = document.getElementById('item-cancel-option')
-//  const saveMovilOption = document.getElementById('save-movil-option')
-//  const cancelMovilOption = document.getElementById('cancel-movil-option')
-//
-//  if (res == 'enabled') {
-//    saveOption.removeAttribute('disabled')
-//    cancelOption.removeAttribute('disabled')
-//    //saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
-//    saveMovilOption.classList.remove('option-disabled')
-//    cancelMovilOption.setAttribute('onclick', 'handleCancelClick()')
-//    cancelMovilOption.classList.remove('option-disabled')
-//  } else if (res == 'disabled') {
-//    saveOption.setAttribute('disabled', 'true')
-//    cancelOption.setAttribute('disabled', 'true')
-//    saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
-//    saveMovilOption.classList.add('option-disabled')
-//    cancelMovilOption.removeAttribute('onclick', 'handleCancelClick()')
-//    cancelMovilOption.classList.add('option-disabled')
-//  }
+  const saveOption = document.getElementById('item-save-option')
+  const cancelOption = document.getElementById('item-cancel-option')
+  const saveMovilOption = document.getElementById('save-movil-option')
+  const cancelMovilOption = document.getElementById('cancel-movil-option')
+
+  if (res == 'enabled') {
+    saveOption.removeAttribute('disabled')
+    cancelOption.removeAttribute('disabled')
+    //saveMovilOption.setAttribute('onclick', 'handleFormValidations()')
+    //saveMovilOption.classList.remove('option-disabled')
+    cancelMovilOption.setAttribute('onclick', 'handleCancelClick()')
+    cancelMovilOption.classList.remove('option-disabled')
+  } else if (res == 'disabled') {
+    saveOption.setAttribute('disabled', 'true')
+    cancelOption.setAttribute('disabled', 'true')
+    //saveMovilOption.removeAttribute('onclick', 'handleFormValidations()')
+    //saveMovilOption.classList.add('option-disabled')
+    cancelMovilOption.removeAttribute('onclick', 'handleCancelClick()')
+    cancelMovilOption.classList.add('option-disabled')
+  }
 }
 
 const handleSearchCleeValidation = e => {
@@ -3312,19 +3312,20 @@ const alertPreviewSave = () => {
     cancelButtonText: 'Cancelar'
   }).then((result) => {
     if (result.value) {
-      handleCleanContainerUGA()
+      callServiceSaveUXFrentes()
       // handleFormValidations()
     }
   })
 }
 
 const callServiceSaveUXFrentes=()=>{
-  id_uo_masivo=id_ue
+  //id_uo_masivo=id_ue
   const cancelOption = document.getElementById('item-cancel-option')
+  frente_destino!=null && frente_origen!=null?capa='frentes':'manzana'
   sendAJAX(urlServices['getSaveUOxCveFrente'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyecto,
-    'capa':'Frentes',
+    'capa':capa,
     'frente_origen':frente_origen,
     'frente_destino': frente_destino, 
     'manzana_origen': manzana_origen,
@@ -3336,19 +3337,25 @@ const callServiceSaveUXFrentes=()=>{
   data => {
     if(data[0].operation){
       //muestra mensaje si hay error
-      showModalMsgError(data)
+      if(data[0].datos.mensaje.type=='false')
+      {
+        handleShowAlert('error', data[0].datos.mensaje.messages )
+      }else{
+          handleCleanContainerUGA()
+          swal.close()
+      }
     } else {
       Swal.fire({
         position: 'bottom-end',
         type: 'warning',
-        title: data[0].messages[0] + "! Porfavor intente nuevamente",
+        title: data[0].datos.mensaje.messages + "! Porfavor intente nuevamente",
         showConfirmButton: false,
         timer: 2000
       })  
     }    
   }, () => {
     swal({
-      title: 'Buscando información de la clave:' +id_ue,
+      title: 'Guardando información!',
       text: 'Por favor espere un momento',
       //timer: 2000,
       onOpen:  () => swal.showLoading() 

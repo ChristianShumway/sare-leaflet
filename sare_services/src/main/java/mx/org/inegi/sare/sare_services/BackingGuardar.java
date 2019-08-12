@@ -259,7 +259,7 @@ public class BackingGuardar extends BackingSincroniza {
     }
     
     public cat_respuesta_services SaveUEFrentes(Integer proyecto, String capa, String usuario, String ip,
-            String manzana_destino, String manzana_origen,String frente_destino, String frente_origen, String claves) {
+        String manzana_destino, String manzana_origen,String frente_destino, String frente_origen, String claves) {
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare_guardadoUXFrente object=new cat_vw_punteo_sare_guardadoUXFrente();
         object.setCapa(capa);

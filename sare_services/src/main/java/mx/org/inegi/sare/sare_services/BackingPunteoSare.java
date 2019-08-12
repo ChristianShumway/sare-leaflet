@@ -17,7 +17,7 @@ import mx.org.inegi.sare.sare_db.dto.cat_ubicacion_punteo;
 import mx.org.inegi.sare.sare_db.dto.cat_uo;
 import mx.org.inegi.sare.sare_db.dto.cat_vial;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
-import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSareConglomerado;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,8 @@ public class BackingPunteoSare extends BackingBusquedaSare {
     InterfacePunteoSare InterfacePunteoSare;
 
     @Autowired
-    @Qualifier("DaoBusquedaConglomerados")
-    InterfaceBusquedaSareConglomerado interfaceBusquedaSareConglomerado;
+    @Qualifier("DaoBusqueda")
+    InterfaceBusquedaSare interfaceBusquedaSareConglomerado;
     
     @Autowired
     @Qualifier("DaoTransformaCartografia")
@@ -225,7 +225,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         if (listaUO != null && listaUO.size() > 0) {
             for (cat_uo listaUO1 : listaUO) {
                 listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
-                interfaceBusquedaSareConglomerado.ocupaCveunicaOCLconglomerado(proyecto, listaUO1.getIdUoMasivo());
+                interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
             }
             Respuesta.setDatos(listaUO);
         } else {

@@ -127,7 +127,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         proyectos = getProyecto(proyecto);
         sql = getSql(proyectos, ce, tramo, UnidadesEconomicasEnum.CONGLOMERADOS.getCódigo());
         switch (proyectos) {
-            case Operativo_Masivo:
+            case MasivoOtros:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -165,6 +165,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         esquemaOcl = getEsquemaOracle(proyecto);
         switch (proyecto) {
             case Operativo_Masivo:
+            case MasivoOtros:
                 //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
                 sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
@@ -269,7 +270,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                         .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                         .append("join ").append(esquemaOcl).append(".tr_uo_masivo uo on uo.id_uo_masivo=pre.id_uo_masivo ")
                         .append("left join ").append(esquemaOcl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble "
-                                + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null ");
+                                + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null and rownum<100");
         }
         return sql;
     }

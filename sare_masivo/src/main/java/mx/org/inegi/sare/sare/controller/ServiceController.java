@@ -24,7 +24,6 @@ import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_services.BackingActivacion;
 import mx.org.inegi.sare.sare_services.BackingBusquedaSare;
-import mx.org.inegi.sare.sare_services.BackingBusquedaSareConglomerados;
 import mx.org.inegi.sare.sare_services.BackingCatalogosSare;
 import mx.org.inegi.sare.sare_services.BackingDesbloqueo;
 import mx.org.inegi.sare.sare_services.BackingGetClavesSare;
@@ -67,10 +66,6 @@ public class ServiceController {
     @Autowired
     @Qualifier("BackingBusqueda")
     private BackingBusquedaSare BackingBusqueda;
-    
-     @Autowired
-    @Qualifier("BackingBusquedaConglomerados")
-    private BackingBusquedaSareConglomerados BackingBusquedaConglomerados;
 
     @Autowired
     @Qualifier("BackingPunteo")
@@ -140,7 +135,7 @@ public class ServiceController {
         if (p != null) {
             t = Integer.parseInt(p);
         }
-        return BackingBusquedaConglomerados.getBusqueda(proyecto, t, tramo, ce, usuario, id_ue, consulta);
+        return BackingBusqueda.getBusquedaConglomerados(proyecto, t, tramo, ce, usuario, id_ue, consulta);
     }
 
     @RequestMapping(value = "getDatabyCoords.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
