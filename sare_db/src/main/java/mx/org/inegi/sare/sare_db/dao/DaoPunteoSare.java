@@ -271,7 +271,8 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql.append(" join ").append(schemaocl).append(".tr_uo_masivo uo on uo.id_uo_masivo =pre.id_uo_masivo");
         sql.append(" join ").append(schemaocl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble");
         sql.append(" join ").append(schemaocl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble ");
-        sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("'");
+        //sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("'");
+        sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("' and pre.st_sare='10' and pre.st_sare<>'01' ");
         cveManzana = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_uo>>() {
             @Override
             public List<cat_uo> extractData(ResultSet rs) throws SQLException, DataAccessException {

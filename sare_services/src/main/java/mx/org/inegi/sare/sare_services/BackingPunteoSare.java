@@ -225,7 +225,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         if (listaUO != null && listaUO.size() > 0) {
             for (cat_uo listaUO1 : listaUO) {
                 listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
-                interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
+                interfaceBusquedaSareConglomerado.ocupaCveunicaOCLconglomerado(proyecto, listaUO1.getIdUoMasivo());
             }
             Respuesta.setDatos(listaUO);
         } else {

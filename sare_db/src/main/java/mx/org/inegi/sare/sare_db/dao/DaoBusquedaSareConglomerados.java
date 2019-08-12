@@ -61,7 +61,7 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
 
     public enum MetodosBusqueda {
         BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
-        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO
+        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO,OCUPACVEUNICACONGLOMERADO
     }
 
     public class MetodosBusquedaClass {
@@ -205,6 +205,27 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(null, 0, "", null, "", proyectos, "", id_ue, 0, MetodosBusqueda.OCUPACVEUNICA, null);
+        switch (proyectos) {
+            case Operativo_Masivo:
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+            default:
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+        }
+        return regresa;
+
+    }
+    
+    @Override
+    public boolean ocupaCveunicaOCLconglomerado(Integer proyecto, String id_ue) {
+        boolean regresa = false;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        sql = getSql(null, 0, "", null, "", proyectos, "", id_ue, 0, MetodosBusqueda.OCUPACVEUNICACONGLOMERADO, null);
         switch (proyectos) {
             case Operativo_Masivo:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
@@ -556,6 +577,8 @@ public class DaoBusquedaSareConglomerados extends DaoTransformaCartografia imple
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare<>'01'");
                         break;
+                    case OCUPACVEUNICACONGLOMERADO:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
                 }
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
