@@ -3342,7 +3342,8 @@ const callServiceSaveUXFrentes=()=>{
         handleShowAlert('error', data[0].datos.mensaje.messages )
       }else{
           handleCleanContainerUGA()
-          swal.close()
+          handleShowSaveAlert('success', 'Guardado', 'la información ha sido almacenada correctamente', true)
+          cleanForm()
       }
     } else {
       Swal.fire({

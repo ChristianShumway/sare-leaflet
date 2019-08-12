@@ -370,6 +370,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         sql = getSql(cat_vw_punteo_sare, params, tabla, rural, "", proyectos, "", "", 0, MetodosBusqueda.GETEXTENTCVEGEO2, null);
         switch (proyectos) {
             case Operativo_Masivo:
+            case MasivoOtros:
                 regresa = execSqlExtentBusquedaCvegeo2Pg(sql);
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
@@ -866,18 +867,18 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         }
         switch (metodo) {
             case GETEXTENTCVEGEO2:
-
-                if (!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_X())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_X()).isEmpty()
-                        && (!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_Y())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_Y()).isEmpty())) {
-                    sql.append("select xmin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
-                    sql.append("||ymin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
-                    sql.append("||xmax(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
-                    sql.append("||ymax(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50)) as extent");
-                } else {
+                
+//                if (!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_X())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_X()).isEmpty()
+//                        && (!"null".equals(String.valueOf(cat_vw_punteo_sare.getCOORD_Y())) && !String.valueOf(cat_vw_punteo_sare.getCOORD_Y()).isEmpty())) {
+//                    sql.append("select xmin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
+//                    sql.append("||ymin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
+//                    sql.append("||xmax(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
+//                    sql.append("||ymax(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50)) as extent");
+//                } else {
                     sql = sqlwhendonthavecords(esquema, cat_vw_punteo_sare, tabla, rural, params, campo_geo);
-                }
+                //}
                 break;
-            case GETEXTENTCVEGEO:
+            case GETEXTENTCVEGEO:        
                 if ((cat_vw_punteo_sare.getCOORD_X() != null && !String.valueOf(cat_vw_punteo_sare.getCOORD_X()).isEmpty()) && (cat_vw_punteo_sare.getCOORD_Y() != null && !String.valueOf(cat_vw_punteo_sare.getCOORD_Y()).isEmpty())) {
                     sql.append("select xmin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
                     sql.append("||ymin(buffer(st_transform(ST_GeomFromText('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326),900913),50))||','");
@@ -961,7 +962,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 } else {
                     cvegeo = String.valueOf(1);
                 }
-                sql.append(" and cvegeo='").append(cvegeo).append("'");
+                sql.append(" and cvegeo='").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
             } else {
                 sql.append(" and 1=1");
             }

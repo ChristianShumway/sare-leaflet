@@ -15,10 +15,12 @@ import java.util.logging.Logger;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
+import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
+import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -38,6 +40,10 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     @Autowired
     @Qualifier("DaoDesbloqueo")
     InterfaceDesbloqueo InterfaceDesbloqueo;
+    
+    @Autowired
+    @Qualifier("DaoPunteoSare")
+    InterfacePunteoSare InterfacePunteo;
 
     @Autowired
     @Qualifier("DaoTransformaCartografia")
@@ -60,7 +66,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     cat_coordenadas coord_merc;
 
     private void inicializaVariable(Integer proyecto) {
-        if (proyecto == 5) {
+        if (proyecto == 5 ) {
             tabla[0] = "td_entidad";
             tabla[1] = "td_municipios";
             tabla[2] = "td_localidades";
@@ -73,6 +79,19 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             nombre[1] = "nomgeo";
             nombre[2] = "nomgeo";
         } else {
+        if(proyecto==9){
+            tabla[0] = "td_entidad";
+            tabla[1] = "td_municipios";
+            tabla[2] = "td_localidades";
+            tabla[3] = "td_ageb";
+            tabla[4] = "td_frentes";
+            tabla[5] = "cat_tipovialidad";
+            tabla_rural[0] = "lpr";
+            tabla_rural[1] = "ar";
+            nombre[0] = "nomgeo";
+            nombre[1] = "nomgeo";
+            nombre[2] = "nomgeo";
+        }else{
             tabla[0] = "ent";
             tabla[1] = "mun";
             tabla[2] = "l";
@@ -86,6 +105,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             nombre[2] = "nomloc";
         }
 
+    }
     }
 
     public cat_respuesta_services getBusquedaConglomerados(Integer proyecto, int t, String tramo, String ce, String usuario, String id_ue, Boolean consulta) throws Exception {
@@ -117,16 +137,31 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                         element.setCOORD_X(null);
                                         element.setCOORD_Y(null);
                                     }
-                                }
+                                }                                
                                 if (element.getCOORD_X() != null && !String.valueOf(element.getCOORD_X()).equals("") && element.getCOORD_Y() != null && !String.valueOf(element.getCOORD_Y()).equals("")) {
-                                    extent = InterfaceBusquedaSare.getExtentBusquedaCvegeo(element, proyecto, 0, null, mza800, null);
-
+                                    //extent = InterfaceBusquedaSare.getExtentBusquedaCvegeo(element, proyecto, 0, null, mza800, null);
+                                    
+                                    
+                                    
                                     cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
                                     cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
                                     coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto, "geo", String.valueOf(cX), String.valueOf(cY));
                                     if (coord_merc != null) {
                                         element.setCOORD_X(new BigDecimal(coord_merc.getX()));
                                         element.setCOORD_Y(new BigDecimal(coord_merc.getY()));
+                                    }
+                                    List<cat_frente_geometria> geom=InterfacePunteo.getGeometriaFrente(proyecto,coord_merc.getX(), coord_merc.getY());
+                                    element.setCveft(geom.get(0).getCveft());
+                                    params = returnParams(element);
+                                    if (params >= 1) {
+                                        fsearch = true;
+                                        while (fsearch) {
+                                            extent = InterfaceBusquedaSare.getExtentBusquedaCvegeo2(element, proyecto, params, tabla[params - 1], mza800, tabla_rural);
+                                            params = params - 1;
+                                            if ((extent != null && !extent.equals("")) || params == 1 || params == 0) {
+                                                fsearch = false;
+                                            }
+                                        }
                                     }
                                     //params=returnParams(element);
                                     //extent=InterfaceBusquedaSare.getExtentBusquedaCvegeo2(element,proyecto,params, tabla[params - 1], mza800, tabla_rural);
