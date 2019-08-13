@@ -270,16 +270,27 @@ public class BackingGuardar extends BackingSincroniza {
         object.setManzana_origen(manzana_origen);
         object.setIp(ip);
         object.setUsuario(usuario);
+        String clave[]=claves.split(",");
         
         try{
             if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
             {
+            object.setResultado("1");
                switch(object.getResultado()){
                    case "0":
                        Respuesta.setMensaje(new cat_mensaje("false", "Ocurrio una exception")); 
                        break;
                    case "1":
                        Respuesta.setMensaje(new cat_mensaje("true", "Se movieron los registros correctamente"));
+                       for(String uo:clave){
+                          try{
+                            InterfaceGuardar.UpdateOclStatusOk(proyecto,null,uo,false); 
+                          }catch(Exception e)
+                          {
+                             Respuesta.setMensaje(new cat_mensaje("false", "los registros fueron movidos, pero ocurrio un error al actualizar en oracle "+e));     
+                          }
+                       }
+                       
                        break;
                    case "98":
                        Respuesta.setMensaje(new cat_mensaje("false", "NO SE PUEDEN MOVER A LA MISMA UBICACION GEOGRAFICA!"));

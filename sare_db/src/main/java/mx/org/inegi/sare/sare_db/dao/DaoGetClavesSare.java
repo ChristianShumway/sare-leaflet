@@ -265,12 +265,16 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             }
 
         } else if (UnidadesEconomicasEnum.CONGLOMERADOS.getCódigo().equals(ue)) {
-                        sql.append("select uo.id_uo_masivo,  st.descripcion status  FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+            sql.append("select uo.id_uo_masivo,  st.descripcion status  FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                         .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                         .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                         .append("join ").append(esquemaOcl).append(".tr_uo_masivo uo on uo.id_uo_masivo=pre.id_uo_masivo ")
                         .append("left join ").append(esquemaOcl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble "
-                                + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null and rownum<100");
+                                + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null");
+            if(!ce.equals("00")){
+                sql.append(" and inm.cve_ce=").append(ce);
+            }
+                        
         }
         return sql;
     }

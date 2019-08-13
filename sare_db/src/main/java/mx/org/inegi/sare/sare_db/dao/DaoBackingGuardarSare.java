@@ -195,6 +195,13 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         regresa = true;
                     }
                     break;
+                case MasivoOtros:
+                    sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOkFrentes, "", false);
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                        regresa = true;
+                    }
+                    break;
+                  
                 default:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;

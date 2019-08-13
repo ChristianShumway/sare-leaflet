@@ -184,11 +184,11 @@ const findUE = id_ue => {
   id_uo_masivo=id_ue;
   xycoorsx=''
   xycoorsy=''
-  document.getElementById("origen").style.display='block';
-  document.getElementById("c154").style.display='block';
-  document.getElementById("catorigen").style.display='none';
-  document.getElementById("catc154").style.display='none';
-  document.getElementById("filtroXclase").style.display='none';
+  //document.getElementById("origen").style.display='block';
+  //document.getElementById("c154").style.display='block';
+  //document.getElementById("catorigen").style.display='none';
+  //document.getElementById("catc154").style.display='none';
+  //document.getElementById("filtroXclase").style.display='none';
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -238,6 +238,7 @@ const callServiceFindUE=(id_ue)=>{
       E10a_g=data[0].datos.datos[0].e10_A;
       E10b_g=data[0].datos.datos[0].e10_B;
       E10c_g=data[0].datos.datos[0].e10_C;
+      frente_origen=data[0].datos.datos[0].cveft;
       
       if(data[0].datos.datos[0].tipo_E10!=null && data[0].datos.datos[0].tipo_E10!='')
       {
@@ -257,7 +258,7 @@ const callServiceFindUE=(id_ue)=>{
       }
      // handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
       handlePunteo(data[0].datos.datos[0].coord_X,data[0].datos.datos[0].coord_Y,'geografica')
-      frente_origen=''
+      //frente_origen=''
       frente_destino=''
       manzana_origen=''
       manzana_destino=''
@@ -1027,7 +1028,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
         frente_destino=dataFrente.cveft
         manzana_destino=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
         if (!frenteExistente){
-            frente_origen=dataFrente.cveft
+            //frente_origen=dataFrente.cveft
             manzana_origen=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
           sendAJAX(urlServices['getListaUOxCveFrente'].url, 
           {
@@ -2653,7 +2654,7 @@ const cleanForm = () => {
   //contrae la tarjeta de referencia
   //handleVisibleForm('referencia')
   //deshabilita botones limpiar y guardar
-  //handleActionButtons('disabled')
+  handleActionButtons('disabled')
   //oculta div ratificar y busqueda
   handleVisibleRatificaandbusqueda()
   //oculta busqueda
@@ -3345,6 +3346,7 @@ const callServiceSaveUXFrentes=()=>{
           handleCleanContainerUGA()
           handleShowSaveAlert('success', 'Guardado', 'la información ha sido almacenada correctamente', true)
           cleanForm()
+          frenteExistente=false;
       }
     } else {
       Swal.fire({

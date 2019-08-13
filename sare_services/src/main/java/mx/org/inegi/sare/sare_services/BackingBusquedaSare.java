@@ -150,8 +150,8 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                         element.setCOORD_X(new BigDecimal(coord_merc.getX()));
                                         element.setCOORD_Y(new BigDecimal(coord_merc.getY()));
                                     }
-                                    List<cat_frente_geometria> geom=InterfacePunteo.getGeometriaFrente(proyecto,coord_merc.getX(), coord_merc.getY());
-                                    element.setCveft(geom.get(0).getCveft());
+//                                    List<cat_frente_geometria> geom=InterfacePunteo.getGeometriaFrente(proyecto,coord_merc.getX(), coord_merc.getY());
+//                                    element.setCveft(geom.get(0).getCveft());
                                     params = returnParams(element);
                                     if (params >= 1) {
                                         fsearch = true;

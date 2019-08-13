@@ -139,6 +139,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
                                     rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
                                     rs.getString("estatus_punteo") != null ? Integer.valueOf(rs.getString("estatus_punteo")) : null,
+                                    rs.getString("cveft")!=null?rs.getString("cveft"):null,
                                     rs.getString("id_inmueble") != null ? new BigDecimal(rs.getString("id_inmueble")) : new BigDecimal(0),
                                     rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
                             fila.setE12p("");
@@ -630,7 +631,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
                         break;
                     case BUSQUEDAMASIVOOTROS:
-                        sql = filtrarSqlMasivoOtros(ce, esquemaOcl, id_ue, origen, null);
+                        sql = filtrarSqlMasivoOtros(ce, esquemaOcl, id_ue, origen, tramo);
                         break;
                     case OCUPACVEUNICA:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
@@ -815,7 +816,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 + "tipo_e14,TRIM(uo.e11a) as e11a,uo.e14,lpad(to_char(uo.tipo_e10_a),2,'0') tipo_e10_a,uo.e10_a,lpad(to_char(uo.tipo_e10_b),2,'0') tipo_e10_b,\n"
                 + "uo.e10_b,uo.tipo_e10_c,uo.e10_c,uo.x as coorx,to_char(uo.y) as coory,pre.st_sare estatus_punteo,uo.e12,uo.e19,uo.tipo_e19,uo.e13,TRIM(uo.e13a) \n"
                 + "as e13_a,uo.e14a as e14_a,'' origen,\n"
-                + "inm.id_inmueble,inm.CVEVIAL");
+                + "inm.cveft,inm.id_inmueble,inm.CVEVIAL");
         sql.append(" FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                 .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                 .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
@@ -833,7 +834,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         }
         if (!(ce == null)) {
             if (!ce.equals("00") && !ce.equals("99")) {
-                //sql.append("and cestatal = ").append(ce);
+                sql.append("and inm.cve_ce = ").append(ce);
             }
         }
         return sql;

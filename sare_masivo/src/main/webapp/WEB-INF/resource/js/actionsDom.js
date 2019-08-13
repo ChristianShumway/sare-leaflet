@@ -468,15 +468,15 @@ const addAttributeTitle = () => {
   document.head.appendChild(script)
 
   function postLoadFunction() {
-    id_ue=document.getElementById('id_UE').value;
-    if(id_ue!=null && id_ue!=" " && id_ue!="")
-    {
+   // id_ue=document.getElementById('id_UE').value;
+    //if(id_ue!=null && id_ue!=" " && id_ue!="")
+    //{
         window.addEventListener("beforeunload", function (e) {
         ejecutar();
         (e || window.event).returnValue = null;
         return null;
         });
-    }
+    //}
     setTimeout( () => {
       document.getElementById('scaleControl_zoomIn').setAttribute('title','Acercar')
       document.getElementById('scaleControl_extent').setAttribute('title','Expandir') 

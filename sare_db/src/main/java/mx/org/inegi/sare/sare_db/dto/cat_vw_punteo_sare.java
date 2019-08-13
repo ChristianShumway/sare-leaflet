@@ -160,7 +160,7 @@ public class cat_vw_punteo_sare {
         this.Id_deftramo = Id_deftramo;
     }
 
-    public cat_vw_punteo_sare(BigDecimal COORD_X, BigDecimal COORD_Y, String E03, String E04, String E05, String E06, String E07, String E10, String E10_A, String E10_B, String E10_C, String E11, String E11A, String E12, String E13, String E13A, String E14, String E14_A, String E19, BigDecimal ID_UE, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, String TIPO_E14, String TIPO_E19, Integer estatus_punteo, BigDecimal Id_inmueble, String cvevial) {
+    public cat_vw_punteo_sare(BigDecimal COORD_X, BigDecimal COORD_Y, String E03, String E04, String E05, String E06, String E07, String E10, String E10_A, String E10_B, String E10_C, String E11, String E11A, String E12, String E13, String E13A, String E14, String E14_A, String E19, BigDecimal ID_UE, String TIPO_E10, String TIPO_E10_A, String TIPO_E10_B, String TIPO_E10_C, String TIPO_E14, String TIPO_E19, Integer estatus_punteo,String cve_fte, BigDecimal Id_inmueble, String cvevial) {
         this.COORD_X = COORD_X;
         this.COORD_Y = COORD_Y;
         this.E03 = E03;
@@ -188,6 +188,7 @@ public class cat_vw_punteo_sare {
         this.TIPO_E14 = TIPO_E14;
         this.TIPO_E19 = TIPO_E19;
         this.estatus_punteo = estatus_punteo;
+        this.Cveft=cve_fte;
         this.Id_inmueble = Id_inmueble;
         this.cvevial = cvevial;
     }
