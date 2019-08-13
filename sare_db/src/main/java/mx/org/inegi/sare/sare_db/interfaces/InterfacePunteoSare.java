@@ -25,7 +25,7 @@ public interface InterfacePunteoSare {
 
     public cat_ubicacion_punteo getInfoPunteoUrbano(Integer proyecto, String ce, String x, String y);
 
-    public List<cat_uo> getListaUO(Integer proyecto, String cveManzanaParam);
+    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente, String idDeftramo);
 
     public String getConversionPuntosAMercator(String x, String y);
 

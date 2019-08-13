@@ -219,13 +219,13 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         return Respuesta;
     }
 
-    public cat_respuesta_services getListaUO(Integer proyecto, String cveManzana) {
+    public cat_respuesta_services getListaUO(Integer proyecto, String cveManzana,String idDeftramo) {
         Respuesta = new cat_respuesta_services();
-        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana);
+        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana,idDeftramo);
         if (listaUO != null && listaUO.size() > 0) {
             for (cat_uo listaUO1 : listaUO) {
                 listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
-                interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
+                //interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
             }
             Respuesta.setDatos(listaUO);
         } else {

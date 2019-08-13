@@ -1032,7 +1032,8 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           sendAJAX(urlServices['getListaUOxCveFrente'].url, 
           {
             'proyecto':dataUserFromLoginLocalStorage.proyecto,
-            'cveFrente': dataFrente.cveFrente                
+            'cveFrente': dataFrente.cveFrente,   
+            'idDeftramo':dataFrente.id_deftramo
           }, 
           
           urlServices['getListaUOxCveFrente'].type,  

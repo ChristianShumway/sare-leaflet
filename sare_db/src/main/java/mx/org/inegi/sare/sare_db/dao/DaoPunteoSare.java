@@ -261,7 +261,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
 
     @Override
-    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente) {
+    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente,String idDeftramo) {
         List<cat_uo> cveManzana = null;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
@@ -272,7 +272,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql.append(" join ").append(schemaocl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble");
         sql.append(" join ").append(schemaocl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble ");
         //sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("'");
-        sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("' and pre.st_sare='10' and pre.st_sare<>'01' ");
+        sql.append(" where  uo.e03||uo.e04||uo.e05||uo.e06||uo.e07||inm.cveft='").append(cveFrente).append("' and pre.st_sare='10' and pre.st_sare<>'01' and inm.ID_DEFTRAMO=").append(idDeftramo);
         cveManzana = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_uo>>() {
             @Override
             public List<cat_uo> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -319,7 +319,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                 cat_frente_geometria fila = null;
                 List<cat_frente_geometria> resultado = new ArrayList<cat_frente_geometria>();
                 while (rs.next()) {
-                    fila = new cat_frente_geometria(rs.getString("clave"), rs.getString("the_geom"), rs.getString("cveft"),rs.getString("id_deftramo"));
+                    fila = new cat_frente_geometria(rs.getString("clave"), rs.getString("the_geom"), rs.getString("cve_ent"), rs.getString("cve_mun"), rs.getString("cve_loc"), rs.getString("cve_ageb"), rs.getString("cve_mza"), rs.getString("nom_ent"), rs.getString("nom_mun"), rs.getString("nom_loc"), rs.getString("cveft"), rs.getString("id_deftramo"));
                     resultado.add(fila);
                 }
                 return resultado;
@@ -767,16 +767,16 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
                         sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),20)))");
                     case CVEMANZANA:
-                        /*sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nomgeo nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc,cveft from ");
-                        sql.append(schemapg).append(".td_frentes  frente");
+                        sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nomgeo nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc,cveft,id_deftramo from ");
+                        sql.append(schemapg).append(".vw_tr_frentes  frente");
                         sql.append(" left join ").append(schemapg).append(".td_entidad ent on frente.cve_ent=ent.cve_ent ");
                         sql.append(" left join ").append(schemapg).append(".td_municipios mun on frente.cve_ent=mun.cve_ent and frente.cve_mun=mun.cve_mun ");
                         sql.append(" left join ").append(schemapg).append(".td_localidades loc on frente.cve_ent=loc.cve_ent and frente.cve_mun=loc.cve_mun and frente.cve_loc=loc.cve_loc ");
-                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");*/
+                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");
                         
-                        sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,cveft,id_deftramo  from ");
+                        /*sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,cveft,id_deftramo  from ");
                         sql.append(schemapg).append(".vw_tr_frentes  frente");
-                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");                                                                       
+                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");*/                                                            
                         break;                                               
                 }
                 break;
