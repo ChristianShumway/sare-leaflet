@@ -2841,6 +2841,37 @@ const openReportesAjax=(opcion)=>{
     xhr.send(null);
 }
 
+async function optionButtonsReport(report)  {
+  /* inputOptions can be an object or Promise */
+  const inputOptions = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        'ver': 'Ver',
+        'descargar': 'Descargar'
+      })
+    }, 500)
+  })
+
+  const { value: option } = await Swal.fire({
+    title: '<span style="width:100%;">Selecciona Opción</span>',
+    input: 'radio',
+    confirmButtonText:'Aceptar',
+    inputOptions: inputOptions,
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Necesitas seleccionar una opción'
+      }
+    }
+  })
+
+  if (option) {
+    if (option === 'ver'){
+      openReportesAjax(report)
+    }
+    //Swal.fire({ html: 'You selected: ' + option + report})
+  }
+}
+
 async function OpenReportes (size, action) {
   const {value: reporte} = await Swal.fire({
     title: action == 'vista' ? '<span style="width:100%;">Reportes</span>' : 'Descarga de Reportes',
@@ -2856,8 +2887,8 @@ async function OpenReportes (size, action) {
     inputValidator: (value) => {
       return new Promise((resolve) => {
         if (value === '1' || value === '2'|| value === '3') {
-          resolve()
-          
+          // resolve()
+          optionButtonsReport(value)
         } else {
           resolve('Selecciona el reporte a visualizar')
         }

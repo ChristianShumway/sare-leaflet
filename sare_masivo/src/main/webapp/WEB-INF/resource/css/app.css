@@ -88,6 +88,11 @@ body{
 .swal2-popup .swal2-title{
     
 }
+
+.swal2-popup .swal2-radio{
+  justify-content: space-around !important;
+}
+
 #btn-top:hover {
   background-color: #555;
   transform: scale(1.05)
