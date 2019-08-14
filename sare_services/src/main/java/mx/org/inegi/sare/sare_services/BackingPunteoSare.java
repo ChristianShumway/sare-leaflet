@@ -45,7 +45,8 @@ public class BackingPunteoSare extends BackingBusquedaSare {
 
     cat_respuesta_services Respuesta = new cat_respuesta_services();
 
-    public String getTipoArea(Integer proyecto, String x, String y) throws Exception {
+    public String getTipoArea(Integer proyecto, String x, String y) throws Exception 
+    {
         String TipoArea = InterfacePunteoSare.getTipoArea(proyecto, x, y);
         return TipoArea;
     }

@@ -272,7 +272,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                         .append("left join ").append(esquemaOcl).append(".tc_tipo_inmueble ti on ti.id_tipo_inmueble=inm.id_tipo_inmueble "
                                 + "left join ce2019_masrencal.tc_st_sare st on st.status_sare=pre.status_sare where st_sare='10' and uo.id_uo_masivo is not null");
             if(!ce.equals("00")){
-                sql.append(" and inm.cve_ce=").append(ce);
+                sql.append(" and cve_operativa=").append(tramo).append(" and inm.cve_ce=").append(ce);
             }
                         
         }

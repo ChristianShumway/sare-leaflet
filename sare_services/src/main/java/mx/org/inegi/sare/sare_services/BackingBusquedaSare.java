@@ -73,8 +73,8 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             tabla[3] = "td_ageb";
             tabla[4] = "td_manzanas";
             tabla[5] = "cat_tipovialidad";
-            tabla_rural[0] = "lpr";
-            tabla_rural[1] = "ar";
+            tabla_rural[0] = "td_localidades_rurales_lpr";
+            tabla_rural[1] = "td_ageb_rural";
             nombre[0] = "nomgeo";
             nombre[1] = "nomgeo";
             nombre[2] = "nomgeo";
@@ -86,8 +86,8 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             tabla[3] = "td_ageb";
             tabla[4] = "td_frentes";
             tabla[5] = "cat_tipovialidad";
-            tabla_rural[0] = "lpr";
-            tabla_rural[1] = "ar";
+            tabla_rural[0] = "td_localidades_rurales_lpr";
+            tabla_rural[1] = "td_ageb_rural";
             nombre[0] = "nomgeo";
             nombre[1] = "nomgeo";
             nombre[2] = "nomgeo";

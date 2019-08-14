@@ -982,9 +982,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         }
         if (params == 4) {
             sql.append("union all select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-            sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("union all ");
+            sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo='").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' union all ");
             sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-            sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent=").append(cat_vw_punteo_sare.getE03()).append("and cvegeo=").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("limit 1");
+            sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo='").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' limit 1");
         }
         return sql;
     }
