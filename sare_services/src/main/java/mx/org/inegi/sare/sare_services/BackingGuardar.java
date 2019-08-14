@@ -276,9 +276,9 @@ public class BackingGuardar extends BackingSincroniza {
         try{
           if(!ce.equals("00"))
           {
-            //if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
-            //{
-            object.setResultado("1");
+            if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
+            {
+            //object.setResultado("1");
                switch(object.getResultado()){
                    case "0":
                        Respuesta.setMensaje(new cat_mensaje("false", "Ocurrio una exception")); 
@@ -301,7 +301,7 @@ public class BackingGuardar extends BackingSincroniza {
                    case "99":
                        Respuesta.setMensaje(new cat_mensaje("false", "NO EXISTE EL FRENTE!"));
                        break;
-             // }
+              }
                
             }
             }else{

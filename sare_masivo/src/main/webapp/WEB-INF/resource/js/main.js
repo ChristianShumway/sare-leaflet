@@ -959,6 +959,9 @@ seleccionarNuevoFrente()
 funcionesNoRatificado()
 }
 else if(request=='no') {
+    frente_destino=frente_origen
+    manzana_destino=manzana_origen
+    mueveConglomerados()
     handleActionButtons('enabled')
     bandera_ratificar=true
   } 
