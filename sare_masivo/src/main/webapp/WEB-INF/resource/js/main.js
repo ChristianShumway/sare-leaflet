@@ -1066,7 +1066,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
               )
           })  
           
-          MDM6('customPolygon',parametros);
+          //MDM6('customPolygon',parametros);          
+           var paramsNew={fColor:"#ff7e00",lSize:10,lColor:"#ff7e00",lType:"line",type:'georeference'};        
+          MDM6('addPolygon',poligono,paramsNew); 
         }
       }
 
@@ -1177,7 +1179,7 @@ const muestraConglomerados = (data, nuevo = '') => {
         </li> `
         console.log(" el poligono que va a pintar es ");
         console.log(poligono);
-         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'buffer'}; 
+         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'}; 
         
 
           MDM6('addPolygon',poligono,paramsNew); 
