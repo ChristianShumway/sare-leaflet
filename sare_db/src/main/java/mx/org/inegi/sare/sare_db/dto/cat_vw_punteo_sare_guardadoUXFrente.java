@@ -20,6 +20,7 @@ public class cat_vw_punteo_sare_guardadoUXFrente {
     private String frente_origen;
     private String claves;
     private String resultado;
+    private String iddeftramo;
 
     public cat_vw_punteo_sare_guardadoUXFrente() {
     }
@@ -32,6 +33,16 @@ public class cat_vw_punteo_sare_guardadoUXFrente {
         this.frente_origen = frente_origen;
         this.claves = claves;
     }
+
+    public String getIddeftramo() {
+        return iddeftramo;
+    }
+
+    public void setIddeftramo(String iddeftramo) {
+        this.iddeftramo = iddeftramo;
+    }
+    
+    
 
     public String getResultado() {
         return resultado;

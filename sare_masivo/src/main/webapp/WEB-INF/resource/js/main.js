@@ -30,7 +30,7 @@ let combosc154yOrigen=false
 let valorScian;
 let htmlDivClases
 let validaAltas=false
-var id_uo_masivo,frente_origen,frente_destino,manzana_origen,manzana_destino,claves,capa;
+var id_uo_masivo,frente_origen,frente_destino,manzana_origen,manzana_destino,claves,capa,iddeftramo;
 var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
@@ -1025,6 +1025,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
+        iddeftramo=dataFrente.id_deftramo
         frente_destino=dataFrente.cveft
         manzana_destino=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
         if (!frenteExistente){
@@ -1033,6 +1034,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           sendAJAX(urlServices['getListaUOxCveFrente'].url, 
           {
             'proyecto':dataUserFromLoginLocalStorage.proyecto,
+            'ce':dataUserFromLoginLocalStorage.ce,
             'cveFrente': dataFrente.cveFrente,   
             'idDeftramo':dataFrente.id_deftramo
           }, 
@@ -1066,7 +1068,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
               )
           })  
           
-          MDM6('customPolygon',parametros);
+          //MDM6('customPolygon',parametros);          
+           var paramsNew={fColor:"#ff7e00",lSize:10,lColor:"#ff7e00",lType:"line",type:'georeference'};        
+          MDM6('addPolygon',poligono,paramsNew); 
         }
       }
 
@@ -1177,7 +1181,7 @@ const muestraConglomerados = (data, nuevo = '') => {
         </li> `
         console.log(" el poligono que va a pintar es ");
         console.log(poligono);
-         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'buffer'}; 
+         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'}; 
         
 
           MDM6('addPolygon',poligono,paramsNew); 
@@ -3358,6 +3362,8 @@ const callServiceSaveUXFrentes=()=>{
   sendAJAX(urlServices['getSaveUOxCveFrente'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyecto,
+    'ce':dataUserFromLoginLocalStorage.ce,
+    'iddeftramo':iddeftramo,
     'capa':capa,
     'frente_origen':frente_origen,
     'frente_destino': frente_destino, 
