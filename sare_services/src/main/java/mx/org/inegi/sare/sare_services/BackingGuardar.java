@@ -258,7 +258,7 @@ public class BackingGuardar extends BackingSincroniza {
         return regresar;
     }
     
-    public cat_respuesta_services SaveUEFrentes(Integer proyecto, String capa, String usuario, String ip,
+    public cat_respuesta_services SaveUEFrentes(Integer proyecto,String ce, String iddeftramo, String capa, String usuario, String ip,
         String manzana_destino, String manzana_origen,String frente_destino, String frente_origen, String claves) {
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare_guardadoUXFrente object=new cat_vw_punteo_sare_guardadoUXFrente();
@@ -270,11 +270,14 @@ public class BackingGuardar extends BackingSincroniza {
         object.setManzana_origen(manzana_origen);
         object.setIp(ip);
         object.setUsuario(usuario);
+        object.setIddeftramo(iddeftramo);
         String clave[]=claves.split(",");
         
         try{
-            if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
-            {
+          if(!ce.equals("00"))
+          {
+            //if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
+            //{
             object.setResultado("1");
                switch(object.getResultado()){
                    case "0":
@@ -298,9 +301,13 @@ public class BackingGuardar extends BackingSincroniza {
                    case "99":
                        Respuesta.setMensaje(new cat_mensaje("false", "NO EXISTE EL FRENTE!"));
                        break;
-               }
+             // }
                
             }
+            }else{
+               Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos")); 
+            }
+            
         }catch(Exception e){
                     Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, e);
                     Respuesta.setDatos(false);

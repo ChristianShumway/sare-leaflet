@@ -144,8 +144,8 @@ public class ServiceController {
     }
     
     @RequestMapping(value = "getListUOporFrente.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services getListUOporFrente(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "cveFrente") String cveFrente, @RequestParam(value = "idDeftramo") String idDeftramo) throws Exception {
-        return BackingPunteo.getListaUO(proyecto,cveFrente,idDeftramo);
+    public cat_respuesta_services getListUOporFrente(@RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "ce") String ce,@RequestParam(value = "cveFrente") String cveFrente, @RequestParam(value = "idDeftramo") String idDeftramo) throws Exception {
+        return BackingPunteo.getListaUO(proyecto,ce,cveFrente,idDeftramo);
     }
 
     @RequestMapping(value = "liberacve.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -178,14 +178,14 @@ public class ServiceController {
     }
     
      @RequestMapping(value = "guardarUEFrentes.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services guardarUEFrentes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "capa") String capa,
+    public cat_respuesta_services guardarUEFrentes(@RequestParam(value = "proyecto") Integer proyecto,@RequestParam(value = "ce") String ce,@RequestParam(value = "iddeftramo") String iddeftramo,@RequestParam(value = "capa") String capa,
             @RequestParam(value = "frente_origen") String frente_origen,
             @RequestParam(value = "frente_destino") String frente_destino,@RequestParam(value = "manzana_origen") String manzana_origen,
             @RequestParam(value = "manzana_destino") String manzana_destino,@RequestParam(value = "claves") String claves,@RequestParam(value = "usuario") String usuario, HttpServletRequest request) throws Exception {
         //Gson gson = new Gson();
         //cat_vw_punteo_sare_guardado inmueble = (cat_vw_punteo_sare_guardado) gson.fromJson(obj, cat_vw_punteo_sare_guardado.class);
         String ip = request.getRemoteAddr();
-        return BackingGuardar.SaveUEFrentes(proyecto, capa, usuario, ip,manzana_destino,manzana_origen, frente_destino,frente_origen,claves);
+        return BackingGuardar.SaveUEFrentes(proyecto,ce,iddeftramo, capa, usuario, ip,manzana_destino,manzana_origen, frente_destino,frente_origen,claves);
     }
     
     @RequestMapping(value = "login.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
