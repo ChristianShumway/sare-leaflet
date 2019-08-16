@@ -335,7 +335,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where id_ue=? and st_sare='01'");
                         break;
                     case GuardarUnidadesEnFrentes:
-                        sql.append("SELECT ").append(esquemaPos).append(".interpolado_inmuebles('").append(obj.getCapa()).append("','")
+                        sql.append("SELECT ").append(esquemaPos).append(".interpolado_inmuebles('").append(obj.getIddeftramo()).append("','").append(obj.getCapa()).append("','")
                                 .append(obj.getManzana_origen()).append("','").append(obj.getFrente_origen()).append("','").append(obj.getClaves())
                                 .append("','").append(obj.getManzana_destino()).append("','").append(obj.getFrente_destino()).append("') resultado");
                         break;
