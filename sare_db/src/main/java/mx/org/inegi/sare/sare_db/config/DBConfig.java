@@ -104,6 +104,33 @@ public class DBConfig {
         return new JdbcTemplate(dataSourceDevOcl());
     }
     
+    /*DataSource Oracle*/
+    @Bean(name = "dataSourceOclEge")
+    @Profile("dev")
+    public DataSource dataSourceDevOclEge() {
+        BasicDataSource dS = new BasicDataSource();
+        dS.setDriverClassName(env.getProperty("db.test.driver.ocl.ege"));
+        dS.setUrl(env.getProperty("db.test.url.ocl.ege"));
+        dS.setUsername(env.getProperty("db.test.user.ocl.ege"));
+        dS.setPassword(env.getProperty("db.test.password.ocl.ege"));
+        dS.setMaxActive(50);
+        dS.setMaxIdle(8);
+        dS.setMinIdle(3);
+        dS.setTestWhileIdle(true);
+        dS.setValidationQuery("SELECT * FROM V$VERSION ");
+        dS.setRemoveAbandonedTimeout(15);
+        dS.setRemoveAbandoned(true);
+        dS.setTimeBetweenEvictionRunsMillis(10000L);
+        dS.setLogAbandoned(false);
+        dS.setDefaultReadOnly(false); 
+        return dS;
+    }
+    @Bean(name = "jdbcTemplateOclEge")
+    @Profile("dev")
+    public JdbcTemplate jdbcTemplateOclEge() {
+        return new JdbcTemplate(dataSourceDevOclEge());
+    }
+    
     @Bean(name = "dataSourceOcl")
     @Profile("prod")
     public DataSource dataSourceProdOcl() {
@@ -124,9 +151,39 @@ public class DBConfig {
         dS.setDefaultReadOnly(false); 
         return dS;
     }
+    @Bean(name = "dataSourceOclEge")
+    @Profile("prod")
+    public DataSource dataSourceProdOclEge() {
+        BasicDataSource dS = new BasicDataSource();
+        dS.setDriverClassName(env.getProperty("db.prod.driver.ocl.ege"));
+        dS.setUrl(env.getProperty("db.prod.url.ocl.ege"));
+        dS.setUsername(env.getProperty("db.prod.user.ocl.ege"));
+        dS.setPassword(env.getProperty("db.prod.password.ocl.ege"));
+        dS.setMaxActive(50);
+        dS.setMaxIdle(15);
+        dS.setMinIdle(8);
+        dS.setTestWhileIdle(true);
+        dS.setValidationQuery("SELECT * FROM V$VERSION ");
+        dS.setRemoveAbandonedTimeout(15);
+        dS.setRemoveAbandoned(true);
+        dS.setTimeBetweenEvictionRunsMillis(30000);
+        dS.setLogAbandoned(false);
+        dS.setDefaultReadOnly(false); 
+        return dS;
+    }
+    @Bean(name = "jdbcTemplateOclEge")
+    @Profile("prod")
+    public JdbcTemplate jdbcTemplateProdOclEGe() {
+        return new JdbcTemplate(dataSourceProdOclEge());
+    }
     @Bean(name = "jdbcTemplateOcl")
     @Profile("prod")
     public JdbcTemplate jdbcTemplateProdOcl() {
+        return new JdbcTemplate(dataSourceProdOcl());
+    }
+    @Bean(name = "jdbcTemplateOcl")
+    @Profile("prod")
+    public JdbcTemplate jdbcTemplateProdOclEge() {
         return new JdbcTemplate(dataSourceProdOcl());
     }
     

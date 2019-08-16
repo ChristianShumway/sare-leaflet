@@ -66,7 +66,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     cat_coordenadas coord_merc;
 
     private void inicializaVariable(Integer proyecto) {
-        if (proyecto == 5 ) {
+        if (proyecto == 5 || proyecto==1 ) {
             tabla[0] = "td_entidad";
             tabla[1] = "td_municipios";
             tabla[2] = "td_localidades";

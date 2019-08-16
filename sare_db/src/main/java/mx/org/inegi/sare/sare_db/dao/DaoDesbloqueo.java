@@ -33,6 +33,10 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
+    
+    @Autowired
+    @Qualifier("jdbcTemplateOclEge")
+    private JdbcTemplate jdbcTemplateoclEge;
 
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
@@ -135,6 +139,12 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                         regresar = true;
                     }
                     break;
+                case Establecimientos_GrandesY_Empresas_EGE:
+                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) 
+                    {
+                        regresar = true;
+                    }
+                    break;
                 default:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) 
                     {
@@ -157,6 +167,12 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
             {
                 case Operativo_Masivo:
                     if (jdbcTemplate.update(sql.toString()) > 0) 
+                    {
+                        regresar = true;
+                    }
+                    break;
+                case Establecimientos_GrandesY_Empresas_EGE:
+                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) 
                     {
                         regresar = true;
                     }
@@ -212,6 +228,18 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                     }
                 });
                 break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                regresar = jdbcTemplateoclEge.query(sql.toString(), new Object[]{id_ue}, new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            fila = rs.getInt(1) > 0;
+                        }
+                        return fila;
+                    }
+                });
+                break;
             default:
                 regresar = jdbcTemplateocl.query(sql.toString(), new Object[]{id_ue}, new ResultSetExtractor<Boolean>() {
                     @Override
@@ -240,6 +268,11 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                     regresar = true;
                 }
                 break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{usuario, id_ue}) > 0) {
+                    regresar = true;
+                }
+                break;
             default:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{usuario, id_ue}) > 0) {
                     regresar = true;
@@ -261,6 +294,11 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                     regresar = true;
                 }
                 break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
+                    regresar = true;
+                }
+                break;
             default:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
                     regresar = true;
@@ -278,6 +316,11 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         switch (proyectos) {
             case Operativo_Masivo:
                 if (jdbcTemplate.update(sql.toString()) > 0) {
+                    regresar = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
                     regresar = true;
                 }
                 break;

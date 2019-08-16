@@ -25,96 +25,140 @@ import org.springframework.stereotype.Repository;
 @Repository("DaoActivacion")
 @Profile("jdbc")
 public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacion {
-    
-    @Autowired    
+
+    @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
-    
+
+    @Autowired
+    @Qualifier("jdbcTemplateOclEge")
+    private JdbcTemplate jdbcTemplateoclEge;
+
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
 //    private String schemaocl;
-    
 //    @Autowired
 //    @Qualifier("schemaSarePG")
 //    private String schemapg;
-    
-    @Autowired    
+    @Autowired
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
 
-    
-    
-    public enum MetodosActivacion
-    {
-       ActivaClaveUnicaInmuebles,ActivaClaveUnicaUESUC,ActivaClaveUnicaUECOMPLEMENTO, ActivaClaveUnicaUEPG
+    public enum MetodosActivacion {
+        ActivaClaveUnicaInmuebles, ActivaClaveUnicaUESUC, ActivaClaveUnicaUECOMPLEMENTO, ActivaClaveUnicaUEPG
     }
 
     @Override
     public boolean activaCveUnicaInmuebles(Integer proyecto, String id_ue) {
-        boolean regresa=false;
-         StringBuilder sql;
-         proyectos=getProyecto(proyecto);
-         sql = getSql(proyectos,MetodosActivacion.ActivaClaveUnicaInmuebles);
-        if(jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue})>0)
-        {
-          regresa=true; 
+        boolean regresa = false;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
+                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
         }
-        
+
         return regresa;
     }
+
     @Override
     public boolean activaCveUnicaUESuc(Integer proyecto, String id_ue) {
-        boolean regresa=false;
-         StringBuilder sql;
-         proyectos=getProyecto(proyecto);
-         sql = getSql(proyectos,MetodosActivacion.ActivaClaveUnicaUESUC);
-        if(jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue})>0)
-        {
-          regresa=true; 
+        boolean regresa = false;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
+                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
         }
-        
+
         return regresa;
     }
+
     @Override
     public boolean activaCveUnicaUEcomplemento(Integer proyecto, String id_ue) {
-        boolean regresa=false;
-         StringBuilder sql;
-         proyectos=getProyecto(proyecto);
-         sql = getSql(proyectos,MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
-        if(jdbcTemplateocl.update(sql.toString(),new Object[]{id_ue})>0)
-        {
-          regresa=true; 
+        boolean regresa = false;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
+                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
         }
-        
+
         return regresa;
     }
+
     @Override
     public int activaCveUnicaUEPG(Integer proyecto, cat_bitacora_activacion_id_unidad_economica cat_bitacora_activacion) {
         int regresa = 0;
-         StringBuilder sql;
-         proyectos=getProyecto(proyecto);
-        sql = getSql(proyectos,MetodosActivacion.ActivaClaveUnicaUEPG);
-        regresa=jdbcTemplate.query(sql.toString(),new Object[]{cat_bitacora_activacion.getCve_unica(),cat_bitacora_activacion.getUsuario(),cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() 
-        {
-            @Override
-            public Integer extractData(ResultSet rs) throws SQLException, DataAccessException 
-            {
-               int fila = 0;
-                while (rs.next()) 
-                {
-                    fila=rs.getInt("activa");
-                }
-                return fila;
-            }
-        });
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
+                regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
+                    @Override
+                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        int fila = 0;
+                        while (rs.next()) {
+                            fila = rs.getInt("activa");
+                        }
+                        return fila;
+                    }
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
+                regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
+                    @Override
+                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        int fila = 0;
+                        while (rs.next()) {
+                            fila = rs.getInt("activa");
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
-    public StringBuilder getSql(ProyectosEnum proyectos, MetodosActivacion metodo)
-    {
-        StringBuilder sql=new StringBuilder();
-        String esquemaPos,esquemaOcl;
-        switch(proyectos)
-        {
+
+    public StringBuilder getSql(ProyectosEnum proyectos, MetodosActivacion metodo) {
+        StringBuilder sql = new StringBuilder();
+        String esquemaPos, esquemaOcl;
+        switch (proyectos) {
             case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
@@ -123,28 +167,25 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
             case Transportes:
-                esquemaPos=getEsquemaPostgres(proyectos);
-                esquemaOcl=getEsquemaOracle(proyectos);
-                switch(metodo)
-                {
+                esquemaPos = getEsquemaPostgres(proyectos);
+                esquemaOcl = getEsquemaOracle(proyectos);
+                switch (metodo) {
                     case ActivaClaveUnicaInmuebles:
-                      sql.append("update ").append(esquemaOcl).append(".TR_INMUEBLES  set baja=1 where ID_UE=?");
-                      break;
+                        sql.append("update ").append(esquemaOcl).append(".TR_INMUEBLES  set baja=1 where ID_UE=?");
+                        break;
                     case ActivaClaveUnicaUESUC:
-                      sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='10' where ID_UE=?");
-                      break;
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_SUC set SARE_ST='10' where ID_UE=?");
+                        break;
                     case ActivaClaveUnicaUECOMPLEMENTO:
-                      sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=NULL, SARE_ST_TIME=NULL where ID_UE=?");
-                      break;
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=NULL, SARE_ST_TIME=NULL where ID_UE=?");
+                        break;
                     case ActivaClaveUnicaUEPG:
-                      sql.append("select ").append(esquemaPos).append(".activa_cve_unica(?,?,?) activa");
-                      break;
+                        sql.append("select ").append(esquemaPos).append(".activa_cve_unica(?,?,?) activa");
+                        break;
                 }
-            break;
+                break;
         }
         return sql;
     }
-    
-    
-    
+
 }

@@ -34,6 +34,10 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
 
+    @Autowired
+    @Qualifier("jdbcTemplateOclEge")
+    private JdbcTemplate jdbcTemplateoclEge;
+
 //    @Autowired
 //    @Qualifier("schemaSareOcl")
 //    private String schemaocl;
@@ -126,22 +130,43 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
 
     @Override
     public boolean Validatelocalidades(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateLocalidades);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+            case MasivoOtros:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateLocalidades);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateLocalidades);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -150,31 +175,64 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaLocalidades);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case MasivoOtros:
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaLocalidades);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaLocalidades);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateEjes(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.Validateejes);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Validateejes);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Validateejes);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -183,31 +241,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insertaejes);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insertaejes);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insertaejes);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateAgebs(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateAgebs);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateAgebs);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateAgebs);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -216,31 +305,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaAgebs);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaAgebs);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaAgebs);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTrAgebs(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrAgebs);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrAgebs);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrAgebs);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -249,31 +369,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrAgebs);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrAgebs);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrAgebs);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTcManzanas(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcManzanas);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcManzanas);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcManzanas);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -282,31 +433,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcManzanas);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcManzanas);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcManzanas);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTrManzanas(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrManzanas);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrManzanas);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrManzanas);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -315,31 +497,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrManzanas);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrManzanas);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrManzanas);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTrLocalidades(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrLocalidades);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrLocalidades);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrLocalidades);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -348,31 +561,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrLocalidades);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrLocalidades);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrLocalidades);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTrFrentes(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrFrentes);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrFrentes);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrFrentes);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
@@ -381,48 +625,97 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        ConsultaSecuenciaFrentes(proyecto, inmueble, usuario);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrFrentes);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                ConsultaSecuenciaFrentes(proyecto, inmueble, usuario);
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrFrentes);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                ConsultaSecuenciaFrentes(proyecto, inmueble, usuario);
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrFrentes);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
     @Override
     public boolean ValidateTcFrentes(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcFrentes);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean fila = false;
-                while (rs.next()) {
-                    if (rs.getInt("ENCONTRADO") > 0) {
-                        fila = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcFrentes);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
                     }
-                }
-                return fila;
-            }
-        });
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcFrentes);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean fila = false;
+                        while (rs.next()) {
+                            if (rs.getInt("ENCONTRADO") > 0) {
+                                fila = true;
+                            }
+                        }
+                        return fila;
+                    }
+                });
+                break;
+        }
+
         return regresa;
     }
 
     public BigDecimal ConsultaSecuenciaFrentes(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ConsultaSecuenciaFrentes);
-        secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
-            @Override
-            public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
-                while (rs.next()) {
-                    secuencia = rs.getBigDecimal("secuencia");
-                }
-                return secuencia;
-            }
-        });
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ConsultaSecuenciaFrentes);
+                secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                    @Override
+                    public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        while (rs.next()) {
+                            secuencia = rs.getBigDecimal("secuencia");
+                        }
+                        return secuencia;
+                    }
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ConsultaSecuenciaFrentes);
+                secuencia = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                    @Override
+                    public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        while (rs.next()) {
+                            secuencia = rs.getBigDecimal("secuencia");
+                        }
+                        return secuencia;
+                    }
+                });
+                break;
+        }
+
         return secuencia;
 
     }
@@ -432,10 +725,21 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcFrentes);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcFrentes);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcFrentes);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
@@ -444,10 +748,21 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.UpdateTrUESUC);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.UpdateTrUESUC);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.UpdateTrUESUC);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
@@ -463,23 +778,43 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
     }
 
     private boolean buscaTr_UE_Complemento(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         user = usuario;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Ue_Complemento);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean regresar;
-                Integer fila = null;
-                while (rs.next()) {
-                    fila = rs.getInt(1);
-                }
-                regresar = fila > 0;
-                return regresar;
-            }
-        });
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Ue_Complemento);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean regresar;
+                        Integer fila = null;
+                        while (rs.next()) {
+                            fila = rs.getInt(1);
+                        }
+                        regresar = fila > 0;
+                        return regresar;
+                    }
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Ue_Complemento);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean regresar;
+                        Integer fila = null;
+                        while (rs.next()) {
+                            fila = rs.getInt(1);
+                        }
+                        regresar = fila > 0;
+                        return regresar;
+                    }
+                });
+                break;
+        }
+
         return regresa;
 
     }
@@ -489,10 +824,21 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_UE_Complemento);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_UE_Complemento);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_UE_Complemento);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
 
     }
@@ -502,33 +848,62 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insert_Tr_UE_Complemento);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insert_Tr_UE_Complemento);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insert_Tr_UE_Complemento);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
 
     }
 
     private boolean buscaTr_Inmuebles(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
-        boolean regresa;
+        boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Inmuebles);
-        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
-            @Override
-            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
-                boolean regresar;
-                Integer fila = null;
-                while (rs.next()) {
-                    fila = rs.getInt(1);
-                }
-                regresar = fila > 0;
-                return regresar;
-            }
-        });
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Inmuebles);
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean regresar;
+                        Integer fila = null;
+                        while (rs.next()) {
+                            fila = rs.getInt(1);
+                        }
+                        regresar = fila > 0;
+                        return regresar;
+                    }
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Inmuebles);
+                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                    @Override
+                    public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        boolean regresar;
+                        Integer fila = null;
+                        while (rs.next()) {
+                            fila = rs.getInt(1);
+                        }
+                        regresar = fila > 0;
+                        return regresar;
+                    }
+                });
+                break;
+        }
         return regresa;
-
     }
 
     private boolean UpdateTr_Inmuebles(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
@@ -536,14 +911,29 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_Inmuebles);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_Inmuebles);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
 
-            if (InsertaTr_Inmuebles(proyecto, inmueble, usuario)) {
-                inmueble.setId_inmueble(secuencia);
-                regresa = true;
-            }
+                    if (InsertaTr_Inmuebles(proyecto, inmueble, usuario)) {
+                        inmueble.setId_inmueble(secuencia);
+                        regresa = true;
+                    }
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_Inmuebles);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+
+                    if (InsertaTr_Inmuebles(proyecto, inmueble, usuario)) {
+                        inmueble.setId_inmueble(secuencia);
+                        regresa = true;
+                    }
+                }
+                break;
         }
+
         return regresa;
 
     }
@@ -555,11 +945,23 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         secuencia = getSecuenciaTrInmuebles(proyecto, inmueble, usuario);
         coordenadas = TransformaCartografia(proyecto, "mer", String.valueOf(inmueble.getCOORD_X()), String.valueOf(inmueble.getCOORD_Y()));
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, coordenadas, Metodossincroniza.Insert_Tr_Inmuebles);
-        if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            inmueble.setId_inmueble(secuencia);
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, coordenadas, Metodossincroniza.Insert_Tr_Inmuebles);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    inmueble.setId_inmueble(secuencia);
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, coordenadas, Metodossincroniza.Insert_Tr_Inmuebles);
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                    inmueble.setId_inmueble(secuencia);
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
 
     }
@@ -567,17 +969,35 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
     private BigDecimal getSecuenciaTrInmuebles(Integer proyecto, cat_vw_punteo_sare inmueble, String usuario) {
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.getSecuenciaTrInmuebles);
-        secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
-            @Override
-            public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
-                BigDecimal regresar = null;
-                while (rs.next()) {
-                    regresar = rs.getBigDecimal("secuencia");
-                }
-                return regresar;
-            }
-        });
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.getSecuenciaTrInmuebles);
+                secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                    @Override
+                    public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        BigDecimal regresar = null;
+                        while (rs.next()) {
+                            regresar = rs.getBigDecimal("secuencia");
+                        }
+                        return regresar;
+                    }
+                });
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.getSecuenciaTrInmuebles);
+                secuencia = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                    @Override
+                    public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        BigDecimal regresar = null;
+                        while (rs.next()) {
+                            regresar = rs.getBigDecimal("secuencia");
+                        }
+                        return regresar;
+                    }
+                });
+                break;
+        }
+
         return secuencia;
     }
 
@@ -598,13 +1018,27 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
-        if (jdbcTemplate.update(sql.toString()) > 0) {
-            if (inmueble.getId_inmueble() == null) {
-                inmueble.setId_inmueble(inmueble.getID_UE());
-            }
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
+                if (jdbcTemplate.update(sql.toString()) > 0) {
+                    if (inmueble.getId_inmueble() == null) {
+                        inmueble.setId_inmueble(inmueble.getID_UE());
+                    }
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
+                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    if (inmueble.getId_inmueble() == null) {
+                        inmueble.setId_inmueble(inmueble.getID_UE());
+                    }
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 
@@ -614,10 +1048,21 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         boolean regresa = false;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
-        sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaIdUE);
-        if (jdbcTemplate.update(sql.toString()) > 0) {
-            regresa = true;
+        switch (proyectos) {
+            case Operativo_Masivo:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaIdUE);
+                if (jdbcTemplate.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaIdUE);
+                if (jdbcTemplate.update(sql.toString()) > 0) {
+                    regresa = true;
+                }
+                break;
         }
+
         return regresa;
     }
 

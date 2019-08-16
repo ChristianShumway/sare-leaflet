@@ -55,6 +55,10 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
+    
+    @Autowired
+    @Qualifier("jdbcTemplateOclEge")
+    private JdbcTemplate jdbcTemplateoclEge;
 
     String resultado;
     boolean isMza;
@@ -104,9 +108,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql = getSql(super.proyectos, "", x, y, Metodo.TIPOAREA);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 resultado = execSqlTipoAreaPg(sql);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -172,9 +176,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 isMza = execSqlisPuntoinMzaPg(sql, point);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -228,9 +232,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         String point = "POINT(" + x + " " + y + ")";
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 entidad = execSqlEntidadPg(sql, point);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -351,9 +355,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql = getSql(super.proyectos, ce, x, y, Metodo.GETPUNTEO);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 ubicacion_punteo = execSqlInfoPunteoUrbanoPg(sql);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -442,9 +446,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql = getSql(super.proyectos, ent, x, y, Metodo.VALPUNTEO);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 cat_vial = execSqlValidaInfoPunteoUrbanoPg(sql, ent, cve_geo, cve_ft);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -542,9 +546,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql = getSql(super.proyectos, "", x, y, Metodo.GETPUNTEORURAL);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 ubicacion_punteo = execInfoPunteoRuralPg(sql);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -633,9 +637,9 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         sql = getSql(super.proyectos, ent, x, y, Metodo.FRENTES_PROXIMOS);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 regresar = execSqlisFrentesProximosPg(sql);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -691,6 +695,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyecto) {
 
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
             case MasivoOtros:
                 switch (metodo) {
                     case TIPOAREA:
@@ -780,7 +785,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         break;                                               
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
