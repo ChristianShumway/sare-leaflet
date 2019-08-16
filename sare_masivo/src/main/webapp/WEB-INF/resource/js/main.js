@@ -1010,7 +1010,6 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
     if (data[0].operation) {
       swal.close();
       bandera=false;
-      console.log(data)
       let dataFrente = data[0].datos.datos[0]
       let datamessage = data[0].datos.mensaje
       
@@ -1183,13 +1182,8 @@ const muestraConglomerados = (data, nuevo = '') => {
             <span> ${conglomerado.idUoMasivo} </span>
           </div>
         </li> `
-        console.log(" el poligono que va a pintar es ");
-        console.log(poligono);
-         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'}; 
-        
-
-          MDM6('addPolygon',poligono,paramsNew); 
-        
+         var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'};         
+          MDM6('addPolygon',poligono,paramsNew);         
     })
   }
 }
