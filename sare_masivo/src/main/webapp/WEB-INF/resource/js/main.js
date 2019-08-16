@@ -189,6 +189,7 @@ const findUE = id_ue => {
   //document.getElementById("catorigen").style.display='none';
   //document.getElementById("catc154").style.display='none';
   //document.getElementById("filtroXclase").style.display='none';
+  id_ue=id_ue.trim();
   if (!/^([0-9])*$/.test(id_ue)) {
     Swal.fire({
       position: 'bottom-end',
@@ -2776,7 +2777,7 @@ const opcionMenu = opcion => {
   }     
 } 
 
-const openReportesAjax=(opcion)=>{
+const openReportesAjax=(opcion,opcionSeleccion)=>{
         var xhr = new XMLHttpRequest();
         xhr.open('POST', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
@@ -2795,11 +2796,12 @@ const openReportesAjax=(opcion)=>{
         if (this.status == 200) {
             swal.close();
             var blob = new Blob([this.response], {type: 'application/pdf'});
-            //var link = document.createElement('a');
+            var link = document.createElement('a');
             var file = window.URL.createObjectURL(this.response);
             if(this.response.type=='application/pdf')
-            {
-                Swal.fire({
+            {   
+               if (opcionSeleccion === 'ver'){
+                   Swal.fire({
                     title: '<strong>Reporte</strong>',
                     width: '100%', 
                     html: `<iframe class='iframe-reporte' src=""></iframe>`,
@@ -2808,11 +2810,15 @@ const openReportesAjax=(opcion)=>{
                     showConfirmButton: false,
                     focusConfirm: false,
                 })
-                 var file = window.URL.createObjectURL(this.response);
                  document.querySelector("iframe").src = file;
-    //            link.download = "reporte.pdf";
-    //            link.click(); 
-                //swal.close();
+                 swal.close();
+               }else{
+                   var file = window.URL.createObjectURL(this.response);
+                   link.setAttribute("href", file);                   
+                   link.download = "reporte.pdf";
+                   link.click(); 
+                   swal.close();
+               }               
             }else{
                 Swal.fire({
                     position: 'bottom-end',
@@ -2867,13 +2873,7 @@ async function optionButtonsReport(report)  {
       }
     }
   })
-
-  if (option) {
-    if (option === 'ver'){
-      openReportesAjax(report)
-    }
-    //Swal.fire({ html: 'You selected: ' + option + report})
-  }
+  openReportesAjax(report,option)     
 }
 
 async function OpenReportes (size, action) {
