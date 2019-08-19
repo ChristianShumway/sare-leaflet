@@ -264,6 +264,7 @@ const callServiceFindUE=(id_ue)=>{
       frente_destino=''
       manzana_origen=''
       manzana_destino=''
+      frenteExistente=false;
       claves=''
     } else {
       Swal.fire({
@@ -2594,6 +2595,7 @@ const handleCancelClick = () => {
   alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
   //llamar servicio que libera la clave y limpia el form si no limpia formulario
   id_uo_masivo != '' ? callServiceLiberaClave(id_uo_masivo) : cleanForm()
+  frenteExistente=false
 
 //  objForm.map(obj => {
 //    const wrapTitle = document.getElementById(obj.title)

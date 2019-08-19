@@ -406,7 +406,7 @@
                       <p class="title-ref"> Clave Frente <span> (Origen) </span></p>
                       <span class="desc-ref" id="cve-frente-origen">Clave Origen</span>
 
-                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <h5 class="title-conglomerados"></h5>
                       <div class="wrap-list-conglomerados">
                         <ul class="list-conglomerados" id="list-conglomerados">
                         </ul>
@@ -417,7 +417,7 @@
                       <p class="title-ref"> Clave Frente <span> (Destino) </span></p>
                       <span class="desc-ref" id="cve-frente-destino">Clave Destino</span>
 
-                      <h5 class="title-conglomerados">CONGLOMERADOS</h5>
+                      <h5 class="title-conglomerados"></h5>
                       <div class="wrap-list-conglomerados">
                         <ul class="list-conglomerados" id="list-conglomerados-destino">
                           <!--

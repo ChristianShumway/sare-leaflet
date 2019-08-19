@@ -3337,6 +3337,9 @@ const llamarServicioclases=(codigoScian, valor)=>{
             }else
             {
                 let codigo=codigoScian.length;
+                if(codigoScian.includes('-')){
+                    codigo=2;
+                }
             switch(codigo)
             {
                 case 2:
