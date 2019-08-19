@@ -293,7 +293,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         sql = new StringBuilder();
         //sql = sql.append(" select astext(ST_Transform((ST_SetSRID(ST_MakePoint('").append(x).append("','").append(y).append("'),6372)),900913))  as geometria");             
-        sql.append("select st_astext(st_transform(st_buffer(ST_GeomFromText(' point(").append(x).append(" ").append(y).append(" )',6372),3),900913)) as geometria ");
+        sql.append("select st_astext(st_transform(st_buffer(ST_GeomFromText(' point(").append(x).append(" ").append(y).append(" )',6372),1),900913)) as geometria ");
         cveManzana = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {

@@ -1075,6 +1075,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           //MDM6('customPolygon',parametros);          
            var paramsNew={fColor:"#ff7e00",lSize:10,lColor:"#ff7e00",lType:"line",type:'georeference'};        
           MDM6('addPolygon',poligono,paramsNew); 
+        }else{
+            var paramsNew={fColor:"#2E384A",lSize:10,lColor:"#2E384A",lType:"line",type:'georeference'};        
+          MDM6('addPolygon',poligono,paramsNew); 
         }
       }
 
