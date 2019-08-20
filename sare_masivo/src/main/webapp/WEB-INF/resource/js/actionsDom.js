@@ -460,8 +460,8 @@ document.onkeydown = handlePressCtrKeyAndKeyCode
 
 
 const addAttributeTitle = () => {
-  //const urlApi = 'http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6'
- const urlApi = 'https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6&d=gaia.inegi.org.mx'
+ const urlApi = 'http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6'
+// const urlApi = 'https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6&d=gaia.inegi.org.mx'
   const script = document.createElement('script')
   script.src = urlApi
   script.addEventListener('load', postLoadFunction)

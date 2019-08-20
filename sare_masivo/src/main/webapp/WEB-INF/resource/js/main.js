@@ -1188,9 +1188,12 @@ const muestraConglomerados = (data, nuevo = '') => {
           </div>
         </li> `
          var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'};         
-          MDM6('addPolygon',poligono,paramsNew);         
+          MDM6('addPolygon',poligono,paramsNew);   
+          var parametrosBorrar={action:'del'};  
+         MDM6('deletePolygons');
     })
   }
+     MDM6('deletePolygons');
 }
 
 const seleccionarNuevoFrente = () => {

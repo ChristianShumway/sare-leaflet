@@ -84,7 +84,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             tabla[1] = "td_municipios";
             tabla[2] = "td_localidades";
             tabla[3] = "td_ageb";
-            tabla[4] = "td_frentes";
+            tabla[4] = "vw_tr_frentes";
             tabla[5] = "cat_tipovialidad";
             tabla_rural[0] = "td_localidades_rurales_lpr";
             tabla_rural[1] = "td_ageb_rural";
