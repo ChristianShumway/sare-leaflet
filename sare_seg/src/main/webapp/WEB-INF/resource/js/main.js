@@ -608,24 +608,18 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
 
     <div class='wrap-list items not-found wrap-inactive' id="wrap-list-not-found">
       <div class='item-lists'><span>No se encontraron claves disponibles para la Coordinación Estatal</span></div>
-    </div>
+    </div>`
     
-    <div id='container-cleelist' class='container-cleelist row'>
-      <div class='wrap-list'>
-        <div class='title-column'>Clave</div>
-        <div class='title-column'>Código</div>
-        <div class='title-column'>Status</div>
-      </div>`
-      console.log(inicioClavesVista)
-      console.log(posicionFinal)
-      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
-        let {idue, c154, status} = data[num]
-        tabla += `<div class='wrap-list items'>
-          <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
-          <div class='item-list'><span>${c154}</span></div>
-          <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
-        </div>`
-      }
+    switch(dataUserFromLoginLocalStorage.proyecto){
+        case 1:
+            tabla=FormarTablaSare(data,tabla,posicionFinal)
+            break;
+        case 5:
+            tabla=FormarTablaSareEstatus(data,tabla,posicionFinal)
+            break;
+        default:
+            
+    }
 
       tabla += `
         <ul class="pagination" id="pagination-clee">
@@ -647,6 +641,40 @@ const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioCla
     tabla +=`</div>`
 
   return tabla
+}
+
+const FormarTablaSareEstatus=(data,tabla,posicionFinal)=>{
+    tabla += `<div id='container-cleelist' class='container-cleelist row'>
+      <div class='wrap-list'>
+        <div class='title-column'>Clave</div>
+        <div class='title-column'>Código</div>
+        <div class='title-column'>Status</div>
+      </div>`
+      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+        let {idue, c154, status} = data[num]
+        tabla += `<div class='wrap-list items'>
+          <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
+          <div class='item-list'><span>${c154}</span></div>
+          <div class='item-list'><span>${status.replace('_', ' ')}</span></div>
+        </div>`
+      }
+      return tabla
+}
+
+const FormarTablaSare=(data,tabla,posicionFinal)=>{
+    tabla += `<div id='container-cleelist' class='container-cleelist row'>
+      <div class='wrap-list'>
+        <div class='title-column'>Clave</div>
+        <div class='title-column'>Código</div>
+      </div>`
+      for(let num = inicioClavesVista; num <= posicionFinal ; num ++){
+        let {idue, c154, status} = data[num]
+        tabla += `<div class='wrap-list items'>
+          <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
+          <div class='item-list'><span>${c154}</span></div>
+        </div>`
+      }
+      return tabla
 }
 
 const cleeListLock = (data, actualPaginaLock, inicioPaginacionLock, finPaginacionLock, inicioClavesVistaLock, finClavesVistaLock) => {
@@ -1117,8 +1145,18 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
-  realPunteo = punteo
-  punteo = 'U'
+  switch(dataUserFromLoginLocalStorage.proyecto){
+        case 1:
+            realPunteo = punteo
+            break;
+        case 5:
+            realPunteo = punteo
+            punteo = 'U'
+            break;
+        default:
+            
+    }
+  
   if(punteo === 'R' || ( punteo === 'U' && confirmacionPunteo )){
     if(fieldExists === false){
       tipoE10n.style.display = 'none'

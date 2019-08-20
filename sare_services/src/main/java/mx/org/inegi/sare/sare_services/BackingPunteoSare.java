@@ -81,9 +81,14 @@ public class BackingPunteoSare extends BackingBusquedaSare {
             }
         }
         if (isCE) {
-            String ta;
-            String punteoReal= InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());;
-            ta="U";
+            String ta="U";
+            String punteoReal= InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());
+            switch(proyecto)
+            {
+                case 1:
+                    ta=punteoReal;
+                    break;
+            }
             if (ta != null) {
                 if (TipoAreaEnum.URBANA.getArea().equals(ta)) {
                     if (InterfacePunteoSare.isPuntoinMza(proyecto, coordMercator.getX(), coordMercator.getY())) {
