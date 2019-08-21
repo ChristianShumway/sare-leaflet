@@ -1051,8 +1051,15 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       else {
         if (typeof data[0].datos.mensaje.type !== 'undefined') {
           if (data[0].datos.mensaje.type === 'confirmar') {
-              
-            showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+              switch(dataUserFromLoginLocalStorage.proyecto){
+                  case 1:
+                      showAlertPunteoConfirmaEge(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+                  break;
+                  case 5:
+                      showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
+                  break;
+              }
+            //showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
           }
           else {
             if (data[0].datos.mensaje.type === 'error') {
@@ -1389,6 +1396,34 @@ const showAlertPunteoConfirma = (data, title, text) =>{
       handleActionButtons('disabled')
        const cancelOption = document.getElementById('item-cancel-option')
        cancelOption.removeAttribute('disabled')
+    }
+  }) 
+}
+
+const showAlertPunteoConfirmaEge = (data, title, text) =>{
+   swal.fire ({
+    title,
+    text,
+    //type: 'error',
+    showCloseButton: false,
+    showConfirmButton: true,
+    confirmButtonColor: '#5562eb',
+    confirmButtonText: 'Confirmar',
+    showCancelButton: true,
+    cancelButtonColor: '#424242',
+    cancelButtonText: 'Cancelar',
+    allowEscapeKey: false,
+    allowOutsideClick: false,
+    customClass: 'swal-wide',
+  }).then ( result => {
+    if (result.value){
+      actualizaForm(data)
+      confirmacionPunteo = true
+      handleTipoPunteo()
+    } else if (result.dismiss == 'cancel'){
+      confirmacionPunteo = false
+      handleTipoPunteo()
+      funcionesNoRatificado()
     }
   }) 
 }

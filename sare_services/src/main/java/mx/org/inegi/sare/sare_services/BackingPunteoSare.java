@@ -38,21 +38,20 @@ public class BackingPunteoSare extends BackingBusquedaSare {
     @Autowired
     @Qualifier("DaoBusqueda")
     InterfaceBusquedaSare interfaceBusquedaSareConglomerado;
-    
+
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas InterfaceTransformaCoordenadas;
 
     cat_respuesta_services Respuesta = new cat_respuesta_services();
 
-    public String getTipoArea(Integer proyecto, String x, String y) throws Exception 
-    {
+    public String getTipoArea(Integer proyecto, String x, String y) throws Exception {
         String TipoArea = InterfacePunteoSare.getTipoArea(proyecto, x, y);
         return TipoArea;
     }
 
-    public cat_respuesta_services getDatabyCoords(Integer proyecto,String x, String y, String tc, Boolean isAlta, String ce, String id_ue){
-        Respuesta=new cat_respuesta_services();
+    public cat_respuesta_services getDatabyCoords(Integer proyecto, String x, String y, String tc, Boolean isAlta, String ce, String id_ue) {
+        Respuesta = new cat_respuesta_services();
         cat_coordenadas coordMercator;
         cat_ubicacion_punteo ubicacion_punteo = null;
         List<cat_vial> cat_vial = null;
@@ -68,25 +67,24 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         if (!isAlta) {
             List<cat_vw_punteo_sare> catBusquedaOracle = InterfaceBusquedaSare.busqueda(proyecto, tc, ce, "", 2, id_ue);
             if (catBusquedaOracle.size() > 0) {
-                if("00".equals(ce)){
-                   isCE=true; 
-                }else{
-                  if(Integer.valueOf(ce)<10){
-                      ce='0'+ce;
-                  }
-                  isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);  
+                if ("00".equals(ce)) {
+                    isCE = true;
+                } else {
+                    if (Integer.valueOf(ce) < 10) {
+                        ce = '0' + ce;
+                    }
+                    isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);
                 }
             } else {
                 Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "La UE no tiene una Coordinación Estatal asginada"));
             }
         }
         if (isCE) {
-            String ta="U";
-            String punteoReal= InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());
-            switch(proyecto)
-            {
+            String ta = "U";
+            String punteoReal = InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());
+            switch (proyecto) {
                 case 1:
-                    ta=punteoReal;
+                    ta = punteoReal;
                     break;
             }
             if (ta != null) {
@@ -132,22 +130,39 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                                 ubicacion_punteo.setE10_X(getVialidades(proyecto, ubicacion_punteo.getE10_X()));
                                 if (ubicacion_punteo.gettipo_e10n() != null && !ubicacion_punteo.gettipo_e10n().equals("")) {
                                     ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto, ubicacion_punteo.gettipo_e10n().toLowerCase()));
-                                    if(ubicacion_punteo.gettipo_e10()==null){
-                                       ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto, "otro (especifique)")); 
+                                    if (ubicacion_punteo.gettipo_e10() == null) {
+                                        ubicacion_punteo.settipo_e10(InterfacePunteoSare.getTipoVial(proyecto, "otro (especifique)"));
                                     }
                                 }
                             }
                             if (ubicacion_punteo.getMod_cat() == 2) {
                                 List<cat_vial> catVial = InterfacePunteoSare.getCatTipoVial(proyecto);
                                 ubicacion_punteo.setCatVial(catVial);
-                               // if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
-                                    Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
-                               // }
+                                switch (proyecto) {
+                                    case 1:
+                                        if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
+                                            Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
+                                        }
+                                        break;
+                                    case 5:
+                                        if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
+                                            Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
+                                        }
+                                        break;
+
+                                }
                             }
                             ubicacion_punteo.setPunteo(punteoReal);
                         } else {
-                            //Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
-                             Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
+                            switch (proyecto) {
+                                case 1:
+                                    Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
+                                    break;
+                                case 5:
+                                    Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
+                                    break;
+
+                            }
                         }
                     }
                 } else if (TipoAreaEnum.RURAL.getArea().equals(ta)) {
@@ -225,14 +240,14 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         return Respuesta;
     }
 
-    public cat_respuesta_services getListaUO(Integer proyecto,String ce, String cveManzana,String idDeftramo) {
+    public cat_respuesta_services getListaUO(Integer proyecto, String ce, String cveManzana, String idDeftramo) {
         Respuesta = new cat_respuesta_services();
-        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana,idDeftramo);
+        List<cat_uo> listaUO = InterfacePunteoSare.getListaUO(proyecto, cveManzana, idDeftramo);
         if (listaUO != null && listaUO.size() > 0) {
             for (cat_uo listaUO1 : listaUO) {
                 listaUO1.setGeometria(InterfacePunteoSare.getConversionPuntosAMercator(listaUO1.getX(), listaUO1.getY()));
-                if(!ce.equals("00")){
-                   interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
+                if (!ce.equals("00")) {
+                    interfaceBusquedaSareConglomerado.ocupaCveunicaOCL(proyecto, listaUO1.getIdUoMasivo());
                 }
 
             }
@@ -242,6 +257,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         }
         return Respuesta;
     }
+
     public List<cat_vial> getVialidades(Integer proyecto, List<cat_vial> vialidades) {
         List<cat_vial> returnVialidades = new ArrayList<>();
         String tipo_vial = null;
