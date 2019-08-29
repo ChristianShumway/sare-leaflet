@@ -1864,15 +1864,15 @@ const validationsBack=(ObjectRequest)=>
         }
       } else {
         if(punteo=='U' && mod_cat=='2') {
-            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
-                return true
-            }else{
+//            if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
+//                return true
+//            }else{
                 if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objForm2Back))){
                     return true
                 }else{
                     return false
                 }
-            }
+            //}
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormPunteoEnFrenteBack))){
                 return true
             }else{

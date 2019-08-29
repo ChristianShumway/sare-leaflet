@@ -14,6 +14,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
+import mx.org.inegi.sare.sare_db.dto.TcCgo;
+import mx.org.inegi.sare.sare_db.dto.TdUo;
+import mx.org.inegi.sare.sare_db.dto.TrEtqVal;
+import mx.org.inegi.sare.sare_db.dto.TrPredios;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
@@ -107,7 +111,28 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
 
     }
     }
-
+    
+    public cat_respuesta_services getBusquedaConglomeradosUo() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        List<TdUo> lista=InterfaceBusquedaSare.busquedaUo();
+        Regresar.setDatos(lista);
+        return Regresar;
+    }
+    
+    public List<TrEtqVal> getBusquedaPredio() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        List<TrEtqVal> lista=InterfaceBusquedaSare.busquedaPredios();
+        Regresar.setDatos(lista);
+        return lista;
+    }
+    
+    public cat_respuesta_services getCgo() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        List<TcCgo> lista=InterfaceBusquedaSare.busquedaCGO();
+        Regresar.setDatos(lista);
+        return Regresar;
+    }
+    
     public cat_respuesta_services getBusquedaConglomerados(Integer proyecto, int t, String tramo, String ce, String usuario, String id_ue, Boolean consulta) throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         inicializaVariable(proyecto);

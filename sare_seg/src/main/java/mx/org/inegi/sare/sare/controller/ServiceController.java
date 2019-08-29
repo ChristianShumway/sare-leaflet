@@ -12,6 +12,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import mx.org.inegi.sare.sare_db.dto.TrEtqVal;
+import mx.org.inegi.sare.sare_db.dto.TrPredios;
 import mx.org.inegi.sare.sare_db.dto.cat_asentamientos_humanos;
 import mx.org.inegi.sare.sare_db.dto.cat_c154;
 import mx.org.inegi.sare.sare_db.dto.cat_codigo;
@@ -106,6 +108,21 @@ public class ServiceController {
     @RequestMapping(value = "getCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public List<cat_codigo_postal> getCP(@RequestParam(value = "cve_ent") String cve_ent, @RequestParam(value = "proyecto") Integer proyecto) throws Exception {
         return BackingValidacionesSare.getcatcp(cve_ent, proyecto);
+    }
+    
+    @RequestMapping(value = "getUo.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getUo() throws Exception {
+        return BackingBusqueda.getBusquedaConglomeradosUo();
+    }
+    
+    @RequestMapping(value = "getPredio.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TrEtqVal> getPredio() throws Exception {
+        return BackingBusqueda.getBusquedaPredio();
+    }
+    
+    @RequestMapping(value = "getCGO.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getCGO() throws Exception {
+        return BackingBusqueda.getCgo();
     }
     
     @RequestMapping(value = "validaCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
