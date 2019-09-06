@@ -15,13 +15,14 @@ import java.util.logging.Logger;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.TcCgo;
+import mx.org.inegi.sare.sare_db.dto.TdInmuebles;
 import mx.org.inegi.sare.sare_db.dto.TdUo;
 import mx.org.inegi.sare.sare_db.dto.TrEtqVal;
-import mx.org.inegi.sare.sare_db.dto.TrPredios;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
-import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.dto.resultadoPrediosEtqVal;
+import mx.org.inegi.sare.sare_db.interfaces.InmueblesRepository;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
@@ -52,6 +53,9 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas DaoTransformaCartografia;
+    
+    @Autowired
+    private InmueblesRepository InmueblesRepository;
 
     boolean mza800 = false;
     String[] tabla = new String[6];
@@ -112,6 +116,13 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     }
     }
     
+     public cat_respuesta_services getBusquedaInterface() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        List<resultadoPrediosEtqVal> lista=InmueblesRepository.fetchEmpDeptDataLeftJoin();
+        Regresar.setDatos(lista);
+        return Regresar;
+    }
+    
     public cat_respuesta_services getBusquedaConglomeradosUo() throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         List<TdUo> lista=InterfaceBusquedaSare.busquedaUo();
@@ -119,16 +130,30 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
         return Regresar;
     }
     
-    public List<TrEtqVal> getBusquedaPredio() throws Exception {
+    public cat_respuesta_services getBusquedaConglomeradosinmuebles() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        List<TdInmuebles> lista=InterfaceBusquedaSare.busquedaInmuebles();
+        Regresar.setDatos(lista);
+        return Regresar;
+    }
+    
+    public cat_respuesta_services getBusquedaPredio() throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         List<TrEtqVal> lista=InterfaceBusquedaSare.busquedaPredios();
         Regresar.setDatos(lista);
-        return lista;
+        return Regresar;
     }
     
     public cat_respuesta_services getCgo() throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         List<TcCgo> lista=InterfaceBusquedaSare.busquedaCGO();
+        Regresar.setDatos(lista);
+        return Regresar;
+    }
+    
+    public cat_respuesta_services getClave() throws Exception {
+        cat_respuesta_services Regresar = new cat_respuesta_services();
+        Short lista=InterfaceBusquedaSare.busquedaCve();
         Regresar.setDatos(lista);
         return Regresar;
     }

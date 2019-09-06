@@ -115,14 +115,31 @@ public class ServiceController {
         return BackingBusqueda.getBusquedaConglomeradosUo();
     }
     
+    @RequestMapping(value = "getInmuebles.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getInmuebles() throws Exception {
+        return BackingBusqueda.getBusquedaConglomeradosinmuebles();
+    }
+    
+    @RequestMapping(value = "getInterface.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getInterface() throws Exception {
+        return BackingBusqueda.getBusquedaInterface();
+    }
+    
+    
     @RequestMapping(value = "getPredio.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<TrEtqVal> getPredio() throws Exception {
-        return BackingBusqueda.getBusquedaPredio();
+    public cat_respuesta_services getPredio() throws Exception {
+        cat_respuesta_services supplier =BackingBusqueda.getBusquedaPredio();
+        return supplier;
     }
     
     @RequestMapping(value = "getCGO.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public cat_respuesta_services getCGO() throws Exception {
         return BackingBusqueda.getCgo();
+    }
+    
+    @RequestMapping(value = "getClave.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getClave() throws Exception {
+        return BackingBusqueda.getClave();
     }
     
     @RequestMapping(value = "validaCP.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

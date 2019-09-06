@@ -7,6 +7,7 @@
       <property name="javax.persistence.jdbc.user" value="censos2013"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
       <property name="javax.persistence.jdbc.password" value="censos_prueba"/>
+      <property name="hibernate.show_sql" value="true" />
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
     </properties>
   </persistence-unit>

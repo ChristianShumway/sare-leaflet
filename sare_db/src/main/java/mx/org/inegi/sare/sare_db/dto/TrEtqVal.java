@@ -5,25 +5,24 @@
  */
 package mx.org.inegi.sare.sare_db.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -133,7 +132,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TrEtqVal.findByY", query = "SELECT t FROM TrEtqVal t WHERE t.y = :y"),
     @NamedQuery(name = "TrEtqVal.findByStRn", query = "SELECT t FROM TrEtqVal t WHERE t.stRn = :stRn"),
     @NamedQuery(name = "TrEtqVal.findByIdCuestionario", query = "SELECT t FROM TrEtqVal t WHERE t.idCuestionario = :idCuestionario"),
-    @NamedQuery(name = "TrEtqVal.findByIdGrupo", query = "SELECT t FROM TrEtqVal t WHERE t.idGrupo = :idGrupo")})
+    @NamedQuery(name = "TrEtqVal.findByIdGrupo", query = "SELECT t FROM TrEtqVal t WHERE t.idCuestionario = :idCuestionario")})
 public class TrEtqVal implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -340,17 +339,19 @@ public class TrEtqVal implements Serializable {
     private Short stRn;
     @Column(name = "ID_CUESTIONARIO")
     private Long idCuestionario;
-    @Column(name = "ID_GRUPO")
-    private Long idGrupo;
+//    @Column(name = "ID_GRUPO")
+//    private Long idGrupo;
 //    @OneToMany(mappedBy = "idUeAnt")
 //    private Collection<TrPredios> trPrediosCollection;
 //    @OneToMany(mappedBy = "idUe")
 //    private Collection<TrPredios> trPrediosCollection1;
     @JoinColumn(name = "TIPO_E14", referencedColumnName = "CVE_TIPO_ASEN")
     @ManyToOne
+    //@JsonIgnore
     private TcAsentamiento tipoE14;
     @JoinColumn(name = "E90", referencedColumnName = "ID_E90")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    //@JsonIgnore
     private TcE90TipoEstable e90;
     @JoinColumns({
         @JoinColumn(name = "E03", referencedColumnName = "CVE_ENT"),
@@ -359,30 +360,39 @@ public class TrEtqVal implements Serializable {
         @JoinColumn(name = "E06", referencedColumnName = "CVE_AGEB"),
         @JoinColumn(name = "E07", referencedColumnName = "CVE_MZA")})
     @ManyToOne(optional = false)
+    //@JsonIgnore
     private TcManzanas tcManzanas;
     @JoinColumn(name = "TIPO_E12P", referencedColumnName = "TIPO_E12P")
     @ManyToOne
+    //@JsonIgnore
     private TcPisos tipoE12p;
     @JoinColumn(name = "E17", referencedColumnName = "E17")
     @ManyToOne
+    //@JsonIgnore
     private TcScian e17;
     @JoinColumn(name = "TIPO_E19", referencedColumnName = "TIPO_E19")
     @ManyToOne
+    //@JsonIgnore
     private TcTipoConglomerado tipoE19;
     @JoinColumn(name = "TIPO_E10_A", referencedColumnName = "CVE_VIALIDAD")
     @ManyToOne
+    //@JsonIgnore
     private TcVialidades tipoE10A;
     @JoinColumn(name = "TIPO_E10_C", referencedColumnName = "CVE_VIALIDAD")
     @ManyToOne
+    //@JsonIgnore
     private TcVialidades tipoE10C;
     @JoinColumn(name = "TIPO_E10", referencedColumnName = "CVE_VIALIDAD")
     @ManyToOne
+    //@JsonIgnore
     private TcVialidades tipoE10;
     @JoinColumn(name = "TIPO_E10_B", referencedColumnName = "CVE_VIALIDAD")
     @ManyToOne
+    //@JsonIgnore
     private TcVialidades tipoE10B;
     @JoinColumn(name = "ID_CONGLOMERADO", referencedColumnName = "ID_CONGLOMERADO")
     @ManyToOne
+    //@JsonIgnore
     private TrConglomerado idConglomerado;
 //    @OneToMany(mappedBy = "idUeAnt")
 //    private Collection<TrInmuebles> trInmueblesCollection;
@@ -1193,13 +1203,13 @@ public class TrEtqVal implements Serializable {
         this.idCuestionario = idCuestionario;
     }
 
-    public Long getIdGrupo() {
-        return idGrupo;
-    }
-
-    public void setIdGrupo(Long idGrupo) {
-        this.idGrupo = idGrupo;
-    }
+//    public Long getIdGrupo() {
+//        return idGrupo;
+//    }
+//
+//    public void setIdGrupo(Long idGrupo) {
+//        this.idGrupo = idGrupo;
+//    }
 
 //    @XmlTransient
 //    public Collection<TrPredios> getTrPrediosCollection() {
