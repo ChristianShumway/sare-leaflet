@@ -10,20 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
 import javax.sql.DataSource;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
-import mx.org.inegi.sare.sare_db.dto.TcCgo;
-import mx.org.inegi.sare.sare_db.dto.TdInmuebles;
-import mx.org.inegi.sare.sare_db.dto.TdUo;
-import mx.org.inegi.sare.sare_db.dto.TrEtqVal;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
@@ -73,70 +64,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     public String esquemaPg;
 
-    public static EntityManager getEntityManager() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("DB");
-        EntityManager manager = factory.createEntityManager();
-        return manager;
-    }
-    public static EntityManager getEntityManagerOracle() {
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("desarrolloOcl");
-        EntityManager manager = factory.createEntityManager();
-        return manager;
-    }
-
-    @Override
-    public List<TdUo> busquedaUo() {
-        EntityManager manager = DaoBusquedaSare.getEntityManager();
-        TypedQuery<TdUo> consulta = (TypedQuery<TdUo>) manager.createNamedQuery("TdUo.findAll");
-        List<TdUo> lista = consulta.getResultList();
-        manager.close();
-        return lista;
-
-    }
     
-    @Override
-    public List<TdInmuebles> busquedaInmuebles() 
-    {
-        EntityManager manager = DaoBusquedaSare.getEntityManager();
-        //TypedQuery<TdInmuebles> consulta = manager.createQuery("select t from TdInmuebles t", TdInmuebles.class);
-        TypedQuery<TdInmuebles> consulta = (TypedQuery<TdInmuebles>) manager.createNamedQuery("TdInmuebles.findAll");
-        List<TdInmuebles> lista =  consulta.setMaxResults(5).getResultList();
-        Hibernate.initialize(lista);
-        manager.close();
-        return lista;
-    }
     
-    @Override
-    public List<TrEtqVal> busquedaPredios() 
-    {
-        EntityManager manager = DaoBusquedaSare.getEntityManagerOracle();
-        TypedQuery<TrEtqVal> consulta = (TypedQuery<TrEtqVal>) manager.createNamedQuery("TrEtqVal.findByIdUe").setParameter("idUe", 13028871L);
-        List<TrEtqVal> lista =  consulta.getResultList();
-        Hibernate.initialize(lista.get(0).getTipoE14().getCveTipoAsen());
-        manager.close();
-        return lista;
-    }
     
-    @Override
-    public Short busquedaCve() {
-        EntityManager manager = DaoBusquedaSare.getEntityManagerOracle();
-        TypedQuery<TrEtqVal> consulta = (TypedQuery<TrEtqVal>) manager.createNamedQuery("TrEtqVal.findByIdUe").setParameter("idUe", 13028871L);
-        List<TrEtqVal> lista =  consulta.getResultList();
-        Hibernate.initialize(lista.get(0).getTipoE14().getCveTipoAsen());
-        manager.close();
-        return lista.get(0).getTipoE14().getCveTipoAsen();
-
-    }
-    
-    @Override
-    public List<TcCgo> busquedaCGO() {
-        EntityManager manager = DaoBusquedaSare.getEntityManagerOracle();
-        TypedQuery<TcCgo> consulta = (TypedQuery<TcCgo>) manager.createNamedQuery("TcCgo.findAll");
-        List<TcCgo> lista = consulta.getResultList();
-        manager.close();
-        return lista;
-
-    }
 
     public enum MetodosBusqueda {
         BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,

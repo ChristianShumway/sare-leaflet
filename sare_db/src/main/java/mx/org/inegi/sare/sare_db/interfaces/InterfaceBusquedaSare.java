@@ -8,11 +8,6 @@ package mx.org.inegi.sare.sare_db.interfaces;
 import java.util.ArrayList;
 import java.util.List;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
-import mx.org.inegi.sare.sare_db.dto.TcCgo;
-import mx.org.inegi.sare.sare_db.dto.TdInmuebles;
-import mx.org.inegi.sare.sare_db.dto.TdUo;
-import mx.org.inegi.sare.sare_db.dto.TrEtqVal;
-import mx.org.inegi.sare.sare_db.dto.TrPredios;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 
 /**
@@ -22,16 +17,6 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 public interface InterfaceBusquedaSare {
     
     public List<cat_vw_punteo_sare> busqueda(Integer proyecto,String tramo, String ce, String usuario, int origen,String id_ue);
-    
-    public List<TdUo> busquedaUo();
-    
-    public List<TdInmuebles> busquedaInmuebles();
-   
-     public List<TrEtqVal> busquedaPredios();
-     
-     public List<TcCgo> busquedaCGO();
-     
-     public Short busquedaCve();
     
     public ArrayList<String> getClavesUnicasPG(Integer proyecto);
     
