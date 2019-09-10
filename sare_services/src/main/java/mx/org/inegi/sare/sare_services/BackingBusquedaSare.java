@@ -15,9 +15,9 @@ import java.util.logging.Logger;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
-import mx.org.inegi.sare.sare_db.dto.cat_frente_geometria;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
+import mx.org.inegi.sare.sare_db.dto.resultadoPrediosEtqVal;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
@@ -48,6 +48,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas DaoTransformaCartografia;
+    
 
     boolean mza800 = false;
     String[] tabla = new String[6];
@@ -107,7 +108,6 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
 
     }
     }
-
     public cat_respuesta_services getBusquedaConglomerados(Integer proyecto, int t, String tramo, String ce, String usuario, String id_ue, Boolean consulta) throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         inicializaVariable(proyecto);

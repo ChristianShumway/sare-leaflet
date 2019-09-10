@@ -771,6 +771,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                     case FRENTES_PROXIMOS:
                         sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent in (select cve_ent from ").append(schemapg).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
                         sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),20)))");
+                        break;
                     case CVEMANZANA:
                         sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nomgeo nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc,cveft,id_deftramo from ");
                         sql.append(schemapg).append(".vw_tr_frentes  frente");

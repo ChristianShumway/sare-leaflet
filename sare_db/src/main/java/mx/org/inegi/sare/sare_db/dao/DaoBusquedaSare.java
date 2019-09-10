@@ -10,8 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.sql.DataSource;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
@@ -65,6 +63,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     private JdbcTemplate jdbcTemplate;
 
     public String esquemaPg;
+
+    
+    
+    
 
     public enum MetodosBusqueda {
         BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
@@ -485,16 +487,16 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         String tipoE10;
         Object parametro = null;
         proyectos = getProyecto(proyecto);
-        switch(proyectos){
+        switch (proyectos) {
             case Establecimientos_GrandesY_Empresas_EGE:
-                tipoE10=String.valueOf(tipo);
-                parametro=tipoE10;
+                tipoE10 = String.valueOf(tipo);
+                parametro = tipoE10;
                 break;
             case Operativo_Masivo:
-                parametro=tipo;
+                parametro = tipo;
                 break;
             default:
-                parametro=tipo;
+                parametro = tipo;
         }
         sql = getSql(null, null, tabla, null, "", proyectos, "", "", 0, MetodosBusqueda.GETNOMBREBUSQUEDA, null);
 
