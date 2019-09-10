@@ -75,10 +75,10 @@ public class BackingReportes extends DaoTransformaCartografia {
                     break;
                 case Operativo_Masivo:
                     if (ce.equals("00")) {
-                        whereReporte = "and 1=1";
+                        whereReporte = "and ue.ID_CUESTIONARIO=54 and id_encuesta=38  and 1=1";
 
                     } else {
-                        whereReporte = " and ue.ce=" + ce + "";
+                        whereReporte = " and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and ue.ce=" + ce + "";
                     }
                     nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
