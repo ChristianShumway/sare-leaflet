@@ -63,6 +63,38 @@ public class BackingReportes extends DaoTransformaCartografia {
         URLImagen = request.getServletContext().getRealPath("/WEB-INF/reportes/imagenes/");
         try {
 
+            switch (proyectos) {
+                case MasivoOtros:
+                    if (ce.equals("00")) {
+                        whereReporte = " and 1=1";
+                    } else {
+                        whereReporte = " and inm.CVE_CE=" + ce + "";
+                    }
+                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    break;
+                case Operativo_Masivo:
+                    if (ce.equals("00")) {
+                        whereReporte = "and 1=1";
+
+                    } else {
+                        whereReporte = " and ue.ce=" + ce + "";
+                    }
+                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    break;
+                case Establecimientos_GrandesY_Empresas_EGE:
+                    if (ce.equals("00")) {
+                        whereReporte = " and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38  and 1=1";
+
+                    } else {
+                        whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and ue.ce=" + ce + "";
+                    }
+                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_ege.jrxml");
+                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    break;
+            }
+
             if (reporte.equals("2")) {
                 nombreArchivo = nombreArchivoJRXMLtecnico;
                 nombreArchivoAdescargar = "EstablecimientosPendientesPunteo";
@@ -74,25 +106,6 @@ public class BackingReportes extends DaoTransformaCartografia {
                 conne = InterfaceReportes.getDs().getConnection();
 
             }
-            switch (proyectos) {
-                case MasivoOtros:
-                    if (ce.equals("00")) {
-                        whereReporte = " and 1=1";
-                    } else {
-                        whereReporte = " and inm.CVE_CE=" + ce + "";
-                    }
-                    break;
-                case Operativo_Masivo:
-                    if (ce.equals("00")) {
-                        whereReporte = "and 1=1";
-                        
-                    } else {
-                        whereReporte = " and ue.ce=" + ce + "";
-                    }
-                    break;
-
-            }
-
             params.put("where", whereReporte);
             ProyectosEnum proyectos;
             proyectos = getProyecto(proyecto);
