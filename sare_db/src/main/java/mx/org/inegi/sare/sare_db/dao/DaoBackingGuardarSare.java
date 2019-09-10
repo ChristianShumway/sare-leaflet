@@ -178,6 +178,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         switch (proyectos) {
             case MasivoOtros:
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getE23A, "", false);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<String>() {
                     @Override
@@ -190,19 +191,19 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                     }
                 });
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, null, inmueble, MetodosGuardar.getE23A, "", false);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<String>() {
-                    @Override
-                    public String extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        String regresar = "";
-                        while (rs.next()) {
-                            regresar = rs.getString("E23A");
-                        }
-                        return regresar;
-                    }
-                });
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, null, inmueble, MetodosGuardar.getE23A, "", false);
+//                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<String>() {
+//                    @Override
+//                    public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                        String regresar = "";
+//                        while (rs.next()) {
+//                            regresar = rs.getString("E23A");
+//                        }
+//                        return regresar;
+//                    }
+//                });
+//                break;
         }
 
         return regresa;
@@ -216,6 +217,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         switch (proyectos) {
             case Operativo_Masivo:
             case MasivoOtros:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getidDeftramo, "", false);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Integer>() {
                     @Override
@@ -228,19 +230,19 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                     }
                 });
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, null, inmueble, MetodosGuardar.getidDeftramo, "", false);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Integer>() {
-                    @Override
-                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        Integer regresar = 0;
-                        while (rs.next()) {
-                            regresar = rs.getInt("id_deftramo");
-                        }
-                        return regresar;
-                    }
-                });
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, null, inmueble, MetodosGuardar.getidDeftramo, "", false);
+//                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Integer>() {
+//                    @Override
+//                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                        Integer regresar = 0;
+//                        while (rs.next()) {
+//                            regresar = rs.getInt("id_deftramo");
+//                        }
+//                        return regresar;
+//                    }
+//                });
+//                break;
         }
         return regresa;
     }
@@ -256,6 +258,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOk, "", false);
             switch (proyectos) {
                 case Operativo_Masivo:
+                case Establecimientos_GrandesY_Empresas_EGE:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;
                     }
@@ -263,11 +266,6 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 case MasivoOtros:
                     sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOkFrentes, "", false);
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
-                case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;
                     }
                     break;
@@ -291,12 +289,8 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOcupado, "", false);
             switch (proyectos) {
                 case Operativo_Masivo:
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
                 case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;
                     }
                     break;

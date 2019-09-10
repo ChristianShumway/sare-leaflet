@@ -132,7 +132,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
           String esquema="";
           switch(proyecto){
               case Establecimientos_GrandesY_Empresas_EGE:
-                  esquema="sare_mas2019_act";
+                  esquema="sare_ege2019_act";
               break;
               case Construccion:
                   esquema="sare_mas2019_act";
@@ -170,7 +170,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
           switch(proyecto)
           {
               case Establecimientos_GrandesY_Empresas_EGE:
-                  esquema="CE2019_SEG";
+                  esquema="ce2019_masrencal";
               break;
             case Construccion:
                 esquema="";

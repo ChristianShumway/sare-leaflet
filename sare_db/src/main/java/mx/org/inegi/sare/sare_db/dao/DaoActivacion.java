@@ -55,18 +55,19 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
 
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                    regresa = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
+//                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+//                    regresa = true;
+//                }
+//                break;
         }
 
         return regresa;
@@ -79,17 +80,18 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                    regresa = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
+//                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+//                    regresa = true;
+//                }
+//                break;
         }
 
         return regresa;
@@ -102,17 +104,18 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                    regresa = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
+//                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+//                    regresa = true;
+//                }
+//                break;
         }
 
         return regresa;
@@ -125,18 +128,6 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
-                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
-                regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
-                    @Override
-                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        int fila = 0;
-                        while (rs.next()) {
-                            fila = rs.getInt("activa");
-                        }
-                        return fila;
-                    }
-                });
-                break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
                 regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
@@ -150,6 +141,19 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
                     }
                 });
                 break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
+//                regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
+//                    @Override
+//                    public Integer extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                        int fila = 0;
+//                        while (rs.next()) {
+//                            fila = rs.getInt("activa");
+//                        }
+//                        return fila;
+//                    }
+//                });
+//                break;
         }
 
         return regresa;

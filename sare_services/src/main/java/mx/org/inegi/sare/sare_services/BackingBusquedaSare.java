@@ -17,7 +17,6 @@ import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
-import mx.org.inegi.sare.sare_db.dto.resultadoPrediosEtqVal;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfacePunteoSare;
@@ -443,6 +442,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         switch (proyectos) {
             case MasivoOtros:
+           
                 String id_uo[] = id_ue.split(",");
                 for (String id_uo_masivo : id_uo) {
                     if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_uo_masivo)) {
@@ -454,12 +454,21 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
 
                 break;
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_ue)) {
                     Regresar.setDatos("");
                 } else {
                     Regresar.setDatos("Error");
                 }
                 break;
+            default:
+                if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_ue)) {
+                    Regresar.setDatos("");
+                } else {
+                    Regresar.setDatos("Error");
+                }
+                break;
+                
 
         }
 

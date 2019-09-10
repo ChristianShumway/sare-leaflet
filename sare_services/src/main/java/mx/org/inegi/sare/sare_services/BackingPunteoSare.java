@@ -70,7 +70,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                 if ("00".equals(ce)) {
                     isCE = true;
                 } else {
-                    if (Integer.valueOf(ce) < 10) {
+                    if (ce.length() < 2) {
                         ce = '0' + ce;
                     }
                     isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);

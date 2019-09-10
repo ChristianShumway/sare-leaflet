@@ -229,7 +229,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                 });
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
-                regresar = jdbcTemplateoclEge.query(sql.toString(), new Object[]{id_ue}, new ResultSetExtractor<Boolean>() {
+                regresar = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -264,15 +264,16 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         sql = getSql(super.proyectos, ce,id_ue, Desbloqueo.updateUE);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario}) > 0) {
                     regresar = true;
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{usuario, id_ue}) > 0) {
-                    regresar = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                if (jdbcTemplate.update(sql.toString(), new Object[]{usuario}) > 0) {
+//                    regresar = true;
+//                }
+//                break;
             default:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{usuario, id_ue}) > 0) {
                     regresar = true;
@@ -290,15 +291,16 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         BigDecimal clave = new BigDecimal(id_ue);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario, clave, ce}) > 0) {
                     regresar = true;
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
-                    regresar = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
+//                    regresar = true;
+//                }
+//                break;
             default:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{usuario, clave}) > 0) {
                     regresar = true;
@@ -361,6 +363,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         esquemaOcl = getEsquemaOracle(proyectos);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
 
                 switch (desbloqueo) {
                     case VerificaDesbloqueo:
@@ -392,7 +395,6 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
 
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:

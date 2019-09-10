@@ -1020,6 +1020,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
                 if (jdbcTemplate.update(sql.toString()) > 0) {
                     if (inmueble.getId_inmueble() == null) {
@@ -1028,15 +1029,15 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                     regresa = true;
                 }
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
-                    if (inmueble.getId_inmueble() == null) {
-                        inmueble.setId_inmueble(inmueble.getID_UE());
-                    }
-                    regresa = true;
-                }
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
+//                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+//                    if (inmueble.getId_inmueble() == null) {
+//                        inmueble.setId_inmueble(inmueble.getID_UE());
+//                    }
+//                    regresa = true;
+//                }
+//                break;
         }
 
         return regresa;

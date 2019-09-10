@@ -214,7 +214,7 @@ public class BackingGuardar extends BackingSincroniza {
         }
         inmueble.setId_deftramo(new BigDecimal(deftramo));
         if (validadeftramo(deftramo)) {
-            inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE()));
+            inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE().substring(inmueble.getId_UE().length()-5, inmueble.getId_UE().length())));
         }
         object.setE23(inmueble.getE23());
         object.setId_deftramo(inmueble.getId_deftramo());
