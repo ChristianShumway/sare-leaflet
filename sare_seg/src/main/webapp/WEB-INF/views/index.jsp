@@ -391,10 +391,10 @@
                 <label for="v-calle">Vista Calle</label>
               </div>
 
-              <div class="radio-option">
+<!--              <div class="radio-option">
                 <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
                 <label for="puntear-alta">Puntear Alta</label>
-              </div>
+              </div>-->
 
             </div> 
           </div>

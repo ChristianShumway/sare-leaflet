@@ -108,6 +108,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         sql = getSql(proyectos, ce, tramo, UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo());
         switch (proyectos) {
             case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 resultado1 = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -120,19 +121,19 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     }
                 });
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
-                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
-                    @Override
-                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
-                        cat_get_claves fila;
-                        while (rs.next()) {
-                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("sare_st_usr"), rs.getString("sare_st_time"), rs.getString("DIFERENCIA_HORAS"), rs.getString("TIME_LOCK"));
-                            resultado1.add(fila);
-                        }
-                        return resultado1;
-                    }
-                });
-                break;
+//            case Establecimientos_GrandesY_Empresas_EGE:
+//                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+//                    @Override
+//                    public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
+//                        cat_get_claves fila;
+//                        while (rs.next()) {
+//                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("sare_st_usr"), rs.getString("sare_st_time"), rs.getString("DIFERENCIA_HORAS"), rs.getString("TIME_LOCK"));
+//                            resultado1.add(fila);
+//                        }
+//                        return resultado1;
+//                    }
+//                });
+//                break;
 
             default:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
@@ -198,10 +199,10 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         switch (proyecto) {
             case Operativo_Masivo:
             case MasivoOtros:
+            case Establecimientos_GrandesY_Empresas_EGE:
                 //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
                 sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
-            case Establecimientos_GrandesY_Empresas_EGE:
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -268,6 +269,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         } else if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS_BLOQUEADAS.getCódigo().equals(ue)) {
             switch (proyectos) {
                 case Operativo_Masivo:
+                case Establecimientos_GrandesY_Empresas_EGE:
                     if (ce.equals("00")) {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
@@ -296,32 +298,32 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
                     }
                     break;
-                case Establecimientos_GrandesY_Empresas_EGE:
-                    if (ce.equals("00")) {
-                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
-                                + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
-                                + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
-                                + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
-                                + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
-                                + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue "
-                                + "inner join ").
-                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)"
-                                + ">'00 01:00:00'))) order by time_lock desc");
-                    } else {
-                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
-                                + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
-                                + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
-                                + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
-                                + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
-                                + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
-                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue"
-                                + " inner join ").
-                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ue.ce=").append(ce).append(" and ue.sare_st='20' "
-                                + "and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
-
-                    }
-                    break;
+//                case Establecimientos_GrandesY_Empresas_EGE:
+//                    if (ce.equals("00")) {
+//                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+//                                + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
+//                                + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
+//                                + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
+//                                + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
+//                                + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
+//                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue "
+//                                + "inner join ").
+//                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ").append(" ue.sare_st='20' and (systimestamp-sare_st_time)"
+//                                + ">'00 01:00:00'))) order by time_lock desc");
+//                    } else {
+//                        sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
+//                                + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (SELECT id_ue, sare_st_usr, "
+//                                + "sare_st_time,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * 24, 24)) DIFERENCIA_HORAS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 24), 60)) "
+//                                + "DIFERENCIA_MINUTOS,TRUNC(MOD((FECHA_UNO - FECHA_DOS) * (60 * 60 * 24), 60)) DIFERENCIA_SEGUNDOS,TRUNC((FECHA_UNO - FECHA_DOS))"
+//                                + " DIFERENCIA_DIAS FROM (SELECT id_ue, sare_st_usr, sare_st_time,TO_DATE(LTRIM(FECHA_UNO,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_DATE"
+//                                + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(SYSTIMESTAMP, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
+//                                + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,ue.id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaOcl).append(".vw_punteo_sare ue"
+//                                + " inner join ").
+//                                append(esquemaOcl).append(".tr_ue_complemento com on ue.id_ue=com.id_ue where ue.ce=").append(ce).append(" and ue.sare_st='20' "
+//                                + "and (systimestamp-sare_st_time)>'00 01:00:00'))) order by time_lock desc");
+//
+//                    }
+//                    break;
                 default:
                     if (ce.equals("00")) {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "

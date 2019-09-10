@@ -166,17 +166,18 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
             switch (proyectos)
             {
                 case Operativo_Masivo:
+                case Establecimientos_GrandesY_Empresas_EGE:
                     if (jdbcTemplate.update(sql.toString()) > 0) 
                     {
                         regresar = true;
                     }
                     break;
-                case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) 
-                    {
-                        regresar = true;
-                    }
-                    break;
+//                case Establecimientos_GrandesY_Empresas_EGE:
+//                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) 
+//                    {
+//                        regresar = true;
+//                    }
+//                    break;
                 default:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) 
                     {
