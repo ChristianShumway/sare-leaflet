@@ -182,6 +182,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
+ MDM6('deletePolygons',null,'georeference'); 
   id_uo_masivo=id_ue;
   xycoorsx=''
   xycoorsy=''
@@ -1000,8 +1001,12 @@ const handlePunteo=(x,y,tc,r)=>{
 //Función que llama al servicio para el punteo de unidades economicas
 
 const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
-  bandera=true;
+  //MDM6('deletePolygons',null,'georeference'); 
+   
   //showalertpunteoloading();
+  console.log(" bandera_ratificar "+bandera_ratificar);
+  if(cveFrenteOrigen==''||cveFrenteDestino==''||cveFrenteOrigen==undefined||cveFrenteDestino==undefined){
+       bandera=true;
   sendAJAX(urlServices['serviceIdentify'].url, 
   {
     'proyecto':dataUserFromLoginLocalStorage.proyecto,
@@ -1030,9 +1035,8 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           }
         };
         muestraInfoFrente(dataFrente)
-        iddeftramo=dataFrente.id_deftramo
-        frente_destino=dataFrente.cveft
-        manzana_destino=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
+        iddeftramo=dataFrente.id_deftramo    
+        console.log("frente destino #$#$#$#$#$#$#$#$#$#$#$"+frente_destino);
         if (!frenteExistente){
             //frente_origen=dataFrente.cveft
             manzana_origen=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza
@@ -1073,15 +1077,18 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
               )
           })  
           
-          //MDM6('customPolygon',parametros);          
-           var paramsNew={fColor:"#ff7e00",lSize:10,lColor:"#ff7e00",lType:"line",type:'georeference'};        
-          MDM6('addPolygon',poligono,paramsNew); 
+          //MDM6('customPolygon',parametros);    
+          var paramsNew={fColor:"#ff7e00",lSize:2,lColor:"#ff7e00",lType:"polygon",type:'georeference'};        
+          //MDM6('deletePolygons',null,'georeference'); 
+          MDM6('addPolygon',poligono,paramsNew);                                  
         }else{
-            var paramsNew={fColor:"#2E384A",lSize:10,lColor:"#2E384A",lType:"line",type:'georeference'};        
-          MDM6('addPolygon',poligono,paramsNew); 
+              frente_destino=dataFrente.cveft
+        manzana_destino=dataFrente.cve_ent+dataFrente.cve_mun+dataFrente.cve_loc+dataFrente.cve_ageb+dataFrente.cve_mza 
+            //MDM6('deletePolygons',null,'georeference'); 
+            var paramsNew={fColor:"#2E384A",lSize:2,lColor:"#2E384A",lType:"line",type:'georeference'};        
+            MDM6('addPolygon',poligono,paramsNew);                     
         }
       }
-
       // showalertpunteoloading();
       if (typeof data[0].datos.mensaje.messages === 'undefined' || data[0].datos.mensaje.messages === null ) {
         /*confirmacionPunteo = false
@@ -1130,7 +1137,10 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
       dismiss => { }
       )
      
-  })
+  })   
+  }else{
+       showAlertPunteo('Aviso','Ya has seleccionado el frente origen y el frente destino ')
+  }
 }
 
 const muestraInfoFrente = data => {
@@ -1138,11 +1148,11 @@ const muestraInfoFrente = data => {
   const cveFrenteDestinoId = document.getElementById('cve-frente-destino')
   const wrapMoverConglomerados = document.getElementById('wrap-mover-conglomerados')
   if (!frenteExistente) {
-    cveFrenteOrigen = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza}`
+    cveFrenteOrigen = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza} ${data.cveft}`
     cveFrenteOrigenId.innerHTML = cveFrenteOrigen
     cveFrenteDestinoId.innerHTML = 'Clave Destino'  
   } else {
-    cveFrenteDestino = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza}`
+    cveFrenteDestino = `${data.cve_ent} ${data.cve_mun} ${data.cve_loc} ${data.cve_ageb} ${data.cve_mza} ${data.cveft}`
     wrapMoverConglomerados.style.display = 'block'
     cveFrenteDestinoId.innerHTML = cveFrenteDestino
   }
@@ -1189,11 +1199,9 @@ const muestraConglomerados = (data, nuevo = '') => {
         </li> `
          var paramsNew={fColor:"#000000",lSize:2,lColor:"#000000",lType:"line",type:'georeference'};         
           MDM6('addPolygon',poligono,paramsNew);   
-          var parametrosBorrar={action:'del'};  
-         MDM6('deletePolygons');
+          var parametrosBorrar={action:'del'};          
     })
-  }
-     MDM6('deletePolygons');
+  }     
 }
 
 const seleccionarNuevoFrente = () => {
@@ -2622,6 +2630,8 @@ const handleCancelClick = () => {
 
     handleReturnContainerForm(nameContainerFloating)
   } 
+  cveFrenteOrigen=''
+  cveFrenteDestino=''
   //id_ue=document.getElementById('id_UE').value;
 
 }
