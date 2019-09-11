@@ -24,6 +24,33 @@ public enum ProyectosEnum {
     Organismos_Operadores_De_Agua(8),
     MasivoOtros(9);
     
+    public enum MetodosBusqueda {
+        BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
+        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO, BUSQUEDAMASIVOOTROS, OCUPACVEUNICACONGLOMERADO, LIBERACLAVEUNICAORACLEOTROS
+    }
+    
+    public class MetodosBusquedaClass {
+
+        MetodosBusqueda metodo;
+
+        public MetodosBusquedaClass(MetodosBusqueda metodo) {
+            this.metodo = metodo;
+        }
+    }
+    
+    public class Proyectos {
+
+        ProyectosEnum proyectos;
+
+        public Proyectos(ProyectosEnum proyectos) {
+            this.proyectos = proyectos;
+        }
+
+        public Proyectos() {
+        }
+
+    }
+    
     private final Integer código;
     private String esquema;
 
@@ -45,6 +72,13 @@ public enum ProyectosEnum {
     public void setEsquema(String esquema) {
         this.esquema = esquema;
     }
+    
+    
+    
+  
+    
+    
+    
     
 
    

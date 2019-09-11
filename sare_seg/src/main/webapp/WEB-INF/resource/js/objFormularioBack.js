@@ -211,11 +211,18 @@ const objFormRuralBack={"object":[
         title:'title-domicilio'
     },
     {
+        id:'e13_a',
+        key: 'domicilio',
+        name:'Letra interior',
+        title:'title-domicilio'
+    }, 
+    {
         id:'e11',
         key: 'domicilio',
         name:'número exterior',
         title:'title-domicilio'
     }, 
+ 
     {
         id:'tipo_E14',
         key: 'asentamiento',

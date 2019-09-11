@@ -83,25 +83,18 @@ public class BackingValidacionesSare {
         cat_respuesta_services respuesta = new cat_respuesta_services();
         if (num_ext.equals("") && !"".equals(letra_ext)) {
             respuesta.setMensaje(new cat_mensaje("true", ""));
-        } else {
-            if((num_ext!=null))
-            {
-                try {
-                    Integer.parseInt(num_ext);
-                    respuesta.setMensaje(new cat_mensaje("true", ""));
-                } catch (NumberFormatException excepcion) {
-                    respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
-                    
-                }
-            }else
-            {
-                if(letra_ext.equals("")&& num_ext.equals(""))
-                {
-                    respuesta.setMensaje(new cat_mensaje("falso", "agregue numero exterior"));
-                }else{
-                    respuesta.setMensaje(new cat_mensaje("true", ""));
-                }
+        } else if ((num_ext != null)) {
+            try {
+                Integer.parseInt(num_ext);
+                respuesta.setMensaje(new cat_mensaje("true", ""));
+            } catch (NumberFormatException excepcion) {
+                respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
+
             }
+        } else if (letra_ext.equals("") && num_ext.equals("")) {
+            respuesta.setMensaje(new cat_mensaje("falso", "agregue numero exterior"));
+        } else {
+            respuesta.setMensaje(new cat_mensaje("true", ""));
         }
         return respuesta;
     }
@@ -122,40 +115,49 @@ public class BackingValidacionesSare {
         JSONObject outerObject1 = new JSONObject(objects);
         JSONArray jsonArray = outerObject.getJSONArray("object");
         Map<String, Object> jsonArray1 = outerObject1.toMap();
-
-        for(int i=0;i<jsonArray.length();i++){
+        boolean banderaletra = false;
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
-            JSONObject json;
+                JSONObject json;
                 json = jsonArray.getJSONObject(i);
-                   Object ele = json.getString("id");
-                   Object nombre = json.getString("name");
-                   Object value=(Object) jsonArray1.get(ele);                   
-                   if(value==null || value.equals("")){                     
-                      respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));                      
-                      respuesta.setDatos(json.toString());
-                      break;
-                   }else{
-                       if(value.equals("Seleccione")){
-                          respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));                      
-                          respuesta.setDatos(json.toString()); 
-                          break;
-                       }else{
-                           if(value.equals("")){
-                               respuesta.setMensaje(new cat_mensaje("false", "Ingrese "+nombre));  
-                               respuesta.setDatos(json.toString());
-                               break;
-                           }else{
-                               respuesta.setMensaje(new cat_mensaje("true", ""));
-                           respuesta.setDatos(json.toString());
-                           }
-                           
-                       }
-                   }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                Object ele = json.getString("id");
+                Object nombre = json.getString("name");
+                Object value = (Object) jsonArray1.get(ele);
+                if (nombre.equals("Letra interior")) {
+                    if (value != null || !value.equals("")) {
+                        banderaletra = true;
+                    }
+                } else if (nombre.equals("número exterior") && banderaletra == false) {
+                    if (value == null || value.equals("")) {
+                        respuesta.setMensaje(new cat_mensaje("false", "Ingrese " + nombre));
+                        respuesta.setDatos(json.toString());
+                        break;
+                    }
+
+                } else if (!nombre.equals("número exterior")) {
+                    if (value == null || value.equals("")) {
+                        respuesta.setMensaje(new cat_mensaje("false", "Ingrese " + nombre));
+                        respuesta.setDatos(json.toString());
+                        break;
+                    } else if (value.equals("Seleccione")) {
+                        respuesta.setMensaje(new cat_mensaje("false", "Ingrese " + nombre));
+                        respuesta.setDatos(json.toString());
+                        break;
+                    } else if (!nombre.equals("número exterior") && value.equals("")) {
+                        respuesta.setMensaje(new cat_mensaje("false", "Ingrese " + nombre));
+                        respuesta.setDatos(json.toString());
+                        break;
+                    } else {
+                        respuesta.setMensaje(new cat_mensaje("true", ""));
+                        respuesta.setDatos(json.toString());
+                    }
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
         return respuesta;
     }
-     
+
 }

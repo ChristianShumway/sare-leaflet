@@ -42,10 +42,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("dataSource")
     private DataSource DataSource;
-
-//    @Autowired
-//    @Qualifier("schemaSareOcl")
-//    private String schemaocl;
+    
+    
     @Autowired
     @Qualifier("jdbcTemplatemdm")
     private JdbcTemplate jdbcTemplatemdm;
@@ -65,36 +63,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     public String esquemaPg;
 
     
-    
-    
-
-    public enum MetodosBusqueda {
-        BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
-        LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO, BUSQUEDAMASIVOOTROS, OCUPACVEUNICACONGLOMERADO, LIBERACLAVEUNICAORACLEOTROS
-    }
-
-    public class MetodosBusquedaClass {
-
-        MetodosBusqueda metodo;
-
-        public MetodosBusquedaClass(MetodosBusqueda metodo) {
-            this.metodo = metodo;
-        }
-    }
-
-    public class Proyectos {
-
-        ProyectosEnum proyectos;
-
-        public Proyectos(ProyectosEnum proyectos) {
-            this.proyectos = proyectos;
-        }
-
-        public Proyectos() {
-        }
-
-    }
     ProyectosEnum proyectos;
+    ProyectosEnum.MetodosBusqueda MetodosBusqueda;
+    
 
     List<cat_vw_punteo_sare> resultado = new ArrayList<>();
     boolean fsearch = true;
@@ -607,7 +578,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
 
-    private StringBuilder getSql(cat_vw_punteo_sare cat_vw_punteo_sare, Integer params, String tabla, String rural[], String campo, ProyectosEnum proyecto, String ce, String id_ue, int origen, MetodosBusqueda metodo, String tramo) {
+    private StringBuilder getSql(cat_vw_punteo_sare cat_vw_punteo_sare, Integer params, String tabla, String rural[], String campo, ProyectosEnum proyecto, String ce, String id_ue, int origen, ProyectosEnum.MetodosBusqueda metodo, String tramo) {
         StringBuilder sql = new StringBuilder();
         String esquemaPos, esquemaOcl;
         esquemaPos = getEsquemaPostgres(proyecto);
@@ -891,7 +862,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return sql;
     }
 
-    private StringBuilder GetSqlExtent(ProyectosEnum proyecto, MetodosBusqueda metodo, Integer params, String tabla, String rural[], cat_vw_punteo_sare cat_vw_punteo_sare) {
+    private StringBuilder GetSqlExtent(ProyectosEnum proyecto, ProyectosEnum.MetodosBusqueda metodo, Integer params, String tabla, String rural[], cat_vw_punteo_sare cat_vw_punteo_sare) {
         StringBuilder sql = new StringBuilder();
         Boolean continuar = true;
         String cvegeo = "";
