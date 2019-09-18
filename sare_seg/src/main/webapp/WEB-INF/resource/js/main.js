@@ -2260,6 +2260,7 @@ const handleShowResult = result => {
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
           //handleActiveVisibleSearch()
+          handleActionTargetRef()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
           handleActionPunteoAlta('on')
           arrayWrapBtns.map (wrap => {
@@ -2734,6 +2735,7 @@ const handleCancelClick = () => {
   handleTipoPunteo()
   handleActionButtons('disabled')
   handleActionPunteoAlta('on')
+  handleActionTargetRef()
   !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
   //handleActiveVisibleSearch()
   eliminaFuncionEliminiarDuplicadosSelects()

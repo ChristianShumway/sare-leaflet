@@ -981,6 +981,10 @@ textarea.materialize-textarea:focus:not([readonly]) {
   box-shadow: 0 1px 0 0 #c8e6c9 !important;
 }
 
+#descrubic{
+  text-transform: uppercase;
+}
+
 .wrap-form .input-field input:not([type]):focus:not([readonly])+label, 
 .wrap-form .input-field input[type=text]:not(.browser-default):focus:not([readonly])+label, 
 .wrap-form .input-field textarea.materialize-textarea:focus:not([readonly])+label {
