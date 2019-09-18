@@ -45,6 +45,13 @@ public class BackingReportes extends DaoTransformaCartografia {
     private InterfaceReportes InterfaceReportes;
 
     ProyectosEnum proyectos;
+    
+    private String asignaCe(String coordinacion){
+        if(coordinacion.length()<2){
+            coordinacion="0"+coordinacion;
+        }
+        return coordinacion;
+    }
 
     public cat_respuesta_services getReporte(Integer proyecto, String tipo, String report, String coordinacion, HttpServletRequest request, HttpServletResponse response) {
         proyectos = getProyecto(proyecto);
@@ -53,7 +60,7 @@ public class BackingReportes extends DaoTransformaCartografia {
         String nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
         String tipoArchivo = tipo;
         String reporte = report;
-        String ce = coordinacion;
+        String ce;
         String whereReporte = "";
         String nombreArchivo = "";
         String nombreArchivoAdescargar = "reporte";
@@ -65,6 +72,7 @@ public class BackingReportes extends DaoTransformaCartografia {
 
             switch (proyectos) {
                 case MasivoOtros:
+                    ce=coordinacion;
                     if (ce.equals("00")) {
                         whereReporte = " and 1=1";
                     } else {
@@ -74,6 +82,7 @@ public class BackingReportes extends DaoTransformaCartografia {
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
                     break;
                 case Operativo_Masivo:
+                    ce=coordinacion;
                     if (ce.equals("00")) {
                         whereReporte = "and ue.ID_CUESTIONARIO=54 and id_encuesta=38  and 1=1";
 
@@ -84,14 +93,18 @@ public class BackingReportes extends DaoTransformaCartografia {
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
+                    ce=asignaCe(coordinacion);
                     if (ce.equals("00")) {
                         whereReporte = " and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38  and 1=1";
 
                     } else {
-                        whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and ue.ce=" + ce + "";
+                            whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and substr(po.cve_operativa,0,2)=" + ce + ""; 
+                             if (reporte.equals("1")) {
+                                 whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and ue.ce=" + ce + "";
+                             }
                     }
                     nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_ege.jrxml");
-                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_ege.jrxml");
                     break;
             }
 

@@ -69,7 +69,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 });
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
-                resultado1 = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
@@ -82,7 +82,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 });
                 break;
             default:
-                resultado1 = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;

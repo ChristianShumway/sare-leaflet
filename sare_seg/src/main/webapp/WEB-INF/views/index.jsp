@@ -393,7 +393,7 @@
 
               <div class="radio-option">
                   <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')" disabled="true"/>
-                <label for="puntear-alta">Puntear Alta</label>
+                <label for="puntear-alta"></label>
               </div>
 
             </div> 

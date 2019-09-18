@@ -152,7 +152,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateLocalidades);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -185,7 +185,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaLocalidades);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -218,7 +218,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Validateejes);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -250,7 +250,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insertaejes);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -282,7 +282,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateAgebs);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -314,7 +314,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaAgebs);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -346,7 +346,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrAgebs);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -378,7 +378,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrAgebs);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -410,7 +410,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcManzanas);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -442,7 +442,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcManzanas);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -474,7 +474,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrManzanas);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -506,7 +506,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrManzanas);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -538,7 +538,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrLocalidades);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -570,7 +570,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrLocalidades);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -636,7 +636,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
             case Establecimientos_GrandesY_Empresas_EGE:
                 ConsultaSecuenciaFrentes(proyecto, inmueble, usuario);
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrFrentes);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -668,7 +668,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcFrentes);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean fila = false;
@@ -704,7 +704,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ConsultaSecuenciaFrentes);
-                secuencia = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
                     @Override
                     public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
                         while (rs.next()) {
@@ -734,7 +734,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcFrentes);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -757,7 +757,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.UpdateTrUESUC);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -800,7 +800,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Ue_Complemento);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean regresar;
@@ -833,7 +833,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_UE_Complemento);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -857,7 +857,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insert_Tr_UE_Complemento);
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
                 }
                 break;
@@ -889,7 +889,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Inmuebles);
-                regresa = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+                regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                         boolean regresar;
@@ -985,7 +985,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.getSecuenciaTrInmuebles);
-                secuencia = jdbcTemplateoclEge.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
+                secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
                     @Override
                     public BigDecimal extractData(ResultSet rs) throws SQLException, DataAccessException {
                         BigDecimal regresar = null;

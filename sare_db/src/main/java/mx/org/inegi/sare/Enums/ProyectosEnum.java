@@ -5,9 +5,6 @@
  */
 package mx.org.inegi.sare.Enums;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
-
 /**
  *
  * @author LIDIA.VAZQUEZ
@@ -22,8 +19,8 @@ public enum ProyectosEnum {
     Muestra_Rural(6,"schemapgEge"),
     Convenios(7,"schemapgEge"),
     Organismos_Operadores_De_Agua(8),
-    MasivoOtros(9);
-    
+    MasivoOtros(9),
+    EGE(10,"schemapgEge");
     public enum MetodosBusqueda {
         BUSQUEDAOCL, GETCLAVESPG, GETDATOSINMUEBLES, GETEXTENTCVEGEO, GETEXTENTCVEGEO2, GETNOMBREBUSQUEDA, GETNOMBREBUSQUEDAOCL,
         LIBERACLAVEUNICAORACLE, GETVALCOORGEO, OCUPACVEUNICA, ACTUALIZACOMPLEMENTO, BUSQUEDAMASIVOOTROS, OCUPACVEUNICACONGLOMERADO, LIBERACLAVEUNICAORACLEOTROS
@@ -71,18 +68,6 @@ public enum ProyectosEnum {
 
     public void setEsquema(String esquema) {
         this.esquema = esquema;
-    }
-    
-    
-    
-  
-    
-    
-    
-    
-
-   
-    
-    
+    } 
     
 }

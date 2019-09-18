@@ -140,7 +140,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                     }
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) 
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) 
                     {
                         regresar = true;
                     }
@@ -323,7 +323,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                 }
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
-                if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresar = true;
                 }
                 break;

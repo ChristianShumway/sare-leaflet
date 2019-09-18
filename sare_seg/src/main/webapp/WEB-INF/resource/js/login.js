@@ -103,7 +103,7 @@ const handleClickValidaUsuario = () => {
           cveOperativa: cve_operativa,
           nombre,
           tipoSare: cualSare.value,
-          tramoControl: tramo_control,
+          tramoControl: cve_operativa,
           usuario,
           proyectoSesion:'',
         }

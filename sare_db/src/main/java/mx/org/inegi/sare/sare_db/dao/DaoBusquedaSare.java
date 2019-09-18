@@ -255,7 +255,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 }
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
-                if (jdbcTemplateoclEge.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
                 break;
@@ -508,7 +508,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     }
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateoclEge.update(sql.toString()) > 0) {
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
                         regresa = true;
                     }
                     break;
