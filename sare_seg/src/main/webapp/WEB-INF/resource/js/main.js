@@ -1881,7 +1881,7 @@ const validationsBack=(ObjectRequest)=>
         }
         else {
           if(punteo=='R' && mod_cat=='1') {
-            validaCp()
+           // validaCp()
           }
           else {
             if(punteo=='R' && mod_cat=='2') {
@@ -2055,6 +2055,9 @@ const handleFormValidationsRural = () => {}
 const validaCp = () => {
   const numero_ext=document.getElementById('e11')
   const letra_ext=document.getElementById('e11A')
+  const cp=document.getElementById('e14_A')
+  const wrapTitle = document.getElementById('title-asentamiento')
+  let visible = wrapTitle.dataset.visible
   sendAJAX(urlServices['serviceValCP'].url, 
   {
     'codigo': $("#e14_A").val(),
@@ -2064,18 +2067,21 @@ const validaCp = () => {
   urlServices['serviceValCP'].type, 
   data => {
     if (data[0].operation) {
-      if (data[0].datos.mensaje.type === "false") {
-          Swal.fire
-          ({
-            position: 'bottom-end',
-            type: 'warning',
-            title: data[0].datos.mensaje.messages,
-            showConfirmButton: false,
-            timer: 3000
-          })
-      }
+          if (data[0].datos.mensaje.type === "false") {
+          cp.style.borderColor = 'red'
+          cp.classList.add('animated', 'shake')
+          visible == 'hide' ? handleVisibleForm('asentamiento') : false
+          msgInputEmpty = data[0].datos.mensaje.messages 
+          alertToastForm(msgInputEmpty, 'error')
+          wrapTitle.classList.add('error')
+          setTimeout(() =>  {
+            cp.classList.remove('animated', 'shake')
+          }, 1000)
+            }
       else {
-
+         cp.style.borderColor = '#eeeeee'
+         visible == 'show' ? handleVisibleForm('asentamiento') : false
+         wrapTitle.classList.remove('error')
         if(nameContainerFloating){
           let containerFloat = nameContainerFloating.slice(3)
           const btnFloat = document.getElementById(`icon-${containerFloat}-float`)

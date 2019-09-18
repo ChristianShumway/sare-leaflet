@@ -244,6 +244,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                     }
                     listCUPG = InterfaceBusquedaSare.getClavesUnicasPG(proyecto);
                     if (listCUPG != null) {
+                        regPg=false;
                         for (String ue : listCUPG) {
                             if (String.valueOf(catBusquedaOracle.get(0).getID_UE()).equals(ue)) {
                                 regPg = true;
