@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sql.DataSource;
+import mx.org.inegi.sare.Enums.BusquedaEnum;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
@@ -64,6 +65,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     
     ProyectosEnum proyectos;
+    BusquedaEnum querys;
     ProyectosEnum.MetodosBusqueda MetodosBusqueda;
     
 
@@ -700,20 +702,12 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     private StringBuilder filtrarSqlEge(String ce, String esquemaPos, String id_ue, int origen, String tramo) {
         String esquemaOcl = esquemaPos;
+        
         StringBuilder sql = new StringBuilder();
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-                sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n"
-                        + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n"
-                        + "lpad(to_char(ue.tipo_e14),2,'0') tipo_e14, ue.e14, lpad(to_char(ue.tipo_e10_a),2,'0') tipo_e10_a, \n"
-                        + "ue.e10_a,lpad(to_char(ue.tipo_e10_b),2,'0') tipo_e10_b, ue.e10_b, lpad(to_char(ue.tipo_e10_c),2,'0'),\n"
-                        + "ue.tipo_e10_c, ue.e10_c, ue.x as coorx, to_char(ue.y) as coory, \n"
-                        + "ue.e16 as descrubic, pre.st_sare estatus_punteo, ue.e12, ue.e19, ue.tipo_e19, ue.e20, \n"
-                        + "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n"
-                        + "'' origen, ue.ce as cestatal,\n"
-                        + "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n"
-                        + "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL ");
+                sql.append(querys.BUSQUEDAOCL.getQuery());
                 sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                         .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                         .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
@@ -985,7 +979,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 } else {
                     cvegeo = String.valueOf(1);
                 }
-                sql.append(" and cvegeo='").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
+                if(tabla.equals("td_manzanas")){
+                    sql.append(" and cvegeo='").append(cvegeo).append("'");
+                }else{
+                    sql.append(" and cvegeo='").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
+                }
             } else {
                 sql.append(" and 1=1");
             }

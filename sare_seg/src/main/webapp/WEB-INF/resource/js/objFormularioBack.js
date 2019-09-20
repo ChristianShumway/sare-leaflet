@@ -173,7 +173,80 @@ const objFormPunteoEnFrenteBack ={ "object": [
   },
 ]}
 
-const objForm2Back={"object":[
+const objForm2Back={"object":[{
+    id:'e08',
+    key:'referencia',
+    name:'e08',
+    title:'title-referencia'
+  },
+  {
+    id:'e09',
+    key:'referencia',
+    name:'e09',
+    title:'title-referencia'
+  },
+  {
+    id:'e17_DESC',
+    key:'referencia',
+    name:'e17_DESC',
+    title:'title-referencia'
+  },
+  // {
+  //   id:'e11',
+  //   key: 'domicilio',
+  //   name:'Número exterior',
+  //   title:'title-domicilio',
+  // },
+  {
+    id:'tipo_E14',
+    key:'asentamiento',
+    name:'tipo de asentamiento humano',
+    title:'title-asentamiento',
+  },
+  {
+    id:'e14_A',
+    key:'asentamiento',
+    name:'código postal',
+    title:'title-asentamiento',
+  },
+  {
+    id:'e14',
+    key:'asentamiento',
+    name:'Nombre del asentamiento',
+    title:'title-asentamiento',
+  },
+  {
+    id:'tipo_e10n',
+    key:'domicilio',
+    name:'Tipo de Vialidad',
+    title:'title-domicilio',
+  }, 
+  {
+    id:'e10',
+    key:'domicilio',
+    name:'Nombre de Vialidad',
+    title:'title-domicilio',
+  }, 
+  {
+    id:'e10_A',
+    key:'entre-vialidades',
+    name:'Nombre de vialidad 1',
+    title:'title-entre-vialidades',
+  },
+  
+  {
+    id:'e10_B',
+    key:'entre-vialidades',
+    name:'Nombre de vialidad 2',
+    title:'title-entre-vialidades',
+  },
+  {
+    id:'e10_C',
+    key:'calle-posterior',
+    name:'Nombre de vialidad',
+    title:'title-calle-posterior',
+  },
+    
     {
         id:'e05',
         key: 'ubicacion-geografica',

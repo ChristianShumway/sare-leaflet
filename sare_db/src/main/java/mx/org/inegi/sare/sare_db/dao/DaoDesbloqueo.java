@@ -377,13 +377,13 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
                         sql.append("SELECT count(distinct id_ue) from ").append(esquemaPos).append(".TR_UE_COMPLEMENTO where id_ue='").append(id_ue).append("'");
                         break;
                     case updateUE:
-                        sql.append("UPDATE ").append(esquemaPos).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=current_timestamp, ST_SARE=20, CE=").append(ce).append(" where ID_UE='").append(id_ue).append("'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".TR_UE_COMPLEMENTO set SARE_ST_USR=?, SARE_ST_TIME=current_timestamp, ST_SARE=20 ").append(" where ID_UE='").append(id_ue).append("'");
                         break;
                     case insertUE:
                         sql.append("INSERT INTO ").append(esquemaPos).append(".TR_UE_COMPLEMENTO (SARE_ST_USR,ID_UE, SARE_ST_TIME, ST_SARE, CE) values (?,?,current_timestamp,20,?)");
                         break;
                     case completaGuardado:
-                        sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='01' where id_ue='").append(id_ue).append("'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set ST_SARE='01' where id_ue='").append(id_ue).append("'");
                         break;
                     case consultaPendientes:
                         sql.append("SELECT id_ue, tramo_control, cvegeo, cve_ce, cve_ent, nom_ent, cve_mun, nom_mun, cve_loc, nom_loc, cve_ageb, cve_mza, cveft, e08, e09, tipo_e10, substr(nomvial,1,110) nomvial, case when numext ='' then null else numext::numeric end numext, numextalf, e12, e12p, numint, ");
