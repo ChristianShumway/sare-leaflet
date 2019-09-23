@@ -9,6 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import mx.org.inegi.sare.sare_db.dto.cat_usuarios;
+import mx.org.inegi.sare.sare_services.BackingLogin;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-public class DefaultController {
+public class DefaultController extends BackingLogin {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public String index(ModelMap map,
@@ -70,6 +72,12 @@ public class DefaultController {
             data.put("proyecto",proyecto);
             data.put("ce",ce);
             data.put("nombre", nombre);
+            String ip=request.getRemoteAddr();
+            cat_usuarios user=new cat_usuarios(nombre,"",tramo_control,ip);
+            user.setProyecto(proyecto);
+            user.setUsuario(nombre);
+            user.setTramo_control(tramo_control);
+            registraAccesoPG(user);
             session.setAttribute("respuesta", data);
             return "index";
         } else {

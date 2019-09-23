@@ -3456,8 +3456,21 @@ const llamarServicioclases=(codigoScian, valor)=>{
 
 
 function abrirAyuda(){
-     //$('a[href$=".pdf"]').prop('target', '_blank');
-    window.open( "resources/ayuda/Manual_del_Usuario_Sare.pdf", '_blank');     
+     //$('a[href$=".pdf"]').prop('target', '_blank');Manual_del_Usuario_Sare_EGE
+     
+     switch(dataUserFromLoginLocalStorage.proyecto){
+         case 1:
+             window.open( "resources/ayuda/Manual_del_Usuario_Sare_EGE.pdf", '_blank'); 
+         break;
+         case 5:
+             window.open( "resources/ayuda/Manual_del_Usuario_Sare.pdf", '_blank'); 
+         break;
+         default:
+             window.open( "resources/ayuda/Manual_del_Usuario_Sare_EGE.pdf", '_blank'); 
+             
+     }
+     
+    
 } 
 
 function soloNumeros(e){

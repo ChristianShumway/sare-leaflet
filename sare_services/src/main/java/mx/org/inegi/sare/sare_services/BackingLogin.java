@@ -190,7 +190,7 @@ public class BackingLogin {
 
     }
     
-    private boolean registraAccesoPG(cat_usuarios usuario){
+    public boolean registraAccesoPG(cat_usuarios usuario){
         boolean Respuesta;
         Respuesta=InterfaceLogin.registraAccesoPG(usuario);
         return Respuesta;
