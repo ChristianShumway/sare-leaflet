@@ -2932,9 +2932,15 @@ const opcionMenu = opcion => {
   }     
 } 
 
-const openReportesAjax=(opcion)=>{
+const openReportesAjax=(opcion,opcionSeleccion)=>{
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo=PDF&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
+        var tipo;
+        if (opcionSeleccion === 'Excel'){
+             tipo='CSV'       
+        }else{
+              tipo='PDF'      
+        }
+        xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo='+tipo+'&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
         if(xhr.readyState==1){
                 swal ({
@@ -2949,12 +2955,14 @@ const openReportesAjax=(opcion)=>{
         }
         xhr.onload = function(e) {
         if (this.status == 200) {
+            
             swal.close();
             var blob = new Blob([this.response], {type: 'application/pdf'});
-            //var link = document.createElement('a');
+            var link = document.createElement('a');
             var file = window.URL.createObjectURL(this.response);
             if(this.response.type=='application/pdf')
             {
+                
                 Swal.fire({
                     title: '<strong>Reporte</strong>',
                     width: '100%', 
@@ -2970,13 +2978,23 @@ const openReportesAjax=(opcion)=>{
     //            link.click(); 
                 //swal.close();
             }else{
-                Swal.fire({
+                if(opcionSeleccion === 'Excel'){
+                    var file = window.URL.createObjectURL(this.response);
+                   link.setAttribute("href", file);                   
+                   link.download = "reporte.csv";
+                   link.click(); 
+                   swal.close();
+                }else{
+                    Swal.fire({
                     position: 'bottom-end',
                     type: 'warning',
                     title: "La operación fue cancelada!",
                     showConfirmButton: false,
                     timer: 2000
-                })
+                }) 
+                }
+                
+               
             }
         }
         };
@@ -3001,6 +3019,31 @@ const openReportesAjax=(opcion)=>{
     xhr.send(null);
 }
 
+async function optionButtonsReport(report)  {
+  /* inputOptions can be an object or Promise */
+  const inputOptions = new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        'Excel': 'Excel',
+        'Pdf': 'Pdf'
+      })
+    }, 500)
+  })
+
+  const { value: option } = await Swal.fire({
+    title: '<span style="width:100%;">Selecciona Opción</span>',
+    input: 'radio',
+    confirmButtonText:'Aceptar',
+    inputOptions: inputOptions,
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Necesitas seleccionar una opción'
+      }
+    }
+  })
+  openReportesAjax(report,option)     
+}
+
 async function OpenReportes (size, action) {
   const {value: reporte} = await Swal.fire({
     title: action == 'vista' ? '<span style="width:100%;">Reportes</span>' : 'Descarga de Reportes',
@@ -3016,8 +3059,8 @@ async function OpenReportes (size, action) {
     inputValidator: (value) => {
       return new Promise((resolve) => {
         if (value === '1' || value === '2'|| value === '3') {
-          resolve()
-          
+          //resolve()
+          optionButtonsReport(value)
         } else {
           resolve('Selecciona el reporte a visualizar')
         }

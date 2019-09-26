@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="registroAvancePunteados" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="15" bottomMargin="20" isIgnorePagination="true" uuid="ec0b94dd-faa5-4539-a9a1-73b8e0247adc">
+	<property name="ireport.zoom" value="1.3310000000000082"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 2_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 3_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 4_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 5_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 6_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 7_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 8_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 9_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 10_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 11_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#666666">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#666666"/>
+		</conditionalStyle>
+	</style>
+	<style name="table_TD_1" mode="Opaque" backcolor="#F4B084">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==1)]]></conditionExpression>
+			<style backcolor="#F4B084"/>
+		</conditionalStyle>
+	</style>
+	<style name="table_TD_2" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[new Boolean($V{REPORT_COUNT}.intValue()%2==0)]]></conditionExpression>
+			<style backcolor="#E6E6E6"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="01 01C A1 05 06 07 12" uuid="0da90263-0085-4754-b90e-2bbe21c4410e">
+		<parameter name="where1" class="java.lang.String">
+			<defaultValueExpression><![CDATA[01]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT ce,cestatal,  carga_1, realizado_1, carga_1 - realizado_1 pendientes_1   FROM (
+SELECT '0' ce, 'NAC' cestatal, 1 orden,
+
+            sum(CASE WHEN  st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN  st_sare in ('01') THEN 1 ELSE 0 END) realizado_1
+            FROM  ce2019_masrencal.tr_plan_oper po 
+            join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE  inm.id_ue is not null and st_sare in ('10','20', '01')
+            and pre.punteo_sare=1 and (ue.ID_CUESTIONARIO!=54 and id_encuesta!=38)
+
+union all
+SELECT substr(po.cve_operativa,0,2) ce, CASE
+            WHEN  substr(po.cve_operativa,0,2) ='01' THEN 'AGS'
+            WHEN  substr(po.cve_operativa,0,2) ='02' THEN 'BCN'
+            WHEN  substr(po.cve_operativa,0,2) ='03' THEN 'BCS'
+            WHEN  substr(po.cve_operativa,0,2) ='04' THEN 'CAM'
+            WHEN  substr(po.cve_operativa,0,2) ='05' THEN 'COA'
+            WHEN  substr(po.cve_operativa,0,2) ='06' THEN 'COL'
+            WHEN  substr(po.cve_operativa,0,2) ='07' THEN 'CHS'
+            WHEN  substr(po.cve_operativa,0,2) ='08' THEN 'CHI'
+            WHEN  substr(po.cve_operativa,0,2) ='09' THEN 'DFN'
+            WHEN  substr(po.cve_operativa,0,2) ='10' THEN 'DGO'
+            WHEN  substr(po.cve_operativa,0,2) ='11' THEN 'GTO'
+            WHEN  substr(po.cve_operativa,0,2) ='12' THEN 'GRO'
+            WHEN  substr(po.cve_operativa,0,2) ='13' THEN 'HGO'
+            WHEN  substr(po.cve_operativa,0,2) ='14' THEN 'JAL'
+            WHEN  substr(po.cve_operativa,0,2) ='15' THEN 'MEO'
+            WHEN  substr(po.cve_operativa,0,2) ='16' THEN 'MIC'
+            WHEN  substr(po.cve_operativa,0,2) ='17' THEN 'MOR'
+            WHEN  substr(po.cve_operativa,0,2) ='18' THEN 'NAY'
+            WHEN  substr(po.cve_operativa,0,2) ='19' THEN 'NLN'
+            WHEN  substr(po.cve_operativa,0,2) ='20' THEN 'OAX'
+            WHEN  substr(po.cve_operativa,0,2) ='21' THEN 'PUE'
+            WHEN  substr(po.cve_operativa,0,2) ='22' THEN 'QRO'
+            WHEN  substr(po.cve_operativa,0,2) ='23' THEN 'QTR'
+            WHEN  substr(po.cve_operativa,0,2) ='24' THEN 'SLP'
+            WHEN  substr(po.cve_operativa,0,2) ='25' THEN 'SIN'
+            WHEN  substr(po.cve_operativa,0,2) ='26' THEN 'SON'
+            WHEN substr(po.cve_operativa,0,2) ='27' THEN 'TAB'
+            WHEN  substr(po.cve_operativa,0,2) ='28' THEN 'TAM'
+            WHEN  substr(po.cve_operativa,0,2) ='29' THEN 'TLA'
+            WHEN  substr(po.cve_operativa,0,2) ='30' THEN 'VER'
+            WHEN  substr(po.cve_operativa,0,2) ='31' THEN 'YUC'
+            WHEN  substr(po.cve_operativa,0,2) ='32' THEN 'ZAC'
+            WHEN  substr(po.cve_operativa,0,2) ='33' THEN 'DFS'
+            WHEN  substr(po.cve_operativa,0,2) ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+          sum(CASE WHEN   st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN   st_sare in ('01') THEN 1 ELSE 0 END) realizado_1
+            FROM  ce2019_masrencal.tr_plan_oper po 
+            join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE inm.id_ue is not null and  st_sare in ('10','20', '01')
+             and pre.punteo_sare=1 $P!{where1}
+            GROUP BY po.cve_operativa
+) dd   order by ce]]>
+		</queryString>
+		<field name="CE" class="java.math.BigDecimal"/>
+		<field name="CESTATAL" class="java.lang.String"/>
+		<field name="CARGA_1" class="java.math.BigDecimal"/>
+		<field name="REALIZADO_1" class="java.math.BigDecimal"/>
+		<field name="PENDIENTES_1" class="java.math.BigDecimal"/>
+		<group name="group1">
+			<groupExpression><![CDATA[$F{CE}]]></groupExpression>
+		</group>
+	</subDataset>
+	<parameter name="where" class="java.lang.String"/>
+	<parameter name="URL" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT ce,cestatal,  carga_1, realizado_1, carga_1 - realizado_1 pendientes_1   FROM (
+SELECT '0' ce, 'NAC' cestatal, 1 orden,
+
+            sum(CASE WHEN  st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN  st_sare in ('01') THEN 1 ELSE 0 END) realizado_1
+            FROM  ce2019_masrencal.tr_plan_oper po 
+            join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop 
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE  inm.id_ue is not null and st_sare in ('10','20', '01')
+            and pre.punteo_sare=1 and (ue.ID_CUESTIONARIO!=54 and id_encuesta!=38)
+
+union all
+SELECT substr(po.cve_operativa,0,2) ce, CASE
+            WHEN  substr(po.cve_operativa,0,2) ='01' THEN 'AGS'
+            WHEN  substr(po.cve_operativa,0,2) ='02' THEN 'BCN'
+            WHEN  substr(po.cve_operativa,0,2) ='03' THEN 'BCS'
+            WHEN  substr(po.cve_operativa,0,2) ='04' THEN 'CAM'
+            WHEN  substr(po.cve_operativa,0,2) ='05' THEN 'COA'
+            WHEN  substr(po.cve_operativa,0,2) ='06' THEN 'COL'
+            WHEN  substr(po.cve_operativa,0,2) ='07' THEN 'CHS'
+            WHEN  substr(po.cve_operativa,0,2) ='08' THEN 'CHI'
+            WHEN  substr(po.cve_operativa,0,2) ='09' THEN 'DFN'
+            WHEN  substr(po.cve_operativa,0,2) ='10' THEN 'DGO'
+            WHEN  substr(po.cve_operativa,0,2) ='11' THEN 'GTO'
+            WHEN  substr(po.cve_operativa,0,2) ='12' THEN 'GRO'
+            WHEN  substr(po.cve_operativa,0,2) ='13' THEN 'HGO'
+            WHEN  substr(po.cve_operativa,0,2) ='14' THEN 'JAL'
+            WHEN  substr(po.cve_operativa,0,2) ='15' THEN 'MEO'
+            WHEN  substr(po.cve_operativa,0,2) ='16' THEN 'MIC'
+            WHEN  substr(po.cve_operativa,0,2) ='17' THEN 'MOR'
+            WHEN  substr(po.cve_operativa,0,2) ='18' THEN 'NAY'
+            WHEN  substr(po.cve_operativa,0,2) ='19' THEN 'NLN'
+            WHEN  substr(po.cve_operativa,0,2) ='20' THEN 'OAX'
+            WHEN  substr(po.cve_operativa,0,2) ='21' THEN 'PUE'
+            WHEN  substr(po.cve_operativa,0,2) ='22' THEN 'QRO'
+            WHEN  substr(po.cve_operativa,0,2) ='23' THEN 'QTR'
+            WHEN  substr(po.cve_operativa,0,2) ='24' THEN 'SLP'
+            WHEN  substr(po.cve_operativa,0,2) ='25' THEN 'SIN'
+            WHEN  substr(po.cve_operativa,0,2) ='26' THEN 'SON'
+            WHEN substr(po.cve_operativa,0,2) ='27' THEN 'TAB'
+            WHEN  substr(po.cve_operativa,0,2) ='28' THEN 'TAM'
+            WHEN  substr(po.cve_operativa,0,2) ='29' THEN 'TLA'
+            WHEN  substr(po.cve_operativa,0,2) ='30' THEN 'VER'
+            WHEN  substr(po.cve_operativa,0,2) ='31' THEN 'YUC'
+            WHEN  substr(po.cve_operativa,0,2) ='32' THEN 'ZAC'
+            WHEN  substr(po.cve_operativa,0,2) ='33' THEN 'DFS'
+            WHEN  substr(po.cve_operativa,0,2) ='34' THEN 'MEP'
+
+end cestatal, 2 orden,
+          sum(CASE WHEN   st_sare in ('10','20', '01') THEN 1 ELSE 0 END) carga_1,
+            sum(CASE WHEN   st_sare in ('01') THEN 1 ELSE 0 END) realizado_1
+            FROM  ce2019_masrencal.tr_plan_oper po 
+            join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop
+            join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
+            join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
+            WHERE inm.id_ue is not null and  st_sare in ('10','20', '01')
+             and pre.punteo_sare=1 $P!{where} --substr(po.cve_operativa,0,2)='01'
+            GROUP BY po.cve_operativa
+) dd where rownum<2  order by ce]]>
+	</queryString>
+	<field name="CE" class="java.math.BigDecimal"/>
+	<field name="CESTATAL" class="java.lang.String"/>
+	<field name="CARGA_1" class="java.math.BigDecimal"/>
+	<field name="REALIZADO_1" class="java.math.BigDecimal"/>
+	<field name="PENDIENTES_1" class="java.math.BigDecimal"/>
+	<variable name="titulo" class="java.lang.String">
+		<variableExpression><![CDATA[]]></variableExpression>
+	</variable>
+	<columnHeader>
+		<band height="5"/>
+	</columnHeader>
+	<detail>
+		<band height="292">
+			<componentElement>
+				<reportElement key="table 8" style="table 8" positionType="Float" stretchType="RelativeToTallestObject" mode="Transparent" x="221" y="0" width="310" height="53" isPrintInFirstWholeBand="true" backcolor="#F4B084" uuid="0218d156-65d4-44bc-b54f-410c6d7e383b"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="01 01C A1 05 06 07 12" uuid="a3c0d3de-8504-482e-b098-07554f815f80">
+						<datasetParameter name="where1">
+							<datasetParameterExpression><![CDATA[$P{where}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="44" uuid="c7850ecc-0623-477f-9eda-ba940c986e83">
+						<jr:columnHeader height="32" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="44" height="32" forecolor="#FFFFFF" backcolor="#E47439" uuid="c4ead5a8-04cd-4ed8-99b0-e6500c76c26b"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#003333"/>
+									<leftPen lineWidth="0.5" lineColor="#003333"/>
+									<bottomPen lineWidth="0.5" lineColor="#003333"/>
+									<rightPen lineWidth="0.5" lineColor="#003333"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<text><![CDATA[CE/Origen]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD_2" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="44" height="21" uuid="fd89cd1f-ae4f-433d-a055-ec58c7f219a1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CESTATAL}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="70ef159f-4e82-4ae7-914b-b5bcc1d0c09a">
+						<jr:columnHeader height="32" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="32" forecolor="#FFFFFF" backcolor="#E47439" uuid="4a0e8673-a885-4d8a-88b9-2ebde5e590b0"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#003333"/>
+									<leftPen lineWidth="0.5" lineColor="#003333"/>
+									<bottomPen lineWidth="0.5" lineColor="#003333"/>
+									<rightPen lineWidth="0.5" lineColor="#003333"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Carga ]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD_2" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="21" uuid="854bf2a1-facd-4fe3-828c-19e461134120"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{CARGA_1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="bae9d30a-54f0-4123-9b24-fe88ad20151a">
+						<jr:columnHeader height="32" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="32" forecolor="#FFFFFF" backcolor="#E47439" uuid="71c85cf9-9bb2-4959-be6b-b622643aa282"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#003333"/>
+									<leftPen lineWidth="0.5" lineColor="#003333"/>
+									<bottomPen lineWidth="0.5" lineColor="#003333"/>
+									<rightPen lineWidth="0.5" lineColor="#003333"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Realizado]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD_2" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="21" uuid="4067cbfa-e746-4367-92d6-eefda9a69570"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{REALIZADO_1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="e017e1a5-5c52-4e54-9bcc-3a88b8a1a6e1">
+						<jr:columnHeader height="32" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="32" forecolor="#FFFFFF" backcolor="#E47439" uuid="3fc56129-b082-4c7e-86f2-4d63495b3a85"/>
+								<box>
+									<pen lineWidth="0.25" lineColor="#FFFFFF"/>
+									<topPen lineWidth="0.5" lineColor="#003333"/>
+									<leftPen lineWidth="0.5" lineColor="#003333"/>
+									<bottomPen lineWidth="0.5" lineColor="#003333"/>
+									<rightPen lineWidth="0.5" lineColor="#003333"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<text><![CDATA[Pendientes]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="table_TD_2" height="21" rowSpan="1">
+							<textField>
+								<reportElement x="0" y="0" width="90" height="21" uuid="c59b4d7c-f2c0-4fbe-9b76-be1e9360cb3b"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.5"/>
+									<leftPen lineWidth="0.5"/>
+									<bottomPen lineWidth="0.5"/>
+									<rightPen lineWidth="0.5"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{PENDIENTES_1}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<noData>
+		<band height="50">
+			<staticText>
+				<reportElement x="266" y="15" width="144" height="20" uuid="d0c935da-68af-4068-8a1b-e96bb8f7cd6c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[No se encontraron datossdsfsdf
+]]></text>
+			</staticText>
+		</band>
+	</noData>
+</jasperReport>
