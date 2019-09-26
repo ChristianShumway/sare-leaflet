@@ -2935,7 +2935,7 @@ const opcionMenu = opcion => {
 const openReportesAjax=(opcion,opcionSeleccion)=>{
         var xhr = new XMLHttpRequest();
         var tipo;
-        if (opcionSeleccion === 'Excel'){
+        if (opcionSeleccion === 'Csv'){
              tipo='CSV'       
         }else{
               tipo='PDF'      
@@ -2978,7 +2978,7 @@ const openReportesAjax=(opcion,opcionSeleccion)=>{
     //            link.click(); 
                 //swal.close();
             }else{
-                if(opcionSeleccion === 'Excel'){
+                if(opcionSeleccion === 'Csv'){
                     var file = window.URL.createObjectURL(this.response);
                    link.setAttribute("href", file);                   
                    link.download = "reporte.csv";
@@ -3024,7 +3024,7 @@ async function optionButtonsReport(report)  {
   const inputOptions = new Promise((resolve) => {
     setTimeout(() => {
       resolve({
-        'Excel': 'Excel',
+        'Csv': 'Csv',
         'Pdf': 'Pdf'
       })
     }, 500)
