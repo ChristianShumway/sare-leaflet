@@ -1020,7 +1020,43 @@ const handlePunteo=(x,y,tc,r)=>{
     let ce=dataUserFromLoginLocalStorage.ce
     let tr=dataUserFromLoginLocalStorage.tramo_control
     let u=dataUserFromLoginLocalStorage.nombre
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
     callServicePunteo(x,y,tc,r,id_ue,ce,tr,u)
+    removeElementsSelects()
+    
+}
+
+const removeElementsSelects=()=>{
+    let selan = document.getElementById("tipo_e10_an");
+    let selbn = document.getElementById("tipo_e10_bn");
+    let selcn = document.getElementById("tipo_e10_cn");
+
+    selan.innerHTML ="";
+    selbn.innerHTML="";
+    selcn.innerHTML="";
+
+//    if(selan!=null && selan.type=='select-one')
+//    {
+//        for(let i=0;i<=selan.length;i++)
+//        {
+//           selan.remove(i); 
+//        }
+//    } 
+//    if(selbn!=null && selbn.type=='select-one')
+//    {
+//        for(let i=0;i<=selbn.length;i++)
+//        {
+//            selbn.remove(i);
+//        }
+//    } 
+//    if(selcn!=null && selcn.type=='select-one')
+//    {
+//        for(let i=0;i<=selcn.length;i++)
+//        {
+//            selcn.remove(i);
+//        }
+//    } 
+    
 }
 
 //Función que llama al servicio para el punteo de unidades economicas
@@ -1144,6 +1180,25 @@ const eliminaFuncionEliminiarDuplicadosSelects = () => {
   })
 }
 
+const removerOtrosInputs=()=>{
+    const tipoE10n_otro = document.getElementById('tipo_e10n_otro') //input
+  const tipoE10an_otro = document.getElementById('tipo_e10_an_otro') //input
+  const tipoE10bn_otro = document.getElementById('tipo_e10_bn_otro') //input
+  const tipoE10cn_otro = document.getElementById('tipo_e10_cn_otro') //input
+    tipoE10n_otro!=null ? tipoE10n_otro.style.display = 'none' : ""
+      tipoE10n_otro!=null ? tipoE10n_otro.removeAttribute('id') : ""
+      tipoE10n_otro!=null ? tipoE10n_otro.parentNode.removeChild(tipoE10n_otro) : ""
+      tipoE10an_otro!=null ? tipoE10an_otro.style.display = 'none' : ""
+      tipoE10an_otro!=null ? tipoE10an_otro.removeAttribute('id') : ""
+      tipoE10an_otro!=null ? tipoE10an_otro.parentNode.removeChild(tipoE10an_otro) : ""
+      tipoE10bn_otro!=null ? tipoE10bn_otro.style.display = 'none' : ""
+      tipoE10bn_otro!=null ? tipoE10bn_otro.removeAttribute('id') : ""
+      tipoE10bn_otro!=null ? tipoE10bn_otro.parentNode.removeChild(tipoE10bn_otro) : ""
+      tipoE10cn_otro!=null ? tipoE10cn_otro.style.display = 'none' : ""
+      tipoE10cn_otro!=null ? tipoE10cn_otro.removeAttribute('id') : ""
+      tipoE10cn_otro!=null ? tipoE10cn_otro.parentNode.removeChild(tipoE10cn_otro) : "" 
+}
+
 const handleTipoPunteo = () => {
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
@@ -1159,6 +1214,7 @@ const handleTipoPunteo = () => {
   const e10B = document.getElementById('e10_B') // select
   const tipoE10cn = document.getElementById('tipo_e10_cn') //input
   const e10C = document.getElementById('e10_C') // select
+  
   switch(dataUserFromLoginLocalStorage.proyecto){
         case 1:
             realPunteo = punteo
@@ -1187,6 +1243,8 @@ const handleTipoPunteo = () => {
       tipoE10cn.removeAttribute('id')
       e10C.style.display = 'none'
       e10C.removeAttribute('id')
+      
+
   
       const selectField = document.createElement('select')
       handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
@@ -1221,6 +1279,8 @@ const handleTipoPunteo = () => {
       const inputFieldE10c = document.createElement('input')
       handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
       
+      //remover antes de agregar
+      removerOtrosInputs()
       
       //función donde se agrega options a los selects con el catálogo de tipo de vialidades
       handleFillTipoDeVialidades(selectField)
@@ -1265,6 +1325,8 @@ const handleTipoPunteo = () => {
     handleReturnTipoNombreVialidad(wrapTipoVialidadPosterior.children, wrapTipoVialidadPosterior, 'tipo_e10_cn', 'tipo')
     //nombre vialidad 2
     handleReturnTipoNombreVialidad(wrapNombreVialidadPosterior.children, wrapNombreVialidadPosterior, 'e10_C', 'nombre')
+    
+    removerOtrosInputs()
 
     fieldExists = false
   }  
@@ -1517,24 +1579,24 @@ const actualizaForm = data => {
           if(E10a_g!=null && tipoE10a_g!=null &&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
                 //$('#tipo_e10_a').text(o.tipo_e10_X);
                 $('#tipo_e10_a').val(o.tipo_e10_X);
-             html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+             html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+             html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
            }
            
             if(E10b_g!=null&&tipoE10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
                   $('#tipo_e10_b').val(o.tipo_e10_X);
-                 htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+                 htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+             htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
            }
            
              
            if(E10c_g!=null&&tipoE10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){        
                $('#tipo_e10_c').val(o.tipo_e10_X);
-               htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
+               htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
+             htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
            }
         });
         $('#e10_A').html(html)
@@ -1553,7 +1615,7 @@ const actualizaForm = data => {
         var html = ''
         if(arrData!=null) {
           arrData.forEach(function (o, i) {
-            html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10n + '">' + o.tipo_e10n + '</option>'
+            html += '<option data-tipo="' + o.tipo_e10 + '" value="' + o.tipo_e10 + '">' + o.tipo_e10n + '</option>'
           });
           var idElemAppend = ['tipo_e10n', 'tipo_e10_an', 'tipo_e10_bn', 'tipo_e10_cn']
           idElemAppend.forEach(function (o, i) {
@@ -2312,6 +2374,7 @@ const handleShowResult = result => {
           handleCancelClick()
           MDM6('hideMarkers', 'identify')
           handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
+          removerOtrosInputs()
           //handleActiveVisibleSearch()
           handleActionTargetRef()
           !checkboxPuntearAlta.checked ? handleActiveVisibleSearch() : false
@@ -2773,6 +2836,7 @@ const buildDetalle = ficha => {
 
 // función boton opción cancelar
 const handleCancelClick = () => {
+  removerOtrosInputs()
   document.getElementById("id_UE").style.display='block';
   document.getElementById("label_idUE").style.display='block';
   document.getElementById("origen").style.display='block';

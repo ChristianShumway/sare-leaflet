@@ -35,9 +35,14 @@ public class DefaultController extends BackingLogin {
                 && ce!=null && !ce.equals("")
                 && tramo_control != null && !tramo_control.equals("")
                 && proyecto != null ) {
-           HttpSession session = request.getSession(true);
+            HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(30 * 60);
             Map data = new HashMap();
+            if(tramo_control.equals("00000") && clave_operativa.equals("00000")){
+                ce="00";
+                tramo_control="00";
+                clave_operativa="00";
+            }
             data.put("clave_operativa",clave_operativa);
             data.put("tramo_control",tramo_control);
             data.put("proyecto",proyecto);
@@ -67,6 +72,11 @@ public class DefaultController extends BackingLogin {
            HttpSession session = request.getSession(true);
             session.setMaxInactiveInterval(30 * 60);
             Map data = new HashMap();
+            if(tramo_control.equals("00000") && clave_operativa.equals("00000")){
+                ce="00";
+                tramo_control="00";
+                clave_operativa="00";
+            }
             data.put("clave_operativa",clave_operativa);
             data.put("tramo_control",tramo_control);
             data.put("proyecto",proyecto);
