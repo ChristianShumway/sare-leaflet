@@ -426,8 +426,8 @@
               </div>
               <div class="inputs-option z-depth-3" id="inputs-referencia">
                 <div class="input-field">
-                  <input placeholder="CLEE_EST" id="id_UE" name="id_UE" type="text" disabled >
-                  <label id="label_idUE" for="id_UE">CLEE_EST</label>
+                  <input placeholder="ID_UE" id="id_UE" name="id_UE" type="text" disabled >
+                  <label id="label_idUE" for="id_UE">ID_UE</label>
                 </div>
                 <div class="input-field">
                   <select class="browser-default" id="catorigen" name="catorigen" style="display: none">

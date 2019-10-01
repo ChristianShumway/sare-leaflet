@@ -291,6 +291,50 @@ const objFormCentrocomercial=[
     }, 
 ]
 
+const inputsinhabilitar=[
+  {
+    id:'e03',
+  },
+  
+  {
+    id:'e03N',
+  },
+  {
+    id:'e04N',
+  }, 
+  {
+    id:'e05',
+  },
+  
+  {
+    id:'e05N',
+  },
+  {
+    id:'e06',
+  }, 
+  {
+    id:'e07',
+  }, 
+  {
+    id:'e04',
+  },
+  {
+    id:'origen',
+  },
+  {
+    id:'c154',
+  },
+  {
+    id:'e08',
+  },
+  {
+    id:'e17_DESC',
+  },
+  {
+    id:'e09',
+  }
+]
+
 const inputsEditables = [
   
   {

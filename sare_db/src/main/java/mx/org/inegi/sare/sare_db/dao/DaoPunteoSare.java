@@ -55,7 +55,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
-    
+
     @Autowired
     @Qualifier("jdbcTemplateOclEge")
     private JdbcTemplate jdbcTemplateoclEge;
@@ -265,7 +265,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     }
 
     @Override
-    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente,String idDeftramo) {
+    public List<cat_uo> getListaUO(Integer proyecto, String cveFrente, String idDeftramo) {
         List<cat_uo> cveManzana = null;
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
@@ -743,9 +743,18 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(esquemaPos).append(".cat_tipovialidad order by descripcion");
                         break;
                     case GETPUNTEORURAL:
+
                         sql.append("select r.cve_ent,ent.nomgeo as nom_ent,r.cve_mun,mun.nomgeo as nom_mun,cve_loc,nom_loc,cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,r.cvegeo,cvevial,punteo,mod_cat,cvegeo2016  from( ");
-                        sql.append("(select * from  ");
-                        sql.append("((SELECT m.cve_ent,m.cve_mun,m.cve_loc,nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                        sql.append("(select * from ( ");
+                        sql.append("(select m.cve_ent,m.cve_mun,m.cve_loc,l.nom_loc,m.cve_ageb,\n"
+                                + "X(ST_astext(ST_ClosestPoint(the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))), Y(ST_astext(ST_ClosestPoint(the_geom_merc,  "
+                                        + "ST_GeomFromText('").append(point).append("',900913)))),\n"
+                                + "cve_mza,'1' cveft, null nomvial,\n"
+                                + "null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 FROM sare_mas2019_carto.vw_manzanasmgn2019 m left join (select cve_ent,cve_mun,cve_loc,nomgeo as nom_loc from sare_mas2019_carto.td_localidades) l\n"
+                                + "on m.cve_ent=l.cve_ent and m.cve_mun=l.cve_mun and m.cve_loc=l.cve_loc\n"
+                                + "where st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),1)))\n"
+                                + "ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) union all ");
+                        sql.append("(SELECT m.cve_ent,m.cve_mun,m.cve_loc,nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
                         sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 ");
                         sql.append("FROM sare_mas2019_carto.vw_manzanasmgn2019 m inner join (select cve_ent,cve_mun,cve_loc,nomgeo as nom_loc from sare_mas2019_carto.td_localidades_rurales_lpr) l "
                                 + "on m.cve_ent||m.cve_mun||m.cve_loc=l.cve_ent||l.cve_mun||l.cve_loc  ");
@@ -779,11 +788,11 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         sql.append(" left join ").append(schemapg).append(".td_municipios mun on frente.cve_ent=mun.cve_ent and frente.cve_mun=mun.cve_mun ");
                         sql.append(" left join ").append(schemapg).append(".td_localidades loc on frente.cve_ent=loc.cve_ent and frente.cve_mun=loc.cve_mun and frente.cve_loc=loc.cve_loc ");
                         sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");
-                        
+
                         /*sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,cveft,id_deftramo  from ");
                         sql.append(schemapg).append(".vw_tr_frentes  frente");
-                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");*/                                                            
-                        break;                                               
+                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");*/
+                        break;
                 }
                 break;
             case Construccion:

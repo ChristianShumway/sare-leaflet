@@ -42,10 +42,12 @@ public class BackingGuardar extends BackingSincroniza {
         if (object.getE13() != null && object.getE13().equals("0")) {
             object.setE13(null);
         }
+      
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
         int validacion = 1;
-        if (inmueble != null) {
+        if (inmueble != null && !inmueble.getTIPO_E10().equals("") && 
+                !inmueble.getTIPO_E10_B().equals("") && !inmueble.getTIPO_E10_C().equals("") && !inmueble.getTIPO_E10_A().equals("")) {
             if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
@@ -108,6 +110,9 @@ public class BackingGuardar extends BackingSincroniza {
                     Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Error interno de Servidor"));
                 }
             }
+        }else{
+           Respuesta.setDatos(false);
+           Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Porfavor verifique la vialidad y las entrevialidades")); 
         }
 
         return Respuesta;
@@ -214,7 +219,8 @@ public class BackingGuardar extends BackingSincroniza {
         }
         inmueble.setId_deftramo(new BigDecimal(deftramo));
         if (validadeftramo(deftramo)) {
-            inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE().substring(inmueble.getId_UE().length()-5, inmueble.getId_UE().length())));
+            //inmueble.setId_deftramo(new BigDecimal(inmueble.getId_UE().substring(inmueble.getId_UE().length()-5, inmueble.getId_UE().length())));
+            inmueble.setId_deftramo(new BigDecimal(0));
         }
         object.setE23(inmueble.getE23());
         object.setId_deftramo(inmueble.getId_deftramo());

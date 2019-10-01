@@ -37,10 +37,13 @@ const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 var tipoE10_g,tipoE10a_g,tipoE10b_g,tipoE10c_g;
 var E10_g,E10a_g,E10b_g,E10c_g;
 
+
+
 const init = () => 
 {
     id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
 }
 
 const handleChangeOptions = option => {
@@ -178,6 +181,7 @@ const buscarUE = () => {
 
 //Función que busca la id_ue
 const findUE = id_ue => {
+  
   id_ue=id_ue;
   xycoorsx=''
   xycoorsy=''
@@ -196,6 +200,7 @@ const findUE = id_ue => {
     })
   } else {
     callServiceFindUE(id_ue)
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
     //handleShowRaticaHideSearch()
     //habilita boton cancelar
     
@@ -208,6 +213,7 @@ const findUE = id_ue => {
 //Función que manda llamar el servicio que regresa la busqueda
 const callServiceFindUE=(id_ue)=>{
   disabledInputs()
+  inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
   document.getElementById("id_UE").disabled=true
   const cancelOption = document.getElementById('item-cancel-option')
   sendAJAX(urlServices['serviceSearch'].url, 
@@ -255,6 +261,7 @@ const callServiceFindUE=(id_ue)=>{
       {
       tipoE10c_g=data[0].datos.datos[0].tipo_E10_C;
       }
+      inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
     } else {
       Swal.fire({
         position: 'bottom-end',
@@ -2150,8 +2157,48 @@ const modalViewPreliminar = () => {
     showCancelButton: true,
     showCloseButton: true, 
     onOpen: showViewPreliminar(d) 
-  }).then ( result => handleShowResult(result) )
+  }).then ( result => validaTipos(result) )
 }
+
+const validaTipos =(result)=>{
+    let tipo_e10,tipo_e10A,tipo_e10B,tipo_e10C;
+    tipo_e10=document.getElementById("tipo_e10").value;
+    tipo_e10A=document.getElementById("tipo_e10_a").value;
+    tipo_e10B=document.getElementById("tipo_e10_b").value;
+    tipo_e10C=document.getElementById("tipo_e10_c").value;
+    if(tipo_e10!="" && tipo_e10A!="" && tipo_e10B!="" && tipo_e10C!=""){
+        if (!/^([0-9])*$/.test(tipo_e10)){
+            handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique la vialidad', false)
+        }else{
+            if (!/^([0-9])*$/.test(tipo_e10A))
+            {
+                handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique la vialidad 1', false)
+            }else
+                {
+                    if (!/^([0-9])*$/.test(tipo_e10B))
+                    {
+                        handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique la vialidad 2', false)
+                    }else
+                        {
+                            if (!/^([0-9])*$/.test(tipo_e10C))
+                            {       
+                                handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique la vialidad posterior', false)
+                            }
+                            else
+                                {
+                                    handleShowResult(result); 
+                                }
+                        }
+            
+                }
+           
+        }
+    }else{
+       handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique las entrevialidades', false) 
+    }
+}
+
+
 
 const showViewPreliminar = d => {
   
@@ -2954,7 +3001,7 @@ const openReportesAjax=(opcion,opcionSeleccion)=>{
                 )
         }
         xhr.onload = function(e) {
-        if (this.status == 200) {
+        if (this.status == 200 ) {
             
             swal.close();
             var blob = new Blob([this.response], {type: 'application/pdf'});
@@ -2979,10 +3026,15 @@ const openReportesAjax=(opcion,opcionSeleccion)=>{
                 //swal.close();
             }else{
                 if(opcionSeleccion === 'Csv'){
-                    var file = window.URL.createObjectURL(this.response);
                    link.setAttribute("href", file);                   
                    link.download = "reporte.csv";
+                   document.body.appendChild(link);
                    link.click(); 
+                   setTimeout(function(){
+                    document.body.removeChild(link);
+                    window.URL.revokeObjectURL(url);  
+                    }, 100);  
+                   
                    swal.close();
                 }else{
                     Swal.fire({

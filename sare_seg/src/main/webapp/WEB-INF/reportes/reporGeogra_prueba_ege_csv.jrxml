@@ -185,7 +185,7 @@
             WHEN  substr(po.cve_operativa,0,2) ='33' THEN 'DFS'
             WHEN  substr(po.cve_operativa,0,2) ='34' THEN 'MEP'
 
-end ce,substr(po.cve_operativa,0,2) cve_ce,po.cve_operativa tramo_control,cgo.descripcion cgo,ue.ID_UE,st.descripcion status,ue.e08,ue.e09,ue.E23A,ue.c154,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
+end ce,substr(po.cve_operativa,0,2) cve_ce,po.cve_operativa tramo_control,ue.ID_UE,st.descripcion status,ue.e08,ue.e09,ue.E23A,ue.c154,ue.e03 cve_ent,ue.e04 cve_mun,ue.e05 cve_loc,ue.e06 cve_ageb,
 ue.e07 cve_mza,ue.tipo_e10,ue.e10 nomvial,ue.e11 numext,ue.e11a numextalf,ue.tipo_e14,ue.e14,ue.e12,ue.e19,ue.e20
 from
 ce2019_masrencal.tr_plan_oper po
@@ -193,15 +193,13 @@ join ce2019_masrencal.tr_predios pre on pre.id_cop=po.id_cop
 join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
 join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
 join ce2019_MASRENCAL.tc_st_sare st on pre.status_sare=st.status_sare
-join ce2019_MASRENCAL.tc_cgo cgo on pre.id_cgo=cgo.id_cgo
 where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!{where}
- order by tramo_control,origen,e23a,clee_emp,id_ue,cgo.id_cgo]]>
+ order by tramo_control,origen,e23a,clee_emp,id_ue]]>
 	</queryString>
 	<field name="ST_SARE" class="java.lang.String"/>
 	<field name="CE" class="java.lang.String"/>
-	<field name="CVE_CE" class="java.math.BigDecimal"/>
+	<field name="CVE_CE" class="java.lang.String"/>
 	<field name="TRAMO_CONTROL" class="java.lang.String"/>
-	<field name="CGO" class="java.lang.String"/>
 	<field name="ID_UE" class="java.math.BigDecimal"/>
 	<field name="STATUS" class="java.lang.String"/>
 	<field name="E08" class="java.lang.String"/>
@@ -246,21 +244,6 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 				<text><![CDATA[ESTATUS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="60" y="0" width="40" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="6fe16cc2-04b7-493d-8e54-1a2072ff8d6e"/>
-				<box>
-					<pen lineWidth="0.5" lineColor="#000000"/>
-					<topPen lineWidth="0.5" lineColor="#000000"/>
-					<leftPen lineWidth="0.5" lineColor="#000000"/>
-					<bottomPen lineWidth="0.5" lineColor="#000000"/>
-					<rightPen lineWidth="0.5" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
-					<paragraph leftIndent="4"/>
-				</textElement>
-				<text><![CDATA[CGO]]></text>
-			</staticText>
-			<staticText>
 				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="22" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="be65544d-66e0-4a88-b8f5-4979d262e710"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
@@ -276,7 +259,7 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 				<text><![CDATA[CE]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="20" y="0" width="40" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="288971ab-d318-4495-b280-6eeae7a78ddf"/>
+				<reportElement positionType="Float" mode="Opaque" x="20" y="0" width="80" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="288971ab-d318-4495-b280-6eeae7a78ddf"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -453,7 +436,7 @@ CONTROL	]]></text>
 					<font fontName="SansSerif" size="7" isBold="false"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
-				<text><![CDATA[CLEE_EST]]></text>
+				<text><![CDATA[ID_UE]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="492" y="22" width="20" height="22" forecolor="#FFFFFF" backcolor="#E47439" uuid="04eb19f2-1555-4564-9da3-c482770d311d"/>
@@ -734,7 +717,7 @@ CONTROL	]]></text>
 				<textFieldExpression><![CDATA[$F{CVE_MZA}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="20" y="0" width="40" height="28" uuid="51da3b53-9b6e-476a-92ef-7fc0de332c37"/>
+				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="20" y="0" width="80" height="28" uuid="51da3b53-9b6e-476a-92ef-7fc0de332c37"/>
 				<box>
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -761,20 +744,6 @@ CONTROL	]]></text>
 					<font fontName="SansSerif" size="6" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ID_UE}]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="60" y="0" width="40" height="28" uuid="a5538b80-af77-41f1-b1e6-99684a1bf373"/>
-				<box>
-					<pen lineWidth="0.5"/>
-					<topPen lineWidth="0.5"/>
-					<leftPen lineWidth="0.5"/>
-					<bottomPen lineWidth="0.5"/>
-					<rightPen lineWidth="0.5"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="6" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{CGO}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement style="table 2_TD" stretchType="RelativeToTallestObject" x="492" y="0" width="20" height="28" uuid="be1ebb2c-40b6-477d-8c26-617fd20bea87"/>
