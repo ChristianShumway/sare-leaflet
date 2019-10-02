@@ -108,7 +108,8 @@ const handleClickValidaUsuario = () => {
           proyectoSesion:'',
         }
         loading = 'false'
-        handleVisibleLoading()        
+        handleVisibleLoading() 
+        inicializaCapas()
         //localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
         card.style.transform = 'rotatex(180deg)'
         //window.location.href =  './index.html'
@@ -118,6 +119,8 @@ const handleClickValidaUsuario = () => {
     () => {}
   )
 }
+
+
 
 // validar enter al logear
 const handlePressEnter = (e) => {

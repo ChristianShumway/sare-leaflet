@@ -1,6 +1,6 @@
 var urlServices = {
     map: {
-       // url: 'http://10.106.12.81/cgi-bin/mapserv.exe?map=../../map/sare_masivo_2019.map&', //  Masivo
+      //  url: 'http://10.106.12.81/cgi-bin/mapserv.exe?map=../../map/sare_masivo_2019.map&', //  Masivo
 //url: 'http://10.106.12.81/cgi-bin/mapserv.exe?map=../../map/SARE_2019.map&', //  Masivo
         //url: 'http://10.106.12.81:88/cgi-bin/mapserv.exe?map=../../map/SARE_RENEM_EGE_2018.map&', //  Consuelo
         url: 'https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/sare_masivo_2019.map&',
@@ -153,3 +153,5 @@ var urlServices = {
     
     
 };
+
+

@@ -196,7 +196,9 @@
 
                    }
                });
-                $(window).mousemove(function(){  MDM6('updateSize'); }); 
+                $(window).mousemove(function(){ 
+                    MDM6('updateSize');
+                }); 
                    
                 //document.addEventListener('DOMMouseScroll', stopWheel, false);
          }     

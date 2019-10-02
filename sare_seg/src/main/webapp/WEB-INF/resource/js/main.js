@@ -13,7 +13,7 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-let layersSARE = ['c100', 'c101a', 'wdenue']
+let layersSARE=['c100', 'c110', 'wdenue']
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -41,6 +41,7 @@ var E10_g,E10a_g,E10b_g,E10c_g;
 
 const init = () => 
 {
+    addInitialCapas()
     id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
     inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
@@ -2256,7 +2257,7 @@ const validaTipos =(result)=>{
            
         }
     }else{
-       handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique las entrevialidades', false) 
+       handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique las entrevialidades y la vialidad ', false) 
     }
 }
 

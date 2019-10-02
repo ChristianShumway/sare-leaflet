@@ -3,6 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+const addInitialCapas=()=>{
+switch(dataUserFromLoginLocalStorage.proyecto){
+        case 1:
+            layersSARE = ['c100', 'c110', 'wdenue']
+            break;
+        case 5:
+            layersSARE = ['c100', 'c101a', 'wdenue']
+            break;
+    }
+    var idWms = urlServices['map'].label
+    MDM6('setParams', { layer: idWms, params: { 'layers': layersSARE, 'EDO': '00' } })
+}
 
 
 const servicevalidaobjform = (object,obj) =>{
