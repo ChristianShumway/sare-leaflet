@@ -170,11 +170,13 @@
                    }
 
                    event.preventDefault();
+                    
                });} /* IE7, IE8 */
          if(document.addEventListener){
              /* Chrome, Safari, Firefox */
              navegador=getBrowserInfo();
              $("#mapa").on("wheel", event => {
+                 
                    if (event.originalEvent.ctrlKey) {
                        event.returnValue = false;
                    }
@@ -189,8 +191,13 @@
                    if(navegador.includes('Chrome'))
                    {
                         event.preventDefault();
+                        
+ 
+
                    }
                });
+                $(window).mousemove(function(){  MDM6('updateSize'); }); 
+                   
                 //document.addEventListener('DOMMouseScroll', stopWheel, false);
          }     
        });
