@@ -117,8 +117,8 @@ public class ServiceController {
         return BackingValidacionesSare.validationsobjForm(obj,objrequest);
     }
     @RequestMapping(value = "valida_num_ext.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext, @RequestParam(value = "letraext") String letraext) throws Exception {
-        return BackingValidacionesSare.valida_num_ext(numext,letraext);
+    public cat_respuesta_services valida_num_ext(@RequestParam(value = "numext") String numext,@RequestParam(value = "numint") String numint, @RequestParam(value = "letraext") String letraext) throws Exception {
+        return BackingValidacionesSare.valida_num_ext(numint,numext,letraext);
     }
 
     @RequestMapping(value = "getCatAsentamientosHumanos.do", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)

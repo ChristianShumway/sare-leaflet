@@ -290,6 +290,12 @@ const objFormRuralBack={"object":[
         title:'title-domicilio'
     }, 
     {
+    id:'e14_A',
+    key:'asentamiento',
+    name:'código postal',
+    title:'title-asentamiento',
+  },
+    {
         id:'e11',
         key: 'domicilio',
         name:'número exterior',

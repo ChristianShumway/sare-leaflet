@@ -322,7 +322,8 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                             if (element.getCOORD_X() != null && element.getCOORD_Y() != null) {
                                                 cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
                                                 cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
-                                                if (cX == 0.0 && cY == 0.0) {
+                                                
+                                                if (!InterfaceBusquedaSare.ValidateCoordsEdo(proyecto, element)) {
                                                     element.setCOORD_X(null);
                                                     element.setCOORD_Y(null);
                                                 } else {

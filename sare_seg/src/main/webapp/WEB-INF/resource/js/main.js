@@ -41,10 +41,11 @@ var E10_g,E10a_g,E10b_g,E10c_g;
 
 const init = () => 
 {
-    addInitialCapas()
+    
     id_ue=document.getElementById("id_UE").value;
     addCapas ( { 'checked': true, 'id': 'unidades' } )
     inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
+    //addInitialCapas()
 }
 
 const handleChangeOptions = option => {
@@ -110,12 +111,13 @@ const addCapas = chk => {
       addLay('c102') //manzanas
     }
     if (typeof chk.ageb !== 'undefined' && chk.ageb === true) {
-      remLay('c102')
+    //  remLay('c102')
       addLay('c103r')
       addLay('c103')
       addLay('c107')
       addLay('c107r')
       addLay('c108')
+      
     }
     
   }
@@ -154,9 +156,9 @@ const zooma = () => {
 //Funcion que hace que se actualice el mapa cada vez que se hace zoom
 const eventoMoveZoom = () => {
   var level = MDM6('getZoomLevel')
-  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': false  })
-  : level >= 12 ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': true })
-  : addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': false, 'mza': false })
+  level > 9 && level < 13  ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': true  })
+  : level >= 12 ? addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': true })
+  : addCapas({ 'checked': 'noFalse', 'id': 'unidades', 'ageb': true, 'mza': true })
 }
 
 // Función buscar clave
@@ -1809,16 +1811,20 @@ const validations=(totalInputs,object,campo)=>{
   }
 }
 
-const validaNumExt=(numero_ext, letra_ext)=>
+const validaNumExt=(numero_int,numero_ext, letra_ext)=>
 {
   sendAJAX(urlServices['servicevalida_num_ext'].url, 
   {
+    'numint':numero_int,
     'numext': numero_ext,
     'letraext': letra_ext
   }, 
   urlServices['servicevalida_num_ext'].type, 
   data => {
     if (data[0].operation) {
+      if(data[0].datos.mensaje.type === "fals"){
+          showelementwithmistakeform(data[0].datos.mensaje.messages,"e13","","title-domicilio","domicilio")
+      }else{
       if (data[0].datos.mensaje.type === "false") {
           showelementwithmistakeform(data[0].datos.mensaje.messages,"e11","","title-domicilio","domicilio")
           return true
@@ -1843,6 +1849,7 @@ const validaNumExt=(numero_ext, letra_ext)=>
             return false
           }
       }
+    }
       
     }
   }, () => { })
@@ -1951,6 +1958,11 @@ const validationsBack=(ObjectRequest)=>
         }
         else {
           if(punteo=='R' && mod_cat=='1') {
+              if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
+                    return true
+                }else{
+                    return false
+                }
            // validaCp()
           }
           else {
@@ -2123,6 +2135,7 @@ const validaEdificio = () => {
 const handleFormValidationsRural = () => {}
 
 const validaCp = () => {
+  const numero_int=document.getElementById('e13')
   const numero_ext=document.getElementById('e11')
   const letra_ext=document.getElementById('e11A')
   const cp=document.getElementById('e14_A')
@@ -2166,7 +2179,7 @@ const validaCp = () => {
 
           handleReturnContainerForm(nameContainerFloating)
         } 
-        if(validaNumExt(numero_ext.value,letra_ext.value)){
+        if(validaNumExt(numero_int.value,numero_ext.value,letra_ext.value)){
             
         }else
         {

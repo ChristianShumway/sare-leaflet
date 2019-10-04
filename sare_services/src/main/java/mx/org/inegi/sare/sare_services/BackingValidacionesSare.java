@@ -43,7 +43,7 @@ public class BackingValidacionesSare {
 
     public cat_respuesta_services validacp(String cp, String entidad, Integer proyecto) throws Exception {
         cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (cp.equals("") || cp == null) {
+        if (cp.equals("") || cp.equals(null)) {
             List<cat_codigo_postal> codigoPostal = getcatcp(entidad, proyecto);
             cp = codigoPostal.get(0).getCp_final();
         }
@@ -56,7 +56,8 @@ public class BackingValidacionesSare {
             respuesta.setMensaje(new cat_mensaje("false", "Fallo al validar Codigo Postal"));
             Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if ("".equals(respuesta.getDatos().toString()) || respuesta.getDatos() == null) {
+        if ("".equals(respuesta.getDatos().toString()) || respuesta.getDatos() == null) 
+        {
             respuesta.setMensaje(new cat_mensaje("true", ""));
         } else {
             respuesta.setMensaje(new cat_mensaje("false", respuesta.getDatos().toString()));
@@ -79,24 +80,38 @@ public class BackingValidacionesSare {
         return respuesta;
     }
 
-    public cat_respuesta_services valida_num_ext(String num_ext, String letra_ext) {
+    public cat_respuesta_services valida_num_ext(String num_int,String num_ext, String letra_ext) {
         cat_respuesta_services respuesta = new cat_respuesta_services();
-        if (num_ext.equals("") && !"".equals(letra_ext)) {
-            respuesta.setMensaje(new cat_mensaje("true", ""));
-        } else if ((num_ext != null)) {
+        if(!num_int.equals(null) && !num_int.equals("")){
             try {
-                Integer.parseInt(num_ext);
+                Integer.parseInt(num_int);
                 respuesta.setMensaje(new cat_mensaje("true", ""));
-            } catch (NumberFormatException excepcion) {
-                respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
+            } catch (NumberFormatException excepción) {
+                respuesta.setMensaje(new cat_mensaje("fals", "el numero interior debe ser numerico"));
 
             }
-        } else if (letra_ext.equals("") && num_ext.equals("")) {
-            respuesta.setMensaje(new cat_mensaje("falso", "agregue numero exterior"));
-        } else {
+        }else{
             respuesta.setMensaje(new cat_mensaje("true", ""));
         }
+        if(!respuesta.getMensaje().getType().equals("fals")){
+            if (num_ext.equals("") && !"".equals(letra_ext)) {
+                respuesta.setMensaje(new cat_mensaje("true", ""));
+            } else if ((num_ext != null)) {
+                try {
+                    Integer.parseInt(num_ext);
+                    respuesta.setMensaje(new cat_mensaje("true", ""));
+                } catch (NumberFormatException excepcion) {
+                    respuesta.setMensaje(new cat_mensaje("false", "el numero exterior debe ser numerico"));
+
+                }
+            } else if (letra_ext.equals("") && num_ext.equals("")) {
+                respuesta.setMensaje(new cat_mensaje("falso", "agregue numero exterior"));
+            } else {
+                respuesta.setMensaje(new cat_mensaje("true", ""));
+            }
+        }
         return respuesta;
+        
     }
 
     public cat_respuesta_services valida_letra_ext(String letra_ext) {

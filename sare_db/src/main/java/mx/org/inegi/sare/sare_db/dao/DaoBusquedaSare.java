@@ -269,6 +269,26 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
 
     }
+    @Override
+    public boolean ValidateCoordsEdo(Integer proyecto,cat_vw_punteo_sare element) {
+        boolean regresa;
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+        sql = getSql(element, 0, "", null, "", proyectos, "", "", 0, MetodosBusqueda.VALIDA_COORDENADAS_CAIGAN_EN_ESTADO, null);
+        regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                boolean fila;
+                int valor=0;
+                while (rs.next()) {
+                   valor=rs.getInt(1);
+                }
+                fila = valor==1;
+                return fila;
+            }
+        });
+        return regresa;
+    }
 
     @Override
     public ArrayList<String> getClavesUnicasPG(Integer proyecto) {
@@ -643,6 +663,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     case OCUPACVEUNICACONGLOMERADO:
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
                         break;
+                    case VALIDA_COORDENADAS_CAIGAN_EN_ESTADO:
+                        sql.append("select case when count(*)>0 then 1 else 0 end from ").append(schemapgEge).append(".td_entidad where st_intersects(st_transform(the_geom_merc,4326),st_geomfromtext('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326))");
+                            break;
                 }
                 break;
             

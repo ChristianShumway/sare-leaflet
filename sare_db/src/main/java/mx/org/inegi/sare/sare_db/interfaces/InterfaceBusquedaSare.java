@@ -36,6 +36,8 @@ public interface InterfaceBusquedaSare {
     
     public boolean ocupaCveunicaOCL(Integer proyecto, String id_ue);
     
+    public boolean ValidateCoordsEdo(Integer proyecto, cat_vw_punteo_sare element);
+    
     
     //public boolean 
 }

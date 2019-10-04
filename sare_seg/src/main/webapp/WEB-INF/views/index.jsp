@@ -555,7 +555,7 @@
                   <input id="tipo_e10_cvevial" name="tipo_e10_cvevial" type="text" hidden readonly >
                 </div>
                 <div class="input-field">
-                  <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" id="e10" name="e10" type="text" disabled >
+                    <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" maxlength="79" oninput="if(this.value.lenght)>this.maxlength this.value = this.value.slice(0, this.maxLength);" id="e10" name="e10" type="text" disabled >
                   <label for="e10">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
