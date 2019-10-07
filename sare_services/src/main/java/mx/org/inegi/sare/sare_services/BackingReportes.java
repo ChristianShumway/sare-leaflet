@@ -103,7 +103,7 @@ public class BackingReportes extends DaoTransformaCartografia {
 //                                 whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and ue.ce=" + ce + "";
 //                             }
                     }
-                    if(tipo.equals("CSV")){
+                    if(tipo.equals("CSV")|| tipo.equals("EXCEL")){
                         nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_ege_csv.jrxml");
                         nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_ege_csv.jrxml");
                     }else{

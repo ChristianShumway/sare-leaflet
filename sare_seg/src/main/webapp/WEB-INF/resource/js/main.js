@@ -3062,8 +3062,11 @@ const openReportesAjax=(opcion,opcionSeleccion)=>{
         var tipo;
         if (opcionSeleccion === 'Csv'){
              tipo='CSV'       
-        }else{
-              tipo='PDF'      
+        }else{            
+            if(opcionSeleccion=='Pdf'){
+                tipo='PDF'      
+            }else{
+                tipo='EXCEL'}
         }
         xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto='+dataUserFromLoginLocalStorage.proyecto+'&tipo='+tipo+'&reporte='+opcion+'&ce='+dataUserFromLoginLocalStorage.ce, true);
         xhr.responseType = 'blob';
@@ -3103,9 +3106,13 @@ const openReportesAjax=(opcion,opcionSeleccion)=>{
     //            link.click(); 
                 //swal.close();
             }else{
-                if(opcionSeleccion === 'Csv'){
-                   link.setAttribute("href", file);                   
-                   link.download = "reporte.csv";
+                if(opcionSeleccion === 'Csv'|| opcionSeleccion==='Excel'){
+                   link.setAttribute("href", file);   
+                   if(opcionSeleccion==='Excel'){
+                      link.download = "reporte.xls";
+                   }else{
+                      link.download = "reporte.csv";
+                   }
                    document.body.appendChild(link);
                    link.click(); 
                    setTimeout(function(){
@@ -3155,7 +3162,8 @@ async function optionButtonsReport(report)  {
     setTimeout(() => {
       resolve({
         'Csv': 'Csv',
-        'Pdf': 'Pdf'
+        'Pdf': 'Pdf',
+        'Excel': 'Excel'
       })
     }, 500)
   })
