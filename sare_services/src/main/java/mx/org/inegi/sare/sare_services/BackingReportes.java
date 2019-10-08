@@ -15,6 +15,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
+import mx.org.inegi.sare.sare_db.dao.DaoBusquedaSare;
 import mx.org.inegi.sare.sare_db.dao.DaoTransformaCartografia;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
@@ -38,7 +39,7 @@ import org.springframework.stereotype.Service;
  * @author LIDIA.VAZQUEZ
  */
 @Service("BackingReportes")
-public class BackingReportes extends DaoTransformaCartografia {
+public class BackingReportes extends DaoBusquedaSare {
 
     @Autowired
     @Qualifier("datosConexionDao")
@@ -58,6 +59,7 @@ public class BackingReportes extends DaoTransformaCartografia {
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         String nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
         String nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+        String nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances_ege_excel.jrxml");
         String tipoArchivo = tipo;
         String reporte = report;
         String ce;
@@ -94,21 +96,30 @@ public class BackingReportes extends DaoTransformaCartografia {
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
                     ce=asignaCe(coordinacion);
-                    if (ce.equals("00")) {
+                    if(report.equals("1") || report.equals("2")){
+                        if (ce.equals("00")) {
                         whereReporte = " and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38  and 1=1";
 
                     } else {
                             whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and substr(po.cve_operativa,0,2)=" + ce + ""; 
-//                             if (reporte.equals("1")) {
-//                                 whereReporte = "  and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and ue.ce=" + ce + "";
-//                             }
                     }
+                    }else{
+                        if (ce.equals("00")) {
+                            whereReporte = " 1=1";
+
+                    } else {
+                            whereReporte = " cve_ce= '" + ce + "'"; 
+                    }
+                    }
+                    
                     if(tipo.equals("CSV")|| tipo.equals("EXCEL")){
                         nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_ege_csv.jrxml");
                         nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_ege_csv.jrxml");
+                        nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances_ege_excel.jrxml");
                     }else{
                     nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_ege.jrxml");
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_ege.jrxml");
+                    nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances_ege.jrxml");
                     }
                     break;
             }
@@ -123,6 +134,10 @@ public class BackingReportes extends DaoTransformaCartografia {
                 nombreArchivoAdescargar = "AvanceRegistrosPunteados";
                 conne = InterfaceReportes.getDs().getConnection();
 
+            }else if(reporte.equals("3")){
+                nombreArchivo = nombreArchivoJRXMLPunteados;
+                nombreArchivoAdescargar = "RegistrosPunteados";
+                conne = InterfaceReportes.getDsPg().getConnection();
             }
             params.put("where", whereReporte);
             ProyectosEnum proyectos;

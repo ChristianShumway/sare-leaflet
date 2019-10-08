@@ -15,4 +15,6 @@ public interface InterfaceReportes {
     
     public DataSource getDs();
     
+    public DataSource getDsPg();
+    
 }

@@ -3188,7 +3188,8 @@ async function OpenReportes (size, action) {
     input: 'select',
     inputOptions: {
       '1': 'Reporte de Avance de Registros Punteados',    
-      '2': 'Reporte de Establecimientos Pendientes de Punteo',    
+      '2': 'Reporte de Establecimientos Pendientes de Punteo', 
+      '3': 'Reporte de Establecimientos Punteados',
     },
     inputPlaceholder: 'Selecciona un Reporte',
     showCancelButton: true,

@@ -23,10 +23,20 @@ public class DaoDatosConexion implements InterfaceReportes{
     @Autowired
     @Qualifier("dataSourceOcl")
     private DataSource ds;
+    
+    @Autowired
+    @Qualifier("dataSource")
+    private DataSource dspg;
 
     @Override
     public DataSource getDs() {
         DataSource d = ds;
+        return d;
+    }
+
+    @Override
+    public DataSource getDsPg() {
+        DataSource d = dspg;
         return d;
     }
 }
