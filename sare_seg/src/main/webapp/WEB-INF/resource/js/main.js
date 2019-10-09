@@ -2237,12 +2237,13 @@ const modalViewPreliminar = () => {
 }
 
 const validaTipos =(result)=>{
-    let tipo_e10,tipo_e10A,tipo_e10B,tipo_e10C;
+    let tipo_e10,tipo_e10A,tipo_e10B,tipo_e10C,tipo_e14;
     tipo_e10=document.getElementById("tipo_e10").value;
     tipo_e10A=document.getElementById("tipo_e10_a").value;
     tipo_e10B=document.getElementById("tipo_e10_b").value;
     tipo_e10C=document.getElementById("tipo_e10_c").value;
-    if(tipo_e10!="" && tipo_e10A!="" && tipo_e10B!="" && tipo_e10C!=""){
+    tipo_e14=document.getElementById("tipo_E14").value
+    if(tipo_e10!="" && tipo_e10A!="" && tipo_e10B!="" && tipo_e10C!="" && tipo_e14!=""){
         if (!/^([0-9])*$/.test(tipo_e10)){
             handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique la vialidad', false)
         }else{
@@ -3172,6 +3173,7 @@ async function optionButtonsReport(report)  {
     title: '<span style="width:100%;">Selecciona Opción</span>',
     input: 'radio',
     confirmButtonText:'Aceptar',
+    showCloseButton:true,
     inputOptions: inputOptions,
     inputValidator: (value) => {
       if (!value) {
@@ -3179,7 +3181,9 @@ async function optionButtonsReport(report)  {
       }
     }
   })
-  openReportesAjax(report,option)     
+  if(option){
+    openReportesAjax(report,option)    
+  }
 }
 
 async function OpenReportes (size, action) {

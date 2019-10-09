@@ -258,8 +258,8 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
 				<text><![CDATA[ESTATUS]]></text>
@@ -273,14 +273,14 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
 				<text><![CDATA[CGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="22" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="be65544d-66e0-4a88-b8f5-4979d262e710"/>
+				<reportElement stretchType="RelativeToTallestObject" mode="Opaque" x="0" y="0" width="20" height="44" forecolor="#FFFFFF" backcolor="#E47439" uuid="be65544d-66e0-4a88-b8f5-4979d262e710"/>
 				<box>
 					<pen lineWidth="0.5" lineColor="#000000"/>
 					<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -288,8 +288,8 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
 					<paragraph lineSpacing="Single" leftIndent="4"/>
 				</textElement>
 				<text><![CDATA[CE]]></text>
@@ -303,8 +303,8 @@ where pre.punteo_sare=1 and inm.id_ue is not null and ST_sare in ('10','20') $P!
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
 				<text><![CDATA[TRAMO
@@ -320,7 +320,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -350,7 +350,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -379,7 +379,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -394,7 +394,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -409,7 +409,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -424,7 +424,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -439,7 +439,7 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
@@ -468,8 +468,8 @@ CONTROL	]]></text>
 					<bottomPen lineWidth="0.5" lineColor="#000000"/>
 					<rightPen lineWidth="0.5" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7" isBold="false"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
 					<paragraph leftIndent="4"/>
 				</textElement>
 				<text><![CDATA[CLEE_EST]]></text>
