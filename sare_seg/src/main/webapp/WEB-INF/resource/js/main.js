@@ -13,7 +13,8 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-let layersSARE=['c100', 'c110', 'wdenue']
+//let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
+let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -309,6 +310,7 @@ const validateCoord = data => {
     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'routen', params: {nom: 'Ubicación Original', desc: xycoorsx + ", " + xycoorsy}})    
     handleActionTargetRef()
  }
+ 
   fillForm(data)
 }
 
@@ -1203,6 +1205,9 @@ const removerOtrosInputs=()=>{
 }
 
 const handleTipoPunteo = () => {
+  if(punteo=='U' && mod_cat=='2'){
+      confirmacionPunteo = true
+  }
   const wrapTipoVialidad = document.getElementById('wrap-tipo-vialidad')
   const wrapTipoVialidadUno = document.getElementById('wrap-tipo-vialidad-uno')
   const wrapNombreVialidadUno = document.getElementById('wrap-nombre-vialidad-uno')
@@ -1401,11 +1406,13 @@ const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
 }
 
 const asignaValorId = item => {
-    document.getElementById('tipo_e10n').value==99?document.getElementById("tipo_e10n_otro").style.display="initial":document.getElementById("tipo_e10n_otro").style.display="none"
-    document.getElementById('tipo_e10_an').value==99?document.getElementById("tipo_e10_an_otro").style.display="initial":document.getElementById("tipo_e10_an_otro").style.display="none"
-    document.getElementById('tipo_e10_bn').value==99?document.getElementById("tipo_e10_bn_otro").style.display="initial":document.getElementById("tipo_e10_bn_otro").style.display="none"
-    document.getElementById('tipo_e10_cn').value==99?document.getElementById("tipo_e10_cn_otro").style.display="initial":document.getElementById("tipo_e10_cn_otro").style.display="none"
-
+    if(document.getElementById("tipo_e10n_otro")!=null)
+    {
+        document.getElementById('tipo_e10n').value==99 ?document.getElementById("tipo_e10n_otro").style.display="initial":document.getElementById("tipo_e10n_otro").style.display="none"
+        document.getElementById('tipo_e10_an').value==99?document.getElementById("tipo_e10_an_otro").style.display="initial":document.getElementById("tipo_e10_an_otro").style.display="none"
+        document.getElementById('tipo_e10_bn').value==99?document.getElementById("tipo_e10_bn_otro").style.display="initial":document.getElementById("tipo_e10_bn_otro").style.display="none"
+        document.getElementById('tipo_e10_cn').value==99?document.getElementById("tipo_e10_cn_otro").style.display="initial":document.getElementById("tipo_e10_cn_otro").style.display="none"
+    }
     const campoTipoE10n = document.getElementById('tipo_e10n')
     const campoTipoE10an = document.getElementById('tipo_e10_an')
     const campoTipoE10bn = document.getElementById('tipo_e10_bn')
@@ -1509,7 +1516,8 @@ const actualizaForm = data => {
   cve_geo2016 = data.cvegeo2016
   cveft = data.cveft
   e10_cve_vial = data.e10_cvevial
-    
+  
+  
   //inicializa entrevialidades
   if(typeof data.e10_X!=='undefined'){
     infodenue = true

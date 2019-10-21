@@ -91,8 +91,17 @@ public class BackingReportes extends DaoBusquedaSare {
                     } else {
                         whereReporte = " and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and ue.ce=" + ce + "";
                     }
+//                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+//                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    if(tipo.equals("CSV")|| tipo.equals("EXCEL")){
+                        nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+                        nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                        nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+                    }else{
                     nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
+                    nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances.jrxml");
+                    }
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
                     ce=asignaCe(coordinacion);
