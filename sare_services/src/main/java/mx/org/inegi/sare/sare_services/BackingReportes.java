@@ -103,9 +103,9 @@ public class BackingReportes extends DaoBusquedaSare {
 //                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
 //                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
                     if(tipo.equals("CSV")|| tipo.equals("EXCEL")){
-                        nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
-                        nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");
-                        nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
+                        nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_mas_csv.jrxml");
+                        nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_mas_csv.jrxml");
+                        nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances_mas_excel.jrxml");
                     }else{
                     nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
                     nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");

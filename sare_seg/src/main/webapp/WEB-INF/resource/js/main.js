@@ -2178,8 +2178,11 @@ const validaCp = () => {
           const btnFloat = document.getElementById(`icon-${containerFloat}-float`)
           const btnStatic = document.getElementById(`icon-${containerFloat}-static`)
           //alert(containerFloat)
-          btnFloat.classList.remove('btn-inactive')
-          btnStatic.classList.add('btn-inactive')
+          if(btnFloat!=null){
+                btnFloat.classList.remove('btn-inactive')
+                btnStatic.classList.add('btn-inactive')
+          }
+          
           arrayWrapBtns.map (wrap => {
             const idWrap = document.getElementById(wrap)
             idWrap.style.display = 'contents'
