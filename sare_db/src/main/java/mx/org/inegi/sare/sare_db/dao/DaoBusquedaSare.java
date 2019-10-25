@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import mx.org.inegi.sare.Enums.BusquedaEnum;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
+import mx.org.inegi.sare.sare_db.dto.cat_registro_ue_complemento_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("dataSource")
     private DataSource DataSource;
-    
-    
+
     @Autowired
     @Qualifier("jdbcTemplatemdm")
     private JdbcTemplate jdbcTemplatemdm;
@@ -63,11 +63,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     public String esquemaPg;
 
-    
     ProyectosEnum proyectos;
     BusquedaEnum querys;
     ProyectosEnum.MetodosBusqueda MetodosBusqueda;
-    
 
     List<cat_vw_punteo_sare> resultado = new ArrayList<>();
     boolean fsearch = true;
@@ -269,21 +267,22 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
 
     }
+
     @Override
-    public boolean ValidateCoordsEdo(Integer proyecto,cat_vw_punteo_sare element) {
+    public boolean ValidateCoordsEdo(Integer proyecto, cat_vw_punteo_sare element) {
         boolean regresa;
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(element, 0, "", null, "", proyectos, "", "", 0, MetodosBusqueda.VALIDA_COORDENADAS_CAIGAN_EN_ESTADO, null);
-        regresa=jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                 boolean fila;
-                int valor=0;
+                int valor = 0;
                 while (rs.next()) {
-                   valor=rs.getInt(1);
+                    valor = rs.getInt(1);
                 }
-                fila = valor==1;
+                fila = valor == 1;
                 return fila;
             }
         });
@@ -513,30 +512,44 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Override
     public boolean liberaCveunicaOCL(Integer proyecto, String cve_unica) {
         boolean regresa = false;
-        StringBuilder sql;
+        StringBuilder sql, sqlpg ;
         proyectos = getProyecto(proyecto);
+        sqlpg = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAPG, null);
         sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLE, null);
         if (cve_unica != null && !cve_unica.equals("")) {
             switch (proyectos) {
                 case Operativo_Masivo:
                     if (jdbcTemplateocl.update(sql.toString()) > 0) {
-                        regresa = true;
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+
+                            regresa = true;
+                        }
                     }
                     break;
                 case MasivoOtros:
                     sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLEOTROS, null);
                     if (jdbcTemplateocl.update(sql.toString()) > 0) {
-                        regresa = true;
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+
+                            regresa = true;
+                        }
                     }
                     break;
                 case Establecimientos_GrandesY_Empresas_EGE:
                     if (jdbcTemplateocl.update(sql.toString()) > 0) {
-                        regresa = true;
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+
+                            regresa = true;
+                        }
+
                     }
                     break;
                 default:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{cve_unica}) > 0) {
-                        regresa = true;
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+
+                            regresa = true;
+                        }
                     }
 
             }
@@ -647,6 +660,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
                         break;
+                    case LIBERACLAVEUNICAPG:
+                        sql.append("UPDATE ").append(esquemaPos).append(".tr_ue_complemento set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare='20'");
+                        break;
                     case LIBERACLAVEUNICAORACLEOTROS:
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='10' where id_uo_masivo='").append(id_ue).append("' and st_sare<>'01'");
                         break;
@@ -665,10 +681,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         break;
                     case VALIDA_COORDENADAS_CAIGAN_EN_ESTADO:
                         sql.append("select case when count(*)>0 then 1 else 0 end from ").append(schemapgEge).append(".td_entidad where st_intersects(st_transform(the_geom_merc,4326),st_geomfromtext('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326))");
-                            break;
+                        break;
                 }
                 break;
-            
+
             case Construccion:
             case Convenios:
             case Muestra_Rural:
@@ -725,21 +741,21 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     private StringBuilder filtrarSqlEge(String ce, String esquemaPos, String id_ue, int origen, String tramo) {
         String esquemaOcl = esquemaPos;
-        
+
         StringBuilder sql = new StringBuilder();
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-                sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n" 
-                        + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n" 
-                        + "lpad(to_char(ue.tipo_e14),2,'0') tipo_e14, ue.e14, lpad(to_char(ue.tipo_e10_a),2,'0') tipo_e10_a, \n" 
-                        + "ue.e10_a,lpad(to_char(ue.tipo_e10_b),2,'0') tipo_e10_b, ue.e10_b, lpad(to_char(ue.tipo_e10_c),2,'0'),\n" 
-                        + "ue.tipo_e10_c, ue.e10_c, ue.x as coorx, to_char(ue.y) as coory, \n" 
-                        + "ue.e16 as descrubic, pre.st_sare estatus_punteo, ue.e12, ue.e19, ue.tipo_e19, ue.e20, \n" 
-                        + "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n" 
-                        + "'' origen, ue.ce as cestatal,\n" 
-                        + "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n" 
-                        + "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL "); 
+                sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n"
+                        + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n"
+                        + "lpad(to_char(ue.tipo_e14),2,'0') tipo_e14, ue.e14, lpad(to_char(ue.tipo_e10_a),2,'0') tipo_e10_a, \n"
+                        + "ue.e10_a,lpad(to_char(ue.tipo_e10_b),2,'0') tipo_e10_b, ue.e10_b, lpad(to_char(ue.tipo_e10_c),2,'0'),\n"
+                        + "ue.tipo_e10_c, ue.e10_c, ue.x as coorx, to_char(ue.y) as coory, \n"
+                        + "ue.e16 as descrubic, pre.st_sare estatus_punteo, ue.e12, ue.e19, ue.tipo_e19, ue.e20, \n"
+                        + "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n"
+                        + "'' origen, ue.ce as cestatal,\n"
+                        + "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n"
+                        + "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL ");
                 //sql.append(querys.BUSQUEDAOCL.getQuery());
                 sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                         .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
@@ -1012,9 +1028,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 } else {
                     cvegeo = String.valueOf(1);
                 }
-                if(tabla.equals("td_manzanas")){
+                if (tabla.equals("td_manzanas")) {
                     sql.append(" and cvegeo='").append(cvegeo).append("'");
-                }else{
+                } else {
                     sql.append(" and cvegeo='").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
                 }
             } else {
@@ -1042,4 +1058,339 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return sql;
     }
 
+    @Override
+    public List<cat_registro_ue_complemento_sare> getListadoClavesUeSuc() {
+        final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from sare_ege2019_act.tr_ue_complemento where st_sare in (10,20)");
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
+            @Override
+            public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_registro_ue_complemento_sare fila = null;
+                while (rs.next()) {
+                    fila = new cat_registro_ue_complemento_sare(
+                            rs.getString("ce"),
+                            rs.getString("id_ue"),
+                            rs.getString("sare_st_usr"),
+                            rs.getString("sare_st_time"),
+                            rs.getString("st_sare"));
+                    regresa.add(fila);
+                }
+
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+    
+    @Override
+    public List<cat_registro_ue_complemento_sare> getListadoClavesUeSucMas() {
+        final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from sare_mas2019_act.tr_ue_complemento where st_sare in (10,20)");
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
+            @Override
+            public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_registro_ue_complemento_sare fila = null;
+                while (rs.next()) {
+                    fila = new cat_registro_ue_complemento_sare(
+                            rs.getString("ce"),
+                            rs.getString("id_ue"),
+                            rs.getString("sare_st_usr"),
+                            rs.getString("sare_st_time"),
+                            rs.getString("st_sare"));
+                    regresa.add(fila);
+                }
+
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+
+    @Override
+    public List<cat_registro_ue_complemento_sare> getListadoClaves() {
+        final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from sare_ege2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:15:00' and st_sare='20' --group by ce");
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
+            @Override
+            public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_registro_ue_complemento_sare fila = null;
+                while (rs.next()) {
+                    fila = new cat_registro_ue_complemento_sare(
+                            rs.getString("ce"),
+                            rs.getString("id_ue"),
+                            rs.getString("sare_st_usr"),
+                            rs.getString("sare_st_time"),
+                            rs.getString("st_sare"));
+                    regresa.add(fila);
+                }
+
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+
+    @Override
+    public List<cat_registro_ue_complemento_sare> getListadoClavesMasivo() {
+        final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
+        StringBuilder sql = new StringBuilder();
+        sql.append("select * from sare_mas2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:15:00' and st_sare='20' --group by ce");
+        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
+            @Override
+            public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_registro_ue_complemento_sare fila = null;
+                while (rs.next()) {
+                    fila = new cat_registro_ue_complemento_sare(
+                            rs.getString("ce"),
+                            rs.getString("id_ue"),
+                            rs.getString("sare_st_usr"),
+                            rs.getString("sare_st_time"),
+                            rs.getString("st_sare"));
+                    regresa.add(fila);
+                }
+
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+
+    public String getstatusSare(String id_ue) {
+        String regresa = "";
+        StringBuilder sql = new StringBuilder();
+        sql.append("select st_sare from ce2019_masrencal.tr_predios where id_ue=");
+        sql.append(id_ue);
+        regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String st_sare = null;
+                while (rs.next()) {
+                    st_sare = rs.getString("st_sare");
+                };
+                return st_sare;
+            }
+        });
+        return regresa;
+    }
+
+    public String getRegistroTdUeSuc(String id_ue) {
+        String regresa = "";
+        StringBuilder sql = new StringBuilder();
+        sql.append("select id_ue from sare_ege2019_act.td_ue_suc where id_ue=");
+        sql.append(id_ue);
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String st_sare = "";
+                while (rs.next()) {
+                    st_sare = rs.getString("id_ue");
+                };
+                return st_sare;
+            }
+        });
+        return regresa;
+    }
+
+    @Override
+    public boolean getbuscatdUeSuc(cat_registro_ue_complemento_sare registro) {
+        Boolean regresa = false;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select id_ue from sare_ege2019_act.td_ue_suc where id_ue=");
+        sql.append(registro.getId_ue());
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String st_sare = "";
+                boolean regresa = false;
+                while (rs.next()) {
+                    st_sare = rs.getString("id_ue");
+                };
+                if (!st_sare.equals("")) {
+                    regresa = true;
+                } else {
+
+                }
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+    
+    @Override
+    public boolean getbuscatdUeSucMas(cat_registro_ue_complemento_sare registro) {
+         Boolean regresa = false;
+        StringBuilder sql = new StringBuilder();
+        sql.append("select id_ue from sare_mas2019_act.td_ue_suc where id_ue=");
+        sql.append(registro.getId_ue());
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+            @Override
+            public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String st_sare = "";
+                boolean regresa = false;
+                while (rs.next()) {
+                    st_sare = rs.getString("id_ue");
+                };
+                if (!st_sare.equals("")) {
+                    regresa = true;
+                } else {
+
+                }
+                return regresa;
+            }
+        });
+        return regresa;
+    }
+
+    @Override
+    public boolean updatetdUeSucMas(cat_registro_ue_complemento_sare registro) {
+         boolean regresa = false;
+        StringBuilder sql = new StringBuilder();
+        StringBuilder sqlpg = new StringBuilder();
+        sql.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
+        sql.append(registro.getId_ue());
+        sqlpg.append("update sare_mas2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
+        sqlpg.append(registro.getId_ue());
+        if (jdbcTemplateocl.update(sql.toString()) > 0) {
+            if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                regresa = true;
+            }
+        } else if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+            regresa = true;
+        }
+        return regresa;
+    }
+
+    public String getRegistroTdUeSucMasivo(String id_ue) {
+        String regresa = "";
+        StringBuilder sql = new StringBuilder();
+        sql.append("select id_ue from sare_mas2019_act.td_ue_suc where id_ue=");
+        sql.append(id_ue);
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String st_sare = "";
+                while (rs.next()) {
+                    st_sare = rs.getString("id_ue");
+                };
+                return st_sare;
+            }
+        });
+        return regresa;
+    }
+
+    @Override
+    public boolean desbloqueoOcl(cat_registro_ue_complemento_sare registro) {
+        boolean regresa = false;
+        StringBuilder sql = new StringBuilder();
+        StringBuilder sqlpg = new StringBuilder();
+        StringBuilder sqlok = new StringBuilder();
+        StringBuilder sqlpgok = new StringBuilder();
+        String st_sare = getstatusSare(registro.getId_ue());
+        sql.append("update ce2019_masrencal.tr_predios set st_sare='10' where id_ue=");
+        sql.append(registro.getId_ue());
+        sql.append(" and st_sare='20'");
+        sqlpg.append("update sare_ege2019_act.tr_ue_complemento set st_sare=").append(st_sare).append(" where id_ue=");
+        sqlpg.append(registro.getId_ue());
+        sqlpg.append(" and st_sare='20'");
+        sqlok.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
+        sqlok.append(registro.getId_ue());
+        sqlok.append(" and st_sare='20'");
+        sqlpgok.append("update sare_ege2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
+        sqlpgok.append(registro.getId_ue());
+        sqlpgok.append(" and st_sare='20'");
+        if (!getRegistroTdUeSuc(registro.getId_ue()).equals("")) {
+            if (jdbcTemplateocl.update(sqlok.toString()) > 0) {
+                if (jdbcTemplate.update(sqlpgok.toString()) > 0) {
+                    regresa = true;
+                }
+            }
+        }
+        if (!regresa) {
+            switch (st_sare) {
+                case "10":
+                case "01":
+                    if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                        regresa = true;
+                    }
+                    break;
+                case "20":
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                            regresa = true;
+                        }
+                    }
+            }
+        }
+        return regresa;
+    }
+
+    @Override
+    public boolean updatetdUeSuc(cat_registro_ue_complemento_sare registro) {
+        boolean regresa = false;
+        StringBuilder sql = new StringBuilder();
+        StringBuilder sqlpg = new StringBuilder();
+        sql.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
+        sql.append(registro.getId_ue());
+        sqlpg.append("update sare_ege2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
+        sqlpg.append(registro.getId_ue());
+        if (jdbcTemplateocl.update(sql.toString()) > 0) {
+            if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                regresa = true;
+            }
+        } else if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+            regresa = true;
+        }
+        return regresa;
+    }
+
+    @Override
+    public boolean desbloqueoOclMasivo(cat_registro_ue_complemento_sare registro) {
+        boolean regresa = false;
+        StringBuilder sqlmas = new StringBuilder();
+        StringBuilder sqlpgmas = new StringBuilder();
+        StringBuilder sqlokmas = new StringBuilder();
+        StringBuilder sqlpgokmas = new StringBuilder();
+        sqlokmas.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
+        sqlokmas.append(registro.getId_ue());
+        sqlokmas.append(" and st_sare='20'");
+        sqlpgokmas.append("update sare_mas2019_act.tr_ue_complemento set st_sare=01 where id_ue=");
+        sqlpgokmas.append(registro.getId_ue());
+        sqlpgokmas.append(" and st_sare='20'");
+        String st_sare = getstatusSare(registro.getId_ue());
+        sqlmas.append("update ce2019_masrencal.tr_predios set st_sare='10' where id_ue=");
+        sqlmas.append(registro.getId_ue());
+        sqlmas.append(" and st_sare='20'");
+        sqlpgmas.append("update sare_mas2019_act.tr_ue_complemento set st_sare=").append(st_sare).append(" where id_ue=");
+        sqlpgmas.append(registro.getId_ue());
+        sqlpgmas.append(" and st_sare='20'");
+        if (!getRegistroTdUeSucMasivo(registro.getId_ue()).equals("")) {
+            if (jdbcTemplateocl.update(sqlokmas.toString()) > 0) {
+                if (jdbcTemplate.update(sqlpgokmas.toString()) > 0) {
+                    regresa = true;
+                }
+            }
+        }
+        if (!regresa) {
+            switch (st_sare) {
+                case "10":
+                case "01":
+                    if (jdbcTemplate.update(sqlpgmas.toString()) > 0) {
+                        regresa = true;
+                    }
+                    break;
+                case "20":
+                    if (jdbcTemplateocl.update(sqlokmas.toString()) > 0) {
+                        if (jdbcTemplate.update(sqlpgokmas.toString()) > 0) {
+                            regresa = true;
+                        }
+                    }
+            }
+        }
+        return regresa;
+    }
+
+    
 }

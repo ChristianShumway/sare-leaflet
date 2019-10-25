@@ -13,7 +13,9 @@ import mx.org.inegi.sare.sare_db.dto.cat_codigo;
 import mx.org.inegi.sare.sare_db.dto.cat_conjunto_comercial;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_piso;
+import mx.org.inegi.sare.sare_db.dto.cat_registro_ue_complemento_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceCatalogosSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,6 +31,10 @@ public class BackingCatalogosSare {
     @Autowired
     @Qualifier("DaoCatalogosSare")
     InterfaceCatalogosSare InterfaceCatalogosSare;
+    
+     @Autowired
+    @Qualifier("DaoBusqueda")
+    InterfaceBusquedaSare InterfaceBusquedaSare;
 
     public List<cat_asentamientos_humanos> getCatalogoAsentamientosHumanos(Integer proyecto) throws Exception {
         List<cat_asentamientos_humanos> catAsentamientosHumanos = InterfaceCatalogosSare.getCatalogoAsentamientosHumanos(proyecto);
@@ -43,6 +49,75 @@ public class BackingCatalogosSare {
     public List<cat_conjunto_comercial> getCatalogoConjuntosComerciales(Integer proyecto) throws Exception {
         List<cat_conjunto_comercial> catAsentamientosHumanos = InterfaceCatalogosSare.getCatalogoConjuntoComercial(proyecto);
         return catAsentamientosHumanos;
+    }
+    public cat_respuesta_services getDesbloqueoClaves(){
+        int cont=0;
+        cat_respuesta_services respuesta=new cat_respuesta_services();
+        List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClaves();
+        for(cat_registro_ue_complemento_sare registro:listado){
+            if(InterfaceBusquedaSare.desbloqueoOcl(registro)){
+                cont=cont+1;
+                respuesta.setMensaje(new cat_mensaje("true","claves Desbloqeuadas: "+cont));
+            }else{
+                respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
+                break;
+                
+            }
+        }
+        int contmasivo=execMasivo();
+        respuesta.setMensaje(new cat_mensaje("true","claves Desbloqeuadas: "+cont+"claves masivo desbloqueadas: "+contmasivo));
+        return respuesta;
+    }
+    
+    public cat_respuesta_services getBuscaOcl(){
+        int cont=0;
+        cat_respuesta_services respuesta=new cat_respuesta_services();
+        List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClavesUeSuc();
+        for(cat_registro_ue_complemento_sare registro:listado){
+            if(InterfaceBusquedaSare.getbuscatdUeSuc(registro)){
+                InterfaceBusquedaSare.updatetdUeSuc(registro);
+                cont=cont+1;
+                respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont));
+            }else{
+                //respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
+                
+            }
+        }
+        int contmasivo=getBuscaOclMasivo();
+        respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont+"claves actualizadas masivo: "+contmasivo));
+        return respuesta;
+    }
+    
+     public int getBuscaOclMasivo(){
+         int cont=0;
+        cat_respuesta_services respuesta=new cat_respuesta_services();
+        List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClavesUeSucMas();
+        for(cat_registro_ue_complemento_sare registro:listado){
+            if(InterfaceBusquedaSare.getbuscatdUeSucMas(registro)){
+                InterfaceBusquedaSare.updatetdUeSucMas(registro);
+                cont=cont+1;
+                respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont));
+            }else{
+                //respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
+                
+            }
+        }
+        //respuesta.setMensaje(new cat_mensaje("true","Todo ok"));
+        return cont;
+    }
+    
+    public int execMasivo(){
+        int cont=0;
+        List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClavesMasivo();
+        for(cat_registro_ue_complemento_sare registro:listado){
+            if(InterfaceBusquedaSare.desbloqueoOclMasivo(registro)){
+                cont=cont+1;
+            }else{
+                break;
+                
+            }
+        }
+        return cont;
     }
 
     public List<cat_c154> getCatalogoC154(Integer proyecto) throws Exception {

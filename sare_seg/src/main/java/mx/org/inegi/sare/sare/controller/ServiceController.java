@@ -232,7 +232,16 @@ public class ServiceController {
     public cat_respuesta_services getDatosClasesPorFiltro(@RequestParam(value = "cveoper") String cveoper, @RequestParam(value = "proyecto") Integer proyecto, @RequestParam(value = "codigoScian") String codigoScian) {
         return BackingCatalogosSare.getDatosClasesPorFiltro(proyecto,cveoper, codigoScian);
     }
+    @RequestMapping(value = "getDesbloqueoClaves.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getDatosClasesPorFiltro() {
+        return BackingCatalogosSare.getDesbloqueoClaves();
+    }
+    @RequestMapping(value = "getbuscaOcl.do", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public cat_respuesta_services getbuscaOcl() {
+        return BackingCatalogosSare.getBuscaOcl();
+    }
     
+  
     @RequestMapping(value = "/validaSesion.do", method = RequestMethod.POST, produces = javax.ws.rs.core.MediaType.APPLICATION_JSON)
     public ResponseLocal validaSesion(HttpSession session) {
         String respuesta = null;

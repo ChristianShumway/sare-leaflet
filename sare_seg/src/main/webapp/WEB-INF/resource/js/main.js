@@ -1101,9 +1101,10 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
           if (data[0].datos.mensaje.type === 'confirmar') {
               switch(dataUserFromLoginLocalStorage.proyecto){
                   case 1:
+                  case 5:
                       showAlertPunteoConfirmaEge(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
                   break;
-                  case 5:
+                  default:
                       showAlertPunteoConfirma(data[0].datos.datos,'Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
                   break;
               }
@@ -1231,7 +1232,6 @@ const handleTipoPunteo = () => {
             realPunteo = punteo
             punteo = 'U'
             break;
-        default:
             
     }
   

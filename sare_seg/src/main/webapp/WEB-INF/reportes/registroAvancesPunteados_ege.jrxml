@@ -279,7 +279,7 @@ SELECT '0' ce, 'NAC' cestatal, 1 orden,
             join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop 
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE  inm.id_ue is not null and st_sare in ('10','20', '01')
+            WHERE  pre.id_ue is not null and st_sare in ('10','20', '01')
             and pre.punteo_sare=1 and (ue.ID_CUESTIONARIO!=54 and id_encuesta!=38)
 
 union all
@@ -326,7 +326,7 @@ end cestatal, 2 orden,
             join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE inm.id_ue is not null and  st_sare in ('10','20', '01')
+            WHERE pre.id_ue is not null and  st_sare in ('10','20', '01')
              and pre.punteo_sare=1 $P!{where1}
             GROUP BY po.cve_operativa
 ) dd   order by ce]]>
@@ -352,7 +352,7 @@ SELECT '0' ce, 'NAC' cestatal, 1 orden,
             join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop 
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE  inm.id_ue is not null and st_sare in ('10','20', '01')
+            WHERE  pre.id_ue is not null and st_sare in ('10','20', '01')
             and pre.punteo_sare=1 and (ue.ID_CUESTIONARIO!=54 and id_encuesta!=38)
 
 union all
@@ -399,7 +399,7 @@ end cestatal, 2 orden,
             join ce2019_MASRENCAL.tr_predios pre on pre.id_cop=po.id_cop
             join ce2019_MASRENCAL.tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble
             join ce2019_MASRENCAL.tr_etq_val ue on ue.id_ue=pre.id_ue
-            WHERE inm.id_ue is not null and  st_sare in ('10','20', '01')
+            WHERE pre.id_ue is not null and  st_sare in ('10','20', '01')
              and pre.punteo_sare=1 $P!{where} --substr(po.cve_operativa,0,2)='01'
             GROUP BY po.cve_operativa
 ) dd where rownum<2  order by ce]]>

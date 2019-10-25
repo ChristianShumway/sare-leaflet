@@ -85,11 +85,20 @@ public class BackingReportes extends DaoBusquedaSare {
                     break;
                 case Operativo_Masivo:
                     ce=coordinacion;
-                    if (ce.equals("00")) {
-                        whereReporte = "and ue.ID_CUESTIONARIO=54 and id_encuesta=38  and 1=1";
+                    if(report.equals("1") || report.equals("2")){
+                        if (ce.equals("00")) {
+                        whereReporte = " and ue.ID_CUESTIONARIO=54 and id_encuesta=38  and 1=1";
 
                     } else {
-                        whereReporte = " and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and ue.ce=" + ce + "";
+                            whereReporte = "  and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and ce=" + ce + ""; 
+                    }
+                    }else{
+                        if (ce.equals("00")) {
+                            whereReporte = " 1=1";
+
+                    } else {
+                            whereReporte = " cve_ce= '" + ce + "'"; 
+                    }
                     }
 //                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/registroAvancesPunteados_prueba.jrxml");
 //                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba.jrxml");

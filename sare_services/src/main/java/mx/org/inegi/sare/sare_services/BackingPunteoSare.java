@@ -140,11 +140,12 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                                 ubicacion_punteo.setCatVial(catVial);
                                 switch (proyecto) {
                                     case 1:
+                                    case 5:
                                         if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
-                                            Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
+                                            Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "existen frentes proximos para ubicar la manzana, confirma que desea dejar la ubicacion seleccionada!!"));
                                         }
                                         break;
-                                    case 5:
+                                    default:
                                         if (InterfacePunteoSare.isFrentesProximos(proyecto, ent, coordMercator.getX(), coordMercator.getY())) {
                                             Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
                                         }
@@ -156,9 +157,10 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                         } else {
                             switch (proyecto) {
                                 case 1:
+                                case 5:
                                     Respuesta = new cat_respuesta_services("error", new cat_mensaje("", "Ocurrio un error al realizar el punteo, favor de volverlo a intentar"));
                                     break;
-                                case 5:
+                                default:
                                     Respuesta = new cat_respuesta_services("", new cat_mensaje("confirmar", "La ubicacion del inmueble debe ser realizada sobre el frente de la manzana, no al interior ni fuera de ella"));
                                     break;
 

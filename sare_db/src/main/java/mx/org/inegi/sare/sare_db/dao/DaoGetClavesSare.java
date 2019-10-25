@@ -282,7 +282,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaPos)
                                 .append(".tr_ue_complemento where ").
                                 append(" st_sare='20' and (current_timestamp-sare_st_time)"
-                                        + ">'00 01:00:00') query1) query2) query3 order by time_lock desc");
+                                        + ">'00 00:15:00') query1) query2) query3 order by time_lock desc");
                     } else {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS, DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"
@@ -294,7 +294,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 + "(LTRIM(FECHA_DOS,'0'),'DD.MM.YYYY HH24:MI:SS') FECHA_DOS FROM (SELECT TO_CHAR(current_timestamp, 'DD.MM.YYYY HH24:MI:SS') FECHA_UNO,TO_CHAR("
                                 + "SARE_ST_TIME, 'DD.MM.YYYY HH24:MI:SS') FECHA_DOS,id_ue, sare_st_usr, sare_st_time FROM ").append(esquemaPos).append(".tr_ue_complemento ").
                                 append(" where st_sare='20' and ce='").append(ce)
-                                .append("' and (current_timestamp-sare_st_time)>'00 01:00:00')query1)query2)query3 order by time_lock desc");
+                                .append("' and (current_timestamp-sare_st_time)>'00 00:15:00')query1)query2)query3 order by time_lock desc");
 
                     }
                     break;
