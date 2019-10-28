@@ -57,7 +57,7 @@ public class BackingCatalogosSare {
         for(cat_registro_ue_complemento_sare registro:listado){
             if(InterfaceBusquedaSare.desbloqueoOcl(registro)){
                 cont=cont+1;
-                respuesta.setMensaje(new cat_mensaje("true","claves Desbloqeuadas: "+cont));
+                respuesta.setMensaje(new cat_mensaje("true","claves Desbloqueadas: "+cont));
             }else{
                 respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
                 break;
@@ -65,7 +65,7 @@ public class BackingCatalogosSare {
             }
         }
         int contmasivo=execMasivo();
-        respuesta.setMensaje(new cat_mensaje("true","claves Desbloqeuadas: "+cont+"claves masivo desbloqueadas: "+contmasivo));
+        respuesta.setMensaje(new cat_mensaje("true","claves Desbloqueadas: "+cont+" claves masivo desbloqueadas: "+contmasivo));
         return respuesta;
     }
     
@@ -79,7 +79,6 @@ public class BackingCatalogosSare {
                 cont=cont+1;
                 respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont));
             }else{
-                //respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
                 
             }
         }
@@ -98,11 +97,9 @@ public class BackingCatalogosSare {
                 cont=cont+1;
                 respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont));
             }else{
-                //respuesta.setMensaje(new cat_mensaje("false","error en la clave"+registro.getId_ue()));
                 
             }
         }
-        //respuesta.setMensaje(new cat_mensaje("true","Todo ok"));
         return cont;
     }
     
