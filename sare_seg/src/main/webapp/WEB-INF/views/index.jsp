@@ -155,6 +155,7 @@
         console.log(getBrowserInfo());
         $(document).ready(function(){
            // disable()
+           
          var hovered_over = false;
          document.onmousewheel = function(){$("#mapa").on("wheel", event => {
                    if (event.originalEvent.ctrlKey) {
@@ -170,6 +171,7 @@
                    }
 
                    event.preventDefault();
+                   window.addEventListener("touchstart", {passive: false} );
                     
                });} /* IE7, IE8 */
          if(document.addEventListener){
@@ -191,6 +193,7 @@
                    if(navegador.includes('Chrome'))
                    {
                         event.preventDefault();
+                        window.addEventListener("touchstart", {passive: false} );
                         
  
 
@@ -199,10 +202,14 @@
                 $(window).mousemove(function(){
                          MDM6('updateSize');
                 }); 
+                
+                
                    
                 //document.addEventListener('DOMMouseScroll', stopWheel, false);
-         }     
+         }
+         
        });
+      
 </script> 
 <script type="text/javascript">
     
@@ -400,15 +407,15 @@
                 <label for="v-calle">Vista Calle</label>
               </div>
                 
-                <div class="radio-option">
+<!--                <div class="radio-option">
                     <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')" disabled="true"/>
                 <label for="puntear-alta"></label>
-              </div>
+              </div>-->
 
-<!--              <div class="radio-option">
+              <div class="radio-option">
                   <input id="puntear-alta" value="puntear_alta" name="accion" type="radio" onchange="radioSelect('alta')"/>
                 <label for="puntear-alta">Puntear Alta</label>
-              </div> -->
+              </div> 
 
             </div> 
           </div>
@@ -560,7 +567,7 @@
                   <input id="tipo_e10_cvevial" name="tipo_e10_cvevial" type="text" hidden readonly >
                 </div>
                 <div class="input-field">
-                    <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" maxlength="79" oninput="if(this.value.lenght)>this.maxlength this.value = this.value.slice(0, this.maxLength);" id="e10" name="e10" type="text" disabled />
+                    <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" maxlength="79"  id="e10" name="e10" type="text" disabled />
                   <label for="e10">Nombre de la Vialidad</label>
                 </div>
                 <div class="input-field">
@@ -793,7 +800,7 @@
         </a>
         <ul>
 <!--          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>-->
-          <li><a id='item-save-option' disabled onclick="validaCp()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
+          <li><a id='item-save-option' disabled onclick="validaCp(event)" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
           <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
           <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
           <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 

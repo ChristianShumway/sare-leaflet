@@ -84,6 +84,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
             String punteoReal = InterfacePunteoSare.getTipoArea(proyecto, coordMercator.getX(), coordMercator.getY());
             switch (proyecto) {
                 case 1:
+                case 5:
                     ta = punteoReal;
                     break;
             }

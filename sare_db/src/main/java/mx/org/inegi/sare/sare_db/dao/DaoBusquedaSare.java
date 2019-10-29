@@ -1062,7 +1062,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     public List<cat_registro_ue_complemento_sare> getListadoClavesUeSuc() {
         final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from sare_ege2019_act.tr_ue_complemento where st_sare in (10,20)");
+        sql.append("select * from sare_ege2019_act.tr_ue_complemento where st_sare in (10,20,01)");
         jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
             @Override
             public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1311,7 +1311,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         if (!regresa) {
             switch (st_sare) {
                 case "10":
-                case "01":
                     if (jdbcTemplate.update(sqlpg.toString()) > 0) {
                         regresa = true;
                     }
@@ -1376,14 +1375,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         if (!regresa) {
             switch (st_sare) {
                 case "10":
-                case "01":
                     if (jdbcTemplate.update(sqlpgmas.toString()) > 0) {
                         regresa = true;
                     }
                     break;
                 case "20":
-                    if (jdbcTemplateocl.update(sqlokmas.toString()) > 0) {
-                        if (jdbcTemplate.update(sqlpgokmas.toString()) > 0) {
+                    if (jdbcTemplateocl.update(sqlmas.toString()) > 0) {
+                        if (jdbcTemplate.update(sqlmas.toString()) > 0) {
                             regresa = true;
                         }
                     }

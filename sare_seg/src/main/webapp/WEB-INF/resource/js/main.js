@@ -13,8 +13,8 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-//let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
-let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
+let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
+//let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -92,6 +92,7 @@ const addLayerEconomicas = (chk, option) => {
 //Funcion agregar capas en el mapa en la opcion sucursales
 const addCapas = chk => {
   var idWms = urlServices['map'].label
+  MDM6('updateSize');
   if (chk.checked == true) {
     if (layersSARE.indexOf('c101') < 0) {
       //addLay('c101')
@@ -596,7 +597,7 @@ const popupCleeListBloqueadas = data => {
 }
 
 const cleeList = (data, actualPagina, inicioPaginacion, finPaginacion, inicioClavesVista, finClavesVista) => {
-  console.log(data)
+  //console.log(data)
   let tabla = ''
   const clavesPorVista = 10
   const totalClaves = data.length
@@ -1019,6 +1020,7 @@ const handleActiveVisibleSearch = () => {
 
 //Funcion que lleva a cabo el punteo del establecimient
 const handlePunteo=(x,y,tc,r)=>{
+    MDM6('updateSize');
     xycoorsx=''
     xycoorsy=''
     id_ue=document.getElementById('id_UE').value
@@ -1230,7 +1232,7 @@ const handleTipoPunteo = () => {
             break;
         case 5:
             realPunteo = punteo
-            punteo = 'U'
+            //punteo = 'U'
             break;
             
     }
@@ -1815,7 +1817,7 @@ const validations=(totalInputs,object,campo)=>{
   }
   if(totalInputs>2)
   {
-    inputsInfo == totalInputs && validaCp()
+    inputsInfo == totalInputs && validaCp(event)
   }
 }
 
@@ -1930,8 +1932,8 @@ const validationsBack=(ObjectRequest)=>
         }
     }
     if(!validaAltas){
-      console.log(punteo)
-      console.log(mod_cat)
+      //console.log(punteo)
+      //console.log(mod_cat)
       if(punteo=='U' && mod_cat=='1') {
         if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
             return true
@@ -2082,7 +2084,7 @@ const handleFormValidations = () => {
         }
         else {
           if(punteo=='R' && mod_cat=='1') {
-            validaCp()
+            validaCp(event)
           }
           else {
             if(punteo=='R' && mod_cat=='2') {
@@ -2142,7 +2144,8 @@ const validaEdificio = () => {
                           
 const handleFormValidationsRural = () => {}
 
-const validaCp = () => {
+const validaCp = (event) => {
+  event.preventDefault();
   const numero_int=document.getElementById('e13')
   const numero_ext=document.getElementById('e11')
   const letra_ext=document.getElementById('e11A')
@@ -2873,7 +2876,7 @@ const handleCancelClick = () => {
  // layersSARE = ['c100', 'wdenue']
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
   disabledInputs()
-  punteo = 'U'
+  //punteo = 'U'
   confirmacionPunteo = false
   handleTipoPunteo()
   handleActionButtons('disabled')
