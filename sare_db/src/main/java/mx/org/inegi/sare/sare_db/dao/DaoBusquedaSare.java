@@ -1381,7 +1381,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     break;
                 case "20":
                     if (jdbcTemplateocl.update(sqlmas.toString()) > 0) {
-                        if (jdbcTemplate.update(sqlmas.toString()) > 0) {
+                        if (jdbcTemplate.update(sqlpgmas.toString()) > 0) {
                             regresa = true;
                         }
                     }

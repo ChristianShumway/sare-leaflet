@@ -1821,8 +1821,8 @@ const validations=(totalInputs,object,campo)=>{
   }
 }
 
-const validaNumExt=(numero_int,numero_ext, letra_ext)=>
-{
+const validaNumExt=(numero_int,numero_ext, letra_ext)=>{
+var regresa=false
   sendAJAX(urlServices['servicevalida_num_ext'].url, 
   {
     'numint':numero_int,
@@ -1834,20 +1834,25 @@ const validaNumExt=(numero_int,numero_ext, letra_ext)=>
     if (data[0].operation) {
       if(data[0].datos.mensaje.type === "fals"){
           showelementwithmistakeform(data[0].datos.mensaje.messages,"e13","","title-domicilio","domicilio")
+          regresa=true
+          return regresa
       }else{
       if (data[0].datos.mensaje.type === "false") {
           showelementwithmistakeform(data[0].datos.mensaje.messages,"e11","","title-domicilio","domicilio")
-          return true
+          regresa= true
+          return regresa
       }else{
           if(data[0].datos.mensaje.type === "falso"){
               showelementwithmistakeform(data[0].datos.mensaje.messages,"e11","","title-domicilio","domicilio")
               showelementwithmistakeform(data[0].datos.mensaje.messages,"e11A","","title-domicilio","domicilio")
-              return true
+              regresa= true
+              return regresa
           }
           else 
           {
-            hideelementwithmistakeform("e11","")
-            hideelementwithmistakeform
+            hideelementwithmistakeform("e11","","title-domicilio","domicilio")
+            hideelementwithmistakeform("e13","","title-domicilio","domicilio")
+            hideelementwithmistakeform("e11A","","title-domicilio","domicilio")
             const wrapTitle = document.getElementById('title-domicilio')
             const numero_ext=document.getElementById('e11')
             const letra_ext=document.getElementById('e11A')
@@ -1856,13 +1861,16 @@ const validaNumExt=(numero_int,numero_ext, letra_ext)=>
             letra_ext.style.borderColor = '#eeeeee'
             wrapTitle.classList.remove('error')
             visible != 'hide' ? handleVisibleForm("domicilio") : false
-            return false
+            regresa= false
+            return regresa
           }
       }
     }
       
     }
   }, () => { })
+  
+  return regresa
     
 }
 const hideelementwithmistakeform=(id, name, title, key )=>{
@@ -1877,7 +1885,6 @@ const hideelementwithmistakeform=(id, name, title, key )=>{
 }
 
 const showelementwithmistakeform=(message, id, name, title, key )=>{
-    alertToastForm(message, 'error')
     const element = document.getElementById(id)
     const wrapTitle = document.getElementById(title)
     let visible = wrapTitle.dataset.visible
@@ -1887,11 +1894,13 @@ const showelementwithmistakeform=(message, id, name, title, key )=>{
     setTimeout(() => element.classList.remove('animated', 'shake'), 1000)
     wrapTitle.id == title &&
     wrapTitle.classList.add('error')
-    element.focus()
+    //element.focus()
+    alertToastForm(message, 'error')
 }
 
-const validationsBack=(ObjectRequest)=>
-{
+const validationsBack=(ObjectRequest)=>{
+ var regresa=false
+
   document.getElementById("id_UE").disabled=true;
   let totalInputs
   let vialidad=document.getElementById('tipo_e10').value;
@@ -1904,48 +1913,61 @@ const validationsBack=(ObjectRequest)=>
         servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormAltaBack))
         if(vialidad==99){
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiqueBack))){
-                return true
+                regresa= true
+                return regresa
             }else{
-                return false
-            }
+                regresa= false
+                return regresa
+            
         }
         if(vialidad1==99){
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad1Back))){
-                return true
+                regresa= true
+                return regresa
             }else{
-                return false
+                regresa= false
+                return regresa
             }
         }
         if(vialidad2==99){
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad2Back))){
-                return true
+                regresa= true
+                return regresa
             }else{
-                return false
+                regresa= false
+                return regresa
             }
         }
         if(vialidad3==99){
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(validaOtroEspecifiquevialidad3Back))){
-                return true
+                regresa= true
+                return regresa
             }else{
-                return false
+                regresa= false
+                return regresa
             }
         }
+    }
     }
     if(!validaAltas){
       //console.log(punteo)
       //console.log(mod_cat)
       if(punteo=='U' && mod_cat=='1') {
         if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
-            return true
+            regresa= true
+            return regresa
         }else{
             if(validaEdif()){
                 if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormCentrocomercialBack))){
-                    return true
+                    regresa= true
+                    return regresa
                 }else{
-                    return false
+                    regresa= false
+                    return regresa
                 }
             }else{
-                return false
+                regresa= false
+                return regresa
             }
             
         }
@@ -1955,23 +1977,29 @@ const validationsBack=(ObjectRequest)=>
 //                return true
 //            }else{
                 if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objForm2Back))){
-                    return true
+                    regresa= true
+                    return regresa
                 }else{
-                    return false
+                    regresa= false
+                    return regresa
                 }
             //}
             if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormPunteoEnFrenteBack))){
-                return true
+                regresa= true
+                return regresa
             }else{
-                return false
+                regresa= false
+                return regresa
             }
         }
         else {
           if(punteo=='R' && mod_cat=='1') {
               if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
-                    return true
+                    regresa= true
+                    return regresa
                 }else{
-                    return false
+                    regresa= false
+                    return regresa
                 }
            // validaCp()
           }
@@ -1981,24 +2009,29 @@ const validationsBack=(ObjectRequest)=>
 //                return true
 //            }else{
                 if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
-                    return true
+                    regresa= true
+                    return regresa
                 }else{
-                    return false
+                    regresa= false
+                    return regresa
                // }
             }
                 if(numero_ext.value<=0){
                   document.getElementById('e11').value="";
                 }
                 if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormRuralBack))){
-                    return true
+                    regresa= true
+                    return regresa
                 }else{
-                    return false
+                    regresa= false
+                    return regresa
                 } 
             }
           }
         }
       }
     }
+return regresa
 }
 
 const validaEdif=()=>{
@@ -2363,6 +2396,11 @@ const showViewPreliminar = d => {
 const handleShowResult = result => {
   const user = dataUserFromLoginLocalStorage.nombre
   const checkboxPuntearAlta = document.getElementById('puntear-alta')
+  handleActionTargetRef()
+  objForm.map(obj => {
+    const wrapTitle = document.getElementById(obj.title)
+    if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+  })
   if (result.value) {
     sendAJAX(urlServices['serviceSaveUEAlter'].url, 
     {

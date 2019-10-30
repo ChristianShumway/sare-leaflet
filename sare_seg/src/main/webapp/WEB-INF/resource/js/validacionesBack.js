@@ -18,6 +18,7 @@ switch(dataUserFromLoginLocalStorage.proyecto){
 
 
 const servicevalidaobjform = (object,obj) =>{
+    var regresa=false
     sendAJAX(urlServices['servicevalidaobjForm'].url, 
   {
     'obj': object,
@@ -27,10 +28,19 @@ const servicevalidaobjform = (object,obj) =>{
   data => {
     if (data[0].operation) {
       if (data[0].datos.mensaje.type === "false") {
-          alertToastForm(data[0].datos.mensaje.messages, 'error')
+          //alertToastForm(data[0].datos.mensaje.messages, 'error')
           const { id, name, title, key } = JSON.parse(data[0].datos.datos)
+          objForm.map(obj => {
+            const wrapTitle = document.getElementById(obj.title)
+            const element=document.getElementById(obj.id)
+            let visible = wrapTitle.dataset.visible
+            element.style.borderColor = '#eeeeee'
+            visible != 'hide' ? handleVisibleForm(key) : false
+            if (wrapTitle.classList.contains('error')) wrapTitle.classList.remove('error')    
+            })
+            handleActionTargetRef()
           showelementwithmistakeform(data[0].datos.mensaje.messages,id,name,title,key)
-          return true
+          regresa = true
       }
       else {
             const { id, name, title, key } = JSON.parse(data[0].datos.datos)
@@ -40,10 +50,11 @@ const servicevalidaobjform = (object,obj) =>{
             elemento.style.borderColor = '#eeeeee'
             wrapTitle.classList.remove('error')
             visible != 'hide' ? handleVisibleForm(key) : false
-        return false
+        regresa= false
       }
     }
   }, () => { })
+  return regresa
 }
 
 
