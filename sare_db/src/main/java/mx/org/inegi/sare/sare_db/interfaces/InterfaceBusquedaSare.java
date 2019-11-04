@@ -47,13 +47,13 @@ public interface InterfaceBusquedaSare {
 
     public List<cat_registro_ue_complemento_sare> getListadoClavesMasivo();
 
-    public boolean desbloqueoOcl(cat_registro_ue_complemento_sare registro);
+    public boolean desbloqueoOclEge(cat_registro_ue_complemento_sare registro);
 
     public boolean desbloqueoOclMasivo(cat_registro_ue_complemento_sare registro);
     
-    public boolean getbuscatdUeSuc(cat_registro_ue_complemento_sare registro);
+    public boolean getbuscatdUeSucEge(cat_registro_ue_complemento_sare registro);
     
-    public boolean updatetdUeSuc(cat_registro_ue_complemento_sare registro);
+    public boolean updatetdUeSucEge(cat_registro_ue_complemento_sare registro);
     
     public boolean getbuscatdUeSucMas(cat_registro_ue_complemento_sare registro);
     

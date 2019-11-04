@@ -5,6 +5,7 @@
  */
 package mx.org.inegi.sare.sare_db.dao;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
@@ -46,7 +48,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     private JdbcTemplate jdbcTemplate;
 
     public enum MetodosGuardar {
-        getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk, UpdateOclStatusOcupado, GuardarUnidadesEnFrentes, UpdateOclStatusOkFrentes
+        getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk, UpdateOclStatusOcupado, GuardarUnidadesEnFrentes, UpdateOclStatusOkFrentes, getGuardaUePrepared
     }
 
     @Override
@@ -132,6 +134,95 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 });
         }
         return regresa;
+    }
+
+    @Override
+    public boolean getGuardaUePreparedStatement(Integer proyecto, final cat_vw_punteo_sare_guardado inmueble, final boolean isAlta) {
+        StringBuilder sql;
+        double regresa = 0L;
+        boolean regresar;
+        proyectos = getProyecto(proyecto);
+        switch (proyectos) {
+            case MasivoOtros:
+            case Operativo_Masivo:
+            case Establecimientos_GrandesY_Empresas_EGE:
+                sql = getSql(proyectos, null, inmueble, MetodosGuardar.getGuardaUePrepared, "", isAlta);
+                try {
+                    regresa = jdbcTemplate.execute(sql.toString(), new PreparedStatementCallback<Double>() {
+                        @Override
+                        @SuppressWarnings("empty-statement")
+                        public Double doInPreparedStatement(PreparedStatement ps)
+                                throws SQLException, DataAccessException {
+
+                            ps.setInt(1, Integer.valueOf(inmueble.getId_UE()));
+                            ps.setString(2, inmueble.getTramo_control());
+                            ps.setString(3, inmueble.getCvegeo().toUpperCase());
+                            ps.setString(4, inmueble.getCE().toUpperCase());
+                            ps.setString(5, inmueble.getE03().toUpperCase());
+                            ps.setString(6, inmueble.getE03N().toUpperCase());
+                            ps.setString(7, inmueble.getE04().toUpperCase());
+                            ps.setString(8, inmueble.getE04N().toUpperCase());
+                            ps.setString(9, inmueble.getE05().toUpperCase());
+                            ps.setString(10, inmueble.getE05N().toUpperCase());
+                            ps.setString(11, inmueble.getE06().toUpperCase());
+                            ps.setString(12, inmueble.getE07().toUpperCase());
+                            ps.setInt(13, Integer.valueOf(inmueble.getCveft()));
+                            ps.setString(14, inmueble.getE08());
+                            ps.setString(15, inmueble.getE09());
+                            ps.setString(16, inmueble.getTipo_e10());
+                            ps.setString(17, inmueble.getE10());
+                            ps.setString(18, inmueble.getE11());
+                            ps.setString(19, inmueble.gete11A());
+                            ps.setString(20, inmueble.getE12());
+                            ps.setString(21, inmueble.getE12p());
+                            ps.setString(22, inmueble.getE13());
+                            ps.setString(23, inmueble.getE13_a());
+                            ps.setString(24, inmueble.getTipo_E14());
+                            ps.setString(25, inmueble.getE14());
+                            ps.setString(26, inmueble.getE14_A());
+                            ps.setString(27, inmueble.getTipo_e10_a());
+                            ps.setString(28, inmueble.getE10_A());
+                            ps.setString(29, inmueble.getTipo_e10_b());
+                            ps.setString(30, inmueble.getE10_B());
+                            ps.setString(31, inmueble.getTipo_e10_c());
+                            ps.setString(32, inmueble.getE10_C());
+                            ps.setString(33, inmueble.getE10_e());
+                            ps.setString(34, inmueble.getDescrubic());
+                            ps.setBigDecimal(35, inmueble.getCoordx());
+                            ps.setBigDecimal(36, inmueble.getCoordy());
+                            ps.setString(37, inmueble.getE19());
+                            ps.setString(38, inmueble.getTipo_e19());
+                            ps.setString(39, inmueble.getPunteo());
+                            ps.setInt(40, Integer.valueOf(inmueble.getMod_cat()));
+                            ps.setString(41, inmueble.getOrigen().toUpperCase());
+                            ps.setString(42, inmueble.getCvegeo2016().toUpperCase());
+                            ps.setString(43, inmueble.getE20().toUpperCase());
+                            ps.setBigDecimal(44, inmueble.getId_deftramo());
+                            ps.setString(45, inmueble.getE10_cvevial());
+                            ps.setString(46, inmueble.getE23());
+                            ps.setBoolean(47, isAlta);
+                            ps.setString(48, inmueble.getNavegador());
+
+                            boolean rs = ps.execute();
+                            Double result;
+                            if (rs = true) {
+                                result = 1D;
+                            } else {
+                                result = 0D;
+                            };
+                            return result;
+                        }
+                    });
+
+                } catch (Exception e) {
+                    regresa = 0L;
+                }
+
+                break;
+        }
+        //inmueble.setId_UE(String.valueOf(regresa));
+        regresar = regresa > 0L;
+        return regresar;
     }
 
     @Override
@@ -387,6 +478,9 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                                 .append(inmueble.getId_deftramo()).append("','")
                                 .append(inmueble.getE10_cvevial() != null ? inmueble.getE10_cvevial() : "").append("','")
                                 .append(inmueble.getE23() != null ? inmueble.getE23() : "").append("','").append(isAlta).append("','").append(inmueble.getNavegador()).append("') resultado");
+                        break;
+                    case getGuardaUePrepared:
+                        sql.append("SELECT resultado from ").append(esquemaPos).append(".registra_ue_sare(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?").append(") resultado");
                         break;
                     case getE23A:
                         sql.append("SELECT E23A FROM ").append(esquemaOcl).append(".tr_etq_val where id_ue = ").append(inmueble.getId_UE());

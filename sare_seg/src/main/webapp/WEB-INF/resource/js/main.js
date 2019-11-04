@@ -13,8 +13,8 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
-//let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
+//let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
+let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'
@@ -1592,24 +1592,24 @@ const actualizaForm = data => {
           if(E10a_g!=null && tipoE10a_g!=null &&(o.e10_X.toUpperCase()==E10a_g.toUpperCase())){
                 //$('#tipo_e10_a').text(o.tipo_e10_X);
                 $('#tipo_e10_a').val(o.tipo_e10_X);
-             html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
+             html += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
+             html += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
             if(E10b_g!=null&&tipoE10b_g!=null&&(o.e10_X.toUpperCase()==E10b_g.toUpperCase())){
                   $('#tipo_e10_b').val(o.tipo_e10_X);
-                 htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
+                 htmlB += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
+             htmlB += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
            
              
            if(E10c_g!=null&&tipoE10c_g!=null&&(o.e10_X.toUpperCase()==E10c_g.toUpperCase())){        
                $('#tipo_e10_c').val(o.tipo_e10_X);
-               htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';             
+               htmlC += '<option selected data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';             
            }else{
-             htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.tipo_e10_X + '">' + o.e10_X + '</option>';
+             htmlC += '<option  data-tipo="' + o.tipo_e10_X + '" data-tipon="' + o.tipo_e10_Xn + '" data-cvevial="' + o.e10_X_cvevial + '"  value="' + o.e10_X + '">' + o.e10_X + '</option>';
            }
         });
         $('#e10_A').html(html)

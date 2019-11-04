@@ -59,7 +59,7 @@ public class BackingGuardar extends BackingSincroniza {
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble, object, proyecto, isAlta)) {
                             if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(), isAlta)) {
-                                if (InterfaceGuardar.getGuardaUe(proyecto, object, isAlta)) {
+                                if (InterfaceGuardar.getGuardaUePreparedStatement(proyecto, object, isAlta)) {
                                     //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                    // if (ActualizaBitacora(proyecto, inmueble, usuario)) {

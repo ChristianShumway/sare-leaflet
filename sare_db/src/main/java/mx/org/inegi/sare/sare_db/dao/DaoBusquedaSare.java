@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import mx.org.inegi.sare.Enums.BusquedaEnum;
 import mx.org.inegi.sare.Enums.ProyectosEnum;
 import static mx.org.inegi.sare.Enums.ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE;
+import mx.org.inegi.sare.Enums.ProyectosEnum.QuerysDesbloqueo;
 import mx.org.inegi.sare.sare_db.dto.cat_registro_ue_complemento_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
@@ -66,6 +67,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     ProyectosEnum proyectos;
     BusquedaEnum querys;
     ProyectosEnum.MetodosBusqueda MetodosBusqueda;
+    ProyectosEnum.QuerysDesbloqueo QuerysDesbloqueo;
 
     List<cat_vw_punteo_sare> resultado = new ArrayList<>();
     boolean fsearch = true;
@@ -512,7 +514,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Override
     public boolean liberaCveunicaOCL(Integer proyecto, String cve_unica) {
         boolean regresa = false;
-        StringBuilder sql, sqlpg ;
+        StringBuilder sql, sqlpg;
         proyectos = getProyecto(proyecto);
         sqlpg = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAPG, null);
         sql = getSql(null, null, "", null, "", proyectos, "", cve_unica, 0, MetodosBusqueda.LIBERACLAVEUNICAORACLE, null);
@@ -1082,7 +1084,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         });
         return regresa;
     }
-    
+
     @Override
     public List<cat_registro_ue_complemento_sare> getListadoClavesUeSucMas() {
         final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
@@ -1112,7 +1114,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     public List<cat_registro_ue_complemento_sare> getListadoClaves() {
         final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from sare_ege2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:15:00' and st_sare='20' --group by ce");
+        sql.append("select * from sare_ege2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:00:00' and st_sare='20' --group by ce");
         jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
             @Override
             public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1137,7 +1139,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     public List<cat_registro_ue_complemento_sare> getListadoClavesMasivo() {
         final List<cat_registro_ue_complemento_sare> regresa = new ArrayList<>();
         StringBuilder sql = new StringBuilder();
-        sql.append("select * from sare_mas2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:15:00' and st_sare='20' --group by ce");
+        sql.append("select * from sare_mas2019_act.tr_ue_complemento where current_timestamp-sare_st_time>'00 00:00:00' and st_sare='20' --group by ce");
         jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_registro_ue_complemento_sare>>() {
             @Override
             public List<cat_registro_ue_complemento_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1176,11 +1178,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
 
-    public String getRegistroTdUeSuc(String id_ue) {
+    public String getRegistroTdUeSuc(cat_registro_ue_complemento_sare registro) {
         String regresa = "";
-        StringBuilder sql = new StringBuilder();
-        sql.append("select id_ue from sare_ege2019_act.td_ue_suc where id_ue=");
-        sql.append(id_ue);
+        StringBuilder sql;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.BUSCA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
         regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1195,11 +1197,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     }
 
     @Override
-    public boolean getbuscatdUeSuc(cat_registro_ue_complemento_sare registro) {
+    public boolean getbuscatdUeSucEge(cat_registro_ue_complemento_sare registro) {
         Boolean regresa = false;
-        StringBuilder sql = new StringBuilder();
-        sql.append("select id_ue from sare_ege2019_act.td_ue_suc where id_ue=");
-        sql.append(registro.getId_ue());
+        StringBuilder sql ;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.BUSCA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
         regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1218,13 +1220,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         });
         return regresa;
     }
-    
+
     @Override
     public boolean getbuscatdUeSucMas(cat_registro_ue_complemento_sare registro) {
-         Boolean regresa = false;
-        StringBuilder sql = new StringBuilder();
-        sql.append("select id_ue from sare_mas2019_act.td_ue_suc where id_ue=");
-        sql.append(registro.getId_ue());
+        Boolean regresa = false;
+        StringBuilder sql;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.BUSCA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
         regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1246,13 +1248,12 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     @Override
     public boolean updatetdUeSucMas(cat_registro_ue_complemento_sare registro) {
-         boolean regresa = false;
-        StringBuilder sql = new StringBuilder();
-        StringBuilder sqlpg = new StringBuilder();
-        sql.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
-        sql.append(registro.getId_ue());
-        sqlpg.append("update sare_mas2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
-        sqlpg.append(registro.getId_ue());
+        boolean regresa = false;
+        StringBuilder sql, sqlpg;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+        sqlpg = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
         if (jdbcTemplateocl.update(sql.toString()) > 0) {
             if (jdbcTemplate.update(sqlpg.toString()) > 0) {
                 regresa = true;
@@ -1263,11 +1264,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
 
-    public String getRegistroTdUeSucMasivo(String id_ue) {
+    public String getRegistroTdUeSucMasivo(cat_registro_ue_complemento_sare registro) {
         String regresa = "";
-        StringBuilder sql = new StringBuilder();
-        sql.append("select id_ue from sare_mas2019_act.td_ue_suc where id_ue=");
-        sql.append(id_ue);
+        StringBuilder sql;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.BUSCA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
         regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -1281,29 +1282,56 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
 
+    private StringBuilder getQueryDesbloqueo(QuerysDesbloqueo getQuery, String esquemaOcl, String esquemaPg, cat_registro_ue_complemento_sare registro) {
+        StringBuilder query = new StringBuilder();
+        switch (getQuery) {
+            case ALMACENA_LA_CLAVE_OCL:
+                query.append("update ").append(esquemaOcl).append(".tr_predios set st_sare='01' where id_ue=");
+                query.append(registro.getId_ue());
+                break;
+            case ALMACENA_LA_CLAVE_PG:
+                query.append("update ").append(esquemaPg).append(".tr_ue_complemento set st_sare='01' where id_ue=");
+                query.append(registro.getId_ue());
+                break;
+            case BLOQUEA_LA_CLAVE_OCL:
+                query.append("update ").append(esquemaOcl).append(".tr_predios set st_sare='20' where id_ue=");
+                query.append(registro.getId_ue());
+                break;
+            case BLOQUEA_LA_CLAVE_PG:
+                query.append("update ").append(esquemaPg).append(".tr_ue_complemento set st_sare='20' where id_ue=");
+                query.append(registro.getId_ue());
+                break;
+            case BUSCA_LA_CLAVE_PG:
+                query.append("select id_ue from ").append(esquemaPg).append(".td_ue_suc where id_ue=");
+                query.append(registro.getId_ue());
+                break;
+            case LIBERA_LA_CLAVE_OCL:
+                query.append("update ").append(esquemaOcl).append(".tr_predios set st_sare='10' where id_ue=");
+                query.append(registro.getId_ue());
+                query.append(" and st_sare='20'");
+                break;
+            case LIBERA_LA_CLAVE_PG:
+                query.append("update ").append(esquemaPg).append(".tr_ue_complemento set st_sare='10' where id_ue=");
+                query.append(registro.getId_ue());
+                query.append(" and st_sare='20'");
+                break;
+        }
+        return query;
+
+    }
+
     @Override
-    public boolean desbloqueoOcl(cat_registro_ue_complemento_sare registro) {
+    public boolean desbloqueoOclEge(cat_registro_ue_complemento_sare registro) {
         boolean regresa = false;
-        StringBuilder sql = new StringBuilder();
-        StringBuilder sqlpg = new StringBuilder();
-        StringBuilder sqlok = new StringBuilder();
-        StringBuilder sqlpgok = new StringBuilder();
+        StringBuilder sql;
         String st_sare = getstatusSare(registro.getId_ue());
-        sql.append("update ce2019_masrencal.tr_predios set st_sare='10' where id_ue=");
-        sql.append(registro.getId_ue());
-        sql.append(" and st_sare='20'");
-        sqlpg.append("update sare_ege2019_act.tr_ue_complemento set st_sare=").append(st_sare).append(" where id_ue=");
-        sqlpg.append(registro.getId_ue());
-        sqlpg.append(" and st_sare='20'");
-        sqlok.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
-        sqlok.append(registro.getId_ue());
-        sqlok.append(" and st_sare='20'");
-        sqlpgok.append("update sare_ege2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
-        sqlpgok.append(registro.getId_ue());
-        sqlpgok.append(" and st_sare='20'");
-        if (!getRegistroTdUeSuc(registro.getId_ue()).equals("")) {
-            if (jdbcTemplateocl.update(sqlok.toString()) > 0) {
-                if (jdbcTemplate.update(sqlpgok.toString()) > 0) {
+        if (!getRegistroTdUeSuc(registro).equals("")) {
+            sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                    getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+            if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                        getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+                if (jdbcTemplate.update(sql.toString()) > 0) {
                     regresa = true;
                 }
             }
@@ -1311,13 +1339,19 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         if (!regresa) {
             switch (st_sare) {
                 case "10":
-                    if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                    sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                            getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+                    if (jdbcTemplate.update(sql.toString()) > 0) {
                         regresa = true;
                     }
                     break;
                 case "20":
+                    sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                            getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
                     if (jdbcTemplateocl.update(sql.toString()) > 0) {
-                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+                        sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
+                                getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+                        if (jdbcTemplate.update(sql.toString()) > 0) {
                             regresa = true;
                         }
                     }
@@ -1327,16 +1361,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     }
 
     @Override
-    public boolean updatetdUeSuc(cat_registro_ue_complemento_sare registro) {
+    public boolean updatetdUeSucEge(cat_registro_ue_complemento_sare registro) {
         boolean regresa = false;
-        StringBuilder sql = new StringBuilder();
-        StringBuilder sqlpg = new StringBuilder();
-        sql.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
-        sql.append(registro.getId_ue());
-        sqlpg.append("update sare_ege2019_act.tr_ue_complemento set st_sare='01' where id_ue=");
-        sqlpg.append(registro.getId_ue());
+        StringBuilder sql, sqlpg;
+        sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE), getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+        sqlpg = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE), getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
         if (jdbcTemplateocl.update(sql.toString()) > 0) {
-            if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+            sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE), getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
+            if (jdbcTemplate.update(sql.toString()) > 0) {
                 regresa = true;
             }
         } else if (jdbcTemplate.update(sqlpg.toString()) > 0) {
@@ -1348,26 +1380,15 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Override
     public boolean desbloqueoOclMasivo(cat_registro_ue_complemento_sare registro) {
         boolean regresa = false;
-        StringBuilder sqlmas = new StringBuilder();
-        StringBuilder sqlpgmas = new StringBuilder();
-        StringBuilder sqlokmas = new StringBuilder();
-        StringBuilder sqlpgokmas = new StringBuilder();
-        sqlokmas.append("update ce2019_masrencal.tr_predios set st_sare='01' where id_ue=");
-        sqlokmas.append(registro.getId_ue());
-        sqlokmas.append(" and st_sare='20'");
-        sqlpgokmas.append("update sare_mas2019_act.tr_ue_complemento set st_sare=01 where id_ue=");
-        sqlpgokmas.append(registro.getId_ue());
-        sqlpgokmas.append(" and st_sare='20'");
+        StringBuilder sql;
         String st_sare = getstatusSare(registro.getId_ue());
-        sqlmas.append("update ce2019_masrencal.tr_predios set st_sare='10' where id_ue=");
-        sqlmas.append(registro.getId_ue());
-        sqlmas.append(" and st_sare='20'");
-        sqlpgmas.append("update sare_mas2019_act.tr_ue_complemento set st_sare=").append(st_sare).append(" where id_ue=");
-        sqlpgmas.append(registro.getId_ue());
-        sqlpgmas.append(" and st_sare='20'");
-        if (!getRegistroTdUeSucMasivo(registro.getId_ue()).equals("")) {
-            if (jdbcTemplateocl.update(sqlokmas.toString()) > 0) {
-                if (jdbcTemplate.update(sqlpgokmas.toString()) > 0) {
+        if (!getRegistroTdUeSucMasivo(registro).equals("")) {
+            sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                    getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+            if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                sql = getQueryDesbloqueo(QuerysDesbloqueo.ALMACENA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                        getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+                if (jdbcTemplate.update(sql.toString()) > 0) {
                     regresa = true;
                 }
             }
@@ -1375,13 +1396,19 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         if (!regresa) {
             switch (st_sare) {
                 case "10":
-                    if (jdbcTemplate.update(sqlpgmas.toString()) > 0) {
+                    sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                            getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+                    if (jdbcTemplate.update(sql.toString()) > 0) {
                         regresa = true;
                     }
                     break;
                 case "20":
-                    if (jdbcTemplateocl.update(sqlmas.toString()) > 0) {
-                        if (jdbcTemplate.update(sqlpgmas.toString()) > 0) {
+                    sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_OCL, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                            getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                        sql = getQueryDesbloqueo(QuerysDesbloqueo.LIBERA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Operativo_Masivo),
+                                getEsquemaPostgres(proyectos.Operativo_Masivo), registro);
+                        if (jdbcTemplate.update(sql.toString()) > 0) {
                             regresa = true;
                         }
                     }
@@ -1390,5 +1417,4 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         return regresa;
     }
 
-    
 }

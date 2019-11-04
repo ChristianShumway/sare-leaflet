@@ -55,7 +55,7 @@ public class BackingCatalogosSare {
         cat_respuesta_services respuesta=new cat_respuesta_services();
         List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClaves();
         for(cat_registro_ue_complemento_sare registro:listado){
-            if(InterfaceBusquedaSare.desbloqueoOcl(registro)){
+            if(InterfaceBusquedaSare.desbloqueoOclEge(registro)){
                 cont=cont+1;
                 respuesta.setMensaje(new cat_mensaje("true","claves Desbloqueadas: "+cont));
             }else{
@@ -74,8 +74,8 @@ public class BackingCatalogosSare {
         cat_respuesta_services respuesta=new cat_respuesta_services();
         List<cat_registro_ue_complemento_sare> listado=InterfaceBusquedaSare.getListadoClavesUeSuc();
         for(cat_registro_ue_complemento_sare registro:listado){
-            if(InterfaceBusquedaSare.getbuscatdUeSuc(registro)){
-                InterfaceBusquedaSare.updatetdUeSuc(registro);
+            if(InterfaceBusquedaSare.getbuscatdUeSucEge(registro)){
+                InterfaceBusquedaSare.updatetdUeSucEge(registro);
                 cont=cont+1;
                 respuesta.setMensaje(new cat_mensaje("true","claves actualizadas: "+cont));
             }else{
