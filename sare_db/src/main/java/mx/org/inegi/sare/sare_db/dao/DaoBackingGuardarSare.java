@@ -5,6 +5,7 @@
  */
 package mx.org.inegi.sare.sare_db.dao;
 
+import java.math.BigDecimal;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -154,7 +155,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         public Double doInPreparedStatement(PreparedStatement ps)
                                 throws SQLException, DataAccessException {
 
-                            ps.setInt(1, Integer.valueOf(inmueble.getId_UE()));
+                            ps.setBigDecimal(1, new BigDecimal(inmueble.getId_UE().trim()));
                             ps.setString(2, inmueble.getTramo_control());
                             ps.setString(3, inmueble.getCvegeo().toUpperCase());
                             ps.setString(4, inmueble.getCE().toUpperCase());

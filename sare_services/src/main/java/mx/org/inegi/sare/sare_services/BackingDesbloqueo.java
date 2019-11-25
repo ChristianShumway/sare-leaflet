@@ -74,7 +74,7 @@ public class BackingDesbloqueo extends BackingSincroniza {
             }
         }
         catch(Exception e){
-            respuesta.setMensaje(new cat_mensaje("false", "- Ocurrió una Excepción "+e.getMessage()));
+            respuesta.setMensaje(new cat_mensaje("false", "Error al desbloquear el registro "));
         }
         return respuesta;
     }

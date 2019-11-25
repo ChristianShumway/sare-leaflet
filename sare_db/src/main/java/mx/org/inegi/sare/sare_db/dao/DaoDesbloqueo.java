@@ -318,7 +318,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         sql = getSql(super.proyectos,"",id_ue, Desbloqueo.completaGuardado);
         switch (proyectos) {
             case Operativo_Masivo:
-                if (jdbcTemplate.update(sql.toString()) > 0) {
+                if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresar = true;
                 }
                 break;
