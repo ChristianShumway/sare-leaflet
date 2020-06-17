@@ -90,7 +90,7 @@ public class BackingReportes extends DaoBusquedaSare {
                         whereReporte = " and ue.ID_CUESTIONARIO=54 and id_encuesta=38  and 1=1";
 
                     } else {
-                            whereReporte = "  and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and ce=" + ce + ""; 
+                            whereReporte = "  and ue.ID_CUESTIONARIO=54 and id_encuesta=38 and substr(po.cve_operativa,0,2)=" + ce + ""; 
                     }
                     }else{
                         if (ce.equals("00")) {

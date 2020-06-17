@@ -747,6 +747,36 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         StringBuilder sql = new StringBuilder();
         switch (proyectos) {
             case Operativo_Masivo:
+                sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n"
+                        + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n"
+                        + "lpad(to_char(ue.tipo_e14),2,'0') tipo_e14, ue.e14, lpad(to_char(ue.tipo_e10_a),2,'0') tipo_e10_a, \n"
+                        + "ue.e10_a,lpad(to_char(ue.tipo_e10_b),2,'0') tipo_e10_b, ue.e10_b, lpad(to_char(ue.tipo_e10_c),2,'0'),\n"
+                        + "ue.tipo_e10_c, ue.e10_c, ue.x_val as coorx, to_char(ue.y_val) as coory, \n"
+                        + "ue.e16 as descrubic, pre.st_sare estatus_punteo, ue.e12, ue.e19, ue.tipo_e19, ue.e20, \n"
+                        + "ue.e13, TRIM(ue.e13a) as e13_a,ue.e14a as e14_a, --to_char(origen) \n"
+                        + "'' origen, ue.ce as cestatal,\n"
+                        + "ue.e23a e23_a,ue.e17, ue.e17 --||' - '|| --e17_desc \n"
+                        + "as codigo_scian,ue.c154, inm.id_inmueble,inm.CVEVIAL ");
+                //sql.append(querys.BUSQUEDAOCL.getQuery());
+                sql.append("FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
+                        .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
+                        .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
+                        .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ");
+                if (origen == 1) {
+                    if (ce.equals("00")) {
+                        sql.append(" where st_sare='10' and pre.punteo_sare=1 and id_cuestionario=54 and id_encuesta=38 and ue.id_ue = ").append(id_ue);
+                    } else {
+                        sql.append(" where st_sare='10' and pre.punteo_sare=1 and id_cuestionario=54 and id_encuesta=38 and ue.id_ue = ").append(id_ue).append(" and cve_operativa='").append(tramo).append("'");
+                    }
+                } else {
+                    sql.append(" where ue.id_ue = ").append(id_ue);
+                }
+                if (!(ce == null)) {
+                    if (!ce.equals("00") && !ce.equals("99")) {
+                        //sql.append("and cestatal = ").append(ce);
+                    }
+                }
+                break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql.append("SELECT to_char(ue.id_ue) as id_ue, ue.e03, ue.e04, ue.e05, ue.e06, ue.e07, ue.e08, ue.e09, \n"
                         + "lpad(to_char(ue.tipo_e10),2,'0') tipo_e10, ue.e10, ue.e11, TRIM(ue.e11a) as e11a, \n"
@@ -765,9 +795,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ");
                 if (origen == 1) {
                     if (ce.equals("00")) {
-                        sql.append(" where st_sare='10' and ue.id_ue = ").append(id_ue);
+                        sql.append(" where st_sare='10' and  pre.punteo_sare=1 and id_cuestionario!=54 and id_encuesta!=38 and ue.id_ue = ").append(id_ue);
                     } else {
-                        sql.append(" where st_sare='10' and ue.id_ue = ").append(id_ue).append(" and cve_operativa='").append(tramo).append("'");
+                        sql.append(" where st_sare='10' and pre.punteo_sare=1 and id_cuestionario!=54 and id_encuesta!=38 and ue.id_ue = ").append(id_ue).append(" and cve_operativa='").append(tramo).append("'");
                     }
                 } else {
                     sql.append(" where ue.id_ue = ").append(id_ue);
@@ -778,27 +808,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     }
                 }
                 break;
-//            case Establecimientos_GrandesY_Empresas_EGE:
-//                sql.append("SELECT to_char(id_ue) as id_ue, e03, e04, e05, e06, e07, e08, e09, lpad(to_char(tipo_e10),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, lpad(to_char(tipo_e14),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a),2,'0') tipo_e10_a, e10_a, ");
-//                sql.append("lpad(to_char(tipo_e10_b),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c),2,'0') tipo_e10_c, e10_c, coord_x as coorx, to_char(coord_y) as coory, descrubic, sare_st estatus_punteo, e12, ");
-//                sql.append("e19, tipo_e19, e20, e13, TRIM(e13a) as e13_a,e14_a, to_char(origen) origen, cestatal, e23a e23_a,"); //modificar e23a por e23 es solo para pruebas, e13_a por e13a, e12_p por e12, e11_a por e11
-//                sql.append("e17, e17||' - '||e17_desc as codigo_scian,c154");
-//                sql.append(" FROM ").append(esquemaPos).append(".VW_PUNTEO_SARE");
-//                if (origen == 1) {
-//                    if (ce.equals("00")) {
-//                        sql.append(" where sare_st='10' and id_ue = ").append(id_ue);
-//                    } else {
-//                        sql.append(" where sare_st='10' and id_ue = ").append(id_ue);
-//                    }
-//                } else {
-//                    sql.append(" where id_ue = ").append(id_ue);
-//                }
-//                if (!(ce == null)) {
-//                    if (!ce.equals("00") && !ce.equals("99")) {
-//                        sql.append("and cestatal = ").append(ce);
-//                    }
-//                }
-//                break;
         }
 
         return sql;
@@ -1199,7 +1208,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Override
     public boolean getbuscatdUeSucEge(cat_registro_ue_complemento_sare registro) {
         Boolean regresa = false;
-        StringBuilder sql ;
+        StringBuilder sql;
         sql = getQueryDesbloqueo(QuerysDesbloqueo.BUSCA_LA_CLAVE_PG, getEsquemaOracle(ProyectosEnum.Establecimientos_GrandesY_Empresas_EGE),
                 getEsquemaPostgres(proyectos.Establecimientos_GrandesY_Empresas_EGE), registro);
         regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {

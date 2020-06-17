@@ -13,8 +13,8 @@ let dataCleeListNew = {}
 let dataCleeListNewLock = {}
 let xycoorsx, xycoorsy, punteo, realPunteo, mod_cat, cve_geo, cve_geo2016, cveft, e10_cve_vial, confirmacionPunteo
 screen.width <= '480' 
-//let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
-let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
+let layersSARE=['c100', 'c101a', 'wdenue'] //capas para el masivo
+//let layersSARE=['c100', 'c110', 'wdenue'] //capas para el ege
 let dataResultSearchClee = {}
 let dataResultSearchCleeLock = {}
 let cleeListType = 'normal'

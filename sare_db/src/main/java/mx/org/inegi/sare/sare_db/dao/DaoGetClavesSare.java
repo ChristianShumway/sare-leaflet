@@ -74,7 +74,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
                         while (rs.next()) {
-                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"),rs.getString("status"));
+                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("c154"), rs.getString("status"));
                             resultado1.add(fila);
                         }
                         return resultado1;
@@ -232,7 +232,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                                 .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                                 .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
-                                .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and pre.punteo_sare=1 and id_cuestionario=54 and id_encuesta=38 and pre.id_ue is not null  ")
+                                .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare"
+                                + " where st_sare='10' and pre.punteo_sare=1 and id_cuestionario=54 and id_encuesta=38 and pre.id_ue is not null  ")
                                 //.append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null AND locs.TIPO='U' ")
                                 .append("and cve_operativa=").append(tramo);
                     }
@@ -250,7 +251,9 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                                 .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
                                 .append("join ").append(esquemaOcl).append(".tr_inmuebles inm on inm.id_inmueble=pre.id_inmueble ")
                                 .append("join ").append(esquemaOcl).append(".tr_etq_val ue on ue.id_ue=pre.id_ue ")
-                                .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and pre.punteo_sare=1 and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and pre.id_ue is not null  ")
+                                .append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare"
+                                + "         where st_sare='10' and pre.punteo_sare=1 "
+                                + "and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38 and pre.id_ue is not null  ")
                                 //.append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null AND locs.TIPO='U' ")
                                 .append("and cve_operativa=").append(tramo);
                     }
