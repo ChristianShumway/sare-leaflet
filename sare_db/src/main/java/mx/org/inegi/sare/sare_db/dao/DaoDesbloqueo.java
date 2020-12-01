@@ -134,6 +134,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
             switch (proyectos)
             {
                 case Operativo_Masivo:
+                case RENEM:
                     if (jdbcTemplateocl.update(sql.toString()) > 0) 
                     {
                         regresar = true;
@@ -167,6 +168,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
             {
                 case Operativo_Masivo:
                 case Establecimientos_GrandesY_Empresas_EGE:
+                case RENEM:
                     if (jdbcTemplate.update(sql.toString()) > 0) 
                     {
                         regresar = true;
@@ -218,6 +220,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         sql = getSql(proyectos,"", id_ue, Desbloqueo.existeUe);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 regresar = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
                     public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -266,6 +269,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario}) > 0) {
                     regresar = true;
                 }
@@ -293,6 +297,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 if (jdbcTemplate.update(sql.toString(), new Object[]{usuario, clave, ce}) > 0) {
                     regresar = true;
                 }
@@ -318,6 +323,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         sql = getSql(super.proyectos,"",id_ue, Desbloqueo.completaGuardado);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresar = true;
                 }
@@ -365,7 +371,7 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-
+            case RENEM:
                 switch (desbloqueo) {
                     case VerificaDesbloqueo:
                         sql.append("SELECT ").append(esquemaPos).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");
@@ -401,7 +407,6 @@ public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloque
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 switch (desbloqueo) {
                     case VerificaDesbloqueo:
                         sql.append("SELECT ").append(esquemaPos).append(".verifica_clave_desbloqueo(").append(id_ue).append(") resultado");

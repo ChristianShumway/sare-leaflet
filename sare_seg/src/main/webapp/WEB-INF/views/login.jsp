@@ -58,11 +58,11 @@
               <!--<option value="4">Construcción</option>
               <option value="7">Convenios</option>
               <option value="1">Establecimientos grandes y empresas</option>
-              <option value="6">Muestra Rural</option>-->
+              <option value="6">Muestra Rural</option>
               <option value="5">Operativo Masivo</option>
               <!--<option value="8">Organismos operadores de agua</option>
-              <option value="2">Pesca - Mineria</option>
-              <option value="3">Transportes</option>-->
+              <option value="2">Pesca - Mineria</option>-->
+              <option value="3">RENEM</option>
             </select>
           </div>
           <a onclick="goFormLogin()" class="btn-inicio-sesion">Iniciar Ahora</a>

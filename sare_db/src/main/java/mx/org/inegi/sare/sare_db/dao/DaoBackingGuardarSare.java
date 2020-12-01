@@ -60,6 +60,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case MasivoOtros:
+            case RENEM:
                 sql = getSql(proyectos, obj, null, MetodosGuardar.GuardarUnidadesEnFrentes, "", false);
                 regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Integer>() {
                     @Override
@@ -94,6 +95,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getValidaUe, "", false);
                 regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Integer>() {
                     @Override
@@ -122,6 +124,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getClaveProvisional, capa, false);
                 regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
                     @Override
@@ -147,6 +150,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case MasivoOtros:
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getGuardaUePrepared, "", isAlta);
                 try {
                     regresa = jdbcTemplate.execute(sql.toString(), new PreparedStatementCallback<Double>() {
@@ -236,6 +240,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case MasivoOtros:
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getGuardaUe, "", isAlta);
                 try {
                     regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Double>() {
@@ -271,6 +276,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case MasivoOtros:
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getE23A, "", false);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<String>() {
                     @Override
@@ -310,6 +316,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getidDeftramo, "", false);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Integer>() {
                     @Override
@@ -351,6 +358,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             switch (proyectos) {
                 case Operativo_Masivo:
                 case Establecimientos_GrandesY_Empresas_EGE:
+                case RENEM:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;
                     }
@@ -382,6 +390,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             switch (proyectos) {
                 case Operativo_Masivo:
                 case Establecimientos_GrandesY_Empresas_EGE:
+                case RENEM:
                     if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                         regresa = true;
                     }
@@ -406,7 +415,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            case RENEM:
             case MasivoOtros:
                 esquemaPos = getEsquemaPostgres(proyecto);
                 esquemaOcl = getEsquemaOracle(proyecto);

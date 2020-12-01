@@ -129,6 +129,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 break;
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 resultado = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
                     @Override
                     public List<cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -246,6 +247,11 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         sql = getSql(null, 0, "", null, "", proyectos, "", id_ue, 0, MetodosBusqueda.OCUPACVEUNICA, null);
         switch (proyectos) {
             case Operativo_Masivo:
+                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                    regresa = true;
+                }
+                break;
+                case RENEM:
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
@@ -384,7 +390,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            case RENEM:
                 regresa = execSqlExtentBusquedaCvegeo2Mdm(sql);
                 break;
 
@@ -438,6 +444,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Operativo_Masivo:
                 parametro = tipo;
                 break;
+                 case RENEM:
+                parametro = tipo;
+                break;
             default:
                 parametro = tipo;
         }
@@ -473,7 +482,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            case RENEM:
                 regresa = ExecgetNombreBusquedaMdm(sql);
                 break;
 
@@ -521,6 +530,14 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         if (cve_unica != null && !cve_unica.equals("")) {
             switch (proyectos) {
                 case Operativo_Masivo:
+                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                        if (jdbcTemplate.update(sqlpg.toString()) > 0) {
+
+                            regresa = true;
+                        }
+                    }
+                    break;
+                    case RENEM:
                     if (jdbcTemplateocl.update(sql.toString()) > 0) {
                         if (jdbcTemplate.update(sqlpg.toString()) > 0) {
 
@@ -625,6 +642,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 switch (metodo) {
                     case BUSQUEDAOCL:
                         //sql = filtrarSqlPg(ce, esquemaPos, id_ue, origen);
@@ -692,7 +710,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            //case RENEM:
                 switch (metodo) {
                     case BUSQUEDAOCL:
                         sql = filtrarSqlEge(ce, esquemaOcl, id_ue, origen, tramo);
@@ -937,7 +955,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            case RENEM:
                 esquema = schemamdm;
                 campo_geo = "the_geom";
                 break;

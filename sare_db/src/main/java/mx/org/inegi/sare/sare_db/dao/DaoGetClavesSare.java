@@ -56,6 +56,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         sql = getSql(proyectos, id_ue, tramo, UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -109,6 +110,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 resultado1 = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -161,6 +163,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         sql = getSql(proyectos, ce, tramo, UnidadesEconomicasEnum.CONGLOMERADOS.getCódigo());
         switch (proyectos) {
             case MasivoOtros:
+                case RENEM:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -200,6 +203,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+                case RENEM:
                 //sql = getFiltroSql(ce, esquemaPos, tramo, ue);
                 sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
@@ -208,7 +212,6 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 sql = getFiltroSql(ce, esquemaPos, esquemaOcl, tramo, ue);
                 break;
         }
@@ -220,6 +223,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         if (UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo().equals(ue)) {
             switch (proyectos) {
                 case Operativo_Masivo:
+                    case RENEM:
                     if (ce.equals("00")) {
                         sql.append("select ue.id_ue, ue.c154, st.descripcion status FROM ").append(esquemaOcl).append(".tr_plan_oper po ")
                                 .append("join ").append(esquemaOcl).append(".tr_predios pre on pre.id_cop=po.id_cop ")
@@ -273,6 +277,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             switch (proyectos) {
                 case Operativo_Masivo:
                 case Establecimientos_GrandesY_Empresas_EGE:
+                    case RENEM:
                     if (ce.equals("00")) {
                         sql.append("SELECT id_ue, sare_st_usr, sare_st_time,DIFERENCIA_HORAS,DIFERENCIA_DIAS || ' dias' || ' - ' || TO_CHAR(DIFERENCIA_HORAS, '00') || ':' || "
                                 + "TO_CHAR(DIFERENCIA_MINUTOS, '00') || ':' || TO_CHAR(DIFERENCIA_SEGUNDOS, '00') AS TIME_LOCK FROM (select id_ue, sare_st_usr, sare_st_time,"

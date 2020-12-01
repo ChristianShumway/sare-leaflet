@@ -136,6 +136,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         switch (proyectos) {
             case Operativo_Masivo:
             case MasivoOtros:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateLocalidades);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -178,6 +179,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         switch (proyectos) {
             case MasivoOtros:
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaLocalidades);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -202,6 +204,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Validateejes);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -243,6 +246,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insertaejes);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -266,6 +270,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateAgebs);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -307,6 +312,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaAgebs);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -330,6 +336,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrAgebs);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -371,6 +378,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrAgebs);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -394,6 +402,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+            case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcManzanas);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -435,6 +444,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcManzanas);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -458,6 +468,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrManzanas);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -499,6 +510,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrManzanas);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -522,6 +534,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrLocalidades);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -563,6 +576,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrLocalidades);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -586,6 +600,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTrFrentes);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -627,6 +642,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 ConsultaSecuenciaFrentes(proyecto, inmueble, usuario);
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTrFrentes);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
@@ -652,6 +668,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ValidateTcFrentes);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -691,6 +708,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ConsultaSecuenciaFrentes);
                 secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
                     @Override
@@ -727,6 +745,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.InsertaTcFrentes);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -750,6 +769,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.UpdateTrUESUC);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -784,6 +804,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Ue_Complemento);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -826,6 +847,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_UE_Complemento);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -850,6 +872,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Insert_Tr_UE_Complemento);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     regresa = true;
@@ -873,6 +896,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.buscaTr_Inmuebles);
                 regresa = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<Boolean>() {
                     @Override
@@ -913,6 +937,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.Update_Tr_Inmuebles);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
 
@@ -947,6 +972,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, coordenadas, Metodossincroniza.Insert_Tr_Inmuebles);
                 if (jdbcTemplateocl.update(sql.toString()) > 0) {
                     inmueble.setId_inmueble(secuencia);
@@ -971,6 +997,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.getSecuenciaTrInmuebles);
                 secuencia = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<BigDecimal>() {
                     @Override
@@ -1020,6 +1047,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
             case Establecimientos_GrandesY_Empresas_EGE:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaBitRegIdUE);
                 if (jdbcTemplate.update(sql.toString()) > 0) {
@@ -1051,6 +1079,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
         proyectos = getProyecto(proyecto);
         switch (proyectos) {
             case Operativo_Masivo:
+                case RENEM:
                 sql = getSql(proyectos, inmueble, null, Metodossincroniza.ActualizaIdUE);
                 if (jdbcTemplate.update(sql.toString()) > 0) {
                     regresa = true;
@@ -1119,7 +1148,7 @@ public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincr
             case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+case RENEM:
                 esquemaPos = getEsquemaPostgres(proyecto);
                 esquemaOcl = getEsquemaOracle(proyecto);
                 switch (metodo) {

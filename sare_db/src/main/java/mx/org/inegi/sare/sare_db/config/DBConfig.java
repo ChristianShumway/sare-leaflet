@@ -151,14 +151,14 @@ public class DBConfig {
         dS.setDefaultReadOnly(false); 
         return dS;
     }
-    @Bean(name = "dataSourceOclEge")
+    @Bean(name = "dataSourceOclUEEPA")
     @Profile("prod")
-    public DataSource dataSourceProdOclEge() {
+    public DataSource dataSourceProdOclUEEPA() {
         BasicDataSource dS = new BasicDataSource();
-        dS.setDriverClassName(env.getProperty("db.prod.driver.ocl.ege"));
-        dS.setUrl(env.getProperty("db.prod.url.ocl.ege"));
-        dS.setUsername(env.getProperty("db.prod.user.ocl.ege"));
-        dS.setPassword(env.getProperty("db.prod.password.ocl.ege"));
+        dS.setDriverClassName(env.getProperty("db.prod.driver.ocl.ueepa"));
+        dS.setUrl(env.getProperty("db.prod.url.ocl.ueepa"));
+        dS.setUsername(env.getProperty("db.prod.user.ocl.ueepa"));
+        dS.setPassword(env.getProperty("db.prod.password.ocl.ueepa"));
         dS.setMaxActive(50);
         dS.setMaxIdle(15);
         dS.setMinIdle(8);
@@ -170,6 +170,56 @@ public class DBConfig {
         dS.setLogAbandoned(false);
         dS.setDefaultReadOnly(false); 
         return dS;
+    }
+    @Bean(name = "dataSourceOclUEEPA")
+    @Profile("dev")
+    public DataSource dataSourceDevOclUEEPA() {
+        BasicDataSource dS = new BasicDataSource();
+        dS.setDriverClassName(env.getProperty("db.prod.driver.ocl.ueepa"));
+        dS.setUrl(env.getProperty("db.prod.url.ocl.ueepa"));
+        dS.setUsername(env.getProperty("db.prod.user.ocl.ueepa"));
+        dS.setPassword(env.getProperty("db.prod.password.ocl.ueepa"));
+        dS.setMaxActive(50);
+        dS.setMaxIdle(15);
+        dS.setMinIdle(8);
+        dS.setTestWhileIdle(true);
+        dS.setValidationQuery("SELECT * FROM V$VERSION ");
+        dS.setRemoveAbandonedTimeout(15);
+        dS.setRemoveAbandoned(true);
+        dS.setTimeBetweenEvictionRunsMillis(30000);
+        dS.setLogAbandoned(false);
+        dS.setDefaultReadOnly(false); 
+        return dS;
+    }
+    @Bean(name = "dataSourceOclUEEPA")
+    @Profile("dev")
+    public DataSource dataSourceProdOclEge() {
+        BasicDataSource dS = new BasicDataSource();
+        dS.setDriverClassName(env.getProperty("db.prod.driver.ocl.ueepa"));
+        dS.setUrl(env.getProperty("db.prod.url.ocl.ueepa"));
+        dS.setUsername(env.getProperty("db.prod.user.ocl.ueepa"));
+        dS.setPassword(env.getProperty("db.prod.password.ocl.ueepa"));
+        dS.setMaxActive(50);
+        dS.setMaxIdle(15);
+        dS.setMinIdle(8);
+        dS.setTestWhileIdle(true);
+        dS.setValidationQuery("SELECT * FROM V$VERSION ");
+        dS.setRemoveAbandonedTimeout(15);
+        dS.setRemoveAbandoned(true);
+        dS.setTimeBetweenEvictionRunsMillis(30000);
+        dS.setLogAbandoned(false);
+        dS.setDefaultReadOnly(false); 
+        return dS;
+    }
+    @Bean(name = "jdbcTemplateOclUEEPA")
+    @Profile("prod")
+    public JdbcTemplate jdbcTemplateProdOclUEEPA() {
+        return new JdbcTemplate(dataSourceProdOclUEEPA());
+    }
+    @Bean(name = "jdbcTemplateOclUEEPA")
+    @Profile("dev")
+    public JdbcTemplate jdbcTemplateDevOclUEEPA() {
+        return new JdbcTemplate(dataSourceDevOclUEEPA());
     }
     @Bean(name = "jdbcTemplateOclEge")
     @Profile("prod")

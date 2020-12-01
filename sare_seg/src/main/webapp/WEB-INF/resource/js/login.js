@@ -109,10 +109,10 @@ const handleClickValidaUsuario = () => {
         }
         loading = 'false'
         handleVisibleLoading() 
-        inicializaCapas()
+        //inicializaCapas()
         //localStorage.setItem("dataUserObj", JSON.stringify(dataUserObj))
         card.style.transform = 'rotatex(180deg)'
-        //window.location.href =  './index.html'
+        window.location.href =  './index.html'
       }
       
     }, 

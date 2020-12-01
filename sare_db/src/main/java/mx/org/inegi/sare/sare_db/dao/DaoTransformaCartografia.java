@@ -71,7 +71,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                 case Operativo_Masivo:
                 case Organismos_Operadores_De_Agua:
                 case Pesca_Mineria:
-                case Transportes:
+                case RENEM:
                 case MasivoOtros:
                     if (TipoCartografia.Geografica.getCodigo().equals(tipo)) 
                 {
@@ -112,7 +112,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                   ProyectosEnume=ProyectosEnum.Pesca_Mineria;
                   break;
               case 8:
-                  ProyectosEnume=ProyectosEnum.Transportes;
+                  ProyectosEnume=ProyectosEnum.RENEM;
                   break;
               case 9:
                   ProyectosEnume=ProyectosEnum.MasivoOtros;
@@ -151,7 +151,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
             case Pesca_Mineria:
                  esquema="sare_mas2019_act";
               break;
-            case Transportes:
+            case RENEM:
                  esquema="sare_mas2019_act";
               break;
             case MasivoOtros:
@@ -189,8 +189,8 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
             case Pesca_Mineria:
                 esquema="";
               break;
-            case Transportes:
-                esquema="";
+            case RENEM:
+                esquema="ce2019_masrencal";
               break;
             case MasivoOtros:
                 esquema="ce2019_masrencal";

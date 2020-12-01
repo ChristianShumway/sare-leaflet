@@ -17,5 +17,7 @@ public interface InterfaceLogin {
     public boolean registraAccesoPG(cat_usuarios acceso);
     
      public cat_usuarios consultaUsuario(cat_usuarios acceso);
+     
+     public cat_usuarios consultaUsuarioUEEPA(cat_usuarios acceso);
     
 }

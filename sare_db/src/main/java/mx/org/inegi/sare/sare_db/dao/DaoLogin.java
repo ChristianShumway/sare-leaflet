@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository("DaoLogin")
-@Profile("jdbc")
+@Profile("prod")
 public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin {
     
 //    @Autowired
@@ -34,6 +34,10 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
     @Autowired    
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    @Qualifier("jdbcTemplateOclUEEPA")
+    private JdbcTemplate dataSourceOclUEEPA;
 
     @Override
     public boolean registraAccesoPG(cat_usuarios acceso) {
@@ -65,6 +69,31 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
                     usuario.setCve_operativa(rs.getString("cveoper"));
                     usuario.setCe(rs.getString("ce"));
                     usuario.setTramo_control(rs.getString("tramo_control"));
+                    usuario.setNombre(rs.getString("nombre"));
+                    usuario.setPass(rs.getString("password"));
+                    regresa=true;
+                }
+                return usuario;
+            }
+        
+        });
+        return regresa;
+    }
+    
+    @Override
+    public cat_usuarios consultaUsuarioUEEPA(cat_usuarios usuario) {
+        cat_usuarios regresa;
+        StringBuilder sql=new StringBuilder();
+        sql.append("select * from inpc_campo.ENC_USUARIO where nombre= '").append(usuario.getUsuario()).append("'");
+        regresa=dataSourceOclUEEPA.query(sql.toString(),new ResultSetExtractor<cat_usuarios>(){
+            @Override
+            public cat_usuarios extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_usuarios usuario=new cat_usuarios();
+                boolean regresa=false;
+                while(rs.next()){
+                    usuario.setCve_operativa(null);
+                    usuario.setCe(rs.getString("clave"));
+                    usuario.setTramo_control(null);
                     usuario.setNombre(rs.getString("nombre"));
                     usuario.setPass(rs.getString("password"));
                     regresa=true;

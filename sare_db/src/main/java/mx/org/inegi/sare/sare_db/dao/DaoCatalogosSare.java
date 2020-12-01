@@ -173,7 +173,7 @@ public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalo
             case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+            case RENEM:
                 esquemaPos=getEsquemaPostgres(proyecto);
                 esquemaOcl=getEsquemaOracle(proyecto);
                 switch(catalogo)

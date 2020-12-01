@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DefaultController extends BackingLogin {
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+   /* @RequestMapping(value = "/", method = RequestMethod.POST)
     public String index(ModelMap map,
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
@@ -53,8 +53,8 @@ public class DefaultController extends BackingLogin {
         } else {
             return "error";
         }
-    }
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    }*/
+   /* @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index1(ModelMap map,
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
@@ -93,31 +93,30 @@ public class DefaultController extends BackingLogin {
         } else {
             return "error";
         }
-    }
+    }*/
     
-//    @RequestMapping(value = "/", method = RequestMethod.GET)
-//    public String index(ModelMap map) {
-//        return "login";
-//    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String index(ModelMap map) {
+        return "login";
+    }
 
-//    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
-//    public String index2(
-//            @RequestParam(value = "acceso", defaultValue = "") String acceso,
-//            @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
-//            @RequestParam(value = "nombre", defaultValue = "") String nombre,
-//            @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
-//            @RequestParam(value = "proyecto", defaultValue = "") Integer proyecto,
-//            HttpServletRequest request) {
-//        if (acceso != null && !acceso.equals("")
-//                && clave_operativa != null && !clave_operativa.equals("")
-//                && nombre != null && !nombre.equals("")
-//                && tramo_control != null && !tramo_control.equals("")
-//                && proyecto != null ) {
-//            return "login";
-//        } else {
-//            return "index";
-//        }
-//    }
+    @RequestMapping(value = "/index.html", method = RequestMethod.GET)
+    public String index2(
+            @RequestParam(value = "acceso", defaultValue = "") String acceso,
+            @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
+            @RequestParam(value = "nombre", defaultValue = "") String nombre,
+            @RequestParam(value = "tramo_control", defaultValue = "") String tramo_control,
+           @RequestParam(value = "proyecto", defaultValue = "") Integer proyecto,
+           HttpServletRequest request) {
+       if (acceso != null && !acceso.equals("")
+               && clave_operativa != null && !clave_operativa.equals("")
+               && nombre != null && !nombre.equals("")
+                && tramo_control != null && !tramo_control.equals("")) {
+            return "login";
+        } else {
+           return "index";
+       }
+    }
 
     @RequestMapping(value = "/error.html", method = RequestMethod.POST)
     public String index3(ModelMap map) {

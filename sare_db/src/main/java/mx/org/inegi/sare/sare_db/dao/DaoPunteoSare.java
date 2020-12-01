@@ -109,6 +109,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 resultado = execSqlTipoAreaPg(sql);
                 break;
             case Construccion:
@@ -116,7 +117,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 resultado = execSqlTipoAreaMdm(sql);
                 break;
 
@@ -177,6 +177,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 isMza = execSqlisPuntoinMzaPg(sql, point);
                 break;
             case Construccion:
@@ -184,7 +185,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 isMza = execSqlisPuntoinMzaMdm(sql, point);
                 break;
 
@@ -233,6 +233,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 entidad = execSqlEntidadPg(sql, point);
                 break;
             case Construccion:
@@ -240,7 +241,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 entidad = execSqlEntidadMgm(sql, point);
                 break;
 
@@ -356,6 +356,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 ubicacion_punteo = execSqlInfoPunteoUrbanoPg(sql);
                 break;
             case Construccion:
@@ -363,7 +364,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 ubicacion_punteo = execSqlInfoPunteoUrbanoMdm(sql);
                 break;
 
@@ -447,6 +447,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 cat_vial = execSqlValidaInfoPunteoUrbanoPg(sql, ent, cve_geo, cve_ft);
                 break;
             case Construccion:
@@ -454,7 +455,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 cat_vial = execSqlValidaInfoPunteoUrbanoMdm(sql, ent, cve_geo, cve_ft);
                 break;
 
@@ -547,6 +547,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 ubicacion_punteo = execInfoPunteoRuralPg(sql);
                 break;
             case Construccion:
@@ -554,7 +555,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
                 ubicacion_punteo = execInfoPunteoRuralMdm(sql);
                 break;
 
@@ -638,6 +638,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case RENEM:
                 regresar = execSqlisFrentesProximosPg(sql);
                 break;
             case Construccion:
@@ -645,7 +646,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
+
                 regresar = execSqlisFrentesProximosMdm(sql);
                 break;
 
@@ -697,6 +698,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
             case MasivoOtros:
+            case RENEM:
                 switch (metodo) {
                     case TIPOAREA:
                         sql = new StringBuilder();
@@ -748,7 +750,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         sql.append("(select * from ( ");
                         sql.append("(select m.cve_ent,m.cve_mun,m.cve_loc,l.nom_loc,m.cve_ageb,\n"
                                 + "X(ST_astext(ST_ClosestPoint(the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))), Y(ST_astext(ST_ClosestPoint(the_geom_merc,  "
-                                        + "ST_GeomFromText('").append(point).append("',900913)))),\n"
+                                + "ST_GeomFromText('").append(point).append("',900913)))),\n"
                                 + "cve_mza,'1' cveft, null nomvial,\n"
                                 + "null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 FROM sare_mas2019_carto.vw_manzanasmgn2019 m left join (select cve_ent,cve_mun,cve_loc,nomgeo as nom_loc from sare_mas2019_carto.td_localidades) l\n"
                                 + "on m.cve_ent=l.cve_ent and m.cve_mun=l.cve_mun and m.cve_loc=l.cve_loc\n"
@@ -800,7 +802,6 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case Transportes:
 
                 switch (metodo) {
                     case TIPOAREA:
