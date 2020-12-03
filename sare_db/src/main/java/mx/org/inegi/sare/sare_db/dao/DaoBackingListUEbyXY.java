@@ -75,7 +75,7 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
+            case UEEPA:
               regresa=execSqlInfoUEDenueMdm(sql); 
             break;
                 
@@ -213,7 +213,7 @@ public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceLi
             case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
+            case UEEPA:
                 esquemaPos=getEsquemaPostgres(proyecto);
                 esquemaOcl=getEsquemaOracle(proyecto);
                 switch(MetodosUEbyXY){

@@ -56,7 +56,7 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaInmuebles);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
@@ -82,7 +82,7 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUESUC);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
@@ -107,7 +107,7 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUECOMPLEMENTO);
                 if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
@@ -132,7 +132,7 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 sql = getSql(proyectos, MetodosActivacion.ActivaClaveUnicaUEPG);
                 regresa = jdbcTemplate.query(sql.toString(), new Object[]{cat_bitacora_activacion.getCve_unica(), cat_bitacora_activacion.getUsuario(), cat_bitacora_activacion.getIp()}, new ResultSetExtractor<Integer>() {
                     @Override
@@ -174,7 +174,7 @@ public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacio
             case Operativo_Masivo:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
+            case UEEPA:
                 esquemaPos = getEsquemaPostgres(proyectos);
                 esquemaOcl = getEsquemaOracle(proyectos);
                 switch (metodo) {

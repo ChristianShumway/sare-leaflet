@@ -48,7 +48,7 @@ public class BackingGuardar extends BackingSincroniza {
         int validacion = 1;
         if (inmueble != null && !inmueble.getTIPO_E10().equals("") && 
                 !inmueble.getTIPO_E10_B().equals("") && !inmueble.getTIPO_E10_C().equals("") && !inmueble.getTIPO_E10_A().equals("")) {
-            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getTRAMO_CONTROL().substring(0, 2).equals("00")) {
+            if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getCE().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
             } else {
@@ -215,7 +215,11 @@ public class BackingGuardar extends BackingSincroniza {
             inmueble.setE23("A");
         } else {
             inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
-            deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+            if(!proyecto.equals(3)){
+                deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
+            }
+            
+            
         }
         inmueble.setId_deftramo(new BigDecimal(deftramo));
         if (validadeftramo(deftramo)) {

@@ -39,6 +39,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     private JdbcTemplate jdbcTemplateocl;
 
     @Autowired
+    @Qualifier("jdbcTemplateOclUEEPA")
+    private JdbcTemplate jdbcTemplateoclueepa;
+
+    @Autowired
     @Qualifier("jdbcTemplateOclEge")
     private JdbcTemplate jdbcTemplateoclEge;
 
@@ -57,6 +61,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("schemaSarePG")
     private String schemapgEge;
+
+    @Autowired
+    @Qualifier("schemaSarePGUEEPA")
+    private String schemaSarePGUEEPA;
 
     @Autowired
     @Qualifier("jdbcTemplate")
@@ -127,9 +135,64 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     }
                 });
                 break;
+            case UEEPA:
+                //sql = getSql(null, 0, "", null, "", proyectos, ce, id_ue, origen, MetodosBusqueda.BUSQUEDAMASIVOOTROS, tramo);
+                resultado = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
+                    @Override
+                    public List<cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
+                        cat_vw_punteo_sare fila;
+                        while (rs.next()) {
+                            fila = new cat_vw_punteo_sare(
+                                    rs.getString("cestatal") != null ? rs.getString("cestatal") : "",
+                                    rs.getString("coorx") != null ? new BigDecimal(rs.getString("coorx").replace(",", ".")) : new BigDecimal(0),
+                                    rs.getString("coory") != null ? new BigDecimal(rs.getString("coory").replace(",", ".")) : new BigDecimal(0),
+                                    rs.getString("c154") != null ? rs.getString("c154") : "",
+                                    rs.getString("descrubic") != null ? rs.getString("descrubic") : "",
+                                    rs.getString("e03") != null ? rs.getString("e03") : "",
+                                    rs.getString("e04") != null ? rs.getString("e04") : "",
+                                    rs.getString("e05") != null ? rs.getString("e05") : "",
+                                    rs.getString("e06") != null ? rs.getString("e06") : "",
+                                    rs.getString("e07") != null ? rs.getString("e07") : "",
+                                    rs.getString("e08") != null ? rs.getString("e08") : "",
+                                    rs.getString("e09") != null ? rs.getString("e09") : "",
+                                    rs.getString("e10") != null ? rs.getString("e10") : "",
+                                    rs.getString("e10_a") != null ? rs.getString("e10_a") : "",
+                                    rs.getString("e10_b") != null ? rs.getString("e10_b") : "",
+                                    rs.getString("e10_c") != null ? rs.getString("e10_c") : "",
+                                    rs.getString("e11") != null ? rs.getString("e11") : "",
+                                    rs.getString("e11a") != null ? rs.getString("e11a") : "",
+                                    rs.getString("e12") != null ? rs.getString("e12") : "",
+                                    rs.getString("e13") != null ? rs.getString("e13") : "",
+                                    rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
+                                    rs.getString("e14") != null ? rs.getString("e14") : "",
+                                    rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
+                                    rs.getString("e17") != null ? new BigDecimal(rs.getString("e17")) : new BigDecimal(0),
+                                    rs.getString("codigo_scian") != null ? rs.getString("codigo_scian") : "",
+                                    rs.getString("e19") != null ? rs.getString("e19") : "",
+                                    rs.getString("e20") != null ? rs.getString("e20") : "",
+                                    rs.getString("e23_a") != null ? rs.getString("e23_a") : "",
+                                    rs.getString("id_ue") != null ? new BigDecimal(rs.getString("id_ue")) : new BigDecimal(0),
+                                    rs.getString("origen") != null ? new BigDecimal(rs.getString("origen")) : new BigDecimal(0),
+                                    rs.getString("estatus_punteo") != null ? Integer.valueOf(rs.getString("estatus_punteo")) : null,
+                                    rs.getString("tipo_e10") != null ? rs.getString("tipo_e10") : "",
+                                    rs.getString("tipo_e10_a") != null ? rs.getString("tipo_e10_a") : "",
+                                    rs.getString("tipo_e10_b") != null ? rs.getString("tipo_e10_b") : "",
+                                    rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
+                                    rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
+                                    rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
+                                    rs.getString("id_inmueble") != null ? new BigDecimal(rs.getString("id_inmueble")) : new BigDecimal(0),
+                                    rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
+                            fila.setE12p("");
+                            resultado.add(fila);
+                        }
+
+                        return resultado;
+                    }
+                });
+                break;
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+
                 resultado = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
                     @Override
                     public List<cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -251,8 +314,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     regresa = true;
                 }
                 break;
-                case RENEM:
-                if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+            case UEEPA:
+                if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
                     regresa = true;
                 }
                 break;
@@ -383,6 +446,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case UEEPA:
                 regresa = execSqlExtentBusquedaCvegeo2Pg(sql);
                 break;
             case Construccion:
@@ -390,7 +454,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
                 regresa = execSqlExtentBusquedaCvegeo2Mdm(sql);
                 break;
 
@@ -444,7 +507,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Operativo_Masivo:
                 parametro = tipo;
                 break;
-                 case RENEM:
+            case UEEPA:
                 parametro = tipo;
                 break;
             default:
@@ -475,6 +538,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+            case UEEPA:
                 regresa = ExecgetNombreBusquedaPg(sql);
                 break;
             case Construccion:
@@ -482,7 +546,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
                 regresa = ExecgetNombreBusquedaMdm(sql);
                 break;
 
@@ -537,8 +600,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         }
                     }
                     break;
-                    case RENEM:
-                    if (jdbcTemplateocl.update(sql.toString()) > 0) {
+                case UEEPA:
+                    if (jdbcTemplateoclueepa.update(sql.toString()) > 0) {
                         if (jdbcTemplate.update(sqlpg.toString()) > 0) {
 
                             regresa = true;
@@ -642,7 +705,6 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             case Operativo_Masivo:
             case MasivoOtros:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
                 switch (metodo) {
                     case BUSQUEDAOCL:
                         //sql = filtrarSqlPg(ce, esquemaPos, id_ue, origen);
@@ -704,13 +766,75 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         break;
                 }
                 break;
+            case UEEPA:
+                switch (metodo) {
+                    case BUSQUEDAOCL:
+                        //sql = filtrarSqlPg(ce, esquemaPos, id_ue, origen);
+                        sql = filtrarSqlEge(ce, esquemaOcl, id_ue, origen, tramo);
+                        break;
+                    case GETCLAVESPG:
+                        sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
+                        break;
+                    case GETDATOSINMUEBLES:
+                        sql.append("SELECT cve_unica,e03,e03n,e04,e04n,e05,e05n,e06,e07,e08,e09,tipo_e10,e10,e10_cvevial,e10_cveseg,e11,e11_a,tipo_e14,e14,tipo_e10_a,e10_a,tipo_e10_b")
+                                .append(",e10_b,tipo_e10_c,e10_c,descrubic, coord_x coorx, coord_y coory,cod_resultado,tipo_reg,e12,e12p,e19,tipo_e19,e20,e13,cve_unica_duplicada clave_unica_duplicada, ")
+                                .append("xmin(buffer(the_geom_merc,50))||','||ymin(buffer(the_geom_merc,50))||','||Xmax(buffer(the_geom_merc,50))||','||Ymax(buffer(the_geom_merc,50)) extent, ")
+                                .append(" e10a_cvevial,e10a_cveseg,e10b_cvevial,e10b_cveseg,e10c_cvevial,e10c_cveseg,tipo_administracion,codigo_carretera,tramo_camino,margen,cadenamiento")
+                                .append(" FROM ").append(esquemaPos).append(".inmuebles where id_ue=? limit 1");
+                        break;
+                    case GETEXTENTCVEGEO:
+                        sql = GetSqlExtent(proyecto, metodo, params, tabla, rural, cat_vw_punteo_sare);
+                        break;
+                    case GETEXTENTCVEGEO2:
+                        sql = GetSqlExtent(proyecto, metodo, params, tabla, rural, cat_vw_punteo_sare);
+                        break;
+                    case GETNOMBREBUSQUEDA:
+                        sql.append("select descripcion from ").append(esquemaPos).append(".").append(tabla).append(" where tipo_e10::int=?");
+                        break;
+                    case GETNOMBREBUSQUEDAOCL:
+                        sql.append("select ").append(campo).append(" from ").append(schemaSarePGUEEPA).append(".").append(tabla).append(" where cve_ent= '").append(cat_vw_punteo_sare.getE03()).append("'");
+                        if (params >= 2) {
+                            sql.append("and cve_mun= '").append(cat_vw_punteo_sare.getE04()).append("'");
+                        }
+                        if (params == 3) {
+                            sql.append("and cve_loc= '").append(cat_vw_punteo_sare.getE05()).append("'");
+                        }
+                        break;
+                    case LIBERACLAVEUNICAORACLE:
+                        //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='10' where id='").append(id_ue).append("' and st_sare<>'01'");
+                        break;
+                    case LIBERACLAVEUNICAPG:
+                        sql.append("UPDATE ").append(esquemaPos).append(".tr_ue_complemento set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare='20'");
+                        break;
+                    case LIBERACLAVEUNICAORACLEOTROS:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='10' where id_uo_masivo='").append(id_ue).append("' and st_sare<>'01'");
+                        break;
+                    case GETVALCOORGEO:
+                        sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
+                        break;
+                    case BUSQUEDAMASIVOOTROS:
+                        sql = filtrarSqlMasivoOtros(ce, esquemaOcl, id_ue, origen, tramo);
+                        break;
+                    case OCUPACVEUNICA:
+                        //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where id=? and st_sare<>'01'");
+                        break;
+                    case OCUPACVEUNICACONGLOMERADO:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
+                        break;
+                    case VALIDA_COORDENADAS_CAIGAN_EN_ESTADO:
+                        sql.append("select case when count(*)>0 then 1 else 0 end from ").append(schemaSarePGUEEPA).append(".td_entidad where st_intersects(st_transform(the_geom_merc,4326),st_geomfromtext('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326))");
+                        break;
+                }
+                break;
 
             case Construccion:
             case Convenios:
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            //case RENEM:
+                //case UEEPA:
                 switch (metodo) {
                     case BUSQUEDAOCL:
                         sql = filtrarSqlEge(ce, esquemaOcl, id_ue, origen, tramo);
@@ -788,6 +912,34 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     }
                 } else {
                     sql.append(" where ue.id_ue = ").append(id_ue);
+                }
+                if (!(ce == null)) {
+                    if (!ce.equals("00") && !ce.equals("99")) {
+                        //sql.append("and cestatal = ").append(ce);
+                    }
+                }
+                break;
+            case UEEPA:
+                sql.append("SELECT to_char(id_ue) as id_ue,  lpad(e03,2,'0') e03, lpad(e04,3,'0') e04, lpad(e05,4,'0') e05, lpad(e06,4,'0') e06, lpad(e07,3,'0') e07, e08, e09, \n"
+                        + "lpad(to_char(tipo_e10),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, \n"
+                        + "lpad(to_char(tipo_e14),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a),2,'0') tipo_e10_a, \n"
+                        + "e10_a,lpad(to_char(tipo_e10_b),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c),2,'0'),\n"
+                        + "tipo_e10_c, e10_c, x as coorx, to_char(y) as coory, \n"
+                        + "e16 as descrubic, st_sare estatus_punteo, e12, e19, tipo_e19, e20, \n"
+                        + "e13, TRIM(e13a) as e13_a,e14a as e14_a, --to_char(origen) \n"
+                        + "'' origen, e03 as cestatal,\n"
+                        + "e20 e23_a,e17, e17 --||' - '|| --e17_desc \n"
+                        + "as codigo_scian,'' as c154, '' as id_inmueble, '' CVEVIAL ");
+                //sql.append(querys.BUSQUEDAOCL.getQuery());
+                sql.append("FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO po ");
+                if (origen == 1) {
+                    if (ce.equals("00")) {
+                        sql.append(" where st_sare='10' and id_ue = ").append(id_ue);
+                    } else {
+                        sql.append(" where st_sare='10'  and id_ue = ").append(id_ue).append(" and usuario_entrevistador='").append(tramo).append("'");
+                    }
+                } else {
+                    sql.append(" where id_ue = ").append(id_ue);
                 }
                 if (!(ce == null)) {
                     if (!ce.equals("00") && !ce.equals("99")) {
@@ -950,12 +1102,16 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 esquema = schemapgEge;
                 campo_geo = "the_geom_merc";
                 break;
+            case UEEPA:
+                esquema = schemaSarePGUEEPA;
+                campo_geo = "the_geom_merc";
+                break;
             case Construccion:
             case Convenios:
             case Muestra_Rural:
             case Organismos_Operadores_De_Agua:
             case Pesca_Mineria:
-            case RENEM:
+
                 esquema = schemamdm;
                 campo_geo = "the_geom";
                 break;
@@ -1058,9 +1214,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     cvegeo = String.valueOf(1);
                 }
                 if (tabla.equals("td_manzanas")) {
-                    sql.append(" and cvegeo='").append(cvegeo).append("'");
+                    sql.append(" and cvegeo~'").append(cvegeo).append("'");
                 } else {
-                    sql.append(" and cvegeo='").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
+                    sql.append(" and cvegeo~'").append(cvegeo).append("' and cveft=").append(cat_vw_punteo_sare.getCveft());
                 }
             } else {
                 sql.append(" and 1=1");
@@ -1076,13 +1232,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
             } else {
                 cvegeo = cat_vw_punteo_sare.getE03();
             }
-            sql.append(" and cvegeo='").append(cvegeo).append("'");
+            sql.append(" and cvegeo~'").append(cvegeo).append("'");
         }
         if (params == 4) {
             sql.append("union all select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-            sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo='").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' union all ");
+            sql.append("from ").append(esquema).append(".").append(rural[0]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo~'").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' union all ");
             sql.append("select xmin(buffer(").append(campo_geo).append(",50))||','||ymin(buffer(").append(campo_geo).append(",50))||','||xmax(buffer(").append(campo_geo).append(",50))||','||ymax(buffer(").append(campo_geo).append(",50)) as extent ");
-            sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo='").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' limit 1");
+            sql.append("from ").append(esquema).append(".").append(rural[1]).append(" where cve_ent='").append(cat_vw_punteo_sare.getE03()).append("' and cvegeo~'").append((cat_vw_punteo_sare.getE03().concat(cat_vw_punteo_sare.getE04().concat(cat_vw_punteo_sare.getE05())))).append("' limit 1");
         }
         return sql;
     }

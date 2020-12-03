@@ -13,7 +13,7 @@ public enum ProyectosEnum {
     
     Establecimientos_GrandesY_Empresas_EGE(1,"sare_ege2019_act","ce2019_masrencal"),
     Pesca_Mineria(2,"",""),
-    RENEM(3,"",""),
+    UEEPA(3,"cartografia_sep_2019","sare_ueepa_2020"),
     Construccion(4,"",""),
     Operativo_Masivo(5,"sare_mas2019_act","ce2019_masrencal"),
     Muestra_Rural(6,"",""),

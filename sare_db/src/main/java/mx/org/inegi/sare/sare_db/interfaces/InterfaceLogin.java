@@ -19,5 +19,7 @@ public interface InterfaceLogin {
      public cat_usuarios consultaUsuario(cat_usuarios acceso);
      
      public cat_usuarios consultaUsuarioUEEPA(cat_usuarios acceso);
+     
+     public cat_usuarios consultaUsuariobyjefeUEEPA(cat_usuarios acceso);
     
 }

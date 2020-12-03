@@ -264,7 +264,7 @@
                         <li><a class="subheader">Opciones</a></li>
                         <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>
                         <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
-                        <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
+                        <!--<li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>-->
                         <li onclick="imprimir()"><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
                         <li onclick=""><a href="#!"><i class="material-icons">local_printshop</i>Claves bloquedas</a></li>
                         <li onclick="abrirAyuda"><a href="#!"><i class="material-icons">live_help</i>Claves bloquedas</a></li>
@@ -804,7 +804,7 @@
                     <!--          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>-->
                     <li><a id='item-save-option' disabled onclick="validaCp(event)" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
                     <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
-                    <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> 
+                    <!--<li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> -->
                     <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 
                     <li onclick="CargaTablaBloqueadas()"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Claves Bloqueadas"><i class="material-icons">lock</i></a></li> 
                     <li onclick="abrirAyuda()"><a href="#!"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Ayuda"><i class="material-icons">help_outline</i></a>

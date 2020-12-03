@@ -69,7 +69,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     cat_coordenadas coord_merc;
 
     private void inicializaVariable(Integer proyecto) {
-        if (proyecto == 5 || proyecto==1 ) {
+        if (proyecto == 5 || proyecto==1) {
             tabla[0] = "td_entidad";
             tabla[1] = "td_municipios";
             tabla[2] = "td_localidades";
@@ -92,6 +92,18 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             tabla_rural[0] = "td_localidades_rurales_lpr";
             tabla_rural[1] = "td_ageb_rural";
             nombre[0] = "nomgeo";
+            nombre[1] = "nomgeo";
+            nombre[2] = "nomgeo";
+        } if (proyecto == 3) {
+            tabla[0] = "td_entidad";
+            tabla[1] = "td_municipios";
+            tabla[2] = "td_localidades";
+            tabla[3] = "td_ageb_urbano";
+            tabla[4] = "td_manzanas";
+            tabla[5] = "cat_tipovialidad";
+            tabla_rural[0] = "td_localidades_rurales";
+            tabla_rural[1] = "td_ageb_rural";
+            nombre[0] = "nom_ent";
             nombre[1] = "nomgeo";
             nombre[2] = "nomgeo";
         }else{
@@ -456,6 +468,13 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                 break;
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
+                if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_ue)) {
+                    Regresar.setDatos("");
+                } else {
+                    Regresar.setDatos("Error");
+                }
+                break;
+            case UEEPA:
                 if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_ue)) {
                     Regresar.setDatos("");
                 } else {

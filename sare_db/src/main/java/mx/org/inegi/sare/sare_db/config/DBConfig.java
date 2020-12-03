@@ -318,6 +318,17 @@ public class DBConfig {
     public String getSchemasarePGProd() {
         return env.getProperty("db.prod.schema");
     }
+    /*esquemas para UEEPA*/
+    @Bean(name = "schemaSarePGUEEPA")
+    @Profile({"prod", "sarePGProd"})
+    public String getSchemasarePGProdUEEPA() {
+        return env.getProperty("db.prod.schema.ueepa");
+    }
+    @Bean(name = "schemaSareOclUEEPA")
+    @Profile({"prod", "sareOclProd"})
+    public String getSchemasareOclProdUEEPA() {
+        return env.getProperty("db.prod.schema.ocl.ueepa");
+    }
     /* Esquemas en produccion  Oracle*/
     @Bean(name = "schemaSareOcl")
     @Profile({"prod", "sareOclProd"})

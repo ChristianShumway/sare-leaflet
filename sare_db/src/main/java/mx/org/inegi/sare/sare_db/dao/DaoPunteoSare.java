@@ -43,10 +43,18 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Autowired
     @Qualifier("schemaSarePG")
     private String schemapg;
+    
+    @Autowired
+    @Qualifier("schemaSarePGUEEPA")
+    private String schemapgueepa;
 
     @Autowired
     @Qualifier("schemaSareOcl")
     private String schemaocl;
+    
+    @Autowired
+    @Qualifier("schemaSareOclUEEPA")
+    private String schemaoclUeepa;
 
     @Autowired
     @Qualifier("jdbcTemplate")
@@ -109,7 +117,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 resultado = execSqlTipoAreaPg(sql);
                 break;
             case Construccion:
@@ -177,7 +185,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 isMza = execSqlisPuntoinMzaPg(sql, point);
                 break;
             case Construccion:
@@ -233,7 +241,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 entidad = execSqlEntidadPg(sql, point);
                 break;
             case Construccion:
@@ -356,7 +364,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 ubicacion_punteo = execSqlInfoPunteoUrbanoPg(sql);
                 break;
             case Construccion:
@@ -447,7 +455,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 cat_vial = execSqlValidaInfoPunteoUrbanoPg(sql, ent, cve_geo, cve_ft);
                 break;
             case Construccion:
@@ -547,7 +555,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 ubicacion_punteo = execInfoPunteoRuralPg(sql);
                 break;
             case Construccion:
@@ -638,7 +646,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         switch (proyectos) {
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
-            case RENEM:
+            case UEEPA:
                 regresar = execSqlisFrentesProximosPg(sql);
                 break;
             case Construccion:
@@ -698,8 +706,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
             case Operativo_Masivo:
             case Establecimientos_GrandesY_Empresas_EGE:
             case MasivoOtros:
-            case RENEM:
-                switch (metodo) {
+                 switch (metodo) {
                     case TIPOAREA:
                         sql = new StringBuilder();
                         sql.append("select tipoarea from(");
@@ -789,6 +796,105 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
                         sql.append(" left join ").append(schemapg).append(".td_entidad ent on frente.cve_ent=ent.cve_ent ");
                         sql.append(" left join ").append(schemapg).append(".td_municipios mun on frente.cve_ent=mun.cve_ent and frente.cve_mun=mun.cve_mun ");
                         sql.append(" left join ").append(schemapg).append(".td_localidades loc on frente.cve_ent=loc.cve_ent and frente.cve_mun=loc.cve_mun and frente.cve_loc=loc.cve_loc ");
+                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");
+
+                        /*sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,cveft,id_deftramo  from ");
+                        sql.append(schemapg).append(".vw_tr_frentes  frente");
+                        sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");*/
+                        break;
+                }
+                break;
+            case UEEPA:
+                switch (metodo) {
+                    case TIPOAREA:
+                        sql = new StringBuilder();
+                        sql.append("select tipoarea from(");
+                        sql.append("select 'U' tipoarea from ").append(schemapgueepa).append(".td_ageb_urbano where st_contains(the_geom_merc,geomfromtext('").append(point).append("',900913))");
+                        sql.append(" union all ");
+                        sql.append("select 'R' tipoarea from ").append(schemapgueepa).append(".td_ageb_rural where st_contains(the_geom_merc,geomfromtext('").append(point).append("',900913)))");
+                        sql.append("ageb limit 1");
+                        break;
+                    case ISMANZANA:
+                        sql.append("select case when resultado<>0 or resultado is null then false else true end contenido from(");
+                        sql.append("select sum(case when contenida=false then 1 else 0 end) resultado from (");
+                        sql.append("select *,ST_ContainsProperly(the_geom_merc,buffer(geomfromtext(?,900913),1)) contenida from (");
+                        sql.append("select gid,the_geom_merc from ").append(schemapgueepa).append(".td_manzanas where st_intersects(the_geom_merc,buffer(geomfromtext(?,900913),1)))a)b)c");
+                        break;
+                    case GETENTIDAD:
+                        sql.append("SELECT cve_ent FROM ").append(schemapgueepa).append(".td_entidad WHERE st_intersects(the_geom_merc,ST_GeomFromText(?,900913)) ");
+                        break;
+                    case GETPUNTEO:
+                        sql.append("select u.cve_ent,ent.nom_ent nom_ent,u.cve_mun,mun.nomgeo nom_mun,u.cve_loc,case when l.nomgeo is null then u.nom_loc else l.nomgeo end nom_loc,u.cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,u.cvegeo,cvevial,punteo,mod_cat,cvegeo2016 from(  ");
+                        sql.append("(SELECT cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),  ");
+                        sql.append("Y(ST_astext(ST_ClosestPoint(a.the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))),cve_mza,cveft cveft, nomvial,tipovial, cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza  cvegeo,cvevial cvevial,'U' punteo,1 mod_cat,'' cvegeo2016 ");
+                        sql.append("FROM ").append(schemapgueepa).append(".td_frentes").append(" a where cve_ent in (select cve_ent from ").append(schemapgueepa).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and   ");
+                        sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),1)))  ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                        sql.append("union all ");
+                        sql.append("(select cve_ent,cve_mun,cve_loc,null nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                        sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),'' cve_mza,'1' cveft,null nomvial, null tipovial, ");
+                        sql.append("cve_ent||cve_mun||cve_loc||cve_ageb cvegeo, '99999' cvevial,'U' punteo,2 mod_cat,'' cvegeo2016 from ").append(schemapgueepa).append(".td_ageb_urbano where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913)) and   ");
+                        sql.append("contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))  ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1)) u  ");
+                        sql.append("INNER JOIN ").append(schemapgueepa).append(".td_entidad ent ON u.cve_ent=ent.cvegeo  INNER JOIN ").append(schemapgueepa).append(".td_municipios mun ON u.cve_ent=mun.cve_ent and u.cve_mun=mun.cve_mun  ");
+                        sql.append("left JOIN ").append(schemapgueepa).append(".td_localidades l ON u.cve_ent=l.cve_ent and u.cve_mun=l.cve_mun and u.cve_loc=l.cve_loc order by mod_cat limit 1");
+                        break;
+                    case VALPUNTEO:
+                        sql.append("select tipovial,nomvial,cvevial,cveseg from ").append(schemapgueepa).append(".get_cat_vial(?,?,?) order by nomvial");
+                        //sql.append("select tipovial,nomvial,(row_number() over())::text cvevial,null cveseg from ").append(schemapg).append(".vw_frentesmgn2019").append(" where cve_ent=? and cve_ent||cve_mun||cve_loc||cve_ageb||cve_mza=? and  cveft<>?  group by 1,2");
+                        break;
+                    case GET_TIPO_VIAL:
+                        sql.append("SELECT tipo_e10 FROM ").append(esquemaPos).append(".cat_tipovialidad WHERE lower(descripcion) = ? union all \n"
+                                + "SELECT '99' tipo_e10 limit 1 ");
+                        break;
+                    case GET_CAT_TIPO_VIAL:
+                        sql.append("SELECT tipo_e10,descripcion tipo_e10n FROM ").append(esquemaPos).append(".cat_tipovialidad order by descripcion");
+                        break;
+                    case GETPUNTEORURAL:
+
+                        sql.append("select r.cve_ent,ent.nom_ent as nom_ent,r.cve_mun,mun.nomgeo as nom_mun,cve_loc,nom_loc,cve_ageb,x,y,cve_mza,cveft, nomvial,tipovial,r.cvegeo,cvevial,punteo,mod_cat,cvegeo2016  from( ");
+                        sql.append("(select * from ( ");
+                        sql.append("(select m.cve_ent,m.cve_mun,m.cve_loc,l.nom_loc,m.cve_ageb,\n"
+                                + "X(ST_astext(ST_ClosestPoint(the_geom_merc,  ST_GeomFromText('").append(point).append("',900913)))), Y(ST_astext(ST_ClosestPoint(the_geom_merc,  "
+                                + "ST_GeomFromText('").append(point).append("',900913)))),\n"
+                                + "cve_mza,'1' cveft, null nomvial,\n"
+                                + "null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 FROM ").append(schemapgueepa).append(".td_manzanas m left join (select cve_ent,cve_mun,cve_loc,nomgeo as nom_loc from ").append(schemapgueepa).append(".td_localidades) l\n"
+                                + "on m.cve_ent=l.cve_ent and m.cve_mun=l.cve_mun and m.cve_loc=l.cve_loc\n"
+                                + "where st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),1)))\n"
+                                + "ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) union all ");
+                        sql.append("(SELECT m.cve_ent,m.cve_mun,m.cve_loc,nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                        sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 ");
+                        sql.append("FROM ").append(schemapgueepa).append(".td_manzanas m inner join (select cve_ent,cve_mun,cve_loc,nomgeo as nom_loc from ").append(schemapgueepa).append(".td_localidades_rurales) l "
+                                + "on m.cve_ent||m.cve_mun||m.cve_loc=l.cve_ent||l.cve_mun||l.cve_loc  ");
+                        sql.append("where st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50)))  ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                        sql.append("union all ");
+                        sql.append("(SELECT cve_ent,cve_mun,cve_loc,nomgeo as nom_loc,cve_ageb,X(the_geom_merc),Y(the_geom_merc),'' cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,1 mod_cat,'' cvegeo2016 ");
+                        sql.append("FROM ").append(schemapgueepa).append(".td_localidades_rurales where st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50))) ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                        sql.append(") rc limit 1) ");
+                        sql.append("union all ");
+                        sql.append("(SELECT cve_ent,cve_mun,cve_loc,nomgeo nom_loc,replace(cve_ageb,'-','') cve_ageb,X(the_geom_merc),Y(the_geom_merc),'' cve_mza,'1' cveft, null nomvial,null tipovial,cvegeo, '99999' cvevial,'R' punteo,2 mod_cat, cve_ent||cve_mun||cve_loc||replace(cve_ageb,'-','') cvegeo2016 ");
+                        sql.append("FROM ").append(schemapgueepa).append(".td_localidades_rurales where st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50))) ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) ");
+                        sql.append("union all ");
+                        sql.append("(select cve_ent,cve_mun,'' cve_loc,'' nom_loc,cve_ageb,X( ST_GeomFromText('").append(point).append("',900913)),  ");
+                        sql.append("Y( ST_GeomFromText('").append(point).append("',900913)),'' cve_mza,'1' cveft,null nomvial, null tipovial, ");
+                        sql.append("cve_ent||cve_mun||cve_ageb cvegeo, '99999' cvevial,'R' punteo,2 mod_cat,'' cvegeo2016 from ").append(schemapgueepa).append(".td_ageb_rural where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913)) and   ");
+                        sql.append("contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))  ");
+                        sql.append("ORDER BY the_geom_merc <->'SRID=900913;").append(point).append("'::geometry LIMIT 1) )r ");
+                        sql.append("INNER JOIN ").append(schemapgueepa).append(".td_entidad ent ON r.cve_ent=ent.cvegeo  INNER JOIN ").append(schemapgueepa).append(".td_municipios mun ON r.cve_ent=mun.cve_ent and r.cve_mun=mun.cve_mun  order by mod_cat limit 1");
+                        break;
+                    case FRENTES_PROXIMOS:
+                        sql.append("SELECT case when COUNT(*)>0 then true else false end frentes FROM ").append(schemapgueepa).append(".td_frentes").append(" where cve_ent in (select cve_ent from ").append(schemapgueepa).append(".td_entidad where contains(the_geom_merc, ST_GeomFromText('").append(point).append("',900913))) and  ");
+                        sql.append("st_intersects(the_geom_merc,(ST_buffer( ST_GeomFromText('").append(point).append("',900913),50)))");
+                        break;
+                    case CVEMANZANA:
+                        sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,frente.cve_ent,frente.cve_mun,frente.cve_loc,frente.cve_ageb,frente.cve_mza,frente.cve_ent||frente.cve_mun||frente.cve_loc||frente.cve_ageb||frente.cve_mza as clave2 ,ent.nom_ent nom_ent,mun.nomgeo nom_mun,loc.nomgeo nom_loc,cveft,id_deftramo from ");
+                        sql.append(schemapgueepa).append(".td_frentes  frente");
+                        sql.append(" left join ").append(schemapgueepa).append(".td_entidad ent on frente.cve_ent=ent.cve_ent ");
+                        sql.append(" left join ").append(schemapgueepa).append(".td_municipios mun on frente.cve_ent=mun.cve_ent and frente.cve_mun=mun.cve_mun ");
+                        sql.append(" left join ").append(schemapgueepa).append(".td_localidades loc on frente.cve_ent=loc.cve_ent and frente.cve_mun=loc.cve_mun and frente.cve_loc=loc.cve_loc ");
                         sql.append(" where st_intersects(frente.the_geom_merc,st_buffer(ST_GeomFromText('").append(point).append("',900913),1))");
 
                         /*sql.append("select astext(ST_SimplifyPreserveTopology(frente.the_geom_merc,0.1)) as the_geom, frente.cvegeo||cveft as clave,cveft,id_deftramo  from ");

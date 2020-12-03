@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_usuarios;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceDesbloqueo;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceLogin;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -44,6 +45,10 @@ public class BackingLogin {
     @Autowired
     @Qualifier("DaoLogin")
     InterfaceLogin InterfaceLogin;
+    
+    @Autowired
+    @Qualifier("DaoDesbloqueo")
+    InterfaceDesbloqueo InterfaceDesbloqueo;
 
     public cat_respuesta_services login(Integer proyecto, String usuario, String password, HttpServletRequest request, HttpServletResponse response) throws IOException {
         String ip = InetAddress.getLocalHost().getHostAddress();
@@ -53,12 +58,19 @@ public class BackingLogin {
         user.setUsuario(usuario);
         user.setProyecto(proyecto);
         user = consultaUsuarioUEEPA(user);
+        if(user.getPass()==null){
+            user = consultaUsuariobyjefeUEEPA(user);
+            if(user.getNombre()!=null){
+                user = consultaUsuarioUEEPA(user);
+            }
+        }
         if (!Objects.equals(proyecto, null)) {
             user.setProyecto(proyecto);
         } else {
             user.setProyecto(3); //se inicializa con el proyecto en 5 de operativo masivo pero se necesita ver como cachar este 
         }
         if (user.getPass() != null && user.getPass().equals(password)) {
+            //InterfaceDesbloqueo.RegistraUEComplemento(proyecto, user.getCe(), usuario, "");
             Respuesta.setMensaje(new cat_mensaje("Exito", ""));
         } else {
             if(user.getProyecto()==3){
@@ -190,6 +202,13 @@ public class BackingLogin {
     private cat_usuarios consultaUsuarioUEEPA(cat_usuarios usuario) {
         cat_usuarios Respuesta;
         Respuesta = InterfaceLogin.consultaUsuarioUEEPA(usuario);
+        return Respuesta;
+    }
+    
+    
+    private cat_usuarios consultaUsuariobyjefeUEEPA(cat_usuarios usuario) {
+        cat_usuarios Respuesta;
+        Respuesta = InterfaceLogin.consultaUsuariobyjefeUEEPA(usuario);
         return Respuesta;
     }
 

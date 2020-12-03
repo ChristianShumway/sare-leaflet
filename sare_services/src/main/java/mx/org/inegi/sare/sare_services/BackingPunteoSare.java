@@ -73,7 +73,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                     if (ce.length() < 2) {
                         ce = '0' + ce;
                     }
-                    isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);
+                    //isCE = InterfacePunteoSare.isCECorrect(coordMercator.getX(), coordMercator.getY(), ce, proyecto);
                 }
             } else {
                 Respuesta = new cat_respuesta_services("error", new cat_mensaje("error", "La UE no tiene una Coordinación Estatal asginada"));
@@ -85,6 +85,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
             switch (proyecto) {
                 case 1:
                 case 5:
+                case 3:
                     ta = punteoReal;
                     break;
             }

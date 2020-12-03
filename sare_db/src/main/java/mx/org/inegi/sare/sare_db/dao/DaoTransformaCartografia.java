@@ -71,7 +71,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                 case Operativo_Masivo:
                 case Organismos_Operadores_De_Agua:
                 case Pesca_Mineria:
-                case RENEM:
+                case UEEPA:
                 case MasivoOtros:
                     if (TipoCartografia.Geografica.getCodigo().equals(tipo)) 
                 {
@@ -97,7 +97,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                   ProyectosEnume=ProyectosEnum.Construccion;
                   break;
               case 3:
-                  ProyectosEnume=ProyectosEnum.Convenios;
+                  ProyectosEnume=ProyectosEnum.UEEPA;
                   break;
               case 4:   
                   ProyectosEnume=ProyectosEnum.Muestra_Rural;
@@ -112,7 +112,7 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
                   ProyectosEnume=ProyectosEnum.Pesca_Mineria;
                   break;
               case 8:
-                  ProyectosEnume=ProyectosEnum.RENEM;
+                  ProyectosEnume=ProyectosEnum.UEEPA;
                   break;
               case 9:
                   ProyectosEnume=ProyectosEnum.MasivoOtros;
@@ -151,8 +151,8 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
             case Pesca_Mineria:
                  esquema="sare_mas2019_act";
               break;
-            case RENEM:
-                 esquema="sare_mas2019_act";
+            case UEEPA:
+                 esquema="sare_ueepa_2020";
               break;
             case MasivoOtros:
                 esquema="sare_mas2019_act";
@@ -189,8 +189,8 @@ public class DaoTransformaCartografia implements InterfaceTransformaCoordenadas 
             case Pesca_Mineria:
                 esquema="";
               break;
-            case RENEM:
-                esquema="ce2019_masrencal";
+            case UEEPA:
+                esquema="inpc_campo";
               break;
             case MasivoOtros:
                 esquema="ce2019_masrencal";

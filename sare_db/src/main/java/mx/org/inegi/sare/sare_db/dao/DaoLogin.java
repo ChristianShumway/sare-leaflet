@@ -84,7 +84,12 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
     public cat_usuarios consultaUsuarioUEEPA(cat_usuarios usuario) {
         cat_usuarios regresa;
         StringBuilder sql=new StringBuilder();
-        sql.append("select * from inpc_campo.ENC_USUARIO where nombre= '").append(usuario.getUsuario()).append("'");
+        String usuariofinal=usuario.getNombre();
+        if(usuariofinal==null){
+            usuariofinal=usuario.getUsuario();
+        }
+        
+        sql.append("select * from inpc_campo.ENC_USUARIO where nombre= '").append(usuariofinal).append("'");
         regresa=dataSourceOclUEEPA.query(sql.toString(),new ResultSetExtractor<cat_usuarios>(){
             @Override
             public cat_usuarios extractData(ResultSet rs) throws SQLException, DataAccessException {
@@ -92,7 +97,7 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
                 boolean regresa=false;
                 while(rs.next()){
                     usuario.setCve_operativa(null);
-                    usuario.setCe(rs.getString("clave"));
+                    usuario.setCe(rs.getString("password").substring(0,2));
                     usuario.setTramo_control(null);
                     usuario.setNombre(rs.getString("nombre"));
                     usuario.setPass(rs.getString("password"));
@@ -105,6 +110,30 @@ public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin
         return regresa;
     }
     
+     @Override
+    public cat_usuarios consultaUsuariobyjefeUEEPA(cat_usuarios usuario) {
+        cat_usuarios regresa;
+        StringBuilder sql=new StringBuilder();
+        sql.append("select * from inpc_campo.ENC_VBCUESTIONARIO_PUNTEO where usuario_jefecontrol= '").append(usuario.getUsuario()).append("'");
+        regresa=dataSourceOclUEEPA.query(sql.toString(),new ResultSetExtractor<cat_usuarios>(){
+            @Override
+            public cat_usuarios extractData(ResultSet rs) throws SQLException, DataAccessException {
+                cat_usuarios usuario=new cat_usuarios();
+                boolean regresa=false;
+                while(rs.next()){
+                    usuario.setCve_operativa(null);
+                    usuario.setCe(null);
+                    usuario.setTramo_control(null);
+                    usuario.setNombre(rs.getString("usuario_entrevistador"));
+                    usuario.setPass(null);
+                    regresa=true;
+                }
+                return usuario;
+            }
+        
+        });
+        return regresa;
+    }
     
     
     
