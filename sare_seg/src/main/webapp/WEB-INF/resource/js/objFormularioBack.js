@@ -16,12 +16,12 @@ const objFormBack = {'object':[{
     name:'e09',
     title:'title-referencia'
   },
-  {
-    id:'e17_DESC',
-    key:'referencia',
-    name:'e17_DESC',
-    title:'title-referencia'
-  },
+//  {
+//    id:'e17_DESC',
+//    key:'referencia',
+//    name:'e17_DESC',
+//    title:'title-referencia'
+//  },
   // {
   //   id:'e11',
   //   key: 'domicilio',
@@ -92,12 +92,12 @@ const objFormPunteoEnFrenteBack ={ "object": [
     name:'e09',
     title:'title-referencia'
   },
-  {
-    id:'e17_DESC',
-    key: 'referencia',
-    name:'e17_DESC',
-    title:'title-referencia'
-  },
+//  {
+//    id:'e17_DESC',
+//    key: 'referencia',
+//    name:'e17_DESC',
+//    title:'title-referencia'
+//  },
   {
     id:'e11',
     key: 'domicilio',
@@ -185,12 +185,12 @@ const objForm2Back={"object":[{
     name:'e09',
     title:'title-referencia'
   },
-  {
-    id:'e17_DESC',
-    key:'referencia',
-    name:'e17_DESC',
-    title:'title-referencia'
-  },
+//  {
+//    id:'e17_DESC',
+//    key:'referencia',
+//    name:'e17_DESC',
+//    title:'title-referencia'
+//  },
   // {
   //   id:'e11',
   //   key: 'domicilio',

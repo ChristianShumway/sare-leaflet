@@ -74,17 +74,22 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 });
                 break;
             case UEEPA:
+                //sql = getSql(proyectos, id_ue, tramo, UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
+
+
                 resultado1 = dataSourceOclUEEPA.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
                         while (rs.next()) {
-                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("e03"), rs.getString("e04"));
+                            fila = new cat_get_claves(rs.getString("id_ue"), rs.getString("e09"), rs.getString("e03"), rs.getString("e04"));
                             resultado1.add(fila);
                         }
                         return resultado1;
                     }
                 });
+
+                //return resultado1;
                 break;
             case Establecimientos_GrandesY_Empresas_EGE:
                 resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
@@ -116,6 +121,38 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
 
         return resultado1;
 
+    }
+
+    @Override
+    public String getEntidad(String entidad) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select nom_ent from cartografia_sep_2019.td_entidad where cve_ent='").append(entidad).append("'");
+        return jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String fila = "";
+                while (rs.next()) {
+                    fila = rs.getString("nom_ent");
+                }
+                return fila;
+            }
+        });
+    }
+
+    @Override
+    public String getMunicipio(String municipio, String entidad) {
+        StringBuilder sql = new StringBuilder();
+        sql.append("select nomgeo from cartografia_sep_2019.td_municipios where cve_mun='").append(municipio).append("' and cve_ent ='").append(entidad).append("'");
+        return jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String fila = "";
+                while (rs.next()) {
+                    fila = rs.getString("nomgeo");
+                }
+                return fila;
+            }
+        });
     }
 
     @Override

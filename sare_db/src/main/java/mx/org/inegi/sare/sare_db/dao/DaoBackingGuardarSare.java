@@ -33,8 +33,8 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     @Autowired
     @Qualifier("jdbcTemplateOcl")
     private JdbcTemplate jdbcTemplateocl;
-    
-     @Autowired
+
+    @Autowired
     @Qualifier("jdbcTemplateOclUEEPA")
     private JdbcTemplate jdbcTemplateoclueepa;
 
@@ -53,7 +53,9 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
     private JdbcTemplate jdbcTemplate;
 
     public enum MetodosGuardar {
-        getValidaUe, getClaveProvisional, getGuardaUe, getE23A, getidDeftramo, UpdateOclStatusOk, UpdateOclStatusOcupado, GuardarUnidadesEnFrentes, UpdateOclStatusOkFrentes, getGuardaUePrepared
+        getValidaUe, getClaveProvisional, getGuardaUe,
+        getE23A, getidDeftramo, UpdateOclStatusOk, UpdateOclStatusOcupado, GuardarUnidadesEnFrentes,
+        UpdateOclStatusOkFrentes, getGuardaUePrepared, GuardarUeOClUEEPA, validarInmuebleUEEPA, UpdateInmuebleUEEPA
     }
 
     @Override
@@ -362,67 +364,120 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         return regresa;
     }
 
-    @Override
-    public boolean UpdateOclStatusOk(Integer proyecto, cat_vw_punteo_sare_guardado object, String id_ue, boolean isAlta) {
-        boolean regresa = false;
-        if (isAlta) {
-            return true;
-        } else {
-            StringBuilder sql;
-            proyectos = getProyecto(proyecto);
-            sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOk, "", false);
-            switch (proyectos) {
-                case Operativo_Masivo:
-                case Establecimientos_GrandesY_Empresas_EGE:
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
-                case UEEPA:
-                    if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
-                case MasivoOtros:
-                    sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOkFrentes, "", false);
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
-                default:
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
+    public boolean validaUEEPA(cat_vw_punteo_sare_guardado inmueble) {
+        StringBuilder sql;
+        String regresa = null;
+        sql = getSql(proyectos, null, inmueble, MetodosGuardar.validarInmuebleUEEPA, "", false);
+        try{
+        regresa = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<String>() {
+            @Override
+            public String extractData(ResultSet rs) throws SQLException, DataAccessException {
+                String regresar = null;
+                while (rs.next()) {
+                    regresar = rs.getString("id_ue");
+                }
+                return regresar;
             }
-            return regresa;
+        });
+        }catch(Exception e)
+        {
+                
         }
+        return regresa != null;
+
     }
 
     @Override
-    public boolean UpdateOclStatusOcupado(Integer proyecto, cat_vw_punteo_sare_guardado object, String id_ue, boolean isAlta) {
+    public boolean GuardarOclUEEPA(Integer proyecto, cat_vw_punteo_sare_guardado inmueble) {
         boolean regresa = false;
-        if (isAlta) {
-            return true;
-        } else {
-            StringBuilder sql;
-            proyectos = getProyecto(proyecto);
-            sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOcupado, "", false);
-            switch (proyectos) {
-                case Operativo_Masivo:
-                case Establecimientos_GrandesY_Empresas_EGE:
-                case UEEPA:
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
-                    break;
-                default:
-                    if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
-                        regresa = true;
-                    }
+        StringBuilder sql;
+        proyectos = getProyecto(proyecto);
+
+            if (validaUEEPA(inmueble)) {
+                sql = getSql(proyectos, null, inmueble, MetodosGuardar.UpdateInmuebleUEEPA, "", false);
+            } else {
+                sql = getSql(proyectos, null, inmueble, MetodosGuardar.GuardarUeOClUEEPA, "", false);
             }
+            if (jdbcTemplateoclueepa.update(sql.toString()) > 0) {
+                regresa = true;
+            }
+
+                
+
             return regresa;
         }
-    }
+
+        @Override
+        public boolean UpdateOclStatusOk
+        (Integer proyecto, cat_vw_punteo_sare_guardado object
+        , String id_ue, boolean isAlta
+        
+            ) {
+        boolean regresa = false;
+            if (isAlta) {
+                return true;
+            } else {
+                StringBuilder sql;
+                proyectos = getProyecto(proyecto);
+                sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOk, "", false);
+                switch (proyectos) {
+                    case Operativo_Masivo:
+                    case Establecimientos_GrandesY_Empresas_EGE:
+                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                        break;
+                    case UEEPA:
+                        if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                        break;
+                    case MasivoOtros:
+                        sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOkFrentes, "", false);
+                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                        break;
+                    default:
+                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                }
+                return regresa;
+            }
+        }
+
+        @Override
+        public boolean UpdateOclStatusOcupado
+        (Integer proyecto, cat_vw_punteo_sare_guardado object
+        , String id_ue, boolean isAlta
+        
+            ) {
+        boolean regresa = false;
+            if (isAlta) {
+                return true;
+            } else {
+                StringBuilder sql;
+                proyectos = getProyecto(proyecto);
+                sql = getSql(proyectos, null, object, MetodosGuardar.UpdateOclStatusOcupado, "", false);
+                switch (proyectos) {
+                    case Operativo_Masivo:
+                    case Establecimientos_GrandesY_Empresas_EGE:
+                    case UEEPA:
+                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                        break;
+                    default:
+                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                            regresa = true;
+                        }
+                }
+                return regresa;
+            }
+        }
+
+    
 
     public StringBuilder getSql(ProyectosEnum proyecto, cat_vw_punteo_sare_guardadoUXFrente obj, cat_vw_punteo_sare_guardado inmueble, MetodosGuardar metodo, String capa, boolean isAlta) {
         StringBuilder sql = new StringBuilder();
@@ -632,6 +687,151 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         break;
                     case UpdateOclStatusOkFrentes:
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='01' where id_uo_masivo=? and st_sare='20'");
+                        break;
+                    case validarInmuebleUEEPA:
+                        sql.append("SELECT id_ue  FROM ").append(esquemaOcl).append(".ENC_CUESTIONARIO_GEO where id_ue = '").append(inmueble.getId_UE()).append("'");
+                        break;
+                    case UpdateInmuebleUEEPA:
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO_GEO set "
+                                + "CVEGEO='").append(inmueble.getCvegeo() != null ? inmueble.getCvegeo() : "").append("',")
+                                .append("CVE_CE='").append(inmueble.getCE() != null ? inmueble.getCE() : "").append("',")
+                                .append("CVE_ENT='").append(inmueble.getE03() != null ? inmueble.getE03() : "").append("',")
+                                .append("NOM_ENT='").append(inmueble.getE03N() != null ? inmueble.getE03N() : "").append("',")
+                                .append("CVE_MUN='").append(inmueble.getE04() != null ? inmueble.getE04() : "").append("',")
+                                .append("NOM_MUN='").append(inmueble.getE04N() != null ? inmueble.getE04N() : "").append("',")
+                                .append("CVE_LOC='").append(inmueble.getE05() != null ? inmueble.getE05() : "").append("',")
+                                .append("NOM_LOC='").append(inmueble.getE05N() != null ? inmueble.getE05N() : "").append("',")
+                                .append("CVE_AGEB='").append(inmueble.getE06() != null ? inmueble.getE06() : "").append("',")
+                                .append("CVE_MZA='").append(inmueble.getE07() != null ? inmueble.getE07() : "").append("',")
+                                .append("CVEFT='").append(inmueble.getCveft() != null ? inmueble.getCveft() : "").append("',")
+                                .append("E08='").append(inmueble.getE08() != null ? inmueble.getE08() : "").append("',")
+                                .append("E09='").append(inmueble.getE09() != null ? inmueble.getE09() : "").append("',")
+                                .append("TIPO_E10='").append(inmueble.getTipo_e10() != null ? inmueble.getTipo_e10() : "").append("',")
+                                .append("NOMVIAL='").append(inmueble.getE10() != null ? inmueble.getE10() : "").append("',")
+                                .append("NUMEXT='").append(inmueble.getE11() != null ? inmueble.getE11() : "").append("',")
+                                .append("NUMEXTALF='").append(inmueble.gete11A() != null ? inmueble.gete11A() : "").append("',")
+                                .append("E12='").append(inmueble.getE12() != null ? inmueble.getE12() : "").append("',")
+                                .append("E12P='").append(inmueble.getE12p() != null ? inmueble.getE12p() : "").append("',")
+                                .append("NUMINT='").append(inmueble.getE13() != null ? inmueble.getE13() : "").append("',")
+                                .append("NUMINTALF='").append(inmueble.getE13_a() != null ? inmueble.getE13_a() : "").append("',")
+                                .append("TIPO_E14='").append(inmueble.getTipo_E14() != null ? inmueble.getTipo_E14() : "").append("',")
+                                .append("E14='").append(inmueble.getE14() != null ? inmueble.getE14() : "").append("',")
+                                .append("E14_A='").append(inmueble.getE14_A() != null ? inmueble.getE14_A() : "").append("',")
+                                .append("TIPO_E10_A='").append(inmueble.getTipo_e10_a() != null ? inmueble.getTipo_e10_a() : "").append("',")
+                                .append("E10_A='").append(inmueble.getE10_A() != null ? inmueble.getE10_A() : "").append("',")
+                                .append("TIPO_E10_B='").append(inmueble.getTipo_e10_b() != null ? inmueble.getTipo_e10_b() : "").append("',")
+                                .append("E10_B='").append(inmueble.getE10_B() != null ? inmueble.getE10_B() : "").append("',")
+                                .append("TIPO_E10_C='").append(inmueble.getTipo_e10_c() != null ? inmueble.getTipo_e10_c() : "").append("',")
+                                .append("E10_C='").append(inmueble.getE10_C() != null ? inmueble.getE10_C() : "").append("',")
+                                .append("E10_E='").append(inmueble.getE10_e() != null ? inmueble.getE10_e() : "").append("',")
+                                .append("DESCRUBIC='").append(inmueble.getDescrubic() != null ? inmueble.getDescrubic() : "").append("',")
+                                .append("COORD_X='").append(inmueble.getCoordx() != null ? inmueble.getCoordx() : "").append("',")
+                                .append("COORD_Y='").append(inmueble.getCoordy() != null ? inmueble.getCoordy() : "").append("',")
+                                .append("E19='").append(inmueble.getE19() != null ? inmueble.getE19() : "").append("',")
+                                .append("TIPO_E19='").append(inmueble.getTipo_e19() != null ? inmueble.getTipo_e19() : "").append("',")
+                                .append("PUNTEO='").append(inmueble.getPunteo() != null ? inmueble.getPunteo() : "").append("',")
+                                .append("FECHA=sysdate").append(",")
+                                .append("MOD_CAT='").append(inmueble.getMod_cat() != null ? inmueble.getMod_cat() : "").append("',")
+                                .append("ORIGEN='").append(inmueble.getOrigen() != null ? inmueble.getOrigen() : "").append("',")
+                                .append("E20='").append(inmueble.getE20() != null ? inmueble.getE20() : "").append("',")
+                                .append("CVEVIAL='").append(inmueble.getE10_cvevial() != null ? inmueble.getE10_cvevial() : "").append("',")
+                                .append("E23='").append(inmueble.getE23() != null ? inmueble.getE23() : "").append("',")
+                                .append("E17_D='").append(inmueble.getE17_DESC() != null ? inmueble.getE17_DESC() : "").append("'")
+                                .append(" where id_ue='")
+                                .append(inmueble.getId_UE()).append("'");
+                        break;
+                    case GuardarUeOClUEEPA:
+                        sql.append("INSERT INTO ").append(esquemaOcl).append(".ENC_CUESTIONARIO_GEO ("
+                                + "ID_UE,"
+                                + "CVEGEO,"
+                                + "CVE_CE,"
+                                + "CVE_ENT,"
+                                + "NOM_ENT,"
+                                + "CVE_MUN,"
+                                + "NOM_MUN,"
+                                + "CVE_LOC,"
+                                + "NOM_LOC,"
+                                + "CVE_AGEB,"
+                                + "CVE_MZA,"
+                                + "CVEFT,"
+                                + "E08,"
+                                + "E09,"
+                                + "TIPO_E10,"
+                                + "NOMVIAL,"
+                                + "NUMEXT,"
+                                + "NUMEXTALF,"
+                                + "E12,"
+                                + "E12P,"
+                                + "NUMINT,"
+                                + "NUMINTALF,"
+                                + "TIPO_E14,"
+                                + "E14,"
+                                + "E14_A,"
+                                + "TIPO_E10_A,"
+                                + "E10_A,"
+                                + "TIPO_E10_B,"
+                                + "E10_B,"
+                                + "TIPO_E10_C,"
+                                + "E10_C,"
+                                + "E10_E,"
+                                + "DESCRUBIC,"
+                                + "COORD_X,"
+                                + "COORD_Y,"
+                                + "E19,"
+                                + "TIPO_E19,"
+                                + "PUNTEO,"
+                                + "FECHA,"
+                                + "MOD_CAT,"
+                                + "ORIGEN,"
+                                + "E20,"
+                                + "CVEVIAL,"
+                                + "E23,"
+                                + "E17_D) VALUES(")
+                                .append(inmueble.getId_UE()).append(",'")
+                                .append(inmueble.getCvegeo().toUpperCase() != null ? inmueble.getCvegeo().toUpperCase() : "").append("','")
+                                .append(inmueble.getCE().toUpperCase() != null ? inmueble.getCE().toUpperCase() : "").append("','")
+                                .append(inmueble.getE03().toUpperCase() != null ? inmueble.getE03().toUpperCase() : "").append("','")
+                                .append(inmueble.getE03N().toUpperCase() != null ? inmueble.getE03N().toUpperCase() : "").append("','")
+                                .append(inmueble.getE04().toUpperCase() != null ? inmueble.getE04().toUpperCase() : "").append("','")
+                                .append(inmueble.getE04N().toUpperCase() != null ? inmueble.getE04N().toUpperCase() : "").append("','")
+                                .append(inmueble.getE05().toUpperCase() != null ? inmueble.getE05().toUpperCase() : "").append("','")
+                                .append(inmueble.getE05N().toUpperCase() != null ? inmueble.getE05N().toUpperCase() : "").append("','")
+                                .append(inmueble.getE06().toUpperCase() != null ? inmueble.getE06().toUpperCase() : "").append("','")
+                                .append(inmueble.getE07().toUpperCase() != null ? inmueble.getE07().toUpperCase() : "").append("','")
+                                .append(inmueble.getCveft() != null ? inmueble.getCveft() : "").append("','")
+                                .append(inmueble.getE08() != null ? inmueble.getE08().toUpperCase() : "").append("','")
+                                .append(inmueble.getE09() != null ? inmueble.getE09().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_e10() != null ? inmueble.getTipo_e10() : "").append("','")
+                                .append(inmueble.getE10() != null ? inmueble.getE10().toUpperCase() : "").append("','")
+                                .append(inmueble.getE11() != null ? inmueble.getE11() : "").append("','")
+                                .append(inmueble.gete11A() != null ? inmueble.gete11A().toUpperCase() : "").append("','")
+                                .append(inmueble.getE12() != null ? inmueble.getE12().toUpperCase() : "").append("','")
+                                .append(inmueble.getE12p() != null ? inmueble.getE12p() : "").append("','")
+                                .append(inmueble.getE13() != null ? inmueble.getE13() : "").append("','")
+                                .append(inmueble.getE13_a() != null ? inmueble.getE13_a().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_E14() != null ? inmueble.getTipo_E14() : "").append("','")
+                                .append(inmueble.getE14() != null ? inmueble.getE14().toUpperCase() : "").append("','")
+                                .append(inmueble.getE14_A() != null ? inmueble.getE14_A().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_e10_a() != null ? inmueble.getTipo_e10_a() : "").append("','")
+                                .append(inmueble.getE10_A() != null ? inmueble.getE10_A().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_e10_b() != null ? inmueble.getTipo_e10_b() : "").append("','")
+                                .append(inmueble.getE10_B() != null ? inmueble.getE10_B().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_e10_c().toUpperCase() != null ? inmueble.getTipo_e10_c().toUpperCase() : "").append("','")
+                                .append(inmueble.getE10_C() != null ? inmueble.getE10_C().toUpperCase() : "").append("','")
+                                .append(inmueble.getE10_e() != null ? inmueble.getE10_e().toUpperCase() : "").append("','")
+                                .append(inmueble.getDescrubic() != null ? inmueble.getDescrubic().toUpperCase() : "").append("',")
+                                .append(inmueble.getCoordx() != null ? inmueble.getCoordx() : "").append(",")
+                                .append(inmueble.getCoordy() != null ? inmueble.getCoordy() : "").append(",'")
+                                .append(inmueble.getE19() != null ? inmueble.getE19().toUpperCase() : "").append("','")
+                                .append(inmueble.getTipo_e19() == null ? "" : inmueble.getTipo_e19()).append("','")
+                                .append(inmueble.getPunteo() != null ? inmueble.getPunteo() : "").append("',")
+                                .append("sysdate,")
+                                .append(inmueble.getMod_cat() != null ? inmueble.getMod_cat() : "").append(",")
+                                .append(inmueble.getOrigen() != null ? inmueble.getOrigen().toUpperCase() : "").append(",'")
+                                .append(inmueble.getE20() != null ? inmueble.getE20().toUpperCase() : "").append("','")
+                                .append(inmueble.getE10_cvevial() != null ? inmueble.getE10_cvevial() : "").append("','")
+                                .append(inmueble.getE23() != null ? inmueble.getE23() : "").append("','")
+                                .append(inmueble.getE17_DESC() != null ? inmueble.getE17_DESC() : "").append("'").append(")");
                         break;
                 }
                 break;

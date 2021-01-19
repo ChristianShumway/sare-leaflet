@@ -20,4 +20,7 @@ public interface InterfaceClavesSare {
     
     public List<cat_get_claves> getListadoConglomerados(Integer proyecto, String tramo, String ce) throws Exception;
     
+    public String getEntidad(String ent) throws Exception;
+    public String getMunicipio(String mun, String ent) throws Exception;
+    
 }

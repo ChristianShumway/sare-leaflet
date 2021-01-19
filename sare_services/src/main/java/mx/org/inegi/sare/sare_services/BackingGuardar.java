@@ -8,12 +8,14 @@ package mx.org.inegi.sare.sare_services;
 import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import mx.org.inegi.sare.sare_db.dto.cat_coordenadas;
 import mx.org.inegi.sare.sare_db.dto.cat_mensaje;
 import mx.org.inegi.sare.sare_db.dto.cat_respuesta_services;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardado;
 import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare_guardadoUXFrente;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceGuardarUE;
+import mx.org.inegi.sare.sare_db.interfaces.InterfaceTransformaCoordenadas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -28,8 +30,13 @@ public class BackingGuardar extends BackingSincroniza {
     @Autowired
     @Qualifier("DaoBackingGuardarSare")
     InterfaceGuardarUE InterfaceGuardar;
+    
+      @Autowired
+    @Qualifier("DaoTransformaCartografia")
+    private InterfaceTransformaCoordenadas InterfaceTransformaCoordenadas;
 
     public cat_respuesta_services SaveUE(Integer proyecto, cat_vw_punteo_sare_guardado object, String usuario, String ip, Boolean isAlta) {
+        cat_coordenadas coords = null;
         if (Integer.valueOf(object.getCE()) < 10) {
             if (object.getCE().length() < 2) {
                 object.setCE("0" + object.getCE());
@@ -60,26 +67,29 @@ public class BackingGuardar extends BackingSincroniza {
                         if (asignaClavesProvisionales(inmueble, object, proyecto, isAlta)) {
                             if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(), isAlta)) {
                                 if (InterfaceGuardar.getGuardaUePreparedStatement(proyecto, object, isAlta)) {
-                                    //if (GuardarUeOCl(inmueble, proyecto, usuario)) { //se comenta ya que no se va a manejar oracle 
+                                    coords = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto,"mer",object.getCoordx().toString(),object.getCoordy().toString());
+                                    object.setCoordx(new BigDecimal(coords.getX()));
+                                    object.setCoordy(new BigDecimal(coords.getY()));
+                                    if (InterfaceGuardar.GuardarOclUEEPA(proyecto, object)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
-                                   // if (ActualizaBitacora(proyecto, inmueble, usuario)) {
-                                        if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
-                                            /*if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
+                                    if (ActualizaBitacora(proyecto, inmueble, usuario)) {
+                                       /// if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
+                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
                                             } else {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                            }*/
+                                            }
                                             if (ActualicaEstatusComplemento(proyecto, inmueble, usuario)) {
                                                 Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
                                             } else {
                                                 Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
                                             }
-                                        } else {
-                                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                        }
-                                   // } else {
-                                     //   Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                    //}
+                                        //} else {
+                                          //  Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                                        //}
+                                    } else {
+                                        Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                                    }
                                 } else {
                                     InterfaceGuardar.UpdateOclStatusOcupado(proyecto, object, object.getId_UE(), isAlta);
                                     Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
@@ -90,9 +100,9 @@ public class BackingGuardar extends BackingSincroniza {
                         } else {
                             Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro, favor de no modificar la ubicación geográfica"));
                         }
-//                        } else {
-//                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-//                        }
+                        } else {
+                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                        }
                     } else if (validacion == 96) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
                     } else if (validacion == 99) {

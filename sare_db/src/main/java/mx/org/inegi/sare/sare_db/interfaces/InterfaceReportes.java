@@ -15,6 +15,8 @@ public interface InterfaceReportes {
     
     public DataSource getDs();
     
+    public DataSource getDsUEEPA();
+    
     public DataSource getDsPg();
     
 }

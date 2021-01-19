@@ -41,13 +41,13 @@ var E10_g, E10a_g, E10b_g, E10c_g;
 
 
 const init = () =>
-        {
+{
 
-            id_ue = document.getElementById("id_UE").value;
-            addCapas({'checked': true, 'id': 'unidades'})
-            inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
-            //addInitialCapas()
-        }
+    id_ue = document.getElementById("id_UE").value;
+    addCapas({'checked': true, 'id': 'unidades'})
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
+    //addInitialCapas()
+}
 
 const handleChangeOptions = option => {
     const title = document.getElementById(`option-${option}`)
@@ -360,7 +360,7 @@ const fillCatalogoPiso = () => {
                     const opcSelected = document.getElementById('e12p')
                     let opt = document.createElement('option')
                     opt.appendChild(document.createTextNode("Seleccione"))
-                    opt.value = "Seleccione"
+                    //opt.value = "Seleccione"
                     opt.setAttribute('selected', true)
                     opcSelected.appendChild(opt)
                     arrAsent.forEach((o, i) => {
@@ -573,6 +573,7 @@ const popupCleeList = data => {
         focusConfirm: false,
         allowEscapeKey: false,
         allowOutsideClick: false,
+        customClass: 'clavesdisponibles',
         onClose: () => {
             cleeListType = 'normal';
             handleResetList()
@@ -688,12 +689,18 @@ const FormarTablaSareUEEPA = (data, tabla, posicionFinal) => {
     tabla += `<div id='container-cleelist' class='container-cleelist row'>
       <div class='wrap-list'>
         <div class='title-column'>Clave</div>
+        <div class='title-column'>Establecimiento</div>
+        <div class='title-column'>CE</div>
+        <div class='title-column'>Municipio</div>
       </div>`
     for (let num = inicioClavesVista; num <= posicionFinal; num++) {
-        let {idue, c154, status} = data[num]
+        let {idue, e08, e03, e04} = data[num]
         tabla += `<div class='wrap-list items'>
           <div class='item-list clave'><span onclick='callServiceFindUE(${idue})'>${idue}</span></div>
-        </div>`
+<div class='item-list'><span>${e08}</span></div>
+<div class='item-list'><span>${e03}</span></div>
+<div class='item-list'><span>${e04}</span></div></div>
+        `
     }
     return tabla
 }
@@ -1177,19 +1184,19 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 const showalertpunteoloading = (bandera) =>
-        {
-            if (bandera == true) {
-                alert("espere un momento porfavor");
-            } else {
-                alert("punteo realizado");
-            }
+{
+    if (bandera == true) {
+        alert("espere un momento porfavor");
+    } else {
+        alert("punteo realizado");
+    }
 
 //    swal 
 //    ({
 //      title: '<span style="width:100%;">Buscando información de punteo!</span>',
 //      text: 'Por favor espere un momento',
 //    })
-        }
+}
 
 const agregaFuncionEliminarDuplicadosSelects = () => {
     idEleToSelect.map(id => {
@@ -1380,25 +1387,25 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph = '') => {
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId =>
-        {
-            //selectId.setAttribute('onchange', 'asignaValorId()')
-            let opt = document.createElement('option')
-            opt.appendChild(document.createTextNode("Seleccione"))
-            opt.value = "Seleccione"
-            selectId.appendChild(opt)
-            catalogoCatVial.map(item => {
-                let opt = document.createElement('option')
-                opt.appendChild(document.createTextNode(item.tipo_e10n))
-                opt.value = item.tipo_e10
-                selectId.appendChild(opt)
-            })
-        }
+{
+    //selectId.setAttribute('onchange', 'asignaValorId()')
+    let opt = document.createElement('option')
+    opt.appendChild(document.createTextNode("Seleccione"))
+    opt.value = "Seleccione"
+    selectId.appendChild(opt)
+    catalogoCatVial.map(item => {
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode(item.tipo_e10n))
+        opt.value = item.tipo_e10
+        selectId.appendChild(opt)
+    })
+}
 
 const ejecutar = () =>
-        {
-            id_ue = document.getElementById('id_UE').value
-            callServiceLiberaClave(id_ue)
-        }
+{
+    id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_ue)
+}
 
 //Función regresa tipo campos  de tipo y nombre vialidad
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
@@ -2368,13 +2375,19 @@ const showViewPreliminar = d => {
             if (Type == 'select-one')
             {
                 a = document.getElementById(idobj[0]).value
+               
                 const sel = document.getElementById(idobj[0])
                 let valor = sel.options[sel.selectedIndex].innerText != 'Seleccione' ? sel.options[sel.selectedIndex].innerText : "";
                 a != 'Seleccione' ? ObjectRequest[idobj[0]] = a : ObjectRequest[idobj[0]] = ""
-                $("#" + idobj[0] + "_pv").text(valor)
+                $("#" + idobj[0] + "_pv").text(valor.toUpperCase())
             } else {
                 ObjectRequest[idobj[0]] = a
-                $("#" + idobj[0] + "_pv").text(a)
+                 if(a!==undefined){
+                    $("#" + idobj[0] + "_pv").text(a.toUpperCase())
+                }else{
+                   $("#" + idobj[0] + "_pv").text(a) 
+                }
+                
             }
 
 
@@ -2444,7 +2457,7 @@ const handleShowResult = result => {
                                 }
                             })
                         } else {
-                            layersSARE = ['c100', 'wdenue']
+                            layersSARE = ['c100', 'wdenue', 'c101a']
                             handleCancelClick()
                             MDM6('hideMarkers', 'identify')
                             handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
@@ -2457,7 +2470,6 @@ const handleShowResult = result => {
                                 const idWrap = document.getElementById(wrap)
                                 idWrap.style.display = 'contents'
                             })
-
                         }
                     } else {
                         handleShowSaveAlert('error', 'Error', 'Error de conexión', true)
@@ -3131,7 +3143,7 @@ const openReportesAjax = (opcion, opcionSeleccion) => {
             tipo = 'EXCEL'
         }
     }
-    xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto=' + dataUserFromLoginLocalStorage.proyecto + '&tipo=' + tipo + '&reporte=' + opcion + '&ce=' + dataUserFromLoginLocalStorage.ce, true);
+    xhr.open('GET', urlServices['serviceReporte'].url + '?proyecto=' + dataUserFromLoginLocalStorage.proyecto + '&tipo=' + tipo + '&reporte=' + opcion + '&ce=' + dataUserFromLoginLocalStorage.nombre, true);
     xhr.responseType = 'blob';
     if (xhr.readyState == 1) {
         swal({
@@ -3255,9 +3267,9 @@ async function OpenReportes(size, action) {
         title: action == 'vista' ? '<span style="width:100%;">Reportes</span>' : 'Descarga de Reportes',
         input: 'select',
         inputOptions: {
-            '1': 'Reporte de Avance de Registros Punteados',
-            '2': 'Reporte de Establecimientos Pendientes de Punteo',
-            '3': 'Reporte de Establecimientos Punteados',
+            //'1': 'Reporte de Avance de Registros Punteados',
+            '1': 'Reporte de Establecimientos',
+            //'3': 'Reporte de Establecimientos Punteados',
         },
         inputPlaceholder: 'Selecciona un Reporte',
         showCancelButton: true,
@@ -3310,6 +3322,7 @@ var imprimir = function () {
     var data = $('#map').html();
     $('#window_bottom').show();
     var isMobile = false;
+    console.log("La resolución de pantalla que tienes en este momento es de: " + screen.width + " x " + screen.height)
 
     var ventana = window.open('', '', 'height=1000,width=1024');
     ventana.document.open();
@@ -3623,29 +3636,29 @@ const añadirParametroScian = () => {
 }
 
 const actionFiltrosScian = (id, clasesFiltro_2, array, etiqueta) =>
-        {
-            const elemento = document.getElementById(id.id)
-            $.each(elemento, function (index, value)
-            {
-                elemento.remove(0);
-            });
-            const opt = document.createElement('option');
-            opt.value = "Seleccione";
-            opt.innerHTML = "Seleccione";
-            elemento.appendChild(opt);
-            clasesFiltro_2.map(id =>
-            {
-                const opt = document.createElement('option');
-                opt.value = id.codigo;
-                opt.innerHTML = id.descripción;
-                elemento.appendChild(opt);
-            })
-            array.map(id =>
-            {
-                let elemen = document.getElementById(id.id)
-                id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
-            })
-        }
+{
+    const elemento = document.getElementById(id.id)
+    $.each(elemento, function (index, value)
+    {
+        elemento.remove(0);
+    });
+    const opt = document.createElement('option');
+    opt.value = "Seleccione";
+    opt.innerHTML = "Seleccione";
+    elemento.appendChild(opt);
+    clasesFiltro_2.map(id =>
+    {
+        const opt = document.createElement('option');
+        opt.value = id.codigo;
+        opt.innerHTML = id.descripción;
+        elemento.appendChild(opt);
+    })
+    array.map(id =>
+    {
+        let elemen = document.getElementById(id.id)
+        id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
+    })
+}
 
 const llamarServicioclases = (codigoScian, valor) => {
     var sel;

@@ -90,7 +90,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="resources/css/app.css?version=<%=version_appCss%>" rel="stylesheet" type="text/css"/>
-        <link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>
+        <!--<link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>-->
         <link href="resources/css/animate.css" rel="stylesheet" type="text/css"/>
         <title>SARE 2019</title>
         <!-- Compiled and minified CSS -->
@@ -264,7 +264,7 @@
                         <li><a class="subheader">Opciones</a></li>
                         <li><a disabled id='save-movil-option' class="option-disabled"><i class="material-icons">save</i>Guardar</a></li>
                         <li><a disabled id="cancel-movil-option" class="option-disabled"><i class="material-icons">highlight_off</i>Cancelar</a></li>
-                        <!--<li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>-->
+                        <li onclick="opcionMenu(3)"><a href="#!"><i class="material-icons">content_paste</i>Reportes</a></li>
                         <li onclick="imprimir()"><a href="#!"><i class="material-icons">local_printshop</i>Imprimir</a></li>
                         <li onclick=""><a href="#!"><i class="material-icons">local_printshop</i>Claves bloquedas</a></li>
                         <li onclick="abrirAyuda"><a href="#!"><i class="material-icons">live_help</i>Claves bloquedas</a></li>
@@ -394,10 +394,10 @@
 
                             <div class="items-radio">  
 
-                                <div class="radio-option">
+                                <!--<div class="radio-option">
                                     <input id="identificar" value="identificar" name="accion" type="radio" onchange="radioSelect('identificar')"/>
                                     <label for="identificar">Identificar</label>
-                                </div>
+                                </div>-->
 
                                 <div class="radio-option">
                                     <input  id="puntear" checked="true" value="puntear" name="accion" type="radio" onchange="radioSelect('puntear')"/>
@@ -572,10 +572,10 @@
                                     <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" maxlength="79"  id="e10" name="e10" type="text" disabled />
                                     <label for="e10">Nombre de la Vialidad</label>
                                 </div>
-                                <div class="input-field">
+                                <!--<div class="input-field">
                                     <input placeholder="Nombre E10 E" id="e10_e" name="e10_e" type="text" disabled >
                                     <label for="e10_e">Nombre E10 E</label>
-                                </div>
+                                </div>-->
                                 <div class="input-field">
                                     <input placeholder="E11 Número Exterior" id="e11" name="e11" type="text" onKeyPress="return soloNumeros(event)" disabled >
                                     <label for="e11">E11 Número Exterior</label>
@@ -804,7 +804,7 @@
                     <!--          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>-->
                     <li><a id='item-save-option' disabled onclick="validaCp(event)" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>
                     <li><a id='item-cancel-option' disabled onclick="handleCancelClick()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Cancelar"><i class="material-icons">highlight_off</i></a></li>
-                    <!--<li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li> -->
+                    <li onclick="opcionMenu(2);"><a id='item-report-option' class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Reportes"><i class="material-icons">content_paste</i></a></li>
                     <li onclick="opcionMenu(4);"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Imprimir"><i class="material-icons">local_printshop</i></a></li> 
                     <li onclick="CargaTablaBloqueadas()"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Claves Bloqueadas"><i class="material-icons">lock</i></a></li> 
                     <li onclick="abrirAyuda()"><a href="#!"><a class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Ayuda"><i class="material-icons">help_outline</i></a>

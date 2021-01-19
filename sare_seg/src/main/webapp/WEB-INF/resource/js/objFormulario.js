@@ -12,12 +12,12 @@ const objForm = [
     name:'e09',
     title:'title-referencia'
   },
-  {
-    id:'e17_DESC',
-    key: 'referencia',
-    name:'e17_DESC',
-    title:'title-referencia'
-  },
+  //{
+    //id:'e17_DESC',
+    //key: 'referencia',
+    //name:'e17_DESC',
+    //title:'title-referencia'
+  //},
   // {
   //   id:'e11',
   //   key: 'domicilio',
@@ -90,12 +90,12 @@ const objFormPunteoEnFrente = [
     name:'e09',
     title:'title-referencia'
   },
-  {
-    id:'e17_DESC',
-    key: 'referencia',
-    name:'e17_DESC',
-    title:'title-referencia'
-  },
+ // {
+   // id:'e17_DESC',
+    //key: 'referencia',
+    //name:'e17_DESC',
+    //title:'title-referencia'
+  //},
   {
     id:'e11',
     key: 'domicilio',
@@ -327,9 +327,9 @@ const inputsinhabilitar=[
   {
     id:'e08',
   },
-  {
-    id:'e17_DESC',
-  },
+  //{
+    //id:'e17_DESC',
+  //},
   {
     id:'e09',
   }
@@ -344,9 +344,9 @@ const inputsEditables = [
   {
     id:'e10',
   },
-  {
-    id:'e10_e',
-  },
+  //{
+    //id:'e10_e',
+  //},
   {
     id:'e11',
   },
@@ -477,9 +477,9 @@ const inputsClean = [
   {
     id:'e09',
   },
-  {
-    id:'e17_DESC',
-  },
+  //{
+    //id:'e17_DESC',
+  //},
   {
     id:'e03',
   },
@@ -511,9 +511,9 @@ const inputsClean = [
   {
     id:'e10',
   },
-  {
-    id:'e10_e',
-  },
+  //{
+    //id:'e10_e',
+  //},
   {
     id:'e11',
   },

@@ -140,17 +140,47 @@ public class BackingReportes extends DaoBusquedaSare {
                     nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_avances_ege.jrxml");
                     }
                     break;
+                   case UEEPA:
+                   // ce=asignaCe(coordinacion);
+                       ce=coordinacion;
+                    if(report.equals("1") || report.equals("2")){
+                        if (ce.equals("00")) {
+                          whereReporte="  where 1=1 ORDER BY USUARIO_ENTREVISTADOR";
+                       // whereReporte = " and ue.ID_CUESTIONARIO!=54 and id_encuesta!=38  and 1=1";
+
+                    } else {
+                            whereReporte = "  where usuario_entrevistador='"+ce+"'"; 
+                    }
+                    }else{
+                        if (ce.equals("00")) {
+                            whereReporte = " where 1=1";
+
+                    } else {
+                            whereReporte = " usuario_entrevistador= '" + ce + "'"; 
+                    }
+                    }
+                    
+                    if(tipo.equals("CSV")|| tipo.equals("EXCEL")){
+                        nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                        nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                        nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                    }else{
+                    nombreArchivoJRXMLavanceGabinete = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                    nombreArchivoJRXMLtecnico = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                    nombreArchivoJRXMLPunteados = request.getServletContext().getRealPath("/WEB-INF/reportes/reporGeogra_prueba_UEEPA_csv.jrxml");
+                    }
+                    break;
             }
 
             if (reporte.equals("2")) {
                 nombreArchivo = nombreArchivoJRXMLtecnico;
                 nombreArchivoAdescargar = "EstablecimientosPendientesPunteo";
-                conne = InterfaceReportes.getDs().getConnection();
+                conne = InterfaceReportes.getDsUEEPA().getConnection();
 
             } else if (reporte.equals("1")) {
                 nombreArchivo = nombreArchivoJRXMLavanceGabinete;
                 nombreArchivoAdescargar = "AvanceRegistrosPunteados";
-                conne = InterfaceReportes.getDs().getConnection();
+                conne = InterfaceReportes.getDsUEEPA().getConnection();
 
             }else if(reporte.equals("3")){
                 nombreArchivo = nombreArchivoJRXMLPunteados;

@@ -16,31 +16,33 @@ import org.springframework.stereotype.Service;
  *
  * @author LIDIA.VAZQUEZ
  */
-
 @Service("BackingGetClaves")
-public class BackingGetClavesSare 
-{
-    
+public class BackingGetClavesSare {
+
     @Autowired
     @Qualifier("DaoGetClaves")
     InterfaceClavesSare InterfaceClavesSare;
-    
-    public List<cat_get_claves> getListadoUnidadesEconomicas (Integer proyecto, String ce, String tramo) throws Exception 
-    {
+
+    public List<cat_get_claves> getListadoUnidadesEconomicas(Integer proyecto, String ce, String tramo) throws Exception {
         List<cat_get_claves> ListadoUnidadesEconomicas = InterfaceClavesSare.getListadoUnidadesEconomicas(proyecto, ce, tramo);
+        for (int i = 0; i < ListadoUnidadesEconomicas.size(); i++) {
+            cat_get_claves clave = ListadoUnidadesEconomicas.get(i);
+            String nom_ent=InterfaceClavesSare.getEntidad(ListadoUnidadesEconomicas.get(i).getE03());
+            clave.setE04(InterfaceClavesSare.getMunicipio(ListadoUnidadesEconomicas.get(i).getE04(),ListadoUnidadesEconomicas.get(i).getE03()));
+            clave.setE03(nom_ent);
+            ListadoUnidadesEconomicas.set(i, clave);
+        }
         return ListadoUnidadesEconomicas;
     }
-    
-    public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas (Integer proyecto, String ce, String tramo) throws Exception 
-    {
+
+    public List<cat_get_claves> getListadoUnidadesEconomicasBloqueadas(Integer proyecto, String ce, String tramo) throws Exception {
         List<cat_get_claves> ListadoUnidadesEconomicas = InterfaceClavesSare.getListadoUnidadesEconomicasBloqueadas(proyecto, ce, tramo);
         return ListadoUnidadesEconomicas;
     }
-    
-    public List<cat_get_claves> getListadoConglomerados (Integer proyecto, String ce, String tramo) throws Exception 
-    {
+
+    public List<cat_get_claves> getListadoConglomerados(Integer proyecto, String ce, String tramo) throws Exception {
         List<cat_get_claves> ListadoUnidadesEconomicas = InterfaceClavesSare.getListadoConglomerados(proyecto, ce, tramo);
         return ListadoUnidadesEconomicas;
     }
-    
+
 }

@@ -31,5 +31,7 @@ public interface InterfaceGuardarUE {
     public boolean UpdateOclStatusOcupado(Integer proyecto, cat_vw_punteo_sare_guardado object, String id_ue, boolean isAlta);
 
     public boolean GuardarUEFrentes(Integer proyecto, cat_vw_punteo_sare_guardadoUXFrente object);
+    
+    public boolean GuardarOclUEEPA(Integer proyecto, cat_vw_punteo_sare_guardado inmueble);
 
 }

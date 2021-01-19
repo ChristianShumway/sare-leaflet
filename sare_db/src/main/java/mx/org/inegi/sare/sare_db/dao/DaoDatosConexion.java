@@ -24,6 +24,10 @@ public class DaoDatosConexion implements InterfaceReportes{
     @Qualifier("dataSourceOcl")
     private DataSource ds;
     
+     @Autowired
+    @Qualifier("dataSourceOclUEEPA")
+    private DataSource dsueepa;
+    
     @Autowired
     @Qualifier("dataSource")
     private DataSource dspg;
@@ -31,6 +35,12 @@ public class DaoDatosConexion implements InterfaceReportes{
     @Override
     public DataSource getDs() {
         DataSource d = ds;
+        return d;
+    }
+    
+     @Override
+    public DataSource getDsUEEPA() {
+        DataSource d = dsueepa;
         return d;
     }
 
