@@ -299,11 +299,11 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 case UEEPA:
                     if (ce.equals("00")) {
                         sql.append("select id_ue,rfc,e03,e04,e05,e06,e07,e08,e09,e09r,e09e,e17d,e17,tipo_e10,e11,e11a,e13,e13a,e12,tipo_e14,e14,e14a,tipo_e19,e19,e20,tipo_e10_a,e10_a,\n"
-                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10");
+                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10 AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') ");
 
                     } else {
                         sql.append("select id_ue,rfc,e03,e04,e05,e06,e07,e08,e09,e09r,e09e,e17d,e17,tipo_e10,e11,e11a,e13,e13a,e12,tipo_e14,e14,e14a,tipo_e19,e19,e20,tipo_e10_a,e10_a,\n"
-                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10")
+                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10 AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') ")
                                 //.append("left join ").append(esquemaOcl).append(".tc_st_sare st on st.status_sare=pre.status_sare JOIN ").append(esquemaOcl).append(".TC_LOCALIDADES locs ON ue.e03=locs.CVE_ENT AND ue.e04=locs.CVE_MUN AND ue.e05=locs.CVE_LOC where st_sare='10' and inm.id_ue is not null AND locs.TIPO='U' ")
                                 .append("and USUARIO_ENTREVISTADOR='").append(tramo).append("'");
                     }

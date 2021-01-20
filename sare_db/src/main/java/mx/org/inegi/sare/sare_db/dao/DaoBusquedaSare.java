@@ -934,9 +934,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 sql.append("FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO po ");
                 if (origen == 1) {
                     if (ce.equals("00")) {
-                        sql.append(" where st_sare='10' and id_ue = ").append(id_ue);
+                        sql.append(" where st_sare='10' AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') and id_ue = ").append(id_ue);
                     } else {
-                        sql.append(" where st_sare='10'  and id_ue = ").append(id_ue).append(" and usuario_entrevistador='").append(tramo).append("'");
+                        sql.append(" where st_sare='10' AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G')  and id_ue = ").append(id_ue).append(" and usuario_entrevistador='").append(tramo).append("'");
                     }
                 } else {
                     sql.append(" where id_ue = ").append(id_ue);
