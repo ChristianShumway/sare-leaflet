@@ -7,7 +7,7 @@ let flagScreen = 'normal'
 
 
 window.onload = () => {
-  handleSessionActive()
+  // handleSessionActive()
   handleHideForm()
   addAttributeTitle()
   handleIconFullScreen()

@@ -30,7 +30,7 @@ var wmsLayerM = L.tileLayer.wms('http://gaia.inegi.org.mx/NLB/tunnel/wms/wms61?'
   sphericalMercator: true
 })//.addTo(map);
 
-var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?EDO="00"&map=/opt/map/SARE_UEEPA_2020.map', {
+var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
   layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
   transparent: false,
   format: 'image/png',
@@ -38,7 +38,8 @@ var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do
   id: 'xpain.test-cach',
   useCache: true,
   crossOrigin: false,
-  sphericalMercator: true
+  sphericalMercator: true,
+  EDO:'00',
 });
 
 var crs = new L.Proj.CRS(
@@ -46,7 +47,8 @@ var crs = new L.Proj.CRS(
   // '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
   '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
   {
-    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+    // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+    resolutions: [8192, 4096, 2048, 1024, 512, 256, 128,64,32,16,8,4,2,1,0.5, 0],
     // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
     origin: [0, 0]
   }
@@ -56,8 +58,9 @@ console.log(crs);
 
 var map = L.map('mapid', {
   center: [21.541, -102.034],//[-17, -67],
-  zoom: 5,
-  layers: [wmsLayerSare],
+  zoom: 1,
+  maxZoom: 18,
+  layers: [wmsLayerM,wmsLayer,wmsLayerSare],
   crs: crs,
   continuousWorld: true,
   worldCopyJump: false

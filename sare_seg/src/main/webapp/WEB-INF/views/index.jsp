@@ -203,7 +203,7 @@ return hexString.toString();
                         }
                     });
                     $(window).mousemove(function () {
-                        MDM6('updateSize');
+                        // MDM6('updateSize');
                     });
 
 
