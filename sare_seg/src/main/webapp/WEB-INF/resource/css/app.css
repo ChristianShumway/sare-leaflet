@@ -1,6 +1,10 @@
 body{
   overflow: auto !important;
- 
+}
+
+#mapid { 
+  height: 584px; 
+  /* border: 1px solid red; */
 }
 
 .icon-full{

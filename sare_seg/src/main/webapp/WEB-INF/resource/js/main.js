@@ -39,7 +39,6 @@ var tipoE10_g, tipoE10a_g, tipoE10b_g, tipoE10c_g;
 var E10_g, E10a_g, E10b_g, E10c_g;
 
 
-
 const init = () =>
 {
 
@@ -47,6 +46,7 @@ const init = () =>
     addCapas({'checked': true, 'id': 'unidades'})
     inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
     //addInitialCapas()
+
 }
 
 const handleChangeOptions = option => {
@@ -90,6 +90,7 @@ const addLayerEconomicas = (chk, option) => {
 
 //Funcion agregar capas en el mapa en la opcion sucursales
 const addCapas = chk => {
+    console.log('hola');
     var idWms = urlServices['map'].label
     MDM6('updateSize');
     if (chk.checked == true) {
@@ -3085,20 +3086,20 @@ const handleLogOut = () => {
     window.location.href = './'
 }
 
-const handleSessionActive = () => {
-    sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
-        if (data[0].datos.success == false) {
-            alertToastForm('No se ha iniciado sesión', 'error')
-            setTimeout(() => window.location.href = './', 1500)
-            let id_ue = document.getElementById('id_UE').value
-        } else {
-            dataUserFromLoginLocalStorage = data[0].datos.datos
-        }
-    },
-            () => {
-    }
-    )
-}
+// const handleSessionActive = () => {
+//     sendAJAX(urlServices['serviceValidasesion'].url, null, urlServices['serviceValidasesion'].type, data => {
+//         if (data[0].datos.success == false) {
+//             alertToastForm('No se ha iniciado sesión', 'error')
+//             setTimeout(() => window.location.href = './', 1500)
+//             let id_ue = document.getElementById('id_UE').value
+//         } else {
+//             dataUserFromLoginLocalStorage = data[0].datos.datos
+//         }
+//     },
+//             () => {
+//     }
+//     )
+// }
 
 // ALERTA NORMAL 
 const alertPosition = () => {

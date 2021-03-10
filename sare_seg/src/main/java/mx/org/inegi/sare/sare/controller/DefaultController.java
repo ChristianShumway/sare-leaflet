@@ -97,7 +97,7 @@ public class DefaultController extends BackingLogin {
     
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
-        return "login";
+        return "index";
     }
 
     @RequestMapping(value = "/index.html", method = RequestMethod.GET)
@@ -112,9 +112,9 @@ public class DefaultController extends BackingLogin {
                && clave_operativa != null && !clave_operativa.equals("")
                && nombre != null && !nombre.equals("")
                 && tramo_control != null && !tramo_control.equals("")) {
-            return "login";
+            return "index";
         } else {
-           return "index";
+           return "login";
        }
     }
 
