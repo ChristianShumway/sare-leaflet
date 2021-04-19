@@ -21,26 +21,73 @@ var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
 
 var wmsLayerM = L.tileLayer.wms('http://gaia.inegi.org.mx/NLB/tunnel/wms/wms61?', {
     layers: 'Hipsografico,MGE',
-    transparent: false,
+    transparent: true,
     format: 'image/png',
     //cql_filter:"ambito='U'",
     id: 'xpain.test-cach',
-    useCache: true,
+    useCache: false,
     crossOrigin: false,
-    sphericalMercator: true
+    sphericalMercator: false
 })//.addTo(map);
 
-var wmsLayerTopo = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/service/wms?', {
-    layers: 'MapaBaseTopograficov61',
-    transparent: false,
-    format: 'image/png',
-    //cql_filter:"ambito='U'",
-    id: 'xpain.test-cach',
-    useCache: true,
-    crossOrigin: false,
-    sphericalMercator: true
-})//.addTo(map);
+var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/service/wms?', {
+layers: 'MapaBaseHipsografico',
+//crs:'4326'
+transparent: false,
+//format: 'image/jpeg',
+// //cql_filter:"ambito='U'",
+//id: 'xpain.test-cach',
+//useCache: true,
+//crossOrigin: false,
+tiled: true
+//sphericalMercator: false,
+});
+var wmsLayerBase5 =  L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}',{
+    img: '../../resources/img/mapaBase/Esri.jpg',
+    //tms: true
+});
+var wmsLayerBase6 =  L.tileLayer('../../resources/img/mapaBase/Osm.jpg',{
+    //img: '../../resources/img/mapaBase/Esri.jpg',
+    tms: true
+});
 
+var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
+layers: 'MapaBaseTopograficov61_sinsombreado',
+//crs:'4326'
+transparent: false,
+//format: 'image/jpeg',
+// //cql_filter:"ambito='U'",
+//id: 'xpain.test-cach',
+//useCache: true,
+//crossOrigin: false,
+tiled: true
+//sphericalMercator: false,
+});
+
+var wmsLayerBase3 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
+layers: 'MapaBaseTopograficov61_sinsombreado_gris',
+//crs:'4326'
+transparent: true,
+format: 'image/jpeg',
+// //cql_filter:"ambito='U'",
+//id: 'xpain.test-cach',
+useCache: true,
+//crossOrigin: false,
+tiled: true,
+sphericalMercator: false,
+});
+var wmsLayerBase4 = L.tileLayer.wms('http://gaiamapas1.inegi.org.mx/mdmCache/service/wms?', {
+layers: 'MapaBaseOrtofoto',
+//crs:'4326'
+transparent: false,
+//format: 'image/jpeg',
+// //cql_filter:"ambito='U'",
+//id: 'xpain.test-cach',
+//useCache: true,
+//crossOrigin: false,
+tiled: true
+//sphericalMercator: false,
+});
 
 var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
     layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
@@ -54,6 +101,19 @@ var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do
     EDO: '00',
 });
 
+//var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
+//    layers: 'MapaBaseTopograficov61_sinsombreado',
+//    transparent: false,
+//    label: 'Topogr&aacute;fico - INEGI',
+//    img: '../../resources/img/mapaBase/Wms.jpg',
+//    format: 'image/png',
+//    // //cql_filter:"ambito='U'",
+//    id: 'xpain.test-cach',
+//    useCache: true,
+//    crossOrigin: false,
+//    sphericalMercator: true,
+//    EDO: '00',
+//});
 
 
 var crs = new L.Proj.CRS(
@@ -61,8 +121,22 @@ var crs = new L.Proj.CRS(
         // '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
         '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
         {
-            // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+            //
+             resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+            // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
+            origin: [0, 0]
+        }
+);
+
+var crs2 = new L.Proj.CRS(
+        'EPSG:3857',
+        // '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
+        '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
+        {
+            //
+             resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
             // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
             origin: [0, 0]
         }
@@ -70,17 +144,17 @@ var crs = new L.Proj.CRS(
 
 
 var map = L.map('mapid', {
-    center: [21.541, -102.034], //[-17, -67],
-    zoom: 1,
+    center: [21.541, -102.034],//[-17, -67],
+    //[21.541, -102.034], 
+    zoom: 5,
     maxZoom: 18,
-    // layers: [wmsLayerM, wmsLayer, wmsLayerTopo, wmsLayerSare],
-    layers: [wmsLayerSare],
-    crs: crs,
+    layers: [wmsLayerSare,wmsLayerBase2],
+    crs: L.CRS.EPSG900913,
+    //crs:crs2,
     continuousWorld: false,
     worldCopyJump: false,
     scrollWheelZoom: false
 });
-
 map.on('click', function (e) {
 
     if (marker !== undefined) {
@@ -90,31 +164,22 @@ map.on('click', function (e) {
 
     // alert(e.latlng);
 });
+window.addEventListener('keydown', function (event)
+ {
+ if (event.ctrlKey == true)
+ {
+ map.scrollWheelZoom.enable();
+ event.preventDefault();
+ /*if (event.originalEvent.detail > 0) {
+ console.log('Down');
+ } else {
+ console.log('Up');
+ }*/
+ }
+ });
 
-document.getElementById('mapid').addEventListener('keydown', function (event) {
-  console.log(event);
-  if (event.ctrlKey == true) {
-    console.log('entro aqui');
-    map.scrollWheelZoom.enable();
-    event.preventDefault();
-    if (event.originalEvent.detail > 0) {
-      console.log('Down');
-    } else {
-      console.log('Up');
-    }
-  } 
-});
-
-document.getElementById('mapid').addEventListener('keyup', function (event) {
-  console.log(event);
-  if (event.ctrlKey == false) {
-    map.scrollWheelZoom.disable();
-  } 
-});
-
-document.getElementById('mapid').addEventListener('mousewheel', function (e) {
-  console.log(e.ctrlKey);
-  if (e.ctrlKey == true)
+window.addEventListener('mousewheel', function (e) {
+    if (event.ctrlKey == true)
     {
       map.scrollWheelZoom.enable();
       // e.p
@@ -126,8 +191,8 @@ document.getElementById('mapid').addEventListener('mousewheel', function (e) {
         alert("presion ctrl para hacer zoom")
         //map.scrollWheelZoom.enable();
     }
-});
-
+},
+        false);
 console.log("map crs: " + map.options.crs.code);
 
 
@@ -136,6 +201,12 @@ var baseMaps = {
     "TOPO-OSM-WMS": wmsLayer,
     'base': wmsLayerTopo,
     "wdenue": wmsLayerSare,
+    "Hipsogr&aacute;fico - INEGI":wmsLayerBase1,
+    "Topogr&aacute;fico - INEGI":wmsLayerBase2,
+    "Topogr&aacute;fico gris - INEGI":wmsLayerBase3,
+    "Ortofotos - INEGI":wmsLayerBase4,
+    "Esri":wmsLayerBase5,
+    "Osm":wmsLayerBase6
 };
 
 
