@@ -477,10 +477,10 @@ const addAttributeTitle = () => {
         return null;
         });
     }
-    setTimeout( () => {
+    /*setTimeout( () => {
       document.getElementById('scaleControl_zoomIn').setAttribute('title','Acercar')
       document.getElementById('scaleControl_extent').setAttribute('title','Expandir') 
       document.getElementById('scaleControl_zoomOut').setAttribute('title','Alejar')
-    },500) 
+    },500) */
   }  
 }
