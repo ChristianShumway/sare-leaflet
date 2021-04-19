@@ -1,4 +1,3 @@
-
 // let layersSARE = ['c100', 'c101a', 'wdenue'] //capas para el masivo
 
 // var mymap = L.map('mapid', { crs: L.CRS.EPSG900913 /*,minZoom: 0,maxZoom: 22*/ }).setView([19.4978, -99.1269], 6);
@@ -17,7 +16,7 @@ var marker;
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
     sphericalMercator: true
-});
+})//.addTo(map);
 
 var wmsLayerM = L.tileLayer.wms('http://gaia.inegi.org.mx/NLB/tunnel/wms/wms61?', {
     layers: 'Hipsografico,MGE',
@@ -43,12 +42,14 @@ var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/ser
 //sphericalMercator: false,
 });
 var wmsLayerBase5 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}', {
-    img: '../../resources/img/mapaBase/Esri.jpg',
+    img: 'resources/img/mapaBase/Esri.jpg',
     //tms: true
 });
-var wmsLayerBase6 = L.tileLayer('../../resources/img/mapaBase/Osm.jpg', {
-    //img: '../../resources/img/mapaBase/Esri.jpg',
-    tms: true
+
+var wmsLayerBase6 = L.tileLayer('resources/img/mapaBase/Osm.jpg', {
+    // tms: true,
+    tiled:true,
+    crossOrigin: false,
 });
 
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
@@ -121,27 +122,13 @@ var crs = new L.Proj.CRS(
         // '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
         '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
         {
-            //
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
-            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
-            // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
-            origin: [0, 0]
+          // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+          resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+          origin: [0, 0]
         }
 );
 
-var crs2 = new L.Proj.CRS(
-        'EPSG:3857',
-        // '+proj=utm +zone=33 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs',
-        '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
-        {
-            //
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
-            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
-            // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
-            origin: [0, 0]
-        }
-);
-
+console.log(crs);
 
 var map = L.map('mapid', {
     center: [21.541, -102.034], //[-17, -67],
@@ -150,10 +137,10 @@ var map = L.map('mapid', {
     maxZoom: 18,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
-    //crs:crs2,
+    // crs:crs,
     continuousWorld: false,
     worldCopyJump: false,
-    scrollWheelZoom: false
+    //scrollWheelZoom: false
 });
 map.on('click', function (e) {
 
@@ -164,7 +151,6 @@ map.on('click', function (e) {
 
     // alert(e.latlng);
 });
-
 window.addEventListener('keydown', function (event)
 {
     if (event.ctrlKey == true)
@@ -182,9 +168,8 @@ window.addEventListener('keydown', function (event)
 window.addEventListener('mousewheel', function (e) {
     if (event.ctrlKey == true)
     {
-      map.scrollWheelZoom.enable();
-      // e.p
-      reventDefault();
+        map.scrollWheelZoom.enable();
+        event.preventDefault();
     }
     if (map.scrollWheelZoom.enabled()) {
         //map.scrollWheelZoom.disable();
@@ -200,7 +185,6 @@ console.log("map crs: " + map.options.crs.code);
 var baseMaps = {
     "MGE": wmsLayerM,
     "TOPO-OSM-WMS": wmsLayer,
-    'base': wmsLayerSare,
     "wdenue": wmsLayerSare,
     "Hipsogr&aacute;fico - INEGI": wmsLayerBase1,
     "Topogr&aacute;fico - INEGI": wmsLayerBase2,
@@ -216,4 +200,3 @@ var overlays = {
   //      imageBounds = [center, [-35.8650, 154.2094]];
 
 L.control.layers(baseMaps,overlays).addTo(map);
-
