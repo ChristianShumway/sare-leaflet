@@ -41,17 +41,24 @@ var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/ser
     tiled: true
 //sphericalMercator: false,
 });
-var wmsLayerBase5 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}', {
-    img: 'resources/img/mapaBase/Esri.jpg',
-    //tms: true
+var wmsLayerBase5 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    //img: 'resources/img/mapaBase/Esri.jpg',
+    
 });
 
-var wmsLayerBase6 = L.tileLayer('resources/img/mapaBase/Osm.jpg', {
+var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     // tms: true,
-    tiled:true,
-    crossOrigin: false,
+   
 });
 
+var wmsLayerBase7 =  new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels'});
+
+
+
+var wmsLayerBase8 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
+    // tms: true,
+   
+});
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseTopograficov61_sinsombreado',
 //crs:'4326'
@@ -181,7 +188,10 @@ window.addEventListener('mousewheel', function (e) {
         false);
 console.log("map crs: " + map.options.crs.code);
 
-
+ /* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
+   map.addLayer(bing);*/
+    
+    
 var baseMaps = {
     "MGE": wmsLayerM,
     "TOPO-OSM-WMS": wmsLayer,
@@ -191,7 +201,9 @@ var baseMaps = {
     "Topogr&aacute;fico gris - INEGI": wmsLayerBase3,
     "Ortofotos - INEGI": wmsLayerBase4,
     "Esri": wmsLayerBase5,
-    "Osm": wmsLayerBase6
+    "Osm": wmsLayerBase6,
+    "Bing":wmsLayerBase7,
+    "Google Satelite":wmsLayerBase8
 };
 var overlays = {
     "Sare": wmsLayerSare

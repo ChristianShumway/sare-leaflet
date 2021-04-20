@@ -1041,9 +1041,11 @@ return hexString.toString();
     // </script>
     -->
     <link rel="stylesheet" href="resources/leaflet/leaflet.css" >
-    <script src="resources/leaflet/leaflet.js" ></script>    
+    <script src="resources/leaflet/leaflet.js" ></script>   
+     <script src="resources/js/Bing.js"></script>
     <script src="resources/leaflet/proj4-src.js"></script>
     <script src="resources/leaflet/proj4leaflet.js"></script>
     <script src="resources/js/withLeaflet.js"></script>
+    
 
 </html>
