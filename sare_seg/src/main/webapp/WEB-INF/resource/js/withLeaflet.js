@@ -97,7 +97,7 @@ var wmsLayerBase4 = L.tileLayer.wms('http://gaiamapas1.inegi.org.mx/mdmCache/ser
 //sphericalMercator: false,
 });
 
-var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
     layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
     transparent: true,
     format: 'image/png',
