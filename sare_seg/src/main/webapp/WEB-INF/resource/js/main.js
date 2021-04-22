@@ -1,4 +1,4 @@
-let dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
+//let dataUserFromLoginLocalStorage = JSON.parse(localStorage.getItem("dataUserObj"))
 let actualPagina = 1
 let inicioPaginacion = 1
 let finPaginacion = screen.width <= '480' ? 5 : 7
@@ -38,7 +38,22 @@ const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 var tipoE10_g, tipoE10a_g, tipoE10b_g, tipoE10c_g;
 var E10_g, E10a_g, E10b_g, E10c_g;
 
+let dataUserFromLoginLocalStorage = {
+  acceso: getParameterByName('acceso'),
+  ce: getParameterByName('ce'),
+  cveOperativa: getParameterByName('clave_operativa'),
+  nombre:getParameterByName('nombre'),
+  tramoControl:  getParameterByName('tramo_control'),
+  usuario:  getParameterByName('nombre'),
+  proyecto: getParameterByName('proyecto')
+}
 
+function getParameterByName(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+    results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 const init = () =>
 {
 
@@ -223,6 +238,7 @@ const callServiceFindUE = (id_ue) => {
     sendAJAX(urlServices['serviceSearch'].url,
             {
                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
+                //'proyecto': $_GET('proyecto'),
                 'p': '1',
                 'tramo': dataUserFromLoginLocalStorage.nombre,
                 'ce': dataUserFromLoginLocalStorage.ce,

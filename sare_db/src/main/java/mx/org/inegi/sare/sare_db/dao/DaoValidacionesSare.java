@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoValidacionesSare")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoValidacionesSare extends DaoTransformaCartografia implements InterfaceValidacionesSare {
 
     

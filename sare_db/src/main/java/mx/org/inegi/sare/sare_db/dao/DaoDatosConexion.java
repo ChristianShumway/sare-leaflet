@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("datosConexionDao")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoDatosConexion implements InterfaceReportes{
 
     @Autowired
