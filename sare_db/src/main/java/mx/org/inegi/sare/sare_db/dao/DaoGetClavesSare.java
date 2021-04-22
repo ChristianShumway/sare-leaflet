@@ -61,7 +61,8 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
         switch (proyectos) {
             case Operativo_Masivo:
 
-                resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                //resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                    resultado1 = jdbcTemplateocl.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
@@ -76,8 +77,9 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
             case UEEPA:
                 //sql = getSql(proyectos, id_ue, tramo, UnidadesEconomicasEnum.UNIDADES_ECONOMICAS.getCódigo());
 
-
-                resultado1 = dataSourceOclUEEPA.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                
+                //resultado1 = dataSourceOclUEEPA.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
+                     resultado1 = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_get_claves>>() {
                     @Override
                     public List<cat_get_claves> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_get_claves fila;
@@ -299,7 +301,7 @@ public class DaoGetClavesSare extends DaoBusquedaSare implements InterfaceClaves
                 case UEEPA:
                     if (ce.equals("00")) {
                         sql.append("select id_ue,rfc,e03,e04,e05,e06,e07,e08,e09,e09r,e09e,e17d,e17,tipo_e10,e11,e11a,e13,e13a,e12,tipo_e14,e14,e14a,tipo_e19,e19,e20,tipo_e10_a,e10_a,\n"
-                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10 AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') ");
+                                + "tipo_e10_b,e10_b,tipo_e10_c,e10_c FROM ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO ").append(" where st_sare=10 AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') ");
 
                     } else {
                         sql.append("select id_ue,rfc,e03,e04,e05,e06,e07,e08,e09,e09r,e09e,e17d,e17,tipo_e10,e11,e11a,e13,e13a,e12,tipo_e14,e14,e14a,tipo_e19,e19,e20,tipo_e10_a,e10_a,\n"

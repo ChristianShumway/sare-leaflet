@@ -45,10 +45,10 @@ var wmsLayerBase5 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/ser
     //img: 'resources/img/mapaBase/Esri.jpg',
     
 });
-var wmsLayerBase6 = L.tileLayer('resources/img/mapaBase/Osm.jpg', {
-    //img: '../../resources/img/mapaBase/Esri.jpg',
-    tms: true
-    });
+var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // tms: true,
+  
+});
 
 var wmsLayerBase7 =  new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels'});
 
