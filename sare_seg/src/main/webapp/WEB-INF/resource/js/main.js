@@ -237,13 +237,24 @@ const callServiceFindUE = (id_ue) => {
     const cancelOption = document.getElementById('item-cancel-option')
     sendAJAX(urlServices['serviceSearch'].url,
             {
+
                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
+<<<<<<< HEAD
                 //'proyecto': $_GET('proyecto'),
                 'p': '1',
                 'tramo': dataUserFromLoginLocalStorage.nombre,
                 'ce': dataUserFromLoginLocalStorage.ce,
                 'usuario': dataUserFromLoginLocalStorage.nombre,
                 'id_ue': id_ue
+=======
+                'proyecto': $_GET('proyecto'),
+                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
+                 'p': '1',
+                 'tramo': dataUserFromLoginLocalStorage.nombre,
+                 'ce': dataUserFromLoginLocalStorage.ce,
+                 'usuario': dataUserFromLoginLocalStorage.nombre,
+                 'id_ue': id_ue
+>>>>>>> 76b57c5765baf2621d114062433b637056b06622
             },
             urlServices['serviceSearch'].type,
             data => {
@@ -309,6 +320,7 @@ const callServiceFindUE = (id_ue) => {
 
 //Comienza a mostrar datos en la interfaz
 const showDataInterfaz = data => {
+    console.log(data);
     handleActionPunteoAlta('off')
     //obtiene el código postal
     getCp(data[0].datos.datos[0].e03)
@@ -477,21 +489,29 @@ const fillCatalogoOrigen = () => {
 
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = data => {
-    let res = data[0].datos.datos[0].extent.split(",")
-    MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10))
+    console.log(data);
+    dataJarcoreado = '-12142160.7867377,2944543.63825811,-11500056.8983068,3735054.2308941';
+    // let res = data[0].datos.datos[0].extent.split(",")
+    let res = dataJarcoreado.split(",");
+    console.log(res);
+    MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
 }
 
 //Función que llama el servicio para obtener el código postal
 const getCp = ce => {
     sendAJAX(
             urlServices['serviceCP'].url,
-            {'cve_ent': ce, 'proyecto': dataUserFromLoginLocalStorage.proyecto},
+            {
+                'cve_ent': ce, 
+                // 'proyecto': dataUserFromLoginLocalStorage.proyecto,
+                'proyecto': 3
+            },
             urlServices['serviceCP'].type,
             data => {
                 cpObj = data[0].datos
             },
             () => {
-    }
+        }
     )
 }
 

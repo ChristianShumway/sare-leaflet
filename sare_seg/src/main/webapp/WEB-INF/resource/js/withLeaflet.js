@@ -1,4 +1,3 @@
-
 // let layersSARE = ['c100', 'c101a', 'wdenue'] //capas para el masivo
 
 // var mymap = L.map('mapid', { crs: L.CRS.EPSG900913 /*,minZoom: 0,maxZoom: 22*/ }).setView([19.4978, -99.1269], 6);
@@ -42,15 +41,29 @@ var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/ser
     tiled: true
 //sphericalMercator: false,
 });
-var wmsLayerBase5 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/${z}/${y}/${x}', {
-    img: '../../resources/img/mapaBase/Esri.jpg',
-    //tms: true
+var wmsLayerBase5 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    //img: 'resources/img/mapaBase/Esri.jpg',
+    
 });
+<<<<<<< HEAD
 var wmsLayerBase6 = L.tileLayer('resources/img/mapaBase/Osm.jpg', {
     //img: '../../resources/img/mapaBase/Esri.jpg',
     tms: true
+=======
+var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // tms: true,
+  
+>>>>>>> 76b57c5765baf2621d114062433b637056b06622
 });
 
+var wmsLayerBase7 =  new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels'});
+
+
+
+var wmsLayerBase8 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
+    // tms: true,
+   
+});
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseTopograficov61_sinsombreado',
 //crs:'4326'
@@ -89,7 +102,7 @@ var wmsLayerBase4 = L.tileLayer.wms('http://gaiamapas1.inegi.org.mx/mdmCache/ser
 //sphericalMercator: false,
 });
 
-var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
     layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
     transparent: true,
     format: 'image/png',
@@ -136,10 +149,13 @@ var crs2 = new L.Proj.CRS(
         '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
         {
             //
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+           // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
             //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
             // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
-            origin: [0, 0]
+            origin: [0, 0],
+          // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+          resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+          origin: [0, 0]
         }
 );
 
@@ -152,7 +168,10 @@ var map = L.map('mapid', {
     maxZoom: 18,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
+<<<<<<< HEAD
     //crs:crs,
+=======
+>>>>>>> 76b57c5765baf2621d114062433b637056b06622
     continuousWorld: false,
     worldCopyJump: false,
     //scrollWheelZoom: false
@@ -196,7 +215,10 @@ window.addEventListener('mousewheel', function (e) {
         false);
 console.log("map crs: " + map.options.crs.code);
 
-
+ /* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
+   map.addLayer(bing);*/
+    
+    
 var baseMaps = {
     "MGE": wmsLayerM,
     "TOPO-OSM-WMS": wmsLayer,
@@ -206,7 +228,9 @@ var baseMaps = {
     "Topogr&aacute;fico gris - INEGI": wmsLayerBase3,
     "Ortofotos - INEGI": wmsLayerBase4,
     "Esri": wmsLayerBase5,
-    "Osm": wmsLayerBase6
+    "Osm": wmsLayerBase6,
+    "Bing":wmsLayerBase7,
+    "Google Satelite":wmsLayerBase8
 };
 var overlays = {
     "Sare": wmsLayerSare
@@ -216,3 +240,44 @@ var overlays = {
 
 L.control.layers(baseMaps,overlays).addTo(map);
 
+
+var formData = {
+    q: "aguascalientes",
+    point1: "3.2919132745585262,-143.6874999924407",
+    point2: "40.74561102796926,-59.312500007554476",
+    pt: "23.320084961929044, -101.4999999999976"
+};
+
+
+
+
+
+function busqueda() {
+ $.ajax({
+    url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
+    type: "POST",
+    dataType: "json",
+    data: JSON.stringify(formData),
+    contentType: "application/json",
+    success: function(response, textStatus, jqXHR) {
+       console.log(response.data);       
+    }
+}); 
+}
+
+/*
+const busqueda = () => {
+//map.flyTo([21.879120, -102.303263], 17)
+  sendAJAX(
+    "http://gaia.inegi.org.mx/mdm_searchengine/search", 
+   JSON.stringify(formData), 
+    'POST', 
+    data => { 
+      // wrapUser.classList.remove('wrap-input-empty')
+      // wrapPassword.classList.remove('wrap-input-empty')
+      console.log(data[0].datos)
+     
+    }, 
+    () => {}
+  )
+}*/
