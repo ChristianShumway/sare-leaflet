@@ -239,8 +239,6 @@ const callServiceFindUE = (id_ue) => {
             {
 
                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
-                //'proyecto': $_GET('proyecto'),
-                //'proyecto': dataUserFromLoginLocalStorage.proyecto,
                 'p': '1',
                 'tramo': dataUserFromLoginLocalStorage.nombre,
                 'ce': dataUserFromLoginLocalStorage.ce,

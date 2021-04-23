@@ -162,6 +162,7 @@ var map = L.map('mapid', {
     maxZoom: 18,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
+    //crs:crs,
     continuousWorld: false,
     worldCopyJump: false,
     //scrollWheelZoom: false
@@ -229,3 +230,45 @@ var overlays = {
   //      imageBounds = [center, [-35.8650, 154.2094]];
 
 L.control.layers(baseMaps,overlays).addTo(map);
+
+
+var formData = {
+    q: "aguascalientes",
+    point1: "3.2919132745585262,-143.6874999924407",
+    point2: "40.74561102796926,-59.312500007554476",
+    pt: "23.320084961929044, -101.4999999999976"
+};
+
+
+
+
+
+function busqueda() {
+ $.ajax({
+    url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
+    type: "POST",
+    dataType: "json",
+    data: JSON.stringify(formData),
+    contentType: "application/json",
+    success: function(response, textStatus, jqXHR) {
+       console.log(response.data);       
+    }
+}); 
+}
+
+/*
+const busqueda = () => {
+//map.flyTo([21.879120, -102.303263], 17)
+  sendAJAX(
+    "http://gaia.inegi.org.mx/mdm_searchengine/search", 
+   JSON.stringify(formData), 
+    'POST', 
+    data => { 
+      // wrapUser.classList.remove('wrap-input-empty')
+      // wrapPassword.classList.remove('wrap-input-empty')
+      console.log(data[0].datos)
+     
+    }, 
+    () => {}
+  )
+}*/
