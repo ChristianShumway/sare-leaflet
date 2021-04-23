@@ -20,7 +20,6 @@ import mx.org.inegi.sare.sare_db.dto.cat_vw_punteo_sare;
 import mx.org.inegi.sare.sare_db.interfaces.InterfaceBusquedaSare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Profile;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
@@ -69,6 +68,10 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
     @Autowired
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    
+    @Autowired
+    @Qualifier("jdbcTemplateProd")
+    private JdbcTemplate jdbcTemplateProd;
 
     public String esquemaPg;
 
@@ -137,7 +140,9 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 break;
             case UEEPA:
                 //sql = getSql(null, 0, "", null, "", proyectos, ce, id_ue, origen, MetodosBusqueda.BUSQUEDAMASIVOOTROS, tramo);
-                resultado = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
+                
+                //resultado = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
+                  resultado = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_vw_punteo_sare>>() {
                     @Override
                     public List<cat_vw_punteo_sare> extractData(ResultSet rs) throws SQLException, DataAccessException {
                         cat_vw_punteo_sare fila;
@@ -166,13 +171,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("e13_a") != null ? rs.getString("e13_a") : "",
                                     rs.getString("e14") != null ? rs.getString("e14") : "",
                                     rs.getString("e14_a") != null ? rs.getString("e14_a") : "",
-                                    rs.getString("e17") != null ? new BigDecimal(rs.getString("e17")) : new BigDecimal(0),
+                                    new BigDecimal(0),
                                     rs.getString("codigo_scian") != null ? rs.getString("codigo_scian") : "",
                                     rs.getString("e19") != null ? rs.getString("e19") : "",
                                     rs.getString("e20") != null ? rs.getString("e20") : "",
                                     rs.getString("e23_a") != null ? rs.getString("e23_a") : "",
                                     rs.getString("id_ue") != null ? new BigDecimal(rs.getString("id_ue")) : new BigDecimal(0),
-                                    rs.getString("origen") != null ? new BigDecimal(rs.getString("origen")) : new BigDecimal(0),
+                                    new BigDecimal(0),
                                     rs.getString("estatus_punteo") != null ? Integer.valueOf(rs.getString("estatus_punteo")) : null,
                                     rs.getString("tipo_e10") != null ? rs.getString("tipo_e10") : "",
                                     rs.getString("tipo_e10_a") != null ? rs.getString("tipo_e10_a") : "",
@@ -180,7 +185,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                                     rs.getString("tipo_e10_c") != null ? rs.getString("tipo_e10_c") : "",
                                     rs.getString("tipo_e14") != null ? rs.getString("tipo_e14") : "",
                                     rs.getString("tipo_e19") != null ? rs.getString("tipo_e19") : "",
-                                    rs.getString("id_inmueble") != null ? new BigDecimal(rs.getString("id_inmueble")) : new BigDecimal(0),
+                                    new BigDecimal(0),
                                     rs.getString("cvevial") != null ? rs.getString("cvevial") : "");
                             fila.setE12p("");
                             resultado.add(fila);
@@ -315,7 +320,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 }
                 break;
             case UEEPA:
-                if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                //if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                if (jdbcTemplate.update(sql.toString(), new Object[]{Integer.valueOf(id_ue)}) > 0) {
                     regresa = true;
                 }
                 break;
@@ -345,7 +351,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         StringBuilder sql;
         proyectos = getProyecto(proyecto);
         sql = getSql(element, 0, "", null, "", proyectos, "", "", 0, MetodosBusqueda.VALIDA_COORDENADAS_CAIGAN_EN_ESTADO, null);
-        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+        regresa = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                 boolean fila;
@@ -478,7 +484,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     private String execSqlExtentBusquedaCvegeo2Pg(StringBuilder sql) {
         String regresa = null;
-        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+        regresa = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String fila = null;
@@ -570,7 +576,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
 
     private String ExecgetNombreBusquedaPg(StringBuilder sql) {
         String regresa = "";
-        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+        regresa = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String fila = null;
@@ -648,7 +654,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
         proyectos = getProyecto(proyecto);
         sql = getSql(null, null, "", null, "", proyectos, "", "", 0, MetodosBusqueda.GETVALCOORGEO, null);
 
-        object = jdbcTemplate.query(sql.toString(), new Object[]{x, y}, new ResultSetExtractor<cat_vw_punteo_sare>() {
+        object = jdbcTemplateProd.query(sql.toString(), new Object[]{x, y}, new ResultSetExtractor<cat_vw_punteo_sare>() {
             @Override
             public cat_vw_punteo_sare extractData(ResultSet rs) throws SQLException, DataAccessException {
                 boolean fila = false;
@@ -770,7 +776,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 switch (metodo) {
                     case BUSQUEDAOCL:
                         //sql = filtrarSqlPg(ce, esquemaPos, id_ue, origen);
-                        sql = filtrarSqlEge(ce, esquemaOcl, id_ue, origen, tramo);
+                        sql = filtrarSqlEge(ce, esquemaPos, id_ue, origen, tramo);
                         break;
                     case GETCLAVESPG:
                         sql.append("SELECT distinct id_ue FROM ").append(esquemaPos).append(".td_ue_suc ");
@@ -818,7 +824,8 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         break;
                     case OCUPACVEUNICA:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='20' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where id=? and st_sare<>'01'");
+                        //sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where id=? and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='20' where id_ue=? and st_sare<>'01'");
                         break;
                     case OCUPACVEUNICACONGLOMERADO:
                         sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
@@ -920,18 +927,18 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                 }
                 break;
             case UEEPA:
-                sql.append("SELECT to_char(id_ue) as id_ue,  lpad(e03,2,'0') e03, lpad(e04,3,'0') e04, lpad(e05,4,'0') e05, lpad(e06,4,'0') e06, lpad(e07,3,'0') e07, e08, e09, \n"
-                        + "lpad(to_char(tipo_e10),2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, \n"
-                        + "lpad(to_char(tipo_e14),2,'0') tipo_e14, e14, lpad(to_char(tipo_e10_a),2,'0') tipo_e10_a, \n"
-                        + "e10_a,lpad(to_char(tipo_e10_b),2,'0') tipo_e10_b, e10_b, lpad(to_char(tipo_e10_c),2,'0'),\n"
-                        + "tipo_e10_c, e10_c, x as coorx, to_char(y) as coory, \n"
+                sql.append("SELECT  id_ue,  lpad(e03,2,'0') e03, lpad(e04,3,'0') e04, lpad(e05,4,'0') e05, lpad(e06,4,'0') e06, lpad(e07,3,'0') e07, e08, e09, \n"
+                        + "lpad(tipo_e10,2,'0') tipo_e10, e10, e11, TRIM(e11a) as e11a, \n"
+                        + "lpad(tipo_e14,2,'0') tipo_e14, e14, lpad(tipo_e10_a,2,'0') tipo_e10_a, \n"
+                        + "e10_a,lpad(tipo_e10_b,2,'0') tipo_e10_b, e10_b, lpad(tipo_e10_c,2,'0'),\n"
+                        + "tipo_e10_c, e10_c, x as coorx, y as coory, \n"
                         + "e16 as descrubic, st_sare estatus_punteo, e12, e19, tipo_e19, e20, \n"
                         + "e13, TRIM(e13a) as e13_a,e14a as e14_a, --to_char(origen) \n"
                         + "'' origen, e03 as cestatal,\n"
                         + "e20 e23_a,e17, e17 --||' - '|| --e17_desc \n"
                         + "as codigo_scian,'' as c154, '' as id_inmueble, '' CVEVIAL ");
                 //sql.append(querys.BUSQUEDAOCL.getQuery());
-                sql.append("FROM ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO po ");
+                sql.append("FROM ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO  po ");
                 if (origen == 1) {
                     if (ce.equals("00")) {
                         sql.append(" where st_sare='10' AND CODIGO_OPERATIVO IN ('01', '01C', '09', '10', '15', '21', '22A', '22C', '22G') and id_ue = ").append(id_ue);

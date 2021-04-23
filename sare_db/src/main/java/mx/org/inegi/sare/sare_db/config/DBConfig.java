@@ -51,6 +51,33 @@ public class DBConfig {
         return new JdbcTemplate(dataSourceDev());
     }
     
+    @Bean(name = "jdbcTemplateProd")
+    @Profile("dev")
+    public JdbcTemplate jdbcTemplateProdDev() {
+        return new JdbcTemplate(dataSourceProdDev());
+    }
+    
+    @Bean(name = "dataSourceProdDev")
+    @Profile("dev")
+    public DataSource dataSourceProdDev() {
+        BasicDataSource dS = new BasicDataSource();
+        dS.setDriverClassName(env.getProperty("db.prod.driver"));
+        dS.setUrl(env.getProperty("db.prod.url"));
+        dS.setUsername(env.getProperty("db.prod.user"));
+        dS.setPassword(env.getProperty("db.prod.password"));
+        dS.setMaxActive(50);
+        dS.setMaxIdle(15);
+        dS.setMinIdle(8);
+        dS.setTestWhileIdle(true);
+        dS.setValidationQuery("select version()");
+        dS.setRemoveAbandonedTimeout(15);
+        dS.setRemoveAbandoned(true);
+        dS.setTimeBetweenEvictionRunsMillis(30000);
+        dS.setLogAbandoned(false);
+        dS.setDefaultReadOnly(false); 
+        return dS;
+    }
+    
     @Bean(name = "dataSource")
     @Profile("prod")
     public DataSource dataSourceProd() {

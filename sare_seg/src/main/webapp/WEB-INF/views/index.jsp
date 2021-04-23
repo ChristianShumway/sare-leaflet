@@ -7,85 +7,85 @@
 <%@page import="java.security.MessageDigest"%>
 
 <%
-String rutaMain = request.getServletContext().getRealPath("/WEB-INF/resource/js/main.js");
-String rutaService = request.getServletContext().getRealPath("/WEB-INF/resource/js/services.js");
-String rutaAppCss = request.getServletContext().getRealPath("/WEB-INF/resource/css/app.css");
-String rutaActionDom = request.getServletContext().getRealPath("/WEB-INF/resource/js/actionsDom.js");
-String rutaObjFormulario = request.getServletContext().getRealPath("/WEB-INF/resource/js/objFormulario.js");
+    String rutaMain = request.getServletContext().getRealPath("/WEB-INF/resource/js/main.js");
+    String rutaService = request.getServletContext().getRealPath("/WEB-INF/resource/js/services.js");
+    String rutaAppCss = request.getServletContext().getRealPath("/WEB-INF/resource/css/app.css");
+    String rutaActionDom = request.getServletContext().getRealPath("/WEB-INF/resource/js/actionsDom.js");
+    String rutaObjFormulario = request.getServletContext().getRealPath("/WEB-INF/resource/js/objFormulario.js");
 
-String archivo = getArchivo(rutaMain);
-String version_main = getMD5(archivo);
+    String archivo = getArchivo(rutaMain);
+    String version_main = getMD5(archivo);
 
-archivo = getArchivo(rutaService);
-String version_services = getMD5(archivo);
+    archivo = getArchivo(rutaService);
+    String version_services = getMD5(archivo);
 
-archivo = getArchivo(rutaAppCss);
-String version_appCss = getMD5(archivo);
+    archivo = getArchivo(rutaAppCss);
+    String version_appCss = getMD5(archivo);
 
-archivo = getArchivo(rutaActionDom);
-String version_actionDom = getMD5(archivo);
+    archivo = getArchivo(rutaActionDom);
+    String version_actionDom = getMD5(archivo);
 
-archivo = getArchivo(rutaObjFormulario);
-String version_objFormulario = getMD5(archivo);
+    archivo = getArchivo(rutaObjFormulario);
+    String version_objFormulario = getMD5(archivo);
 
 
 %>
 
 <%!
-public String getArchivo(String rurta) {
-BufferedReader br = null;
-String everything = "nada";
-try {
-br = new BufferedReader(new FileReader(rurta));
-StringBuilder sb2 = new StringBuilder();
-String line2 = br.readLine();
+    public String getArchivo(String rurta) {
+        BufferedReader br = null;
+        String everything = "nada";
+        try {
+            br = new BufferedReader(new FileReader(rurta));
+            StringBuilder sb2 = new StringBuilder();
+            String line2 = br.readLine();
 
-while (line2 != null) {
-sb2.append(line2);
-sb2.append(System.lineSeparator());
-line2 = br.readLine();
-}
-everything = sb2.toString();
-} catch (Exception e) {
-e.printStackTrace();
-} finally {
-try {
-if (br != null) {
-br.close();
-}
-} catch (Exception e) {
-}
-}
-return everything;
-}
+            while (line2 != null) {
+                sb2.append(line2);
+                sb2.append(System.lineSeparator());
+                line2 = br.readLine();
+            }
+            everything = sb2.toString();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (br != null) {
+                    br.close();
+                }
+            } catch (Exception e) {
+            }
+        }
+        return everything;
+    }
 %>
 
 <%!
-public String getMD5(String rurta) throws Exception {
-String regreso = "nada";
-String plainText = rurta;
-MessageDigest mdAlgorithm = MessageDigest.getInstance("MD5");
-mdAlgorithm.update(plainText.getBytes());
+    public String getMD5(String rurta) throws Exception {
+        String regreso = "nada";
+        String plainText = rurta;
+        MessageDigest mdAlgorithm = MessageDigest.getInstance("MD5");
+        mdAlgorithm.update(plainText.getBytes());
 
-byte[] digest = mdAlgorithm.digest();
-StringBuffer hexString = new StringBuffer();
+        byte[] digest = mdAlgorithm.digest();
+        StringBuffer hexString = new StringBuffer();
 
-for (int i = 0; i < digest.length; i++) {
-plainText = Integer.toHexString(0xFF & digest[i]);
+        for (int i = 0; i < digest.length; i++) {
+            plainText = Integer.toHexString(0xFF & digest[i]);
 
-if (plainText.length() < 2) {
-plainText = "0" + plainText;
-}
+            if (plainText.length() < 2) {
+                plainText = "0" + plainText;
+            }
 
-hexString.append(plainText);
-}
+            hexString.append(plainText);
+        }
 
-return hexString.toString();
-}
+        return hexString.toString();
+    }
 %>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-    <html>
+<html>
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -99,7 +99,7 @@ return hexString.toString();
         <link rel="stylesheet" href="resources/css/materialize.css">
         <link href="resources/css/material-icons.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700|Montserrat:200,300,400,500,700,800,900|Roboto:300,400,500,700"
-            rel="stylesheet">
+              rel="stylesheet">
         <link rel="stylesheet" href="resources/css/sweetalert2.min.css">
 
         <!-- <script src="resources/js/jquery-2.1.1.min.js"  ></script> -->
@@ -113,16 +113,16 @@ return hexString.toString();
         <script src="resources/config/tree.js" type="text/javascript"></script>
         <script src="resources/config/interface.js" type="text/javascript"></script>
 
-        
+
 
         <script src="resources/js/validacionesBack.js" type="text/javascript"></script>
         <script src="resources/js/objFormularioBack.js" type="text/javascript"></script>
 
-
+        <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
         <!-- Compiled and minified JavaScript -->
         <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
         <script src='resources/js/jquery-2.1.1.min.js'></script>
-        <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
+
         <script src='resources/js/actionsDom.js?version=<%=version_actionDom%>'></script>
         <script src="resources/config/config.js" type="text/javascript"></script>
         <script src='resources/js/objFormulario.js?version=<%=version_objFormulario%>'></script>
@@ -139,7 +139,7 @@ return hexString.toString();
             var versionnavegador = navigator.userAgent;
             var getBrowserInfo = function () {
                 var ua = navigator.userAgent, tem,
-                    M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
+                        M = ua.match(/(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i) || [];
                 if (/trident/i.test(M[1])) {
                     tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
                     return 'IE ' + (tem[1] || '');
@@ -175,7 +175,7 @@ return hexString.toString();
                         }
 
                         event.preventDefault();
-                        window.addEventListener("touchstart", { passive: false });
+                        window.addEventListener("touchstart", {passive: false});
 
                     });
                 } /* IE7, IE8 */
@@ -197,7 +197,7 @@ return hexString.toString();
                         }
                         if (navegador.includes('Chrome')) {
                             event.preventDefault();
-                            window.addEventListener("touchstart", { passive: false });
+                            window.addEventListener("touchstart", {passive: false});
 
 
 
@@ -238,15 +238,15 @@ return hexString.toString();
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
                                 <li>
                                     <a id="ancla-map" onclick='handleModuleScroll(event)'
-                                        href="#container-map">Mapa</a>
+                                       href="#container-map">Mapa</a>
                                 </li>
                                 <li>
                                     <a id="ancla-form" onclick='handleModuleScroll(event)'
-                                        href="#container-form">Formulario</a>
+                                       href="#container-form">Formulario</a>
                                 </li>
                                 <li>
                                     <a onclick='handleFullScreen()' data-toggle="tooltip"
-                                        id="btn-fullscreen" title="Expandir"></a>
+                                       id="btn-fullscreen" title="Expandir"></a>
                                 </li>
                             </ul>
                         </div>
@@ -254,7 +254,7 @@ return hexString.toString();
                             <h2>NAVEGADOR NO SOPORTADO</h2>
                             <h2>Puedes descargar Chrome
                                 <a class="sublineado" href="https://www.google.com/chrome/"
-                                    target="blank">Aquí</a>
+                                   target="blank">Aquí</a>
                             </h2>
                         </div>
                     </nav>
@@ -280,12 +280,12 @@ return hexString.toString();
 
                         <li>
                             <a class="waves-effect" onclick='handleModuleScroll(event)'
-                                id="ancla-map-movil" href="#container-map">
+                               id="ancla-map-movil" href="#container-map">
                                 <i class="material-icons">map</i>Mapa</a>
                         </li>
                         <li>
                             <a class="waves-effect" onclick='handleModuleScroll(event)'
-                                id="ancla-form-movil" href="#container-form">
+                               id="ancla-form-movil" href="#container-form">
                                 <i class="material-icons">storage</i>Formulario</a>
                         </li>
                         <li>
@@ -336,7 +336,7 @@ return hexString.toString();
                     <div class="col s12 m8 offset-m2 l6 offset-l3 wrap-search">
                         <div class="input-field">
                             <input placeholder="Realizar Busqueda de la Clave..." id="clave-busqueda" name="clave-busqueda" type="text" class="validate"
-                                onkeypress="handleSearchCleeValidation(event)">
+                                   onkeypress="handleSearchCleeValidation(event)">
                         </div>
                         <div class="btns-search">
                             <a onclick="buscarUE()" class="btn-search search-four tooltipped" data-position="bottom" data-tooltip="Busqueda por clave">Buscar</a>
@@ -534,7 +534,7 @@ return hexString.toString();
                                 <div class="input-field">
                                     <a onclick="handleActionTarget('ubicacion-geografica', 'ubicacion-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -593,11 +593,11 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('referencia', 'referencia-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                     <a onclick="handleActionTarget('domicilio', 'domicilio-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -633,7 +633,7 @@ return hexString.toString();
                                 </div>
                                 <div class="input-field">
                                     <input placeholder="Nombre de Vialidad" style="text-transform:uppercase;" maxlength="79" id="e10" name="e10" type="text"
-                                        disabled />
+                                           disabled />
                                     <label for="e10">Nombre de la Vialidad</label>
                                 </div>
                                 <!--<div class="input-field">
@@ -659,11 +659,11 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('ubicacion-geografica', 'ubicacion-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                     <a onclick="handleActionTarget('asentamiento', 'asentamiento-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -704,11 +704,11 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('domicilio', 'domicilio-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                     <a onclick="handleActionTarget('entre-vialidades', 'vialidades-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -767,11 +767,11 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('asentamiento', 'asentamiento-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                     <a onclick="handleActionTarget('calle-posterior', 'calle-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -818,11 +818,11 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('entre-vialidades', 'vialidades-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                     <a onclick="handleActionTarget('edificio', 'edificio-float-der')" class="next-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -873,7 +873,7 @@ return hexString.toString();
                                 <div class="input-field btns-prev-next">
                                     <a onclick="handleActionTarget('calle-posterior', 'calle-float-izq')" class="previous-wrap">
                                         <img src="resources/images/iconos/right-arrow.png"
-                                            alt="next">
+                                             alt="next">
                                     </a>
                                 </div>
                             </div>
@@ -889,46 +889,46 @@ return hexString.toString();
             <!-- CONTAINER OPTIONS BUTTONS -->
             <div class="fixed-action-btn click-to-toggle btn-float-map ">
                 <a class="btn-floating btn-large btn-options-menu tooltipped animated bounceInUp slower delay-1s" data-position="bottom"
-                    data-tooltip="Menu">
+                   data-tooltip="Menu">
                     <i class="large material-icons">menu</i>
                 </a>
                 <ul>
                     <!--          <li><a id='item-save-option' disabled onclick="handleFormValidations()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Guardar"><i class="material-icons">save</i></a></li>-->
                     <li>
                         <a id='item-save-option' disabled onclick="validaCp(event)" class="btn-floating btn-item-menu tooltipped"
-                            data-position="left" data-tooltip="Guardar">
+                           data-position="left" data-tooltip="Guardar">
                             <i class="material-icons">save</i>
                         </a>
                     </li>
                     <li>
                         <a id='item-cancel-option' disabled onclick="handleCancelClick()"
-                            class="btn-floating btn-item-menu tooltipped" data-position="left"
-                            data-tooltip="Cancelar">
+                           class="btn-floating btn-item-menu tooltipped" data-position="left"
+                           data-tooltip="Cancelar">
                             <i class="material-icons">highlight_off</i>
                         </a>
                     </li>
                     <li onclick="opcionMenu(2);">
                         <a id='item-report-option' class="btn-floating btn-item-menu tooltipped"
-                            data-position="left" data-tooltip="Reportes">
+                           data-position="left" data-tooltip="Reportes">
                             <i class="material-icons">content_paste</i>
                         </a>
                     </li>
                     <li onclick="opcionMenu(4);">
                         <a class="btn-floating btn-item-menu tooltipped" data-position="left"
-                            data-tooltip="Imprimir">
+                           data-tooltip="Imprimir">
                             <i class="material-icons">local_printshop</i>
                         </a>
                     </li>
                     <li onclick="CargaTablaBloqueadas()">
                         <a class="btn-floating btn-item-menu tooltipped" data-position="left"
-                            data-tooltip="Claves Bloqueadas">
+                           data-tooltip="Claves Bloqueadas">
                             <i class="material-icons">lock</i>
                         </a>
                     </li>
                     <li onclick="abrirAyuda()">
                         <a href="#!">
                             <a class="btn-floating btn-item-menu tooltipped" data-position="left"
-                                data-tooltip="Ayuda">
+                               data-tooltip="Ayuda">
                                 <i class="material-icons">help_outline</i>
                             </a>
                             <!--          <li><a onclick="handleLogOut()" class="btn-floating btn-item-menu tooltipped" data-position="left" data-tooltip="Salir"><i class="material-icons">exit_to_app</i></a></li>-->
@@ -995,14 +995,14 @@ return hexString.toString();
         loadScript("resources/js/materialize.min.js", function () {
             // initialization code                
             $(".button-collapse").sideNav(
-                {
-                    edge: 'left',
-                    draggable: true,
-                    closeOnClick: true,
-                }
+                    {
+                        edge: 'left',
+                        draggable: true,
+                        closeOnClick: true,
+                    }
             );
 
-            $('.tooltipped').tooltip({ delay: 20 });
+            $('.tooltipped').tooltip({delay: 20});
             $('.dropdown-button').dropdown();
             $('select').material_select();
         })
@@ -1033,7 +1033,7 @@ return hexString.toString();
 
     <!-- <script src="https://gaia.inegi.org.mx/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6&d=gaia.inegi.org.mx" type="text/javascript"></script> -->
     <!--  <script src="http://mdm5beta.inegi.org.mx:8181/mdm-api/api?key=mdmGIfDSZGc6rJYVVmirb6A7tmwfYgCE7UQivS5p6JJPpY&version=V6" type="text/javascript"></script>-->
-    
+
     <!--<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
     //     crossorigin="" />
 
@@ -1048,6 +1048,6 @@ return hexString.toString();
     <script src="resources/leaflet/proj4-src.js"></script>
     <script src="resources/leaflet/proj4leaflet.js"></script>
     <script src="resources/js/withLeaflet.js"></script>
-    
+
 
 </html>

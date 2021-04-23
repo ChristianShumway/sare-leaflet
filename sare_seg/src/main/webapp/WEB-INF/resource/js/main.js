@@ -39,19 +39,19 @@ var tipoE10_g, tipoE10a_g, tipoE10b_g, tipoE10c_g;
 var E10_g, E10a_g, E10b_g, E10c_g;
 
 let dataUserFromLoginLocalStorage = {
-  acceso: getParameterByName('acceso'),
-  ce: getParameterByName('ce'),
-  cveOperativa: getParameterByName('clave_operativa'),
-  nombre:getParameterByName('nombre'),
-  tramoControl:  getParameterByName('tramo_control'),
-  usuario:  getParameterByName('nombre'),
-  proyecto: getParameterByName('proyecto')
+    acceso: getParameterByName('acceso'),
+    ce: getParameterByName('ce'),
+    cveOperativa: getParameterByName('clave_operativa'),
+    nombre: getParameterByName('nombre'),
+    tramoControl: getParameterByName('tramo_control'),
+    usuario: getParameterByName('nombre'),
+    proyecto: parseInt(getParameterByName('proyecto'))
 }
 
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-    results = regex.exec(location.search);
+            results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 const init = () =>
@@ -239,13 +239,13 @@ const callServiceFindUE = (id_ue) => {
             {
 
                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
-                'proyecto': $_GET('proyecto'),
-                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
-                 'p': '1',
-                 'tramo': dataUserFromLoginLocalStorage.nombre,
-                 'ce': dataUserFromLoginLocalStorage.ce,
-                 'usuario': dataUserFromLoginLocalStorage.nombre,
-                 'id_ue': id_ue
+                //'proyecto': $_GET('proyecto'),
+                //'proyecto': dataUserFromLoginLocalStorage.proyecto,
+                'p': '1',
+                'tramo': dataUserFromLoginLocalStorage.nombre,
+                'ce': dataUserFromLoginLocalStorage.ce,
+                'usuario': dataUserFromLoginLocalStorage.nombre,
+                'id_ue': id_ue
             },
             urlServices['serviceSearch'].type,
             data => {
@@ -481,19 +481,29 @@ const fillCatalogoOrigen = () => {
 //Función que hace zoom con el extent al hacer la busqueda
 const acercarWithExtent = data => {
     console.log(data);
-    dataJarcoreado = '-12142160.7867377,2944543.63825811,-11500056.8983068,3735054.2308941';
-    // let res = data[0].datos.datos[0].extent.split(",")
-    let res = dataJarcoreado.split(",");
+    //dataJarcoreado = '-12142160.7867377,2944543.63825811,-11500056.8983068,3735054.2308941';
+    let res = data[0].datos.datos[0].extent.split(",")
+    //let res = dataJarcoreado.split(",");
     console.log(res);
-    MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
-}
+    //map="";
+    var southWest = new L.LatLng(17.5436463137101,-92.9481569580442),
+    northEast = new L.LatLng(17.6129368481396,-92.9403425006787),
+    bounds = new L.LatLngBounds(southWest, northEast);
+    L.marker([17.5436463137101,-92.9481569580442]).addTo(map);
+    L.marker([17.6129368481396,-92.9403425006787]).addTo(map);
+    //var bounds = new L.LatLngBounds([[Math.max(-10347566.1353358049), Math.max(1988299.98895659461)], [Math.min(-10346071.6013279948), Math.min(1992292.79037697008)]]);
+    map.fitBounds(bounds, { padding: [50, 50] });
+   // map.flyTo([17.5787470709221, -92.9537681280972], 17)
+    //map.setZoom(16)
+    //MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
+};
 
 //Función que llama el servicio para obtener el código postal
 const getCp = ce => {
     sendAJAX(
             urlServices['serviceCP'].url,
             {
-                'cve_ent': ce, 
+                'cve_ent': ce,
                 // 'proyecto': dataUserFromLoginLocalStorage.proyecto,
                 'proyecto': 3
             },
@@ -502,7 +512,7 @@ const getCp = ce => {
                 cpObj = data[0].datos
             },
             () => {
-        }
+    }
     )
 }
 
@@ -1063,7 +1073,7 @@ const funcionesNoRatificado = () => {
     handleActionTargetRef()
     xycoorsx = ''
     xycoorsy = ''
-    MDM6('hideMarkers', 'identify')
+    //MDM6('hideMarkers', 'identify')
     const cancelOption = document.getElementById('item-cancel-option')
     cancelOption.removeAttribute('disabled')
 }
@@ -2403,19 +2413,19 @@ const showViewPreliminar = d => {
             if (Type == 'select-one')
             {
                 a = document.getElementById(idobj[0]).value
-               
+
                 const sel = document.getElementById(idobj[0])
                 let valor = sel.options[sel.selectedIndex].innerText != 'Seleccione' ? sel.options[sel.selectedIndex].innerText : "";
                 a != 'Seleccione' ? ObjectRequest[idobj[0]] = a : ObjectRequest[idobj[0]] = ""
                 $("#" + idobj[0] + "_pv").text(valor.toUpperCase())
             } else {
                 ObjectRequest[idobj[0]] = a
-                 if(a!==undefined){
+                if (a !== undefined) {
                     $("#" + idobj[0] + "_pv").text(a.toUpperCase())
-                }else{
-                   $("#" + idobj[0] + "_pv").text(a) 
+                } else {
+                    $("#" + idobj[0] + "_pv").text(a)
                 }
-                
+
             }
 
 
