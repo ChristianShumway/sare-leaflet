@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoSincroniza")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoSincronizaSare extends DaoBusquedaSare implements InterfaceSincroniza {
 
     @Autowired

@@ -113,7 +113,7 @@ return hexString.toString();
         <script src="resources/config/tree.js" type="text/javascript"></script>
         <script src="resources/config/interface.js" type="text/javascript"></script>
 
-        <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
+        
 
         <script src="resources/js/validacionesBack.js" type="text/javascript"></script>
         <script src="resources/js/objFormularioBack.js" type="text/javascript"></script>
@@ -122,6 +122,7 @@ return hexString.toString();
         <!-- Compiled and minified JavaScript -->
         <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script> -->
         <script src='resources/js/jquery-2.1.1.min.js'></script>
+        <script src="resources/js/main.js?version=<%=version_main%>" type="text/javascript"></script>
         <script src='resources/js/actionsDom.js?version=<%=version_actionDom%>'></script>
         <script src="resources/config/config.js" type="text/javascript"></script>
         <script src='resources/js/objFormulario.js?version=<%=version_objFormulario%>'></script>

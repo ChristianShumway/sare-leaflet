@@ -30,7 +30,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoCatalogosSare")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoCatalogosSare extends DaoBusquedaSare implements InterfaceCatalogosSare {
     
 //    @Autowired

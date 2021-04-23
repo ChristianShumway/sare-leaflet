@@ -26,7 +26,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoBackingListUEbyXY")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoBackingListUEbyXY extends DaoBusquedaSare implements InterfaceListUEbyXY{
     
     @Autowired

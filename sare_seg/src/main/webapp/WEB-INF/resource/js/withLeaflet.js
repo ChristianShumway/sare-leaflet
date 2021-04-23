@@ -46,7 +46,7 @@ var wmsLayerBase5 = L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/serv
     img: '../../resources/img/mapaBase/Esri.jpg',
     //tms: true
 });
-var wmsLayerBase6 = L.tileLayer('../../resources/img/mapaBase/Osm.jpg', {
+var wmsLayerBase6 = L.tileLayer('resources/img/mapaBase/Osm.jpg', {
     //img: '../../resources/img/mapaBase/Esri.jpg',
     tms: true
 });
@@ -99,6 +99,7 @@ var wmsLayerSare = L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do
     crossOrigin: false,
     sphericalMercator: true,
     EDO: '00',
+    tiled:true
 });
 
 //var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
@@ -122,8 +123,8 @@ var crs = new L.Proj.CRS(
         '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
         {
             //
-            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
-            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+            //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
             // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
             origin: [0, 0]
         }
@@ -151,7 +152,7 @@ var map = L.map('mapid', {
     maxZoom: 18,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
-    //crs:crs2,
+    //crs:crs,
     continuousWorld: false,
     worldCopyJump: false,
     //scrollWheelZoom: false

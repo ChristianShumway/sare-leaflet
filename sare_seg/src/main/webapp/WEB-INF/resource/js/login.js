@@ -4,13 +4,13 @@ const wrapUser = document.getElementById('wrap-input-user')
 const wrapPassword = document.getElementById('wrap-input-password')
 const cualSare = document.getElementById('cual-sare')
 let dataUserObj = {
-  acceso: '',
-  ce: '',
-  cveOperativa: '',
-  nombre: '',
+  acceso: $_GET('proyecto'),
+  ce: $_GET('ce'),
+  cveOperativa: $_GET('clave_operativa'),
+  nombre: $_GET('nombre'),
   tipoSare: '',
-  tramoControl: '',
-  usuario: '',
+  tramoControl:  $_GET('tramo_control'),
+  usuario:  $_GET('nombre'),
   proyectoSesion:'',
 }
 let loading = 'false'

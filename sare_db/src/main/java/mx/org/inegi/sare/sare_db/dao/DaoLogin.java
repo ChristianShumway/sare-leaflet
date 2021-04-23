@@ -25,7 +25,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository("DaoLogin")
-@Profile("prod")
+//@Profile("prod")
 public class DaoLogin extends DaoTransformaCartografia implements InterfaceLogin {
     
 //    @Autowired

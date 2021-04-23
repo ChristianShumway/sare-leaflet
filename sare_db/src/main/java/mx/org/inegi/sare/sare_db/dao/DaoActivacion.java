@@ -23,7 +23,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoActivacion")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoActivacion extends DaoBusquedaSare implements InterfaceActivacion {
 
     @Autowired

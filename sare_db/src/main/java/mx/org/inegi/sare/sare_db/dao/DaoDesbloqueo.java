@@ -27,7 +27,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoDesbloqueo")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoDesbloqueo extends DaoBusquedaSare implements InterfaceDesbloqueo {
 
     @Autowired

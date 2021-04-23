@@ -31,7 +31,7 @@ import org.springframework.stereotype.Repository;
  * @author LIDIA.VAZQUEZ
  */
 @Repository("DaoBusqueda")
-@Profile("jdbc")
+//@Profile("jdbc")
 public class DaoBusquedaSare extends DaoTransformaCartografia implements InterfaceBusquedaSare {
 
     @Autowired

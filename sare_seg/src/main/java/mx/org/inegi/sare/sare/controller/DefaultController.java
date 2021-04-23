@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class DefaultController extends BackingLogin {
 
-   /* @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String index(ModelMap map,
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
@@ -53,8 +53,8 @@ public class DefaultController extends BackingLogin {
         } else {
             return "error";
         }
-    }*/
-   /* @RequestMapping(value = "/", method = RequestMethod.GET)
+    }
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index1(ModelMap map,
             @RequestParam(value = "acceso", defaultValue = "") String acceso,
             @RequestParam(value = "clave_operativa", defaultValue = "") String clave_operativa,
@@ -93,9 +93,9 @@ public class DefaultController extends BackingLogin {
         } else {
             return "error";
         }
-    }*/
+    }
     
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+   /* @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index(ModelMap map) {
         return "index";
     }
@@ -125,6 +125,6 @@ public class DefaultController extends BackingLogin {
      @RequestMapping(value = "/error.html", method = RequestMethod.GET)
     public String index2(ModelMap map) {
         return "error";
-    }
+    }*/
 
 }
