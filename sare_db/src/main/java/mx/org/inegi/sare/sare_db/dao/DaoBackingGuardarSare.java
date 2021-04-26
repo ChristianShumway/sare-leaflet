@@ -296,7 +296,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                 break;
             case UEEPA:
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.getE23A, "", false);
-                regresa = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<String>() {
+                regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
                     @Override
                     public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                         String regresar = "";
@@ -369,7 +369,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
         String regresa = null;
         sql = getSql(proyectos, null, inmueble, MetodosGuardar.validarInmuebleUEEPA, "", false);
         try{
-        regresa = jdbcTemplateoclueepa.query(sql.toString(), new ResultSetExtractor<String>() {
+        regresa = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String regresar = null;
@@ -398,7 +398,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
             } else {
                 sql = getSql(proyectos, null, inmueble, MetodosGuardar.GuardarUeOClUEEPA, "", false);
             }
-            if (jdbcTemplateoclueepa.update(sql.toString()) > 0) {
+            if (jdbcTemplate.update(sql.toString()) > 0) {
                 regresa = true;
             }
 
@@ -428,7 +428,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         }
                         break;
                     case UEEPA:
-                        if (jdbcTemplateoclueepa.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                        if (jdbcTemplate.update(sql.toString(), new Object[]{Integer.valueOf(id_ue)}) > 0) {
                             regresa = true;
                         }
                         break;
@@ -464,7 +464,7 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                     case Operativo_Masivo:
                     case Establecimientos_GrandesY_Empresas_EGE:
                     case UEEPA:
-                        if (jdbcTemplateocl.update(sql.toString(), new Object[]{id_ue}) > 0) {
+                        if (jdbcTemplate.update(sql.toString(), new Object[]{id_ue}) > 0) {
                             regresa = true;
                         }
                         break;
@@ -667,18 +667,18 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("SELECT resultado from ").append(esquemaPos).append(".registra_ue_sare(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?").append(") resultado");
                         break;
                     case getE23A:
-                        sql.append("SELECT e23 as E23A FROM ").append(esquemaOcl).append(".ENC_CUESTIONARIO where id = ").append(inmueble.getId_UE());
+                        sql.append("SELECT e23 as E23A FROM ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO where id_ue = ").append(inmueble.getId_UE());
                         break;
                     case getidDeftramo:
                         sql.append("SELECT id_deftramo");
                         sql.append(" FROM ").append(esquemaOcl).append(".tr_inmuebles where id_inmueble = ").append(inmueble.getId_inmueble());
                         break;
                     case UpdateOclStatusOk:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='01',FECHA_ST_SARE =CURRENT_DATE where id=? and st_sare='20'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='01',FECHA_ST_SARE =CURRENT_DATE where id_ue=? and st_sare='20'");
                         break;
 
                     case UpdateOclStatusOcupado:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20',FECHA_ST_SARE =CURRENT_DATE where id=? and st_sare='01'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='20',FECHA_ST_SARE =CURRENT_DATE where id_ue=? and st_sare='01'");
                         break;
                     case GuardarUnidadesEnFrentes:
                         sql.append("SELECT ").append(esquemaPos).append(".interpolado_inmuebles('").append(obj.getIddeftramo()).append("','").append(obj.getCapa()).append("','")
@@ -689,10 +689,10 @@ public class DaoBackingGuardarSare extends DaoSincronizaSare implements Interfac
                         sql.append("UPDATE ").append(esquemaOcl).append(".TR_PREDIOS set st_sare='01' where id_uo_masivo=? and st_sare='20'");
                         break;
                     case validarInmuebleUEEPA:
-                        sql.append("SELECT id_ue  FROM ").append(esquemaOcl).append(".ENC_CUESTIONARIO_GEO where id_ue = '").append(inmueble.getId_UE()).append("'");
+                        sql.append("SELECT id_ue  FROM ").append(esquemaPos).append(".ENC_CUESTIONARIO_GEO where id_ue = '").append(inmueble.getId_UE()).append("'");
                         break;
                     case UpdateInmuebleUEEPA:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO_GEO set "
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_CUESTIONARIO_GEO set "
                                 + "CVEGEO='").append(inmueble.getCvegeo() != null ? inmueble.getCvegeo() : "").append("',")
                                 .append("CVE_CE='").append(inmueble.getCE() != null ? inmueble.getCE() : "").append("',")
                                 .append("CVE_ENT='").append(inmueble.getE03() != null ? inmueble.getE03() : "").append("',")

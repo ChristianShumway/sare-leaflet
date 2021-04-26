@@ -2732,7 +2732,8 @@ const identificar = coor => {
             } else {
                 if (level <= 13) {
                     showAlertIdentify('warning', `${14 - level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
-                    MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+                    
+                   // MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
                 } else {
                     //Lo deja puntear y agrega el punto
                      map.removeLayer(marker)
