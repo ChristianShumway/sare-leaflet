@@ -13,6 +13,7 @@
 // }).addTo(mymap);
 
 var marker;
+var lat,long;
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
     sphericalMercator: true
@@ -173,7 +174,9 @@ map.on('click', function (e) {
         map.removeLayer(marker)
     }
     marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-
+    lat=e.latlng.lat;
+    long=e.latlng.lng;
+    identify(e.latlng)
     // alert(e.latlng);
 });
 window.addEventListener('keydown', function (event)

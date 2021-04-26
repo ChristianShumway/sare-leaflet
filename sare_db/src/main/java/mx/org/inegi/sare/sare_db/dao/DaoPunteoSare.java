@@ -59,6 +59,11 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     @Autowired
     @Qualifier("jdbcTemplate")
     private JdbcTemplate jdbcTemplate;
+    
+    
+    @Autowired
+    @Qualifier("jdbcTemplateProd")
+    private JdbcTemplate jdbcTemplateProd;
 
     @Autowired
     @Qualifier("jdbcTemplateOcl")
@@ -155,7 +160,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private String execSqlTipoAreaPg(StringBuilder sql) {
         resultado = "";
-        jdbcTemplate.query(sql.toString(), new ResultSetExtractor<String>() {
+        jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String fila = null;
@@ -218,7 +223,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private boolean execSqlisPuntoinMzaPg(StringBuilder sql, String point) {
         isMza = false;
-        isMza = jdbcTemplate.query(sql.toString(), new Object[]{point, point}, new ResultSetExtractor<Boolean>() {
+        isMza = jdbcTemplateProd.query(sql.toString(), new Object[]{point, point}, new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                 boolean fila = false;
@@ -325,7 +330,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
         StringBuilder sql;
         super.proyectos = super.getProyecto(proyecto);
         sql = getSql(super.proyectos, "", x, y, Metodo.CVEMANZANA);
-        cveManzana = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<List<cat_frente_geometria>>() {
+        cveManzana = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<List<cat_frente_geometria>>() {
             @Override
             public List<cat_frente_geometria> extractData(ResultSet rs) throws SQLException, DataAccessException {
                 cat_frente_geometria fila = null;
@@ -342,7 +347,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private String execSqlEntidadPg(StringBuilder sql, String point) {
         entidad = null;
-        entidad = jdbcTemplate.query(sql.toString(), new Object[]{point}, new ResultSetExtractor<String>() {
+        entidad = jdbcTemplateProd.query(sql.toString(), new Object[]{point}, new ResultSetExtractor<String>() {
             @Override
             public String extractData(ResultSet rs) throws SQLException, DataAccessException {
                 String fila = null;
@@ -415,7 +420,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private cat_ubicacion_punteo execSqlInfoPunteoUrbanoPg(StringBuilder sql) {
         ubicacion_punteo = null;
-        ubicacion_punteo = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() {
+        ubicacion_punteo = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() {
             @Override
             public cat_ubicacion_punteo extractData(ResultSet rs) throws SQLException, DataAccessException {
                 while (rs.next()) {
@@ -491,7 +496,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
     private List<cat_vial> execSqlValidaInfoPunteoUrbanoPg(StringBuilder sql, String ent, String cve_geo, String cve_ft) {
         int cve = Integer.valueOf(cve_ft);
         cat_vial = new ArrayList<>();
-        cat_vial = jdbcTemplate.query(sql.toString(), new Object[]{ent, cve_geo, cve}, new ResultSetExtractor<List<cat_vial>>() {
+        cat_vial = jdbcTemplateProd.query(sql.toString(), new Object[]{ent, cve_geo, cve}, new ResultSetExtractor<List<cat_vial>>() {
             @Override
             public List<cat_vial> extractData(ResultSet rs) throws SQLException, DataAccessException {
                 cat_vial fila = null;
@@ -606,7 +611,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private cat_ubicacion_punteo execInfoPunteoRuralPg(StringBuilder sql) {
         ubicacion_punteo = new cat_ubicacion_punteo();
-        ubicacion_punteo = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() {
+        ubicacion_punteo = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<cat_ubicacion_punteo>() {
             @Override
             public cat_ubicacion_punteo extractData(ResultSet rs) throws SQLException, DataAccessException {
                 cat_ubicacion_punteo fila = new cat_ubicacion_punteo();
@@ -681,7 +686,7 @@ public class DaoPunteoSare extends DaoBusquedaSare implements InterfacePunteoSar
 
     private boolean execSqlisFrentesProximosPg(StringBuilder sql) {
         boolean regresar = false;
-        regresar = jdbcTemplate.query(sql.toString(), new ResultSetExtractor<Boolean>() {
+        regresar = jdbcTemplateProd.query(sql.toString(), new ResultSetExtractor<Boolean>() {
             @Override
             public Boolean extractData(ResultSet rs) throws SQLException, DataAccessException {
                 Boolean fila = false;

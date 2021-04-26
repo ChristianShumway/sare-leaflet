@@ -607,7 +607,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                     }
                     break;
                 case UEEPA:
-                    if (jdbcTemplateoclueepa.update(sql.toString()) > 0) {
+                    if (jdbcTemplate.update(sql.toString()) > 0) {
                         if (jdbcTemplate.update(sqlpg.toString()) > 0) {
 
                             regresa = true;
@@ -808,13 +808,13 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         break;
                     case LIBERACLAVEUNICAORACLE:
                         //sql.append("UPDATE ").append(esquemaPos).append(".VW_PUNTEO_SARE set SARE_ST='10' where id_ue='").append(id_ue).append("' and sare_st<>'01'");
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='10' where id='").append(id_ue).append("' and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare<>'01'");
                         break;
                     case LIBERACLAVEUNICAPG:
                         sql.append("UPDATE ").append(esquemaPos).append(".tr_ue_complemento set st_sare='10' where id_ue='").append(id_ue).append("' and st_sare='20'");
                         break;
                     case LIBERACLAVEUNICAORACLEOTROS:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='10' where id_uo_masivo='").append(id_ue).append("' and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='10' where id_uo_masivo='").append(id_ue).append("' and st_sare<>'01'");
                         break;
                     case GETVALCOORGEO:
                         sql.append("select x_geo::varchar,y_geo::varchar,error from ").append(esquemaPos).append(".val_coordenada_geo(?,?) valida");
@@ -828,7 +828,7 @@ public class DaoBusquedaSare extends DaoTransformaCartografia implements Interfa
                         sql.append("UPDATE ").append(esquemaPos).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='20' where id_ue=? and st_sare<>'01'");
                         break;
                     case OCUPACVEUNICACONGLOMERADO:
-                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_CUESTIONARIO set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
+                        sql.append("UPDATE ").append(esquemaOcl).append(".ENC_VBCUESTIONARIO_PUNTEO set st_sare='20' where ID_UO_MASIVO=? and st_sare<>'01'");
                         break;
                     case VALIDA_COORDENADAS_CAIGAN_EN_ESTADO:
                         sql.append("select case when count(*)>0 then 1 else 0 end from ").append(schemaSarePGUEEPA).append(".td_entidad where st_intersects(st_transform(the_geom_merc,4326),st_geomfromtext('POINT(").append(cat_vw_punteo_sare.getCOORD_X()).append(" ").append(cat_vw_punteo_sare.getCOORD_Y()).append(")',4326))");

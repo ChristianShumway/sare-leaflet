@@ -60,7 +60,7 @@ public class BackingPunteoSare extends BackingBusquedaSare {
         if (TipoCartografia.Geografica.getCodigo().equals(tc)) {
             Double cX = Double.parseDouble(x.replace(",", "."));
             Double cY = Double.parseDouble(y.replace(",", "."));
-            coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, x, y, tc);
+            coordMercator = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, tc, x, y);
         } else {
             coordMercator = new cat_coordenadas(x, y);
         }
@@ -97,6 +97,9 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                         String ent = InterfacePunteoSare.getEntidad(proyecto, coordMercator.getX(), coordMercator.getY());
                         ubicacion_punteo = InterfacePunteoSare.getInfoPunteoUrbano(proyecto, ent, coordMercator.getX(), coordMercator.getY());
                         if (ubicacion_punteo != null && ubicacion_punteo.getMod_cat() == 1) {
+                            cat_coordenadas coordenadasGeograficas = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, "mer", ubicacion_punteo.getCoord_x(), ubicacion_punteo.getCoord_y());
+                            ubicacion_punteo.setCoord_x(coordenadasGeograficas.getX());
+                            ubicacion_punteo.setCoord_y(coordenadasGeograficas.getY());
                             cat_vial = InterfacePunteoSare.validaInfoPunteoUrbano(ubicacion_punteo.getE03(), ubicacion_punteo.getCvegeo(), ubicacion_punteo.getCveft(), proyecto, ce, coordMercator.getX(), coordMercator.getY());
                             ubicacion_punteo.setE10_X(new ArrayList<cat_vial>());
                             ubicacion_punteo.setE10_X(cat_vial);
@@ -171,6 +174,9 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                     }
                 } else if (TipoAreaEnum.RURAL.getArea().equals(ta)) {
                     ubicacion_punteo = InterfacePunteoSare.getInfoPunteoRural(proyecto, coordMercator.getX(), coordMercator.getY());
+                    cat_coordenadas coordenadasGeograficas = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, "mer", ubicacion_punteo.getCoord_x(), ubicacion_punteo.getCoord_y());
+                    ubicacion_punteo.setCoord_x(coordenadasGeograficas.getX());
+                    ubicacion_punteo.setCoord_y(coordenadasGeograficas.getY());
                     List<cat_vial> catVial = InterfacePunteoSare.getCatTipoVial(proyecto);
                     ubicacion_punteo.setCatVial(catVial);
                     ubicacion_punteo.setPunteo(punteoReal);

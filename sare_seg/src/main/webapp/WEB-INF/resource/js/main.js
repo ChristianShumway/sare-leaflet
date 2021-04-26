@@ -107,7 +107,7 @@ const addLayerEconomicas = (chk, option) => {
 const addCapas = chk => {
     console.log('hola');
     var idWms = urlServices['map'].label
-    MDM6('updateSize');
+    //MDM6('updateSize');
     if (chk.checked == true) {
         if (layersSARE.indexOf('c101') < 0) {
             //addLay('c101')
@@ -484,12 +484,12 @@ const acercarWithExtent = data => {
     //let res = dataJarcoreado.split(",");
     console.log(res);
     //map="";
-    var southWest = new L.LatLng(res[1],res[0]),
-    northEast = new L.LatLng(res[3],res[2]),
-    bounds = new L.LatLngBounds(southWest, northEast);
+    var southWest = new L.LatLng(res[1], res[0]),
+            northEast = new L.LatLng(res[3], res[2]),
+            bounds = new L.LatLngBounds(southWest, northEast);
     //var bounds = new L.LatLngBounds([[Math.max(-10347566.1353358049), Math.max(1988299.98895659461)], [Math.min(-10346071.6013279948), Math.min(1992292.79037697008)]]);
-    map.fitBounds(bounds, { padding: [50, 50] });
-   // map.flyTo([17.5787470709221, -92.9537681280972], 17)
+    map.fitBounds(bounds, {padding: [50, 50]});
+    // map.flyTo([17.5787470709221, -92.9537681280972], 17)
     //map.setZoom(16)
     //MDM6("goCoords", parseInt(res[0], 10), parseInt(res[1], 10), parseInt(res[2], 10), parseInt(res[3], 10));
 };
@@ -1056,7 +1056,7 @@ const ratificar = request => {
         handleActionTargetRef()
         handleActionButtons('enabled')
         MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}})
-        handlePunteo(xycoorsx, xycoorsy, 'mercator', 'r')
+        handlePunteo(xycoorsx, xycoorsy, 'geo', 'r')
         bandera_ratificar = true
     } else if (request == 'no') {
         funcionesNoRatificado()
@@ -1084,7 +1084,7 @@ const handleActiveVisibleSearch = () => {
 
 //Funcion que lleva a cabo el punteo del establecimient
 const handlePunteo = (x, y, tc, r) => {
-    MDM6('updateSize');
+    // MDM6('updateSize');
     xycoorsx = ''
     xycoorsy = ''
     id_ue = document.getElementById('id_UE').value
@@ -1177,7 +1177,8 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                     } else {
                         if (data[0].datos.mensaje.type === 'error') {
                             showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-                            MDM6('hideMarkers', 'identify')
+                             map.removeLayer(marker)
+                            //MDM6('hideMarkers', 'identify')
                             xycoorsx = ''
                             xycoorsy = ''
                         } else {
@@ -1187,7 +1188,8 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                             const cancelOption = document.getElementById('item-cancel-option')
                             cancelOption.removeAttribute('disabled')
                             showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-                            MDM6('hideMarkers', 'identify')
+                             map.removeLayer(marker)
+                            // MDM6('hideMarkers', 'identify')
                             xycoorsx = ''
                             xycoorsy = ''
                         }
@@ -1195,7 +1197,9 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                 }
             }
         } else {
-            MDM6('hideMarkers', 'identify')
+            if (marker !== undefined) {
+                map.removeLayer(marker)
+            }
             showAlertPunteo(`Punteo no realizado ${data[0].messages}`)
         }
 
@@ -1633,8 +1637,12 @@ const actualizaForm = data => {
     }
     xycoorsx = data.coord_x
     xycoorsy = data.coord_y
-    MDM6('hideMarkers', 'identify')
-    MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}})
+     if (marker !== undefined) {
+        map.removeLayer(marker)
+    }
+     marker = L.marker([data.coord_y,data.coord_x]).addTo(map);
+    //MDM6('hideMarkers', 'identify')
+    //MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}})
     isChange = true
 
     for (var entry in data) {
@@ -2493,7 +2501,8 @@ const handleShowResult = result => {
                         } else {
                             layersSARE = ['c100', 'wdenue', 'c101a']
                             handleCancelClick()
-                            MDM6('hideMarkers', 'identify')
+                             map.removeLayer(marker)
+                            //MDM6('hideMarkers', 'identify')
                             handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
                             removerOtrosInputs()
                             //handleActiveVisibleSearch()
@@ -2544,15 +2553,19 @@ const identify = (coor) => HandleWhatDoYouWantToDo(coor)
 // Función al seleccionar opciones identificar, puntear  y vista calle
 const HandleWhatDoYouWantToDo = (coor) => {
     let request = $('input:radio[name=accion]:checked').val();
-    let level = MDM6('getZoomLevel');
-    MDM6('updateSize');
+    //let level = MDM6('getZoomLevel');
+    let level = map.getZoom();
+    //MDM6('updateSize');
     switch (request) {
         case 'identificar':
             if (level >= 13)
             {
-                identificaUE(coor.lon, coor.lat);
+                identificaUE(coor.lng, coor.lat);
             } else {
-                MDM6('hideMarkers', 'identify')
+                if (marker !== undefined) {
+                    map.removeLayer(marker)
+                }
+                //MDM6('hideMarkers', 'identify')
                 Swal.fire({
                     position: 'bottom-end',
                     type: 'warning',
@@ -2581,7 +2594,8 @@ const HandleWhatDoYouWantToDo = (coor) => {
                 identificar(coor);
                 handleActionButtons('enabled')
             } else {
-                MDM6('hideMarkers', 'identify')
+                map.removeLayer(marker)
+                //MDM6('hideMarkers', 'identify')
                 Swal.fire({
                     position: 'bottom-end',
                     type: 'warning',
@@ -2593,9 +2607,10 @@ const HandleWhatDoYouWantToDo = (coor) => {
             break
         case 'v_calle':
             if (level >= 13) {
-                StreetView(coor.lon, coor.lat)
+                StreetView(coor.lng, coor.lat)
             } else {
-                MDM6('hideMarkers', 'identify')
+                map.removeLayer(marker)
+                //MDM6('hideMarkers', 'identify')
                 Swal.fire({
                     position: 'bottom-end',
                     type: 'warning',
@@ -2616,15 +2631,18 @@ const HandleWhatDoYouWantToDo = (coor) => {
             isAlta = true
             if (level <= 13) {
                 showAlertIdentify('warning', `${14 - level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
-                MDM6('hideMarkers', 'identify')
+                map.removeLayer(marker)
+                //MDM6('hideMarkers', 'identify')
             } else {
                 //Lo deja puntear y agrega el punto
                 enabledInputs()
                 handleActionTargetRef()
                 handleActionButtons('enabled')
-                MDM6('hideMarkers', 'identify')
-                MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
-                handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+                map.removeLayer(marker)
+                //MDM6('hideMarkers', 'identify')
+                marker = L.marker([coor.lng, coor.lat]).addTo(map);
+                //MDM6('addMarker', {lon: parseFloat(coor.lng), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lng + ", " + coor.lat}});
+                handlePunteo(coor.lng, coor.lat, 'geo', 'n')
                 handleHideAlertPickMap()
                 fillCatalogo()
                 fillCatalogoConjuntosComerciales()
@@ -2696,8 +2714,10 @@ const HandleActionsSaveNewPoint = option => {
 }
 
 const identificar = coor => {
-    MDM6('hideMarkers', 'identify')
-    let level = MDM6('getZoomLevel')
+     map.removeLayer(marker)
+    // MDM6('hideMarkers', 'identify')
+    //let level = MDM6('getZoomLevel')
+    let level = map.getZoom()
     id_ue = document.getElementById('id_UE').value
     let visible = document.getElementById('container-ratifica').dataset.visible
 
@@ -2715,9 +2735,11 @@ const identificar = coor => {
                     MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
                 } else {
                     //Lo deja puntear y agrega el punto
-                    MDM6('hideMarkers', 'identify')
-                    MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
-                    handlePunteo(coor.lon, coor.lat, 'mercator', 'n')
+                     map.removeLayer(marker)
+                     marker = L.marker([coor.lat, coor.lng]).addTo(map);
+                    //MDM6('hideMarkers', 'identify')
+                    //MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
+                    handlePunteo(coor.lng, coor.lat, 'geo', 'n')
                     handleHideAlertPickMap()
                 }
             }
@@ -2747,7 +2769,8 @@ const modalGoogleMap = (x, y, tc) => {
                 urlServices['serviceIdentifyStreetView'].type,
                 data => {
                     if (data[0].operation) {
-                        MDM6('hideMarkers', 'identify')
+                        map.removeLayer(marker)
+                        //MDM6('hideMarkers', 'identify')
                         ubicacion = `${data[0].datos['y']} , ${ data[0].datos['x']}`
                         let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
                         setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
@@ -2781,7 +2804,8 @@ const mostrarMensaje = () => {
         html: true,
         animation: true
     })
-    MDM6('hideMarkers', 'identify')
+    map.removeLayer(marker)
+    //MDM6('hideMarkers', 'identify')
     xycoorsx = ''
     xycoorsy = ''
 }
@@ -2799,7 +2823,8 @@ const callServicioIdentificar = (capas, x, y) => {
         if (data[0].operation) {
             swal.close();
             if (data[0].datos.mensaje.messages === null) {
-                MDM6('hideMarkers', 'identify')
+                map.removeLayer(marker)
+                //MDM6('hideMarkers', 'identify')
                 var dataToFrm = data[0].datos.datos
                 modalShowInfoUE(dataToFrm, capas)
             } else {
@@ -2818,8 +2843,8 @@ const callServicioIdentificar = (capas, x, y) => {
                     allowOutsideClick: true,
                     animation: true
                 })
-
-                MDM6('hideMarkers', 'identify')
+map.removeLayer(marker)
+               // MDM6('hideMarkers', 'identify')
                 xycoorsx = ''
                 xycoorsy = ''
             }
@@ -3036,11 +3061,15 @@ const cleanForm = () => {
     //limpia formularios
     handleCleanForms()
     //posicion el mapa en su posicion inicial
-    MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995)
+    map.setView([21.541, -102.034], 5)
+    //MDM6("goCoords", -6674510.727748, -16067092.761748, 4294907.646543801, 1046639.6931187995)
     //oculta el marcador azul
-    MDM6('hideMarkers', 'identify')
+    if (marker !== undefined) {
+        map.removeLayer(marker)
+    }
+    //MDM6('hideMarkers', 'identify')
     //oculta el marcador naranja
-    MDM6('hideMarkers', 'routen')
+    //MDM6('hideMarkers', 'routen')
     //contrae la tarjeta de referencia
     handleVisibleForm('referencia')
     //deshabilita botones limpiar y guardar
@@ -3557,7 +3586,8 @@ const handleShowResultDesbloqueo = (result, id_ue) => {
                             return;
                         } else {
                             swal.close()
-                            MDM6('hideMarkers', 'identify')
+                            map.removeLayer(marker)
+                            //MDM6('hideMarkers', 'identify')
                             handleShowSaveAlert('success', 'Desbloqueo', 'Se ha Desbloqueado la clave', true)
                         }
                     } else {
