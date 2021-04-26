@@ -484,11 +484,9 @@ const acercarWithExtent = data => {
     //let res = dataJarcoreado.split(",");
     console.log(res);
     //map="";
-    var southWest = new L.LatLng(17.5436463137101,-92.9481569580442),
-    northEast = new L.LatLng(17.6129368481396,-92.9403425006787),
+    var southWest = new L.LatLng(res[1],res[0]),
+    northEast = new L.LatLng(res[3],res[2]),
     bounds = new L.LatLngBounds(southWest, northEast);
-    L.marker([17.5436463137101,-92.9481569580442]).addTo(map);
-    L.marker([17.6129368481396,-92.9403425006787]).addTo(map);
     //var bounds = new L.LatLngBounds([[Math.max(-10347566.1353358049), Math.max(1988299.98895659461)], [Math.min(-10346071.6013279948), Math.min(1992292.79037697008)]]);
     map.fitBounds(bounds, { padding: [50, 50] });
    // map.flyTo([17.5787470709221, -92.9537681280972], 17)

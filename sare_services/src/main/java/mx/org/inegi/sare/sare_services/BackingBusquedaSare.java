@@ -42,7 +42,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     @Autowired
     @Qualifier("DaoDesbloqueo")
     InterfaceDesbloqueo InterfaceDesbloqueo;
-    
+
     @Autowired
     @Qualifier("DaoPunteoSare")
     InterfacePunteoSare InterfacePunteo;
@@ -50,7 +50,6 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     @Autowired
     @Qualifier("DaoTransformaCartografia")
     InterfaceTransformaCoordenadas DaoTransformaCartografia;
-    
 
     boolean mza800 = false;
     String[] tabla = new String[6];
@@ -69,7 +68,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
     cat_coordenadas coord_merc;
 
     private void inicializaVariable(Integer proyecto) {
-        if (proyecto == 5 || proyecto==1) {
+        if (proyecto == 5 || proyecto == 1) {
             tabla[0] = "td_entidad";
             tabla[1] = "td_municipios";
             tabla[2] = "td_localidades";
@@ -82,46 +81,48 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
             nombre[1] = "nomgeo";
             nombre[2] = "nomgeo";
         } else {
-        if(proyecto==9){
-            tabla[0] = "td_entidad";
-            tabla[1] = "td_municipios";
-            tabla[2] = "td_localidades";
-            tabla[3] = "td_ageb";
-            tabla[4] = "vw_tr_frentes";
-            tabla[5] = "cat_tipovialidad";
-            tabla_rural[0] = "td_localidades_rurales_lpr";
-            tabla_rural[1] = "td_ageb_rural";
-            nombre[0] = "nomgeo";
-            nombre[1] = "nomgeo";
-            nombre[2] = "nomgeo";
-        } if (proyecto == 3) {
-            tabla[0] = "td_entidad";
-            tabla[1] = "td_municipios";
-            tabla[2] = "td_localidades";
-            tabla[3] = "td_ageb_urbano";
-            tabla[4] = "td_manzanas";
-            tabla[5] = "cat_tipovialidad";
-            tabla_rural[0] = "td_localidades_rurales";
-            tabla_rural[1] = "td_ageb_rural";
-            nombre[0] = "nom_ent";
-            nombre[1] = "nomgeo";
-            nombre[2] = "nomgeo";
-        }else{
-            tabla[0] = "ent";
-            tabla[1] = "mun";
-            tabla[2] = "l";
-            tabla[3] = "a";
-            tabla[4] = "m";
-            tabla[5] = "cat_tipovialidad";
-            tabla_rural[0] = "lpr";
-            tabla_rural[1] = "ar";
-            nombre[0] = "nom_ent";
-            nombre[1] = "nom_mun";
-            nombre[2] = "nomloc";
-        }
+            if (proyecto == 9) {
+                tabla[0] = "td_entidad";
+                tabla[1] = "td_municipios";
+                tabla[2] = "td_localidades";
+                tabla[3] = "td_ageb";
+                tabla[4] = "vw_tr_frentes";
+                tabla[5] = "cat_tipovialidad";
+                tabla_rural[0] = "td_localidades_rurales_lpr";
+                tabla_rural[1] = "td_ageb_rural";
+                nombre[0] = "nomgeo";
+                nombre[1] = "nomgeo";
+                nombre[2] = "nomgeo";
+            }
+            if (proyecto == 3) {
+                tabla[0] = "td_entidad";
+                tabla[1] = "td_municipios";
+                tabla[2] = "td_localidades";
+                tabla[3] = "td_ageb_urbano";
+                tabla[4] = "td_manzanas";
+                tabla[5] = "cat_tipovialidad";
+                tabla_rural[0] = "td_localidades_rurales";
+                tabla_rural[1] = "td_ageb_rural";
+                nombre[0] = "nom_ent";
+                nombre[1] = "nomgeo";
+                nombre[2] = "nomgeo";
+            } else {
+                tabla[0] = "ent";
+                tabla[1] = "mun";
+                tabla[2] = "l";
+                tabla[3] = "a";
+                tabla[4] = "m";
+                tabla[5] = "cat_tipovialidad";
+                tabla_rural[0] = "lpr";
+                tabla_rural[1] = "ar";
+                nombre[0] = "nom_ent";
+                nombre[1] = "nom_mun";
+                nombre[2] = "nomloc";
+            }
 
+        }
     }
-    }
+
     public cat_respuesta_services getBusquedaConglomerados(Integer proyecto, int t, String tramo, String ce, String usuario, String id_ue, Boolean consulta) throws Exception {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         inicializaVariable(proyecto);
@@ -151,12 +152,10 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                         element.setCOORD_X(null);
                                         element.setCOORD_Y(null);
                                     }
-                                }                                
+                                }
                                 if (element.getCOORD_X() != null && !String.valueOf(element.getCOORD_X()).equals("") && element.getCOORD_Y() != null && !String.valueOf(element.getCOORD_Y()).equals("")) {
                                     //extent = InterfaceBusquedaSare.getExtentBusquedaCvegeo(element, proyecto, 0, null, mza800, null);
-                                    
-                                    
-                                    
+
                                     cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
                                     cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
                                     coord_merc = DaoTransformaCartografia.TransformaCartografia(proyecto, "geo", String.valueOf(cX), String.valueOf(cY));
@@ -259,7 +258,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                     }
                     listCUPG = InterfaceBusquedaSare.getClavesUnicasPG(proyecto);
                     if (listCUPG != null) {
-                        regPg=false;
+                        regPg = false;
                         for (String ue : listCUPG) {
                             if (String.valueOf(catBusquedaOracle.get(0).getID_UE()).equals(ue)) {
                                 regPg = true;
@@ -337,7 +336,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                             if (element.getCOORD_X() != null && element.getCOORD_Y() != null) {
                                                 cX = Double.parseDouble(String.valueOf(element.getCOORD_X()).replace(",", "."));
                                                 cY = Double.parseDouble(String.valueOf(element.getCOORD_Y()).replace(",", "."));
-                                                
+
                                                 if (!InterfaceBusquedaSare.ValidateCoordsEdo(proyecto, element)) {
                                                     element.setCOORD_X(null);
                                                     element.setCOORD_Y(null);
@@ -363,10 +362,20 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                                                     fsearch = true;
                                                     while (fsearch) {
                                                         extent = InterfaceBusquedaSare.getExtentBusquedaCvegeo2(element, proyecto, params, tabla[params - 1], mza800, tabla_rural);
+
                                                         params = params - 1;
                                                         if ((extent != null && !extent.equals("")) || params == 1 || params == 0) {
+
                                                             fsearch = false;
                                                         }
+                                                        if (extent != null && !extent.equals("")) {
+                                                            String extentArray[];
+                                                            extentArray = extent.split(",");
+                                                            cat_coordenadas extent1 = DaoTransformaCartografia.TransformaCartografia(proyecto, "mer", extentArray[0], extentArray[1]);
+                                                            cat_coordenadas extent2 = DaoTransformaCartografia.TransformaCartografia(proyecto, "mer", extentArray[2], extentArray[3]);
+                                                            extent = String.valueOf(extent1.getX()).concat(",").concat(String.valueOf(extent1.getY())).concat(",").concat(String.valueOf(extent2.getX())).concat(",").concat(String.valueOf(extent2.getY()));
+                                                        }
+
                                                     }
                                                 }
 
@@ -455,7 +464,7 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
         cat_respuesta_services Regresar = new cat_respuesta_services();
         switch (proyectos) {
             case MasivoOtros:
-           
+
                 String id_uo[] = id_ue.split(",");
                 for (String id_uo_masivo : id_uo) {
                     if (InterfaceBusquedaSare.liberaCveunicaOCL(proyecto, id_uo_masivo)) {
@@ -488,7 +497,6 @@ public class BackingBusquedaSare extends DaoTransformaCartografia {
                     Regresar.setDatos("Error");
                 }
                 break;
-                
 
         }
 
