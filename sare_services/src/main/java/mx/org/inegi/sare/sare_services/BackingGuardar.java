@@ -70,7 +70,7 @@ public class BackingGuardar extends BackingSincroniza {
                                     //coords = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto,"mer",object.getCoordx().toString(),object.getCoordy().toString());
                                     //object.setCoordx(new BigDecimal(coords.getX()));
                                     //object.setCoordy(new BigDecimal(coords.getY()));
-                                    if (InterfaceGuardar.GuardarOclUEEPA(proyecto, object)) { //se comenta ya que no se va a manejar oracle 
+                                    //if (InterfaceGuardar.GuardarOclUEEPA(proyecto, object)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
                                        /// if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
@@ -100,11 +100,11 @@ public class BackingGuardar extends BackingSincroniza {
                         } else {
                             Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro, favor de no modificar la ubicación geográfica"));
                         }
-                        } else {
+                        //} else {
                             Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                        }
+                        //}
                     } else if (validacion == 96) {
-                        Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
+                      //  Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
                     } else if (validacion == 99) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Datos nulos"));
                     } else if (validacion == 99) {
