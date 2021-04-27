@@ -3508,7 +3508,7 @@ const CargaTablaBloqueadas = () => {
     sendAJAX(urlServices['serviceListaClavesBloqueadas'].url,
             {
                 'proyecto': dataUserFromLoginLocalStorage.proyecto,
-                'tramo': dataUserFromLoginLocalStorage.tramo_control,
+                'tramo': dataUserFromLoginLocalStorage.nombre,
                 'id_ue': dataUserFromLoginLocalStorage.ce
             }, urlServices['serviceListaClavesBloqueadas'].type,
             data => {
