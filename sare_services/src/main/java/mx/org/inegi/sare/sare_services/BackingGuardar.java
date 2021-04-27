@@ -30,8 +30,8 @@ public class BackingGuardar extends BackingSincroniza {
     @Autowired
     @Qualifier("DaoBackingGuardarSare")
     InterfaceGuardarUE InterfaceGuardar;
-    
-      @Autowired
+
+    @Autowired
     @Qualifier("DaoTransformaCartografia")
     private InterfaceTransformaCoordenadas InterfaceTransformaCoordenadas;
 
@@ -49,12 +49,12 @@ public class BackingGuardar extends BackingSincroniza {
         if (object.getE13() != null && object.getE13().equals("0")) {
             object.setE13(null);
         }
-      
+
         cat_respuesta_services Respuesta = new cat_respuesta_services();
         cat_vw_punteo_sare inmueble = inicializa(object);
         int validacion = 1;
-        if (inmueble != null && !inmueble.getTIPO_E10().equals("") && 
-                !inmueble.getTIPO_E10_B().equals("") && !inmueble.getTIPO_E10_C().equals("") && !inmueble.getTIPO_E10_A().equals("")) {
+        if (inmueble != null && !inmueble.getTIPO_E10().equals("")
+                && !inmueble.getTIPO_E10_B().equals("") && !inmueble.getTIPO_E10_C().equals("") && !inmueble.getTIPO_E10_A().equals("")) {
             if (inmueble.getID_UE() == null || inmueble.getCE().equals("00") || inmueble.getCE().substring(0, 2).equals("00")) {
                 Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
                 Respuesta.setDatos(false);
@@ -66,6 +66,9 @@ public class BackingGuardar extends BackingSincroniza {
                     if (validacion == 1) {
                         if (asignaClavesProvisionales(inmueble, object, proyecto, isAlta)) {
                             if (InterfaceGuardar.UpdateOclStatusOk(proyecto, object, object.getId_UE(), isAlta)) {
+                                coords = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto, "geo", object.getCoordx().toString(), object.getCoordy().toString());
+                                object.setCoordx(new BigDecimal(coords.getX()));
+                                object.setCoordy(new BigDecimal(coords.getY()));
                                 if (InterfaceGuardar.getGuardaUePreparedStatement(proyecto, object, isAlta)) {
                                     //coords = InterfaceTransformaCoordenadas.TransformaCartografia(proyecto,"mer",object.getCoordx().toString(),object.getCoordy().toString());
                                     //object.setCoordx(new BigDecimal(coords.getX()));
@@ -73,19 +76,19 @@ public class BackingGuardar extends BackingSincroniza {
                                     //if (InterfaceGuardar.GuardarOclUEEPA(proyecto, object)) { //se comenta ya que no se va a manejar oracle 
                                     inmueble.setID_UE(new BigDecimal(object.getId_UE())); //se inicializa el objeto con el id_ue que contiene y viene esto debido a las altas
                                     if (ActualizaBitacora(proyecto, inmueble, usuario)) {
-                                       /// if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
-                                            if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
-                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
-                                            } else {
-                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
-                                            }
-                                            if (ActualicaEstatusComplemento(proyecto, inmueble, usuario)) {
-                                                Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
-                                            } else {
-                                                Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
-                                            }
+                                        /// if (ActualizaIdUEPg(proyecto, inmueble, usuario)) {
+                                        if (ConfirmaUEPg(proyecto, inmueble, usuario)) {
+                                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
+                                        } else {
+                                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                                        }
+                                        if (ActualicaEstatusComplemento(proyecto, inmueble, usuario)) {
+                                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Completamente Guardado"));
+                                        } else {
+                                            Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro porfavor revise la información"));
+                                        }
                                         //} else {
-                                          //  Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                                        //  Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                                         //}
                                     } else {
                                         Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
@@ -101,10 +104,10 @@ public class BackingGuardar extends BackingSincroniza {
                             Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro, favor de no modificar la ubicación geográfica"));
                         }
                         //} else {
-                           // Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                        // Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                         //}
                     } else if (validacion == 96) {
-                      //  Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
+                        //  Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
                     } else if (validacion == 99) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Datos nulos"));
                     } else if (validacion == 99) {
@@ -120,9 +123,9 @@ public class BackingGuardar extends BackingSincroniza {
                     Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Error interno de Servidor"));
                 }
             }
-        }else{
-           Respuesta.setDatos(false);
-           Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Porfavor verifique la vialidad y las entrevialidades")); 
+        } else {
+            Respuesta.setDatos(false);
+            Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Porfavor verifique la vialidad y las entrevialidades"));
         }
 
         return Respuesta;
@@ -226,11 +229,10 @@ public class BackingGuardar extends BackingSincroniza {
         } else {
             //inmueble.setE23(InterfaceGuardar.e23a(proyecto, inmueble));
             inmueble.setE23(null);
-            if(!proyecto.equals(3)){
+            if (!proyecto.equals(3)) {
                 deftramo = InterfaceGuardar.getidDeftramo(proyecto, inmueble);
             }
-            
-            
+
         }
         inmueble.setId_deftramo(new BigDecimal(deftramo));
         if (validadeftramo(deftramo)) {
@@ -278,11 +280,11 @@ public class BackingGuardar extends BackingSincroniza {
         }
         return regresar;
     }
-    
-    public cat_respuesta_services SaveUEFrentes(Integer proyecto,String ce, String iddeftramo, String capa, String usuario, String ip,
-        String manzana_destino, String manzana_origen,String frente_destino, String frente_origen, String claves) {
+
+    public cat_respuesta_services SaveUEFrentes(Integer proyecto, String ce, String iddeftramo, String capa, String usuario, String ip,
+            String manzana_destino, String manzana_origen, String frente_destino, String frente_origen, String claves) {
         cat_respuesta_services Respuesta = new cat_respuesta_services();
-        cat_vw_punteo_sare_guardadoUXFrente object=new cat_vw_punteo_sare_guardadoUXFrente();
+        cat_vw_punteo_sare_guardadoUXFrente object = new cat_vw_punteo_sare_guardadoUXFrente();
         object.setCapa(capa);
         object.setClaves(claves);
         object.setFrente_destino(frente_destino);
@@ -292,48 +294,45 @@ public class BackingGuardar extends BackingSincroniza {
         object.setIp(ip);
         object.setUsuario(usuario);
         object.setIddeftramo(iddeftramo);
-        String clave[]=claves.split(",");
-        
-        try{
-          if(!ce.equals("00"))
-          {
-            if(InterfaceGuardar.GuardarUEFrentes(proyecto,object))
-            {
-            //object.setResultado("1");
-               switch(object.getResultado()){
-                   case "0":
-                       Respuesta.setMensaje(new cat_mensaje("false", "Ocurrio una exception")); 
-                       break;
-                   case "1":
-                       Respuesta.setMensaje(new cat_mensaje("true", "Se movieron los registros correctamente"));
-                       for(String uo:clave){
-                          try{
-                            InterfaceGuardar.UpdateOclStatusOk(proyecto,null,uo,false); 
-                          }catch(Exception e)
-                          {
-                             Respuesta.setMensaje(new cat_mensaje("false", "los registros fueron movidos, pero ocurrio un error al actualizar en oracle "+e));     
-                          }
-                       }
-                       
-                       break;
-                   case "98":
-                       Respuesta.setMensaje(new cat_mensaje("false", "NO SE PUEDEN MOVER A LA MISMA UBICACION GEOGRAFICA!"));
-                       break;
-                   case "99":
-                       Respuesta.setMensaje(new cat_mensaje("false", "NO EXISTE EL FRENTE!"));
-                       break;
-              }
-               
+        String clave[] = claves.split(",");
+
+        try {
+            if (!ce.equals("00")) {
+                if (InterfaceGuardar.GuardarUEFrentes(proyecto, object)) {
+                    //object.setResultado("1");
+                    switch (object.getResultado()) {
+                        case "0":
+                            Respuesta.setMensaje(new cat_mensaje("false", "Ocurrio una exception"));
+                            break;
+                        case "1":
+                            Respuesta.setMensaje(new cat_mensaje("true", "Se movieron los registros correctamente"));
+                            for (String uo : clave) {
+                                try {
+                                    InterfaceGuardar.UpdateOclStatusOk(proyecto, null, uo, false);
+                                } catch (Exception e) {
+                                    Respuesta.setMensaje(new cat_mensaje("false", "los registros fueron movidos, pero ocurrio un error al actualizar en oracle " + e));
+                                }
+                            }
+
+                            break;
+                        case "98":
+                            Respuesta.setMensaje(new cat_mensaje("false", "NO SE PUEDEN MOVER A LA MISMA UBICACION GEOGRAFICA!"));
+                            break;
+                        case "99":
+                            Respuesta.setMensaje(new cat_mensaje("false", "NO EXISTE EL FRENTE!"));
+                            break;
+                    }
+
+                }
+            } else {
+                Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos"));
             }
-            }else{
-               Respuesta.setMensaje(new cat_mensaje("false", "Privilegios insuficientes para modificar datos")); 
-            }
-            
-        }catch(Exception e){
-                    Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, e);
-                    Respuesta.setDatos(false);
-                    Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Reporte este error con su administrador"));   
-         }
+
+        } catch (Exception e) {
+            Logger.getLogger(BackingGuardar.class.getName()).log(Level.SEVERE, null, e);
+            Respuesta.setDatos(false);
+            Respuesta.setMensaje(new cat_mensaje("false", "Fallo al guardar, Reporte este error con su administrador"));
+        }
         return Respuesta;
     }
 
