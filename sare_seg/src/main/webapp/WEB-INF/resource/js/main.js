@@ -55,14 +55,14 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 const init = () =>
-{
+        {
 
-    id_ue = document.getElementById("id_UE").value;
-    addCapas({'checked': true, 'id': 'unidades'})
-    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
-    //addInitialCapas()
+            id_ue = document.getElementById("id_UE").value;
+            addCapas({'checked': true, 'id': 'unidades'})
+            inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
+            //addInitialCapas()
 
-}
+        }
 
 const handleChangeOptions = option => {
     const title = document.getElementById(`option-${option}`)
@@ -1177,7 +1177,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                     } else {
                         if (data[0].datos.mensaje.type === 'error') {
                             showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-                             map.removeLayer(marker)
+                            map.removeLayer(marker)
                             //MDM6('hideMarkers', 'identify')
                             xycoorsx = ''
                             xycoorsy = ''
@@ -1188,7 +1188,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                             const cancelOption = document.getElementById('item-cancel-option')
                             cancelOption.removeAttribute('disabled')
                             showAlertPunteo('Condiciones insuficientes de punteo', data[0].datos.mensaje.messages)
-                             map.removeLayer(marker)
+                            map.removeLayer(marker)
                             // MDM6('hideMarkers', 'identify')
                             xycoorsx = ''
                             xycoorsy = ''
@@ -1222,19 +1222,19 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 const showalertpunteoloading = (bandera) =>
-{
-    if (bandera == true) {
-        alert("espere un momento porfavor");
-    } else {
-        alert("punteo realizado");
-    }
+        {
+            if (bandera == true) {
+                alert("espere un momento porfavor");
+            } else {
+                alert("punteo realizado");
+            }
 
 //    swal 
 //    ({
 //      title: '<span style="width:100%;">Buscando información de punteo!</span>',
 //      text: 'Por favor espere un momento',
 //    })
-}
+        }
 
 const agregaFuncionEliminarDuplicadosSelects = () => {
     idEleToSelect.map(id => {
@@ -1425,25 +1425,25 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph = '') => {
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId =>
-{
-    //selectId.setAttribute('onchange', 'asignaValorId()')
-    let opt = document.createElement('option')
-    opt.appendChild(document.createTextNode("Seleccione"))
-    opt.value = "Seleccione"
-    selectId.appendChild(opt)
-    catalogoCatVial.map(item => {
-        let opt = document.createElement('option')
-        opt.appendChild(document.createTextNode(item.tipo_e10n))
-        opt.value = item.tipo_e10
-        selectId.appendChild(opt)
-    })
-}
+        {
+            //selectId.setAttribute('onchange', 'asignaValorId()')
+            let opt = document.createElement('option')
+            opt.appendChild(document.createTextNode("Seleccione"))
+            opt.value = "Seleccione"
+            selectId.appendChild(opt)
+            catalogoCatVial.map(item => {
+                let opt = document.createElement('option')
+                opt.appendChild(document.createTextNode(item.tipo_e10n))
+                opt.value = item.tipo_e10
+                selectId.appendChild(opt)
+            })
+        }
 
 const ejecutar = () =>
-{
-    id_ue = document.getElementById('id_UE').value
-    callServiceLiberaClave(id_ue)
-}
+        {
+            id_ue = document.getElementById('id_UE').value
+            callServiceLiberaClave(id_ue)
+        }
 
 //Función regresa tipo campos  de tipo y nombre vialidad
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
@@ -1637,10 +1637,10 @@ const actualizaForm = data => {
     }
     xycoorsx = data.coord_x
     xycoorsy = data.coord_y
-     if (marker !== undefined) {
+    if (marker !== undefined) {
         map.removeLayer(marker)
     }
-     marker = L.marker([data.coord_y,data.coord_x]).addTo(map);
+    marker = L.marker([data.coord_y, data.coord_x]).addTo(map);
     //MDM6('hideMarkers', 'identify')
     //MDM6('addMarker', {lon: data.coord_x, lat: data.coord_y, type: 'identify', params: {nom: 'Nueva Ubicación', desc: ''}})
     isChange = true
@@ -2501,7 +2501,7 @@ const handleShowResult = result => {
                         } else {
                             layersSARE = ['c100', 'wdenue', 'c101a']
                             handleCancelClick()
-                             map.removeLayer(marker)
+                            map.removeLayer(marker)
                             //MDM6('hideMarkers', 'identify')
                             handleShowSaveAlert('success', 'Guardado', 'El punto ha sido almacenado correctamente', true)
                             removerOtrosInputs()
@@ -2714,7 +2714,7 @@ const HandleActionsSaveNewPoint = option => {
 }
 
 const identificar = coor => {
-     map.removeLayer(marker)
+    map.removeLayer(marker)
     // MDM6('hideMarkers', 'identify')
     //let level = MDM6('getZoomLevel')
     let level = map.getZoom()
@@ -2732,12 +2732,12 @@ const identificar = coor => {
             } else {
                 if (level <= 13) {
                     showAlertIdentify('warning', `${14 - level} acercamientos sobre mapa`, 'Realizalos para ubicar correctamente la unidad económica')
-                    
-                   // MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
+
+                    // MDM6('addMarker', {lon: parseFloat(xycoorsx), lat: parseFloat(xycoorsy), type: 'identify', params: {nom: '', desc: xycoorsx + ", " + xycoorsy}});
                 } else {
                     //Lo deja puntear y agrega el punto
-                     map.removeLayer(marker)
-                     marker = L.marker([coor.lat, coor.lng]).addTo(map);
+                    map.removeLayer(marker)
+                    marker = L.marker([coor.lat, coor.lng]).addTo(map);
                     //MDM6('hideMarkers', 'identify')
                     //MDM6('addMarker', {lon: parseFloat(coor.lon), lat: parseFloat(coor.lat), type: 'identify', params: {nom: 'Nueva ubicación', desc: coor.lon + ", " + coor.lat}});
                     handlePunteo(coor.lng, coor.lat, 'geo', 'n')
@@ -2764,21 +2764,26 @@ const StreetView = (x, y) => modalGoogleMap(x, y, 'mercator')
 
 //modal que manda llamar la vista de calle
 const modalGoogleMap = (x, y, tc) => {
-    if (tc === 'mercator') {
-        sendAJAX(urlServices['serviceIdentifyStreetView'].url,
-                {'proyecto': dataUserFromLoginLocalStorage.proyecto, 'x': x, 'y': y},
-                urlServices['serviceIdentifyStreetView'].type,
-                data => {
-                    if (data[0].operation) {
-                        map.removeLayer(marker)
-                        //MDM6('hideMarkers', 'identify')
-                        ubicacion = `${data[0].datos['y']} , ${ data[0].datos['x']}`
-                        let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
-                        setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
-                    }
-                }, ''
-                )
-    }
+    map.removeLayer(marker)
+    //MDM6('hideMarkers', 'identify')
+    ubicacion = y+','+x
+    let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
+    setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
+//    if (tc === 'mercator') {
+//        sendAJAX(urlServices['serviceIdentifyStreetView'].url,
+//                {'proyecto': dataUserFromLoginLocalStorage.proyecto, 'x': x, 'y': y},
+//                urlServices['serviceIdentifyStreetView'].type,
+//                data => {
+//                    if (data[0].operation) {
+//                        map.removeLayer(marker)
+//                        //MDM6('hideMarkers', 'identify')
+//                        ubicacion = `${data[0].datos['y']} , ${ data[0].datos['x']}`
+//                        let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
+//                        setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
+//                    }
+//                }, ''
+//                )
+//    }
 }
 
 //Funcion para identificar la unidad economica y llamar el servicio
@@ -2844,8 +2849,8 @@ const callServicioIdentificar = (capas, x, y) => {
                     allowOutsideClick: true,
                     animation: true
                 })
-map.removeLayer(marker)
-               // MDM6('hideMarkers', 'identify')
+                map.removeLayer(marker)
+                // MDM6('hideMarkers', 'identify')
                 xycoorsx = ''
                 xycoorsy = ''
             }
@@ -3701,29 +3706,29 @@ const añadirParametroScian = () => {
 }
 
 const actionFiltrosScian = (id, clasesFiltro_2, array, etiqueta) =>
-{
-    const elemento = document.getElementById(id.id)
-    $.each(elemento, function (index, value)
-    {
-        elemento.remove(0);
-    });
-    const opt = document.createElement('option');
-    opt.value = "Seleccione";
-    opt.innerHTML = "Seleccione";
-    elemento.appendChild(opt);
-    clasesFiltro_2.map(id =>
-    {
-        const opt = document.createElement('option');
-        opt.value = id.codigo;
-        opt.innerHTML = id.descripción;
-        elemento.appendChild(opt);
-    })
-    array.map(id =>
-    {
-        let elemen = document.getElementById(id.id)
-        id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
-    })
-}
+        {
+            const elemento = document.getElementById(id.id)
+            $.each(elemento, function (index, value)
+            {
+                elemento.remove(0);
+            });
+            const opt = document.createElement('option');
+            opt.value = "Seleccione";
+            opt.innerHTML = "Seleccione";
+            elemento.appendChild(opt);
+            clasesFiltro_2.map(id =>
+            {
+                const opt = document.createElement('option');
+                opt.value = id.codigo;
+                opt.innerHTML = id.descripción;
+                elemento.appendChild(opt);
+            })
+            array.map(id =>
+            {
+                let elemen = document.getElementById(id.id)
+                id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
+            })
+        }
 
 const llamarServicioclases = (codigoScian, valor) => {
     var sel;

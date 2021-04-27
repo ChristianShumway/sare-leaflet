@@ -101,7 +101,7 @@ public class BackingGuardar extends BackingSincroniza {
                             Respuesta.setMensaje(new cat_mensaje("false", "No fue posible guardar el registro, favor de no modificar la ubicación geográfica"));
                         }
                         //} else {
-                            Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
+                           // Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                         //}
                     } else if (validacion == 96) {
                       //  Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
