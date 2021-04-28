@@ -160,7 +160,7 @@ var map = L.map('mapid', {
     center: [21.541, -102.034], //[-17, -67],
     //[21.541, -102.034], 
     zoom: 5,
-    maxZoom: 18,
+    maxZoom: 21,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
     //crs:crs,
