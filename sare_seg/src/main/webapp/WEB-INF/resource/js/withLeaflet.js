@@ -161,6 +161,7 @@ var map = L.map('mapid', {
     //[21.541, -102.034], 
     zoom: 5,
     maxZoom: 21,
+    minZoom:5,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
     //crs:crs,
