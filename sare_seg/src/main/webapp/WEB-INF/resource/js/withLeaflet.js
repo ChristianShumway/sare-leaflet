@@ -13,27 +13,34 @@
 // }).addTo(mymap);
 
 var marker;
-var lat,long;
+var lat, long;
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
-    sphericalMercator: true
+    sphericalMercator: true,
+    maxZoom: 21,
+    maxNativeZoom: 19,
 })//.addTo(map);
 
 var wmsLayerM = L.tileLayer.wms('http://gaia.inegi.org.mx/NLB/tunnel/wms/wms61?', {
     layers: 'Hipsografico,MGE',
     transparent: true,
+    maxzoom: 21,
     format: 'image/png',
     //cql_filter:"ambito='U'",
     id: 'xpain.test-cach',
     useCache: false,
     crossOrigin: false,
-    sphericalMercator: false
+    sphericalMercator: false,
+    maxZoom: 21,
+    maxNativeZoom: 19,
 })//.addTo(map);
 
 var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseHipsografico',
 //crs:'4326'
     transparent: false,
+    maxZoom: 21,
+    maxNativeZoom: 19,
 //format: 'image/jpeg',
 // //cql_filter:"ambito='U'",
 //id: 'xpain.test-cach',
@@ -43,25 +50,33 @@ var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/ser
 //sphericalMercator: false,
 });
 var wmsLayerBase5 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 21,
+    maxNativeZoom: 19,
     //img: 'resources/img/mapaBase/Esri.jpg',
-    
+
 });
 var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 21,
+    maxNativeZoom: 19,
     // tms: true,
-  
+
 });
 
-var wmsLayerBase7 =  new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels'});
+var wmsLayerBase7 = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels',maxZoom: 21,
+    maxNativeZoom: 19});
 
 
 
 var wmsLayerBase8 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
     // tms: true,
-   
+maxZoom: 21,
+    maxNativeZoom: 19,
 });
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseTopograficov61_sinsombreado',
 //crs:'4326'
+    maxZoom: 21,
+    maxNativeZoom: 19,
     transparent: false,
 //format: 'image/jpeg',
 // //cql_filter:"ambito='U'",
@@ -79,6 +94,8 @@ var wmsLayerBase3 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/
     format: 'image/jpeg',
 // //cql_filter:"ambito='U'",
 //id: 'xpain.test-cach',
+maxZoom: 21,
+    maxNativeZoom: 19,
     useCache: true,
 //crossOrigin: false,
     tiled: true,
@@ -86,6 +103,8 @@ var wmsLayerBase3 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/
 });
 var wmsLayerBase4 = L.tileLayer.wms('http://gaiamapas1.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseOrtofoto',
+    maxZoom: 21,
+    maxNativeZoom: 19,
 //crs:'4326'
     transparent: false,
 //format: 'image/jpeg',
@@ -101,13 +120,15 @@ var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?ma
     layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
     transparent: true,
     format: 'image/png',
+    maxZoom: 21,
+    maxNativeZoom: 19,
     // //cql_filter:"ambito='U'",
     id: 'xpain.test-cach',
     useCache: true,
     crossOrigin: false,
     sphericalMercator: true,
     EDO: '00',
-    tiled:true
+    tiled: true
 });
 
 //var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
@@ -144,13 +165,13 @@ var crs2 = new L.Proj.CRS(
         '+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +nadgrids=@null +wktext +no_defs',
         {
             //
-           // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+            // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
             //resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
             // resolutions: [8192, 4096, 2048], // 3 example zoom level resolutions
             origin: [0, 0],
-          // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
-          resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
-          origin: [0, 0]
+            // resolutions: [8192, 4096, 2048, 1024, 512, 256, 128],
+            resolutions: [8192, 4096, 2048, 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1, 0.5, 0],
+            origin: [0, 0]
         }
 );
 
@@ -161,7 +182,7 @@ var map = L.map('mapid', {
     //[21.541, -102.034], 
     zoom: 5,
     maxZoom: 21,
-    minZoom:5,
+    minZoom: 5,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
     //crs:crs,
@@ -175,8 +196,8 @@ map.on('click', function (e) {
         map.removeLayer(marker)
     }
     marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-    lat=e.latlng.lat;
-    long=e.latlng.lng;
+    lat = e.latlng.lat;
+    long = e.latlng.lng;
     identify(e.latlng)
     // alert(e.latlng);
 });
@@ -210,10 +231,10 @@ window.addEventListener('mousewheel', function (e) {
         false);
 console.log("map crs: " + map.options.crs.code);
 
- /* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
-   map.addLayer(bing);*/
-    
-    
+/* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
+ map.addLayer(bing);*/
+
+
 var baseMaps = {
     "MGE": wmsLayerM,
     "TOPO-OSM-WMS": wmsLayer,
@@ -224,16 +245,16 @@ var baseMaps = {
     "Ortofotos - INEGI": wmsLayerBase4,
     "Esri": wmsLayerBase5,
     "Osm": wmsLayerBase6,
-    "Bing":wmsLayerBase7,
-    "Google Satelite":wmsLayerBase8
+    "Bing": wmsLayerBase7,
+    "Google Satelite": wmsLayerBase8
 };
 var overlays = {
     "Sare": wmsLayerSare
 };
 //var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
-  //      imageBounds = [center, [-35.8650, 154.2094]];
+//      imageBounds = [center, [-35.8650, 154.2094]];
 
-L.control.layers(baseMaps,overlays).addTo(map);
+L.control.layers(baseMaps, overlays).addTo(map);
 
 
 var formData = {
@@ -248,31 +269,31 @@ var formData = {
 
 
 function busqueda() {
- $.ajax({
-    url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
-    type: "POST",
-    dataType: "json",
-    data: JSON.stringify(formData),
-    contentType: "application/json",
-    success: function(response, textStatus, jqXHR) {
-       console.log(response.data);       
-    }
-}); 
+    $.ajax({
+        url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        success: function (response, textStatus, jqXHR) {
+            console.log(response.data);
+        }
+    });
 }
 
 /*
-const busqueda = () => {
-//map.flyTo([21.879120, -102.303263], 17)
-  sendAJAX(
-    "http://gaia.inegi.org.mx/mdm_searchengine/search", 
-   JSON.stringify(formData), 
-    'POST', 
-    data => { 
-      // wrapUser.classList.remove('wrap-input-empty')
-      // wrapPassword.classList.remove('wrap-input-empty')
-      console.log(data[0].datos)
-     
-    }, 
-    () => {}
-  )
-}*/
+ const busqueda = () => {
+ //map.flyTo([21.879120, -102.303263], 17)
+ sendAJAX(
+ "http://gaia.inegi.org.mx/mdm_searchengine/search", 
+ JSON.stringify(formData), 
+ 'POST', 
+ data => { 
+ // wrapUser.classList.remove('wrap-input-empty')
+ // wrapPassword.classList.remove('wrap-input-empty')
+ console.log(data[0].datos)
+ 
+ }, 
+ () => {}
+ )
+ }*/

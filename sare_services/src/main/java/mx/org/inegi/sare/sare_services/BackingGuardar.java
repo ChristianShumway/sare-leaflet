@@ -107,7 +107,7 @@ public class BackingGuardar extends BackingSincroniza {
                         // Respuesta.setMensaje(new cat_mensaje("true", "Registro Parcialmente Guardado"));
                         //}
                     } else if (validacion == 96) {
-                        //  Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
+                          Respuesta.setMensaje(new cat_mensaje("false", "Clave unica duplicada"));
                     } else if (validacion == 99) {
                         Respuesta.setMensaje(new cat_mensaje("false", "Datos nulos"));
                     } else if (validacion == 99) {

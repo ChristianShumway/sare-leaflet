@@ -241,6 +241,7 @@ const handleCleanForms=()=>
     $("#e10_A").empty().attr("disabled", true);
     $("#e10_B").empty().attr("disabled", true);
     $("#e10_C").empty().attr("disabled", true);
+    removeElementsSelects()
 }
 
 //Función para activar y desactivar puntear alta
@@ -280,7 +281,7 @@ const handlePositionContainerForm = (wrap, idBtn = '', action = '', title = '') 
   
 }
 
-const handleReturnContainerForm = (wrap, idBtn = '', action = '', title = '') => {
+const   handleReturnContainerForm = (wrap, idBtn = '', action = '', title = '') => {
   nameContainerFloating = ''
   wrapFloatActive = false
   const wrapFloating = document.getElementById(wrap)

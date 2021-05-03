@@ -36,7 +36,7 @@ var id_inmueble;
 var ObjectRequest = {}
 const idEleToSelect = ['e10_A', 'e10_B', 'e10_C']
 var tipoE10_g, tipoE10a_g, tipoE10b_g, tipoE10c_g;
-var E10_g, E10a_g, E10b_g, E10c_g;
+var E10_g, E10a_g, E10b_g, E10c_g, e10X;
 
 let dataUserFromLoginLocalStorage = {
     acceso: getParameterByName('acceso'),
@@ -1161,6 +1161,14 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                 actualizaForm(data[0].datos.datos)
                 agregaFuncionEliminarDuplicadosSelects()
                 handleTipoPunteo()
+                
+                if (punteo = 'R') {
+                    removeElementsSelects()
+                    handleFillTipoDeVialidades(document.getElementById("tipo_e10_an"))
+                    handleFillTipoDeVialidades(document.getElementById("tipo_e10_bn"))
+                    handleFillTipoDeVialidades(document.getElementById("tipo_e10_cn"))
+                }
+
             } else {
                 if (typeof data[0].datos.mensaje.type !== 'undefined') {
                     if (data[0].datos.mensaje.type === 'confirmar') {
@@ -1288,8 +1296,7 @@ const handleTipoPunteo = () => {
     const tipoE10bn = document.getElementById('tipo_e10_bn') //input
     const e10B = document.getElementById('e10_B') // select
     const tipoE10cn = document.getElementById('tipo_e10_cn') //input
-    const e10C = document.getElementById('e10_C') // select
-
+    const e10C = document.getElementById('e10_C') // selectha
     switch (dataUserFromLoginLocalStorage.proyecto) {
         case 1:
             realPunteo = punteo
@@ -1306,9 +1313,10 @@ const handleTipoPunteo = () => {
 
     if (punteo === 'R' || (punteo === 'U' && confirmacionPunteo)) {
         if (fieldExists === false) {
-            tipoE10n.style.display = 'none'
+
+           tipoE10n.style.display = 'none'
             tipoE10n.removeAttribute('id')
-            tipoE10an.style.display = 'none'
+             /*tipoE10an.style.display = 'none'
             tipoE10an.removeAttribute('id')
             e10A.style.display = 'none'
             e10A.removeAttribute('id')
@@ -1319,14 +1327,14 @@ const handleTipoPunteo = () => {
             tipoE10cn.style.display = 'none'
             tipoE10cn.removeAttribute('id')
             e10C.style.display = 'none'
-            e10C.removeAttribute('id')
+            e10C.removeAttribute('id')*/
 
 
 
             const selectField = document.createElement('select')
             handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
 
-            const inputFieldOtro = document.createElement('input')
+            /*const inputFieldOtro = document.createElement('input')
             handleAttributesInputOrSelect('input', inputFieldOtro, 'tipo_e10n_otro', 'Tipo de la vialidad ')
 
             const selectFieldTipoE10an = document.createElement('select')
@@ -1357,18 +1365,18 @@ const handleTipoPunteo = () => {
             handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
 
             //remover antes de agregar
-            removerOtrosInputs()
+            removerOtrosInputs()*/
 
             //función donde se agrega options a los selects con el catálogo de tipo de vialidades
             handleFillTipoDeVialidades(selectField)
-            handleFillTipoDeVialidades(selectFieldTipoE10an)
+            /*handleFillTipoDeVialidades(selectFieldTipoE10an)
             handleFillTipoDeVialidades(selectFieldTipoE10bn)
-            handleFillTipoDeVialidades(selectFieldTipoE10cn)
+            handleFillTipoDeVialidades(selectFieldTipoE10cn)*/
 
             wrapTipoVialidad.appendChild(selectField)
-            wrapTipoVialidad.appendChild(inputFieldOtro)
+            //wrapTipoVialidad.appendChild(inputFieldOtro)
 
-            wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
+           /* wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
             wrapTipoVialidadUno.appendChild(inputFieldOtroan)
             wrapNombreVialidadUno.appendChild(inputFieldE10an)
 
@@ -1383,7 +1391,7 @@ const handleTipoPunteo = () => {
             document.getElementById("tipo_e10n_otro").style.display = 'none'
             document.getElementById("tipo_e10_an_otro").style.display = 'none'
             document.getElementById("tipo_e10_bn_otro").style.display = 'none'
-            document.getElementById("tipo_e10_cn_otro").style.display = 'none'
+            document.getElementById("tipo_e10_cn_otro").style.display = 'none'*/
             fieldExists = true
         }
 
@@ -1406,7 +1414,8 @@ const handleTipoPunteo = () => {
         removerOtrosInputs()
 
         fieldExists = false
-    }
+    } 
+
 }
 
 //Función crear Input o Select según si es rural
@@ -1655,6 +1664,7 @@ const actualizaForm = data => {
             objCalles = []
             if (arrData) {
                 arrData.forEach(function (o, i) {
+                    e10X = true
                     objCalles.push(o)
                     calles.push(o.e10_X_cvevial)
                     if (E10a_g != null && tipoE10a_g != null && (o.e10_X.toUpperCase() == E10a_g.toUpperCase())) {
@@ -2374,7 +2384,7 @@ const validaTipos = (result) => {
 
         }
     } else {
-        handleShowSaveAlert('error', 'Error', 'Error en los datos, porfavor verifique las entrevialidades y la vialidad ', false)
+        handleShowSaveAlert('error', 'Error', 'Error en los datos, alguna de las vialidades se encuentra vacia, favor de verificar', false)
     }
 }
 
@@ -2766,7 +2776,7 @@ const StreetView = (x, y) => modalGoogleMap(x, y, 'mercator')
 const modalGoogleMap = (x, y, tc) => {
     map.removeLayer(marker)
     //MDM6('hideMarkers', 'identify')
-    ubicacion = y+','+x
+    ubicacion = y + ',' + x
     let url = `http://maps.google.com/maps?q=&layer=c&cbll=${ubicacion}&cbp=`
     setTimeout(() => win = window.open(url, "_blank", "width=800,height=600,top=150,left=200"), 200)
 //    if (tc === 'mercator') {
@@ -3032,7 +3042,8 @@ const handleCancelClick = () => {
         handleReturnContainerForm(nameContainerFloating)
     }
     id_ue = document.getElementById('id_UE').value;
-
+    //cleanForm()
+    //e10X = false
 }
 
 const callServiceLiberaClave = (id_ue) => {
