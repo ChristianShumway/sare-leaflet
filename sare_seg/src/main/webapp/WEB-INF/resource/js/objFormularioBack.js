@@ -308,24 +308,24 @@ const objFormRuralBack={"object":[
         name:'tipo de asentamiento humano',
         title:'title-asentamiento'
     }, 
-    {
-        id:'tipo_e10_an',
-        key: 'entre-vialidades',
-        name:'Tipo vialidad 1',
-        title:'title-entre-vialidades'
-    },
-    {
-        id:'tipo_e10_bn',
-        key: 'entre-vialidades',
-        name:'Tipo vialidad 2',
-        title:'title-entre-vialidades'
-    },
-    {
-        id:'tipo_e10_cn',
-        key: 'calle-posterior',
-        name:'Tipo de vialidad 3',
-        title:'title-calle-posterior'
-    },
+//    {
+//        id:'tipo_e10_an',
+//        key: 'entre-vialidades',
+//        name:'Tipo vialidad 1',
+//        title:'title-entre-vialidades'
+//    },
+//    {
+//        id:'tipo_e10_bn',
+//        key: 'entre-vialidades',
+//        name:'Tipo vialidad 2',
+//        title:'title-entre-vialidades'
+//    },
+//    {
+//        id:'tipo_e10_cn',
+//        key: 'calle-posterior',
+//        name:'Tipo de vialidad 3',
+//        title:'title-calle-posterior'
+//    },
     {
         id:'descrubic',
         key: 'calle-posterior',

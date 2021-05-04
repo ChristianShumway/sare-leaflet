@@ -55,14 +55,14 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 const init = () =>
-        {
+{
 
-            id_ue = document.getElementById("id_UE").value;
-            addCapas({'checked': true, 'id': 'unidades'})
-            inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
-            //addInitialCapas()
+    id_ue = document.getElementById("id_UE").value;
+    addCapas({'checked': true, 'id': 'unidades'})
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
+    //addInitialCapas()
 
-        }
+}
 
 const handleChangeOptions = option => {
     const title = document.getElementById(`option-${option}`)
@@ -74,6 +74,16 @@ const handleChangeOptions = option => {
     } else {
         addLayerEconomicas(checkBox, option);
     }
+    if (option == 'wdenue' && checkBox.checked==false) {
+        map.removeLayer(wmsLayerSare)
+        map.addLayer(wmsLayerSareWithoutlayer)
+    }else{
+        if(checkBox.checked==true){
+            map.addLayer(wmsLayerSare)
+            map.removeLayer(wmsLayerSareWithoutlayer)
+        }
+    }
+
 
 }
 
@@ -100,7 +110,7 @@ const addLayerEconomicas = (chk, option) => {
     } else {
         layersSARE.splice(layersSARE.indexOf(chk.id), 1)
     }
-    MDM6('setParams', {layer: idWms, params: {'layers': layersSARE, 'EDO': '00'}})
+    //MDM6('setParams', {layer: idWms, params: {'layers': layersSARE, 'EDO': '00'}})
 }
 
 //Funcion agregar capas en el mapa en la opcion sucursales
@@ -1161,7 +1171,7 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
                 actualizaForm(data[0].datos.datos)
                 agregaFuncionEliminarDuplicadosSelects()
                 handleTipoPunteo()
-                
+
                 if (punteo = 'R') {
                     removeElementsSelects()
                     handleFillTipoDeVialidades(document.getElementById("tipo_e10_an"))
@@ -1230,19 +1240,19 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 const showalertpunteoloading = (bandera) =>
-        {
-            if (bandera == true) {
-                alert("espere un momento porfavor");
-            } else {
-                alert("punteo realizado");
-            }
+{
+    if (bandera == true) {
+        alert("espere un momento porfavor");
+    } else {
+        alert("punteo realizado");
+    }
 
 //    swal 
 //    ({
 //      title: '<span style="width:100%;">Buscando información de punteo!</span>',
 //      text: 'Por favor espere un momento',
 //    })
-        }
+}
 
 const agregaFuncionEliminarDuplicadosSelects = () => {
     idEleToSelect.map(id => {
@@ -1314,20 +1324,20 @@ const handleTipoPunteo = () => {
     if (punteo === 'R' || (punteo === 'U' && confirmacionPunteo)) {
         if (fieldExists === false) {
 
-           tipoE10n.style.display = 'none'
+            tipoE10n.style.display = 'none'
             tipoE10n.removeAttribute('id')
-             /*tipoE10an.style.display = 'none'
-            tipoE10an.removeAttribute('id')
-            e10A.style.display = 'none'
-            e10A.removeAttribute('id')
-            tipoE10bn.style.display = 'none'
-            tipoE10bn.removeAttribute('id')
-            e10B.style.display = 'none'
-            e10B.removeAttribute('id')
-            tipoE10cn.style.display = 'none'
-            tipoE10cn.removeAttribute('id')
-            e10C.style.display = 'none'
-            e10C.removeAttribute('id')*/
+            /*tipoE10an.style.display = 'none'
+             tipoE10an.removeAttribute('id')
+             e10A.style.display = 'none'
+             e10A.removeAttribute('id')
+             tipoE10bn.style.display = 'none'
+             tipoE10bn.removeAttribute('id')
+             e10B.style.display = 'none'
+             e10B.removeAttribute('id')
+             tipoE10cn.style.display = 'none'
+             tipoE10cn.removeAttribute('id')
+             e10C.style.display = 'none'
+             e10C.removeAttribute('id')*/
 
 
 
@@ -1335,63 +1345,63 @@ const handleTipoPunteo = () => {
             handleAttributesInputOrSelect('select', selectField, 'tipo_e10n')
 
             /*const inputFieldOtro = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldOtro, 'tipo_e10n_otro', 'Tipo de la vialidad ')
-
-            const selectFieldTipoE10an = document.createElement('select')
-            handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
-
-            const inputFieldOtroan = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldOtroan, 'tipo_e10_an_otro', 'Tipo de la vialidad 1 ')
-
-            const inputFieldE10an = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldE10an, 'e10_A', 'Nombre de la vialidad 1')
-
-            const selectFieldTipoE10bn = document.createElement('select')
-            handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
-
-            const inputFieldOtrobn = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldOtrobn, 'tipo_e10_bn_otro', 'Tipo de la vialidad 2 ')
-
-            const inputFieldE10bn = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldE10bn, 'e10_B', 'Nombre de la vialidad 2')
-
-            const selectFieldTipoE10cn = document.createElement('select')
-            handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
-
-            const inputFieldOtrocn = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldOtrocn, 'tipo_e10_cn_otro', 'Tipo de la vialidad Posterior ')
-
-            const inputFieldE10c = document.createElement('input')
-            handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
-
-            //remover antes de agregar
-            removerOtrosInputs()*/
+             handleAttributesInputOrSelect('input', inputFieldOtro, 'tipo_e10n_otro', 'Tipo de la vialidad ')
+             
+             const selectFieldTipoE10an = document.createElement('select')
+             handleAttributesInputOrSelect('select', selectFieldTipoE10an, 'tipo_e10_an')
+             
+             const inputFieldOtroan = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldOtroan, 'tipo_e10_an_otro', 'Tipo de la vialidad 1 ')
+             
+             const inputFieldE10an = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldE10an, 'e10_A', 'Nombre de la vialidad 1')
+             
+             const selectFieldTipoE10bn = document.createElement('select')
+             handleAttributesInputOrSelect('select', selectFieldTipoE10bn, 'tipo_e10_bn')
+             
+             const inputFieldOtrobn = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldOtrobn, 'tipo_e10_bn_otro', 'Tipo de la vialidad 2 ')
+             
+             const inputFieldE10bn = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldE10bn, 'e10_B', 'Nombre de la vialidad 2')
+             
+             const selectFieldTipoE10cn = document.createElement('select')
+             handleAttributesInputOrSelect('select', selectFieldTipoE10cn, 'tipo_e10_cn')
+             
+             const inputFieldOtrocn = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldOtrocn, 'tipo_e10_cn_otro', 'Tipo de la vialidad Posterior ')
+             
+             const inputFieldE10c = document.createElement('input')
+             handleAttributesInputOrSelect('input', inputFieldE10c, 'e10_C', 'Nombre de la vialidad Posterior')
+             
+             //remover antes de agregar
+             removerOtrosInputs()*/
 
             //función donde se agrega options a los selects con el catálogo de tipo de vialidades
             handleFillTipoDeVialidades(selectField)
             /*handleFillTipoDeVialidades(selectFieldTipoE10an)
-            handleFillTipoDeVialidades(selectFieldTipoE10bn)
-            handleFillTipoDeVialidades(selectFieldTipoE10cn)*/
+             handleFillTipoDeVialidades(selectFieldTipoE10bn)
+             handleFillTipoDeVialidades(selectFieldTipoE10cn)*/
 
             wrapTipoVialidad.appendChild(selectField)
             //wrapTipoVialidad.appendChild(inputFieldOtro)
 
-           /* wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
-            wrapTipoVialidadUno.appendChild(inputFieldOtroan)
-            wrapNombreVialidadUno.appendChild(inputFieldE10an)
-
-            wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
-            wrapTipoVialidadDos.appendChild(inputFieldOtrobn)
-            wrapNombreVialidadDos.appendChild(inputFieldE10bn)
-
-            wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
-            wrapTipoVialidadPosterior.appendChild(inputFieldOtrocn)
-            wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
-
-            document.getElementById("tipo_e10n_otro").style.display = 'none'
-            document.getElementById("tipo_e10_an_otro").style.display = 'none'
-            document.getElementById("tipo_e10_bn_otro").style.display = 'none'
-            document.getElementById("tipo_e10_cn_otro").style.display = 'none'*/
+            /* wrapTipoVialidadUno.appendChild(selectFieldTipoE10an)
+             wrapTipoVialidadUno.appendChild(inputFieldOtroan)
+             wrapNombreVialidadUno.appendChild(inputFieldE10an)
+             
+             wrapTipoVialidadDos.appendChild(selectFieldTipoE10bn)
+             wrapTipoVialidadDos.appendChild(inputFieldOtrobn)
+             wrapNombreVialidadDos.appendChild(inputFieldE10bn)
+             
+             wrapTipoVialidadPosterior.appendChild(selectFieldTipoE10cn)
+             wrapTipoVialidadPosterior.appendChild(inputFieldOtrocn)
+             wrapNombreVialidadPosterior.appendChild(inputFieldE10c)
+             
+             document.getElementById("tipo_e10n_otro").style.display = 'none'
+             document.getElementById("tipo_e10_an_otro").style.display = 'none'
+             document.getElementById("tipo_e10_bn_otro").style.display = 'none'
+             document.getElementById("tipo_e10_cn_otro").style.display = 'none'*/
             fieldExists = true
         }
 
@@ -1414,7 +1424,7 @@ const handleTipoPunteo = () => {
         removerOtrosInputs()
 
         fieldExists = false
-    } 
+    }
 
 }
 
@@ -1434,25 +1444,25 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph = '') => {
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId =>
-        {
-            //selectId.setAttribute('onchange', 'asignaValorId()')
-            let opt = document.createElement('option')
-            opt.appendChild(document.createTextNode("Seleccione"))
-            opt.value = "Seleccione"
-            selectId.appendChild(opt)
-            catalogoCatVial.map(item => {
-                let opt = document.createElement('option')
-                opt.appendChild(document.createTextNode(item.tipo_e10n))
-                opt.value = item.tipo_e10
-                selectId.appendChild(opt)
-            })
-        }
+{
+    //selectId.setAttribute('onchange', 'asignaValorId()')
+    let opt = document.createElement('option')
+    opt.appendChild(document.createTextNode("Seleccione"))
+    opt.value = "Seleccione"
+    selectId.appendChild(opt)
+    catalogoCatVial.map(item => {
+        let opt = document.createElement('option')
+        opt.appendChild(document.createTextNode(item.tipo_e10n))
+        opt.value = item.tipo_e10
+        selectId.appendChild(opt)
+    })
+}
 
 const ejecutar = () =>
-        {
-            id_ue = document.getElementById('id_UE').value
-            callServiceLiberaClave(id_ue)
-        }
+{
+    id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_ue)
+}
 
 //Función regresa tipo campos  de tipo y nombre vialidad
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
@@ -3717,29 +3727,29 @@ const añadirParametroScian = () => {
 }
 
 const actionFiltrosScian = (id, clasesFiltro_2, array, etiqueta) =>
-        {
-            const elemento = document.getElementById(id.id)
-            $.each(elemento, function (index, value)
-            {
-                elemento.remove(0);
-            });
-            const opt = document.createElement('option');
-            opt.value = "Seleccione";
-            opt.innerHTML = "Seleccione";
-            elemento.appendChild(opt);
-            clasesFiltro_2.map(id =>
-            {
-                const opt = document.createElement('option');
-                opt.value = id.codigo;
-                opt.innerHTML = id.descripción;
-                elemento.appendChild(opt);
-            })
-            array.map(id =>
-            {
-                let elemen = document.getElementById(id.id)
-                id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
-            })
-        }
+{
+    const elemento = document.getElementById(id.id)
+    $.each(elemento, function (index, value)
+    {
+        elemento.remove(0);
+    });
+    const opt = document.createElement('option');
+    opt.value = "Seleccione";
+    opt.innerHTML = "Seleccione";
+    elemento.appendChild(opt);
+    clasesFiltro_2.map(id =>
+    {
+        const opt = document.createElement('option');
+        opt.value = id.codigo;
+        opt.innerHTML = id.descripción;
+        elemento.appendChild(opt);
+    })
+    array.map(id =>
+    {
+        let elemen = document.getElementById(id.id)
+        id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
+    })
+}
 
 const llamarServicioclases = (codigoScian, valor) => {
     var sel;

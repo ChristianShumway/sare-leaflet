@@ -131,6 +131,21 @@ var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?ma
     tiled: true
 });
 
+var wmsLayerSareWithoutlayer = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+    layers: 'c103,c102,c100,c101a,c103r,c107,c107r,c108',
+    transparent: true,
+    format: 'image/png',
+    maxZoom: 21,
+    maxNativeZoom: 19,
+    // //cql_filter:"ambito='U'",
+    id: 'xpain.test-cach',
+    useCache: true,
+    crossOrigin: false,
+    sphericalMercator: true,
+    EDO: '00',
+    tiled: true
+});
+
 //var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
 //    layers: 'MapaBaseTopograficov61_sinsombreado',
 //    transparent: false,
