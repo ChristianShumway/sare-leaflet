@@ -13,7 +13,8 @@
 // }).addTo(mymap);
 
 var marker;
-var lat, long;
+var lat=21.541, long=-102.034;
+var cities = L.layerGroup();
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
     sphericalMercator: true,
@@ -62,14 +63,14 @@ var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.pn
 
 });
 
-var wmsLayerBase7 = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels',maxZoom: 21,
+var wmsLayerBase7 = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels', maxZoom: 21,
     maxNativeZoom: 19});
 
 
 
 var wmsLayerBase8 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
     // tms: true,
-maxZoom: 21,
+    maxZoom: 21,
     maxNativeZoom: 19,
 });
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
@@ -94,7 +95,7 @@ var wmsLayerBase3 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/
     format: 'image/jpeg',
 // //cql_filter:"ambito='U'",
 //id: 'xpain.test-cach',
-maxZoom: 21,
+    maxZoom: 21,
     maxNativeZoom: 19,
     useCache: true,
 //crossOrigin: false,
@@ -145,7 +146,6 @@ var wmsLayerSareWithoutlayer = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/ba
     EDO: '00',
     tiled: true
 });
-
 //var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
 //    layers: 'MapaBaseTopograficov61_sinsombreado',
 //    transparent: false,
@@ -190,16 +190,16 @@ var crs2 = new L.Proj.CRS(
         }
 );
 
-console.log(crs);
 
 var map = L.map('mapid', {
-    center: [21.541, -102.034], //[-17, -67],
+    center: [lat, long], //[-17, -67],
     //[21.541, -102.034], 
     zoom: 5,
     maxZoom: 21,
     minZoom: 5,
     layers: [wmsLayerBase2, wmsLayerSare],
     crs: L.CRS.EPSG900913,
+    zoomControl: true,
     //crs:crs,
     continuousWorld: false,
     worldCopyJump: false,
@@ -244,16 +244,15 @@ window.addEventListener('mousewheel', function (e) {
     }
 },
         false);
-console.log("map crs: " + map.options.crs.code);
 
 /* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
  map.addLayer(bing);*/
-
 
 var baseMaps = {
     "MGE": wmsLayerM,
     "TOPO-OSM-WMS": wmsLayer,
     "wdenue": wmsLayerSare,
+    "wdenue1": wmsLayerSareWithoutlayer,
     "Hipsogr&aacute;fico - INEGI": wmsLayerBase1,
     "Topogr&aacute;fico - INEGI": wmsLayerBase2,
     "Topogr&aacute;fico gris - INEGI": wmsLayerBase3,
@@ -269,7 +268,7 @@ var overlays = {
 //var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
 //      imageBounds = [center, [-35.8650, 154.2094]];
 
-L.control.layers(baseMaps, overlays).addTo(map);
+var lcontrol = L.control.layers(baseMaps, overlays).addTo(map);
 
 
 var formData = {
@@ -312,3 +311,54 @@ function busqueda() {
  () => {}
  )
  }*/
+map.on('zoomend', function () {
+    //alert("hola")
+
+});
+const handleChangeOptions = option => {
+    const title = document.getElementById(`option-${option}`)
+    const idWms = urlServices['map'].label;
+    const checkBox = document.getElementById(`${option}`)
+    checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
+    if (option == "c101") {
+        addCapas(checkBox);
+    } else {
+        addLayerEconomicas(checkBox, option);
+    }
+    if (option == 'wdenue' && checkBox.checked == false) {
+        removeLayer("wmslayerSare", "wmsLayerSareWithoutlayer")
+    } else {
+        if (checkBox.checked == true) {
+            removeLayer("wmsLayerSareWithoutlayer", "wmslayerSare")
+        }
+    }
+
+
+}
+var capaDenueRemove = {
+    "wmslayerSare": wmsLayerSare,
+    "wmsLayerSareWithoutlayer": wmsLayerSareWithoutlayer
+}
+function removeLayer(caparemover, capaagregar) {
+    //map.removeLayer(capaDenueRemove[caparemover]);
+    let zoom=map.getZoom()
+    map.remove()
+    var container = L.DomUtil.get('map');
+      if(container != null){
+        container._leaflet_id = null;
+      }
+     map = L.map('mapid', {
+        center: [lat, long], //[-17, -67],
+        //[21.541, -102.034], 
+        zoom: zoom,
+        maxZoom: 21,
+        minZoom: 5,
+        layers: [wmsLayerBase2, capaDenueRemove[capaagregar]],
+        crs: L.CRS.EPSG900913,
+        zoomControl: true,
+        //crs:crs,
+        continuousWorld: false,
+        worldCopyJump: false,
+        //scrollWheelZoom: false
+    });
+}
