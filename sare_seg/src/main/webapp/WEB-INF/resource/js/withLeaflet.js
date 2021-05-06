@@ -328,7 +328,7 @@ const handleChangeOptions = option => {
     if (option == 'wdenue' && checkBox.checked == false) {
         removeLayer("wmslayerSare", "wmsLayerSareWithoutlayer")
     } else {
-        if (checkBox.checked == true) {
+        if (option == 'wdenue' && checkBox.checked == true) {
             removeLayer("wmsLayerSareWithoutlayer", "wmslayerSare")
         }
     }
