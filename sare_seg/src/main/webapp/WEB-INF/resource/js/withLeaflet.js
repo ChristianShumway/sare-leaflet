@@ -203,8 +203,14 @@ var map = L.map('mapid', {
     //crs:crs,
     continuousWorld: false,
     worldCopyJump: false,
+    zoomControl: false
     //scrollWheelZoom: false
 });
+
+L.control.zoom({
+    position:'topright'
+}).addTo(map);
+
 map.on('click', function (e) {
 
     if (marker !== undefined) {
@@ -213,9 +219,10 @@ map.on('click', function (e) {
     marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
     lat = e.latlng.lat;
     long = e.latlng.lng;
-    identify(e.latlng)
+    // identify(e.latlng)
     // alert(e.latlng);
 });
+
 window.addEventListener('keydown', function (event)
 {
     if (event.ctrlKey == true)
@@ -281,8 +288,6 @@ var formData = {
 
 
 
-
-
 function busqueda() {
     $.ajax({
         url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
@@ -295,6 +300,7 @@ function busqueda() {
         }
     });
 }
+
 
 /*
  const busqueda = () => {
