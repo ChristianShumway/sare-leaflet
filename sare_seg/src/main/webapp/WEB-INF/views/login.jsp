@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="resources/css/login.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@7.33.1/dist/sweetalert2.min.css">
   <link rel="stylesheet" href="resources/css/animate.css">
-  <title>LOGIN - SARE 2019</title>
+  <title>LOGIN - SARE </title>
 </head>
 <body>
   

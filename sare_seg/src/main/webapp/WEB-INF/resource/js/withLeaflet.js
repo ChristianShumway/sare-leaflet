@@ -191,13 +191,13 @@ function chargeMap() {
         tiled: true
     });
     let zoom;
-    if(map){
+    if (map) {
         zoom = map.getZoom()
         map.remove()
-    }else{
-        zoom=5
+    } else {
+        zoom = 5
     }
-    
+
     var container = L.DomUtil.get('map');
     if (container != null) {
         container._leaflet_id = null;
@@ -216,19 +216,21 @@ function chargeMap() {
         worldCopyJump: false,
         //scrollWheelZoom: false
     });
-    if(boundsZoom){
+    if (boundsZoom) {
         map.fitBounds(boundsZoom, {padding: [50, 50]});
     }
-    
+
     map.on('click', function (e) {
 
         if (marker !== undefined) {
             map.removeLayer(marker)
         }
-        marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
-        lat = e.latlng.lat;
-        long = e.latlng.lng;
-        identify(e.latlng)
+        if (zoom > 12) {
+            marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+            lat = e.latlng.lat;
+            long = e.latlng.lng;
+            identify(e.latlng)
+        }
         // alert(e.latlng);
     });
     var baseMaps = {
@@ -247,6 +249,14 @@ function chargeMap() {
     var overlays = {
         "Sare": wmsLayerSare
     };
+    map.on('baselayerchange', function (e) {
+        wmsLayerBase2 = e.layer;
+    });
+    map.on('dblclick', function (e) {
+        if (marker !== undefined) {
+            map.removeLayer(marker)
+        }
+    });
 //var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
 //      imageBounds = [center, [-35.8650, 154.2094]];
 

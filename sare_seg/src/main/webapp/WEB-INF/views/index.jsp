@@ -93,7 +93,7 @@
         <link href="resources/css/app.css?version=<%=version_appCss%>" rel="stylesheet" type="text/css" />
         <!--<link href="resources/css/panel-search.css" rel="stylesheet" type="text/css"/>-->
         <link href="resources/css/animate.css" rel="stylesheet" type="text/css" />
-        <title>SARE 2019</title>
+        <title>SARE</title>
         <!-- Compiled and minified CSS -->
         <script src='resources/js/services.js?version=<%=version_services%>'></script>
         <link rel="stylesheet" href="resources/css/materialize.css">
