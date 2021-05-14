@@ -74,6 +74,26 @@ const objForm = [
         title: 'title-calle-posterior',
     },
 ]
+const objFormVialidadesOtroRemove = [
+    {
+        id: 'nombre_e10an_otro',
+        key: 'calle-posterior',
+        name: 'Nombre de vialidad',
+        title: 'title-calle-posterior',
+    },
+    {
+        id: 'nombre_e10bn_otro',
+        key: 'calle-posterior',
+        name: 'Nombre de vialidad',
+        title: 'title-calle-posterior',
+    },
+     {
+        id: 'nombre_e10cn_otro',
+        key: 'calle-posterior',
+        name: 'Nombre de vialidad',
+        title: 'title-calle-posterior',
+    }
+]
 const objFormPunteoEnFrente = [
 
     {

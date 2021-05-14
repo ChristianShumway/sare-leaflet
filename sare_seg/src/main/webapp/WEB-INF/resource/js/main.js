@@ -472,8 +472,8 @@ const acercarWithExtent = data => {
     let res = data[0].datos.datos[0].extent.split(",")
     //let res = dataJarcoreado.split(",");
     console.log(res);
-    lat=res[1]
-    long=res[2]
+    lat = res[1]
+    long = res[2]
     //map="";
     var southWest = new L.LatLng(res[1], res[0]),
             northEast = new L.LatLng(res[3], res[2]),
@@ -1307,6 +1307,7 @@ const handleTipoPunteo = () => {
 
             tipoE10n.style.display = 'none'
             tipoE10n.removeAttribute('id')
+
             /*tipoE10an.style.display = 'none'
              tipoE10an.removeAttribute('id')
              e10A.style.display = 'none'
@@ -1431,12 +1432,14 @@ const handleFillTipoDeVialidades = selectId =>
             opt.appendChild(document.createTextNode("Seleccione"))
             opt.value = "Seleccione"
             selectId.appendChild(opt)
-            catalogoCatVial.map(item => {
-                let opt = document.createElement('option')
-                opt.appendChild(document.createTextNode(item.tipo_e10n))
-                opt.value = item.tipo_e10
-                selectId.appendChild(opt)
-            })
+            if (catalogoCatVial != null) {
+                catalogoCatVial.map(item => {
+                    let opt = document.createElement('option')
+                    opt.appendChild(document.createTextNode(item.tipo_e10n))
+                    opt.value = item.tipo_e10
+                    selectId.appendChild(opt)
+                })
+            }
         }
 
 const ejecutar = () =>
@@ -1750,7 +1753,6 @@ var asignaTipoVial = function (e) {
             $("#e10_c").val('Ninguno')
     }
 }
-
 //Funcion elimina duplicados
 
 const eliminaDuplicados = (cmb) => {
@@ -1761,14 +1763,44 @@ const eliminaDuplicados = (cmb) => {
     var tipo_e10n = $(optionSelected).attr('data-tipon');
     var e10 = $(optionSelected).val();
     var cmbs = ["e10_A", "e10_B", "e10_C"];
+    var cmbsOther = ["nombre_e10an_otro", "nombre_e10bn_otro", "nombre_e10cn_otro"]
+    let banderaa, banderab, banderac = false;
     $.each(cmbs, function (i, cm) {
 
-        if (cm === cmb.id || e10.toLowerCase() === 'sin referencia' || e10.toLowerCase() === 'ninguno') {
+        if ((cm === cmb.id || e10.toLowerCase() === 'sin referencia' || e10.toLowerCase() === 'ninguno') && e10 !== 'Otro') {
             //$("#" + cm + " option[value='Seleccione']").remove();
+            if (document.getElementById(cmbsOther[i])) {
+                document.getElementById(cmbsOther[i]).remove();
+            }
             $("#" + cm + "n").val('Ninguno');
-        } else if (cvevial !== '') {
+        } else if (cvevial !== '' && e10 !== 'Otro') {
             $("#" + cm + " option[data-cvevial='" + cvevial + "']").remove();
             //$("#" + cm + " option[data-cvevial='" + cvevial + "'][data-cveseg='" + cveseg + "']").remove();
+        } else if ((e10 === 'Otro' && cmb.id === 'e10_A') && !banderaa) {
+            if (!document.getElementById(cmbsOther[i])) {
+                const wrapTipoVialidadUno = document.getElementById('wrap-nombre-vialidad-uno')
+                const inputFieldOtro = document.createElement('input')
+                handleAttributesInputOrSelect('input', inputFieldOtro, 'nombre_e10an_otro', 'Nombre de la vialidad uno')
+                wrapTipoVialidadUno.appendChild(inputFieldOtro)
+                banderaa = true;
+            }
+        } else if ((e10 === 'Otro' && cmb.id === 'e10_B') && !banderab) {
+            if (!document.getElementById(cmbsOther[i])) {
+                const wrapTipoVialidadUno = document.getElementById('wrap-nombre-vialidad-dos')
+                const inputFieldOtro = document.createElement('input')
+                handleAttributesInputOrSelect('input', inputFieldOtro, 'nombre_e10bn_otro', 'Nombre de la vialidad dos')
+                wrapTipoVialidadUno.appendChild(inputFieldOtro)
+                banderab = true;
+            }
+
+        } else if ((e10 === 'Otro' && cmb.id === 'e10_C') && !banderac) {
+            if (!document.getElementById(cmbsOther[i])) {
+                const wrapTipoVialidadUno = document.getElementById('wrap-nombre-vialidad-posterior')
+                const inputFieldOtro = document.createElement('input')
+                handleAttributesInputOrSelect('input', inputFieldOtro, 'nombre_e10cn_otro', 'Nombre de la vialidad Posterior')
+                wrapTipoVialidadUno.appendChild(inputFieldOtro)
+                banderac = true;
+            }
         }
     });
     if (cmb.id === 'e10_A') {
@@ -1985,7 +2017,7 @@ const validationsBack = (ObjectRequest) => {
                 return regresa
 
             }
-            if (vialidad1 == 99) {
+            if (vialidad1 === 99 && regresa === false) {
                 if (servicevalidaobjform(JSON.stringify(ObjectRequest), JSON.stringify(validaOtroEspecifiquevialidad1Back))) {
                     regresa = true
                     return regresa
@@ -1994,7 +2026,7 @@ const validationsBack = (ObjectRequest) => {
                     return regresa
                 }
             }
-            if (vialidad2 == 99) {
+            if (vialidad2 === 99 && regresa === false) {
                 if (servicevalidaobjform(JSON.stringify(ObjectRequest), JSON.stringify(validaOtroEspecifiquevialidad2Back))) {
                     regresa = true
                     return regresa
@@ -2003,7 +2035,7 @@ const validationsBack = (ObjectRequest) => {
                     return regresa
                 }
             }
-            if (vialidad3 == 99) {
+            if (vialidad3 === 99 && regresa === false) {
                 if (servicevalidaobjform(JSON.stringify(ObjectRequest), JSON.stringify(validaOtroEspecifiquevialidad3Back))) {
                     regresa = true
                     return regresa
@@ -2301,7 +2333,8 @@ const validaCp = (event) => {
                             if (validationsBack(ObjectRequest)) {
 
                             } else {
-                                modalViewPreliminar()
+                                valueOthertoNameVial()
+                                //modalViewPreliminar()
                             }
 //           if(servicevalidaobjform(JSON.stringify(ObjectRequest),JSON.stringify(objFormBack))){
 //               
@@ -2315,8 +2348,31 @@ const validaCp = (event) => {
             }, () => {
     })
 }
+const valueOthertoNameVial = () => {
+    let vialidades = ["e10_A", "e10_B", "e10_C"];
+    let vialidadesOtro = ["nombre_e10an_otro", "nombre_e10bn_otro", "nombre_e10cn_otro"];
+    let vial1, vial2, vial3
+    objFormVialidadesOtroRemove.map(vial => {
+        vialidadesOtro.forEach((o, i) => {
+            if (vial.id === vialidadesOtro[i]) {
+                if (document.getElementById(vialidadesOtro[i]) != null) {
+                    let select = document.getElementById(vialidades[i]);
+                    vial1 = document.getElementById(vialidadesOtro[i]).value;
+                    var opt = document.createElement('option');
+                    opt.value = vial1;
+                    opt.innerHTML = vial1;
+                    select.appendChild(opt);
+                    select.selectedIndex = vial1;
+                    document.getElementById(vialidades[i]).value = vial1;
+                }
+            }
+        })
+    });
+    modalViewPreliminar()
+}
 
 const modalViewPreliminar = () => {
+    //
     const myform = $('#frmSARE')
     let disabled = myform.find(':input:disabled').removeAttr('disabled')
     let d = myform.serialize()
@@ -2368,7 +2424,8 @@ const validaTipos = (result) => {
                     } else
                     {
                         handleShowResult(result);
-                        lat=21.541, long=-102.034;
+
+                        lat = 21.541, long = -102.034;
                     }
                 }
 
@@ -2495,7 +2552,8 @@ const handleShowResult = result => {
                                 cancelButtonText: 'Cancelar'
                             }).then((result) => {
                                 if (result.value) {
-                                    modalViewPreliminar()
+                                    valueOthertoNameVial()
+
                                 } else {
                                     handleCancelClick()
                                 }
@@ -2985,7 +3043,15 @@ const buildDetalle = ficha => {
     $('#tabUE_detalleTab tbody').html(html)
 }
 
+const removeVialOther = () => {
+    objFormVialidadesOtroRemove.map(obj => {
+        let elemento = document.getElementById(obj.id);
+        if (elemento != null) {
+            elemento.remove();
+        }
+    });
 
+}
 // función boton opción cancelar
 const handleCancelClick = () => {
     removerOtrosInputs()
@@ -2995,6 +3061,7 @@ const handleCancelClick = () => {
     document.getElementById("c154").style.display = 'block';
     document.getElementById("catorigen").style.display = 'none';
     document.getElementById("catc154").style.display = 'none';
+
     id_ue = document.getElementById('id_UE').value
     // layersSARE = ['c100', 'wdenue']
     const checkboxPuntearAlta = document.getElementById('puntear-alta')
@@ -3012,7 +3079,7 @@ const handleCancelClick = () => {
     alertToastForm('Ahora puedes realizar una nueva busqueda', 'info')
     //llamar servicio que libera la clave y limpia el form si no limpia formulario
     id_ue != '' ? callServiceLiberaClave(id_ue) : cleanForm()
-
+    removeVialOther()
     objForm.map(obj => {
         const wrapTitle = document.getElementById(obj.title)
         if (wrapTitle.classList.contains('error'))
@@ -3036,7 +3103,7 @@ const handleCancelClick = () => {
     id_ue = document.getElementById('id_UE').value;
     //cleanForm()
     //e10X = false
-    lat=21.541, long=-102.034;
+    lat = 21.541, long = -102.034;
 }
 
 const callServiceLiberaClave = (id_ue) => {
