@@ -139,41 +139,50 @@ var crs2 = new L.Proj.CRS(
 );
 
 
-var map;
-const handleChangeOptions = option => {
-    const title = document.getElementById(`option-${option}`)
-    const idWms = urlServices['map'].label;
-    const checkBox = document.getElementById(`${option}`)
-    checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
-    if (option == "c101") {
-        addCapas(checkBox);
-    } else {
-        addLayerEconomicas(checkBox, option);
+var map = L.map('mapid', {
+    center: [21.541, -102.034], //[-17, -67],
+    //[21.541, -102.034], 
+    zoom: 5,
+    maxZoom: 21,
+    minZoom: 5,
+    layers: [wmsLayerBase2, wmsLayerSare],
+    crs: L.CRS.EPSG900913,
+    //crs:crs,
+    continuousWorld: false,
+    worldCopyJump: false,
+    zoomControl: false
+    //scrollWheelZoom: false
+});
+
+L.control.zoom({
+    position:'topright'
+}).addTo(map);
+
+map.on('click', function (e) {
+
+    if (marker !== undefined) {
+        map.removeLayer(marker)
     }
-    if (option == 'wdenue') {
-        if (checkBox.checked == false) {
-            let pos = layers.indexOf('wdenue')
-            layers.splice(pos, 1)
-            pos = layers.indexOf('c104')
-            layers.splice(pos, 1)
-            chargeMap()
-        } else {
-            layers.push('wdenue')
-            chargeMap()
-        }
-    } else {
-        if (option == 'c104') {
-            if (checkBox.checked == true) {
-                layers.push('c104')
-                chargeMap()
-            } else {
-                let pos = layers.indexOf('c104')
-                layers.splice(pos, 1)
-                chargeMap()
-            }
-        }
+    marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+    lat = e.latlng.lat;
+    long = e.latlng.lng;
+    // identify(e.latlng)
+    // alert(e.latlng);
+});
+
+window.addEventListener('keydown', function (event) {
+    if (event.ctrlKey == true)
+    {
+        map.scrollWheelZoom.enable();
+        event.preventDefault();
+        /*if (event.originalEvent.detail > 0) {
+         console.log('Down');
+         } else {
+         console.log('Up');
+         }*/
     }
-}
+});
+
 function chargeMap() {
     //map.removeLayer(capaDenueRemove[caparemover]);
     wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
@@ -260,14 +269,48 @@ function chargeMap() {
 //var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
 //      imageBounds = [center, [-35.8650, 154.2094]];
 
-    var lcontrol = L.control.layers(baseMaps, overlays).addTo(map);
-    map.on('zoomend', function (e) {
-        map = e.target,
-                boundsZoom = map.getBounds();
-        lat = boundsZoom.getNorthEast().lat;
-        long = boundsZoom.getSouthWest().lng;
-        // here i get southwest & northeast data how to get lat & lng & zoom level 
-        console.log(boundsZoom);
-        console.log(lat, long);
+L.control.layers(baseMaps, overlays).addTo(map);
+
+
+var formData = {
+    q: "aguascalientes",
+    point1: "3.2919132745585262,-143.6874999924407",
+    point2: "40.74561102796926,-59.312500007554476",
+    pt: "23.320084961929044, -101.4999999999976"
+};
+
+
+
+function busqueda() {
+    $.ajax({
+        url: "http://gaia.inegi.org.mx/mdm_searchengine/search",
+        type: "POST",
+        dataType: "json",
+        data: JSON.stringify(formData),
+        contentType: "application/json",
+        success: function (response, textStatus, jqXHR) {
+            console.log(response.data);
+        }
     });
+}
+
+
+/*
+ const busqueda = () => {
+ //map.flyTo([21.879120, -102.303263], 17)
+ sendAJAX(
+ "http://gaia.inegi.org.mx/mdm_searchengine/search", 
+ JSON.stringify(formData), 
+ 'POST', 
+ data => { 
+ // wrapUser.classList.remove('wrap-input-empty')
+ // wrapPassword.classList.remove('wrap-input-empty')
+ console.log(data[0].datos)
+ 
+ }, 
+ () => {}
+ )
+ }
+ */
+
 }
