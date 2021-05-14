@@ -208,6 +208,9 @@ public class BackingPunteoSare extends BackingBusquedaSare {
                                 vial = new cat_vial(null, "Ninguno", "Ninguno", "FFF", "");
                                 cat_vial.add(vial);
                                 ubicacion_punteo.setE10_X(cat_vial);
+                                vial = new cat_vial(null, "Otro", "Otro", "HHH", "");
+                                cat_vial.add(vial);
+                                ubicacion_punteo.setE10_X(cat_vial);
                                 break;
                         }
                         if (ubicacion_punteo.getE10_X() != null && ubicacion_punteo.getE10_X().size() > 0) {

@@ -13,7 +13,9 @@
 // }).addTo(mymap);
 
 var marker;
-var lat, long;
+var lat = 21.541, long = -102.034;
+var cities = L.layerGroup();
+var boundsZoom;
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
     sphericalMercator: true,
@@ -37,67 +39,46 @@ var wmsLayerM = L.tileLayer.wms('http://gaia.inegi.org.mx/NLB/tunnel/wms/wms61?'
 
 var wmsLayerBase1 = L.tileLayer.wms('https://censo2020.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseHipsografico',
-//crs:'4326'
     transparent: false,
     maxZoom: 21,
     maxNativeZoom: 19,
-//format: 'image/jpeg',
-// //cql_filter:"ambito='U'",
-//id: 'xpain.test-cach',
-//useCache: true,
-//crossOrigin: false,
     tiled: true
-//sphericalMercator: false,
 });
 var wmsLayerBase5 = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
     maxZoom: 21,
     maxNativeZoom: 19,
-    //img: 'resources/img/mapaBase/Esri.jpg',
 
 });
 var wmsLayerBase6 = L.tileLayer('https://b.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 21,
     maxNativeZoom: 19,
-    // tms: true,
 
 });
 
-var wmsLayerBase7 = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels',maxZoom: 21,
+var wmsLayerBase7 = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT", {type: 'AerialWithLabels', maxZoom: 21,
     maxNativeZoom: 19});
 
 
 
 var wmsLayerBase8 = L.tileLayer('http://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}', {
-    // tms: true,
-maxZoom: 21,
+    maxZoom: 21,
     maxNativeZoom: 19,
 });
 var wmsLayerBase2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseTopograficov61_sinsombreado',
-//crs:'4326'
     maxZoom: 21,
     maxNativeZoom: 19,
     transparent: false,
-//format: 'image/jpeg',
-// //cql_filter:"ambito='U'",
-//id: 'xpain.test-cach',
-//useCache: true,
-//crossOrigin: false,
     tiled: true
-//sphericalMercator: false,
 });
 
 var wmsLayerBase3 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
     layers: 'MapaBaseTopograficov61_sinsombreado_gris',
-//crs:'4326'
     transparent: true,
     format: 'image/jpeg',
-// //cql_filter:"ambito='U'",
-//id: 'xpain.test-cach',
-maxZoom: 21,
+    maxZoom: 21,
     maxNativeZoom: 19,
     useCache: true,
-//crossOrigin: false,
     tiled: true,
     sphericalMercator: false,
 });
@@ -105,24 +86,20 @@ var wmsLayerBase4 = L.tileLayer.wms('http://gaiamapas1.inegi.org.mx/mdmCache/ser
     layers: 'MapaBaseOrtofoto',
     maxZoom: 21,
     maxNativeZoom: 19,
-//crs:'4326'
     transparent: false,
-//format: 'image/jpeg',
-// //cql_filter:"ambito='U'",
-//id: 'xpain.test-cach',
-//useCache: true,
-//crossOrigin: false,
     tiled: true
-//sphericalMercator: false,
 });
+
+var capas = {c103: "c103", c102: "c102", c100: "c100", c101a: "c101a", wdenue: "wdenue", c104: "c104", c103r: "c103r", c107: "c107", c107r: "c107r", c108: "c108"}
+var layers = ["c103", "c102", "c100", "c101a", "wdenue", "c103r", "c107", "c107r", "c108"]
+
 
 var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
-    layers: 'c103,c102,c100,c101a,wdenue,c103r,c107,c107r,c108',
+    layers: layers,
     transparent: true,
     format: 'image/png',
     maxZoom: 21,
     maxNativeZoom: 19,
-    // //cql_filter:"ambito='U'",
     id: 'xpain.test-cach',
     useCache: true,
     crossOrigin: false,
@@ -130,35 +107,6 @@ var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?ma
     EDO: '00',
     tiled: true
 });
-
-var wmsLayerSareWithoutlayer = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
-    layers: 'c103,c102,c100,c101a,c103r,c107,c107r,c108',
-    transparent: true,
-    format: 'image/png',
-    maxZoom: 21,
-    maxNativeZoom: 19,
-    // //cql_filter:"ambito='U'",
-    id: 'xpain.test-cach',
-    useCache: true,
-    crossOrigin: false,
-    sphericalMercator: true,
-    EDO: '00',
-    tiled: true
-});
-
-//var wmsLayerSareB2 = L.tileLayer.wms('https://gaia.inegi.org.mx/mdmCache/service/wms?', {
-//    layers: 'MapaBaseTopograficov61_sinsombreado',
-//    transparent: false,
-//    label: 'Topogr&aacute;fico - INEGI',
-//    img: '../../resources/img/mapaBase/Wms.jpg',
-//    format: 'image/png',
-//    // //cql_filter:"ambito='U'",
-//    id: 'xpain.test-cach',
-//    useCache: true,
-//    crossOrigin: false,
-//    sphericalMercator: true,
-//    EDO: '00',
-//});
 
 
 var crs = new L.Proj.CRS(
@@ -190,7 +138,6 @@ var crs2 = new L.Proj.CRS(
         }
 );
 
-console.log(crs);
 
 var map = L.map('mapid', {
     center: [21.541, -102.034], //[-17, -67],
@@ -223,8 +170,7 @@ map.on('click', function (e) {
     // alert(e.latlng);
 });
 
-window.addEventListener('keydown', function (event)
-{
+window.addEventListener('keydown', function (event) {
     if (event.ctrlKey == true)
     {
         map.scrollWheelZoom.enable();
@@ -237,42 +183,79 @@ window.addEventListener('keydown', function (event)
     }
 });
 
-window.addEventListener('mousewheel', function (e) {
-    if (event.ctrlKey == true)
-    {
-        map.scrollWheelZoom.enable();
-        event.preventDefault();
+function chargeMap() {
+    //map.removeLayer(capaDenueRemove[caparemover]);
+    wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+        layers: layers,
+        transparent: true,
+        format: 'image/png',
+        maxZoom: 21,
+        maxNativeZoom: 19,
+        // //cql_filter:"ambito='U'",
+        id: 'xpain.test-cach',
+        useCache: true,
+        crossOrigin: false,
+        sphericalMercator: true,
+        EDO: '00',
+        tiled: true
+    });
+    let zoom;
+    if(map){
+        zoom = map.getZoom()
+        map.remove()
+    }else{
+        zoom=5
     }
-    if (map.scrollWheelZoom.enabled()) {
-        //map.scrollWheelZoom.disable();
-    } else {
-        alert("presion ctrl para hacer zoom")
-        //map.scrollWheelZoom.enable();
+    
+    var container = L.DomUtil.get('map');
+    if (container != null) {
+        container._leaflet_id = null;
     }
-},
-        false);
-console.log("map crs: " + map.options.crs.code);
+    map = L.map('mapid', {
+        center: [lat, long], //[-17, -67],
+        //[21.541, -102.034], 
+        zoom: zoom,
+        maxZoom: 21,
+        minZoom: 5,
+        layers: [wmsLayerBase2, wmsLayerSare],
+        crs: L.CRS.EPSG900913,
+        zoomControl: true,
+        //crs:crs,
+        continuousWorld: false,
+        worldCopyJump: false,
+        //scrollWheelZoom: false
+    });
+    if(boundsZoom){
+        map.fitBounds(boundsZoom, {padding: [50, 50]});
+    }
+    
+    map.on('click', function (e) {
 
-/* var bing = new L.BingLayer("At-Y-dJe-yHOoSMPmSuTJD5rRE_oltqeTmSYpMrLLYv-ni4moE-Fe1y8OWiNwZVT");
- map.addLayer(bing);*/
-
-
-var baseMaps = {
-    "MGE": wmsLayerM,
-    "TOPO-OSM-WMS": wmsLayer,
-    "wdenue": wmsLayerSare,
-    "Hipsogr&aacute;fico - INEGI": wmsLayerBase1,
-    "Topogr&aacute;fico - INEGI": wmsLayerBase2,
-    "Topogr&aacute;fico gris - INEGI": wmsLayerBase3,
-    "Ortofotos - INEGI": wmsLayerBase4,
-    "Esri": wmsLayerBase5,
-    "Osm": wmsLayerBase6,
-    "Bing": wmsLayerBase7,
-    "Google Satelite": wmsLayerBase8
-};
-var overlays = {
-    "Sare": wmsLayerSare
-};
+        if (marker !== undefined) {
+            map.removeLayer(marker)
+        }
+        marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
+        lat = e.latlng.lat;
+        long = e.latlng.lng;
+        identify(e.latlng)
+        // alert(e.latlng);
+    });
+    var baseMaps = {
+        "MGE": wmsLayerM,
+        "TOPO-OSM-WMS": wmsLayer,
+        "wdenue": wmsLayerSare,
+        "Hipsogr&aacute;fico - INEGI": wmsLayerBase1,
+        "Topogr&aacute;fico - INEGI": wmsLayerBase2,
+        "Topogr&aacute;fico gris - INEGI": wmsLayerBase3,
+        "Ortofotos - INEGI": wmsLayerBase4,
+        "Esri": wmsLayerBase5,
+        "Osm": wmsLayerBase6,
+        "Bing": wmsLayerBase7,
+        "Google Satelite": wmsLayerBase8
+    };
+    var overlays = {
+        "Sare": wmsLayerSare
+    };
 //var imageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Sydney_Opera_House_-_Dec_2008.jpg/1024px-Sydney_Opera_House_-_Dec_2008.jpg',
 //      imageBounds = [center, [-35.8650, 154.2094]];
 
@@ -317,4 +300,7 @@ function busqueda() {
  }, 
  () => {}
  )
- }*/
+ }
+ */
+
+}
