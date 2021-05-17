@@ -262,8 +262,9 @@ function chargeMap() {
 
     var lcontrol = L.control.layers(baseMaps, overlays).addTo(map);
     map.on('zoomend', function (e) {
+        zoom=map.getZoom()
         map = e.target,
-                boundsZoom = map.getBounds();
+       boundsZoom = map.getBounds();
         lat = boundsZoom.getNorthEast().lat;
         long = boundsZoom.getSouthWest().lng;
         // here i get southwest & northeast data how to get lat & lng & zoom level 
