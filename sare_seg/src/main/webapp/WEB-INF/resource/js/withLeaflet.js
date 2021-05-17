@@ -210,7 +210,7 @@ function chargeMap() {
         minZoom: 5,
         layers: [wmsLayerBase2, wmsLayerSare],
         crs: L.CRS.EPSG900913,
-        zoomControl: true,
+        zoomControl: false,
         //crs:crs,
         continuousWorld: false,
         worldCopyJump: false,
@@ -219,6 +219,10 @@ function chargeMap() {
     if (boundsZoom) {
         map.fitBounds(boundsZoom, {padding: [50, 50]});
     }
+
+    L.control.zoom({
+        position: 'topright'
+    }).addTo(map);
 
     map.on('click', function (e) {
 
