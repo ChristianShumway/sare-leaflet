@@ -15,7 +15,7 @@
 var marker;
 var lat = 21.541, long = -102.034;
 var cities = L.layerGroup();
-var boundsZoom,zoom=5;
+var boundsZoom, zoom = 5, zoomMapa;
 var wmsLayer = L.tileLayer.wms('http://ows.mundialis.de/services/service?', {
     layers: 'TOPO-OSM-WMS',
     sphericalMercator: true,
@@ -141,13 +141,15 @@ var crs2 = new L.Proj.CRS(
 
 var map;
 const handleChangeOptions = option => {
+    map.fitBounds(boundsZoom);
+    console.log(zoom)
     const title = document.getElementById(`option-${option}`)
     const idWms = urlServices['map'].label;
     const checkBox = document.getElementById(`${option}`)
     checkBox.checked ? title.classList.add('option-active') : title.classList.remove('option-active')
     if (option == "c101") {
         addCapas(checkBox);
-         } else {
+    } else {
         addLayerEconomicas(checkBox, option);
     }
     if (option == 'wdenue') {
@@ -157,32 +159,74 @@ const handleChangeOptions = option => {
             pos = layers.indexOf('c104')
             layers.splice(pos, 1)
             chargeMap()
+            console.log(map.getZoom() + "wdenue")
+
         } else {
             layers.push('wdenue')
             chargeMap()
+            console.log(map.getZoom() + "wdenue!")
         }
     } else {
         if (option == 'c104') {
             if (checkBox.checked == true) {
                 layers.push('c104')
                 chargeMap()
+                console.log(map.getZoom() + "c104")
+
             } else {
                 let pos = layers.indexOf('c104')
                 layers.splice(pos, 1)
                 chargeMap()
+                console.log(map.getZoom() + "c104!")
             }
         }
     }
+    bounds()
+
+}
+function bounds() {
+    if (boundsZoom) {
+        var zoomStart = map.getZoom()
+        map.fitBounds(boundsZoom, {padding: [50, 50]});
+        bandera = true;
+        map.setZoom(zoomStart)
+    }
 }
 function chargeMap() {
+
     //map.removeLayer(capaDenueRemove[caparemover]);
-    wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+//    wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+//        layers: layers,
+//        transparent: true,
+//        format: 'image/png',
+//        maxZoom: 21,
+//        maxNativeZoom: 19,
+//        // //cql_filter:"ambito='U'",
+//        id: 'xpain.test-cach',
+//        useCache: true,
+//        crossOrigin: false,
+//        sphericalMercator: true,
+//        EDO: '00',
+//        tiled: true
+//    });
+    if (map) {
+        zoom = map.getZoom()
+        map.remove()
+    } else {
+        var southWest = new L.LatLng('32.91648534731439', '-66.92871093750001'),
+                northEast = new L.LatLng('9.188870084473406', '-137.10937500000003');
+        boundsZoom = new L.LatLngBounds(southWest, northEast);
+        zoom = 5
+        zoomMapa = 5
+    }
+
+    console.log(zoom)
+    var wmsLayerSare = L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
         layers: layers,
         transparent: true,
         format: 'image/png',
         maxZoom: 21,
         maxNativeZoom: 19,
-        // //cql_filter:"ambito='U'",
         id: 'xpain.test-cach',
         useCache: true,
         crossOrigin: false,
@@ -190,13 +234,8 @@ function chargeMap() {
         EDO: '00',
         tiled: true
     });
-    
-    if (map) {
-        zoom = map.getZoom()
-        map.remove()
-    } else {
-        zoom = 5
-    }
+
+
 
     var container = L.DomUtil.get('map');
     if (container != null) {
@@ -211,15 +250,13 @@ function chargeMap() {
         layers: [wmsLayerBase2, wmsLayerSare],
         crs: L.CRS.EPSG900913,
         zoomControl: false,
+        preferCanvas: true,
         //crs:crs,
         continuousWorld: false,
         worldCopyJump: false,
-        //scrollWheelZoom: false
+        zoomSnap: 0
+                //scrollWheelZoom: false
     });
-    if (boundsZoom) {
-        map.fitBounds(boundsZoom, {padding: [50, 50]});
-    }
-
     L.control.zoom({
         position: 'topright'
     }).addTo(map);
@@ -265,14 +302,60 @@ function chargeMap() {
 //      imageBounds = [center, [-35.8650, 154.2094]];
 
     var lcontrol = L.control.layers(baseMaps, overlays).addTo(map);
+    let bandera = false;
+//    map.on('moveend', function (e) {
+//        boundsZoom = map.getBounds();
+//
+//    });
     map.on('zoomend', function (e) {
-        zoom=map.getZoom()
-        map = e.target,
-       boundsZoom = map.getBounds();
-        lat = boundsZoom.getNorthEast().lat;
-        long = boundsZoom.getSouthWest().lng;
-        // here i get southwest & northeast data how to get lat & lng & zoom level 
-        console.log(boundsZoom);
-        console.log(lat, long);
+        zoom = map.getZoom()
+        if (map) {
+            boundsZoom = map.getBounds();
+            console.log("entre aqui");
+        }
+
     });
+
+    L.control.browserPrint({
+        printLayer: L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+            layers: layers,
+            transparent: true,
+            format: 'image/png',
+            maxZoom: 21,
+            maxNativeZoom: 19,
+            id: 'xpain.test-cach',
+            useCache: true,
+            crossOrigin: false,
+            sphericalMercator: true,
+            EDO: '00',
+            tiled: true
+        }),
+        printModes: ["Landscape"],
+        position: 'topright',
+        manualMode: false}).addTo(map);
+    map.on("browser-pre-print", function (e) {
+    });
+
+    map.on("browser-print-start", function (e) {
+        // Green circle;
+
+    });
+
+    map.on("browser-print-end", function (e) {
+        e.printObjects[L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
+            layers: layers,
+            transparent: true,
+            format: 'image/png',
+            maxZoom: 21,
+            maxNativeZoom: 19,
+            id: 'xpain.test-cach',
+            useCache: true,
+            crossOrigin: false,
+            sphericalMercator: true,
+            EDO: '00',
+            tiled: true
+        })];
+    });
+
+
 }

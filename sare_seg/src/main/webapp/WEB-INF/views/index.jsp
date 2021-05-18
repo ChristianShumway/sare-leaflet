@@ -1203,6 +1203,7 @@
                       <link rel="stylesheet" href="resources/leaflet/leaflet.css">
                       <script src="resources/leaflet/leaflet.js"></script>
                       <script src="resources/js/pluginsLeaf/L.singleTile.js"></script>
+                      <script src="resources/js/pluginsLeaf/Leaflet.browser.print.js" type="text/javascript"></script>
                       <script src="resources/js/pluginsLeaf/Bing.js"></script>
                       <script src="resources/leaflet/proj4-src.js"></script>
                       <script src="resources/leaflet/proj4leaflet.js"></script>

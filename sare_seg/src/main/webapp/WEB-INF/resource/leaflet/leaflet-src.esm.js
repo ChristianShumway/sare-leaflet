@@ -3249,7 +3249,7 @@ var Map = Evented.extend({
 		}
 
 		var target = this._getBoundsCenterZoom(bounds, options);
-		return this.setView(target.center, target.zoom, options);
+		return this.setView(target.center, zoom, options);
 	},
 
 	// @method fitWorld(options?: fitBounds options): this

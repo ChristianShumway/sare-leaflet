@@ -3458,8 +3458,33 @@ async function OpenReportes(size, action) {
 //  }  
 }
 var imprimir = function () {
+//    var modeToUse = L.control.browserPrint.mode.auto();
+//    map.printControl.print(modeToUse);
+    //window.print()
+    var contenido = document.getElementById("mapid").innerHTML;
+    var contenidoOriginal = document.body.innerHTML;
+
+    document.body.innerHTML = contenido;
+
+    window.print();
+
+    document.body.innerHTML = contenidoOriginal;
+    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    mywindow.document.write('<html><head><title>' + document.title + '</title>');
+    mywindow.document.write('</head><body >');
+    mywindow.document.write('<h1>' + document.title + '</h1>');
+    mywindow.document.write(document.getElementById('mapid').innerHTML);
+    mywindow.document.write('</body></html>');
+
+    mywindow.document.close(); // necessary for IE >= 10
+    mywindow.focus(); // necessary for IE >= 10*/
+
+    mywindow.print();
+    mywindow.close();
+    window.print()
     $('#window_bottom').hide();
-    var data = $('#map').html();
+    var data = $('#mapid').html();
     $('#window_bottom').show();
     var isMobile = false;
     console.log("La resolución de pantalla que tienes en este momento es de: " + screen.width + " x " + screen.height)
@@ -3467,6 +3492,7 @@ var imprimir = function () {
     var ventana = window.open('', '', 'height=1000,width=1024');
     ventana.document.open();
     ventana.document.write('<html><head ><title>' + titulo_impresion + '</title>');
+    ventana.document.write('<link rel="stylesheet" href="resources/leaflet/leaflet.css">');
     ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
     ventana.document.write('<script src="resources/js/main.js"></script>');
     if (navigator.userAgent.indexOf("Chrome") !== -1)
@@ -3516,7 +3542,7 @@ var imprimir = function () {
     ventana.document.write('</div>');
     ventana.document.write('</div>');
     ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},4000); window.onafterprint = function(e){');
-    ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); },2000);     ');
+    //ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); },2000);     ');
     ventana.document.write('};</script>');
     ventana.document.write('</body>');
     ventana.document.write('</html>');
