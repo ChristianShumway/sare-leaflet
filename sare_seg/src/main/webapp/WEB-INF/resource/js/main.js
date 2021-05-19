@@ -55,14 +55,14 @@ function getParameterByName(name) {
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
 const init = () =>
-        {
+{
 
-            id_ue = document.getElementById("id_UE").value;
-            addCapas({'checked': true, 'id': 'unidades'})
-            inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
-            //addInitialCapas()
+    id_ue = document.getElementById("id_UE").value;
+    addCapas({'checked': true, 'id': 'unidades'})
+    inputsinhabilitar.map(input => document.getElementById(input.id).setAttribute('disabled', true))
+    //addInitialCapas()
 
-        }
+}
 
 
 
@@ -1221,19 +1221,19 @@ const callServicePunteo = (x, y, tc, r, id_ue, ce, tr, u) => {
 }
 
 const showalertpunteoloading = (bandera) =>
-        {
-            if (bandera == true) {
-                alert("espere un momento porfavor");
-            } else {
-                alert("punteo realizado");
-            }
+{
+    if (bandera == true) {
+        alert("espere un momento porfavor");
+    } else {
+        alert("punteo realizado");
+    }
 
 //    swal 
 //    ({
 //      title: '<span style="width:100%;">Buscando información de punteo!</span>',
 //      text: 'Por favor espere un momento',
 //    })
-        }
+}
 
 const agregaFuncionEliminarDuplicadosSelects = () => {
     idEleToSelect.map(id => {
@@ -1426,27 +1426,27 @@ const handleAttributesInputOrSelect = (type, constName, idField, ph = '') => {
 
 //función llenado de catálogo con opciones de tipo de vialidad cuando es rural
 const handleFillTipoDeVialidades = selectId =>
-        {
-            //selectId.setAttribute('onchange', 'asignaValorId()')
+{
+    //selectId.setAttribute('onchange', 'asignaValorId()')
+    let opt = document.createElement('option')
+    opt.appendChild(document.createTextNode("Seleccione"))
+    opt.value = "Seleccione"
+    selectId.appendChild(opt)
+    if (catalogoCatVial != null) {
+        catalogoCatVial.map(item => {
             let opt = document.createElement('option')
-            opt.appendChild(document.createTextNode("Seleccione"))
-            opt.value = "Seleccione"
+            opt.appendChild(document.createTextNode(item.tipo_e10n))
+            opt.value = item.tipo_e10
             selectId.appendChild(opt)
-            if (catalogoCatVial != null) {
-                catalogoCatVial.map(item => {
-                    let opt = document.createElement('option')
-                    opt.appendChild(document.createTextNode(item.tipo_e10n))
-                    opt.value = item.tipo_e10
-                    selectId.appendChild(opt)
-                })
-            }
-        }
+        })
+    }
+}
 
 const ejecutar = () =>
-        {
-            id_ue = document.getElementById('id_UE').value
-            callServiceLiberaClave(id_ue)
-        }
+{
+    id_ue = document.getElementById('id_UE').value
+    callServiceLiberaClave(id_ue)
+}
 
 //Función regresa tipo campos  de tipo y nombre vialidad
 const handleReturnTipoNombreVialidad = (childrens, wrap, idChildren, field) => {
@@ -3461,17 +3461,20 @@ var imprimir = function () {
 //    var modeToUse = L.control.browserPrint.mode.auto();
 //    map.printControl.print(modeToUse);
     //window.print()
-    var contenido = document.getElementById("mapid").innerHTML;
-    var contenidoOriginal = document.body.innerHTML;
-
-    document.body.innerHTML = contenido;
-
-    window.print();
-
-    document.body.innerHTML = contenidoOriginal;
-    var mywindow = window.open('', 'PRINT', 'height=400,width=600');
+//    var contenido = document.getElementById("mapid").innerHTML;
+//    var contenidoOriginal = document.body.innerHTML;
+//
+//    document.body.innerHTML = contenido;
+//
+//    window.print();
+//
+//    document.body.innerHTML = contenidoOriginal;
+    var mywindow = window.open('', 'PRINT', 'height='+screen.width+',width='+screen.height);
 
     mywindow.document.write('<html><head><title>' + document.title + '</title>');
+    mywindow.document.write('<link rel="stylesheet" href="resources/leaflet/leaflet.css">');
+    mywindow.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
+    mywindow.document.write('<script src="resources/js/main.js"></script>');
     mywindow.document.write('</head><body >');
     mywindow.document.write('<h1>' + document.title + '</h1>');
     mywindow.document.write(document.getElementById('mapid').innerHTML);
@@ -3480,76 +3483,80 @@ var imprimir = function () {
     mywindow.document.close(); // necessary for IE >= 10
     mywindow.focus(); // necessary for IE >= 10*/
 
-    mywindow.print();
-    mywindow.close();
-    window.print()
-    $('#window_bottom').hide();
-    var data = $('#mapid').html();
-    $('#window_bottom').show();
-    var isMobile = false;
-    console.log("La resolución de pantalla que tienes en este momento es de: " + screen.width + " x " + screen.height)
-
-    var ventana = window.open('', '', 'height=1000,width=1024');
-    ventana.document.open();
-    ventana.document.write('<html><head ><title>' + titulo_impresion + '</title>');
-    ventana.document.write('<link rel="stylesheet" href="resources/leaflet/leaflet.css">');
-    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
-    ventana.document.write('<script src="resources/js/main.js"></script>');
-    if (navigator.userAgent.indexOf("Chrome") !== -1)
-    {
-        ventana.document.write('<style type="text/css"  media="print"> ');
-        ventana.document.write('@page{size:landscape;}html { width:29.4cm;height:20.62cm;}');
-        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}');
-        ventana.document.write('.divMapa{page-break-after : always;} ');
-        ventana.document.write('.olControlMousePosition{display:none;} ');
-        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
-        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} ');
-        ventana.document.write('</style>');
-    } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
-        ventana.document.write('<style type="text/css"  media="print"> @page{size:landscape;}html { width:29.4cm;height:20.62cm;}');
-        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;} ');
-        ventana.document.write('.divMapa{page-break-after : always;}');
-        ventana.document.write('.olControlMousePosition{display:none;} ');
-        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
-        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
-    } else if (navigator.userAgent.indexOf('Trident') !== -1) {
-        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
-    }
-    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
-    ventana.document.write('<link rel="stylesheet" href="resources/css/materialize_1.0.0.css">');
-    ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
-    ventana.document.write('</head>');
-    ventana.document.write('<body>');
-    ventana.document.write('<div class="" id="mapa" >');
-    ventana.document.write(data);
-    ventana.document.write('</div>');
-    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">');
-    ventana.document.write('<div class="modal-content">');
-    ventana.document.write('<div> Cargando</div>');
-    ventana.document.write('<div class="preloader-wrapper big active">');
-    ventana.document.write('<div class="spinner-layer spinner-blue-only">');
-    ventana.document.write('<div class="circle-clipper left">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('<div class="gap-patch">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('<div class="circle-clipper right">');
-    ventana.document.write('<div class="circle"></div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');
-    ventana.document.write('</div>');
-    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},4000); window.onafterprint = function(e){');
-    //ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); },2000);     ');
-    ventana.document.write('};</script>');
-    ventana.document.write('</body>');
-    ventana.document.write('</html>');
-    ventana.document.close();
-    setTimeout(function () {
-        ventana.print();
+   setTimeout(function () {
+        mywindow.print();
+        mywindow.close();
     }, 5000);
+    
+    
+//    window.print()
+//    $('#window_bottom').hide();
+//    var data = $('#mapid').html();
+//    $('#window_bottom').show();
+//    var isMobile = false;
+    console.log("La resolución de pantalla que tienes en este momento es de: " + screen.width + " x " + screen.height)
+//
+//    var ventana = window.open('', '', 'height=1000,width=1024');
+//    ventana.document.open();
+//    ventana.document.write('<html><head ><title>' + titulo_impresion + '</title>');
+//    ventana.document.write('<link rel="stylesheet" href="resources/leaflet/leaflet.css">');
+//    ventana.document.write('<script src="resources/js/jquery-2.1.1.min.js"></script>');
+//    ventana.document.write('<script src="resources/js/main.js"></script>');
+//    if (navigator.userAgent.indexOf("Chrome") !== -1)
+//    {
+//        ventana.document.write('<style type="text/css"  media="print"> ');
+//        ventana.document.write('@page{size:landscape;}html { width:29.4cm;height:20.62cm;}');
+//        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;}');
+//        ventana.document.write('.divMapa{page-break-after : always;} ');
+//        ventana.document.write('.olControlMousePosition{display:none;} ');
+//        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
+//        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{ width:82%; position:relative; height:100%; left:-200px} ');
+//        ventana.document.write('</style>');
+//    } else if (navigator.userAgent.indexOf("Firefox") !== -1) {
+//        ventana.document.write('<style type="text/css"  media="print"> @page{size:landscape;}html { width:29.4cm;height:20.62cm;}');
+//        ventana.document.write('body{margin-bottom: -2.30cm;margin-top: 2cm;margin-right: -1.0cm;margin-left:-1.0cm;} ');
+//        ventana.document.write('.divMapa{page-break-after : always;}');
+//        ventana.document.write('.olControlMousePosition{display:none;} ');
+//        ventana.document.write('#OpenLayers_Control_ScaleLine_4{display:none;}');
+//        ventana.document.write('#OpenLayers_Map_5_OpenLayers_ViewPort{width:82%;overflow:hidden;position:relative;height:100%;}" </style>');
+//    } else if (navigator.userAgent.indexOf('Trident') !== -1) {
+//        ventana.document.write('<link rel="stylesheet" type="text/css" href="css/print_ie.css"/>');
+//    }
+//    ventana.document.write('<link rel="stylesheet" type="text/css" href="resources/css/app.css"/>');
+//    ventana.document.write('<link rel="stylesheet" href="resources/css/materialize_1.0.0.css">');
+//    ventana.document.write('<script src="resources/js/materialize.min.js"></script>');
+//    ventana.document.write('</head>');
+//    ventana.document.write('<body>');
+//    ventana.document.write('<div class="" id="mapa" >');
+//    ventana.document.write(data);
+//    ventana.document.write('</div>');
+//    ventana.document.write('<div id="modal" class="modal" style="top: 40%!important;">');
+//    ventana.document.write('<div class="modal-content">');
+//    ventana.document.write('<div> Cargando</div>');
+//    ventana.document.write('<div class="preloader-wrapper big active">');
+//    ventana.document.write('<div class="spinner-layer spinner-blue-only">');
+//    ventana.document.write('<div class="circle-clipper left">');
+//    ventana.document.write('<div class="circle"></div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('<div class="gap-patch">');
+//    ventana.document.write('<div class="circle"></div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('<div class="circle-clipper right">');
+//    ventana.document.write('<div class="circle"></div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('</div>');
+//    ventana.document.write('<script>modal2();setClassPrint();setTimeout(function(){closeModal2();},4000); window.onafterprint = function(e){');
+//    //ventana.document.write('$(window).off("mousemove", window.onafterprint);  setTimeout(function () {    window.close(); },2000);     ');
+//    ventana.document.write('};</script>');
+//    ventana.document.write('</body>');
+//    ventana.document.write('</html>');
+//    ventana.document.close();
+//    setTimeout(function () {
+//        ventana.print();
+//    }, 5000);
 }
 
 
@@ -3803,29 +3810,29 @@ const añadirParametroScian = () => {
 }
 
 const actionFiltrosScian = (id, clasesFiltro_2, array, etiqueta) =>
-        {
-            const elemento = document.getElementById(id.id)
-            $.each(elemento, function (index, value)
-            {
-                elemento.remove(0);
-            });
-            const opt = document.createElement('option');
-            opt.value = "Seleccione";
-            opt.innerHTML = "Seleccione";
-            elemento.appendChild(opt);
-            clasesFiltro_2.map(id =>
-            {
-                const opt = document.createElement('option');
-                opt.value = id.codigo;
-                opt.innerHTML = id.descripción;
-                elemento.appendChild(opt);
-            })
-            array.map(id =>
-            {
-                let elemen = document.getElementById(id.id)
-                id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
-            })
-        }
+{
+    const elemento = document.getElementById(id.id)
+    $.each(elemento, function (index, value)
+    {
+        elemento.remove(0);
+    });
+    const opt = document.createElement('option');
+    opt.value = "Seleccione";
+    opt.innerHTML = "Seleccione";
+    elemento.appendChild(opt);
+    clasesFiltro_2.map(id =>
+    {
+        const opt = document.createElement('option');
+        opt.value = id.codigo;
+        opt.innerHTML = id.descripción;
+        elemento.appendChild(opt);
+    })
+    array.map(id =>
+    {
+        let elemen = document.getElementById(id.id)
+        id.id == "label_" + etiqueta || id.id == "filtro_" + etiqueta ? elemen.style.display = "block" : elemen.style.display = "none";
+    })
+}
 
 const llamarServicioclases = (codigoScian, valor) => {
     var sel;

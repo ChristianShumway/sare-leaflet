@@ -315,47 +315,4 @@ function chargeMap() {
         }
 
     });
-
-    L.control.browserPrint({
-        printLayer: L.singleTile('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
-            layers: layers,
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 21,
-            maxNativeZoom: 19,
-            id: 'xpain.test-cach',
-            useCache: true,
-            crossOrigin: false,
-            sphericalMercator: true,
-            EDO: '00',
-            tiled: true
-        }),
-        printModes: ["Landscape"],
-        position: 'topright',
-        manualMode: false}).addTo(map);
-    map.on("browser-pre-print", function (e) {
-    });
-
-    map.on("browser-print-start", function (e) {
-        // Green circle;
-
-    });
-
-    map.on("browser-print-end", function (e) {
-        e.printObjects[L.tileLayer.wms('https://gaia.inegi.org.mx/NLB_CE/balancer.do?map=/opt/map/SARE_UEEPA_2020.map', {
-            layers: layers,
-            transparent: true,
-            format: 'image/png',
-            maxZoom: 21,
-            maxNativeZoom: 19,
-            id: 'xpain.test-cach',
-            useCache: true,
-            crossOrigin: false,
-            sphericalMercator: true,
-            EDO: '00',
-            tiled: true
-        })];
-    });
-
-
 }
